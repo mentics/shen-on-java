@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/shen/gen"/>
+	<classpathentry kind="src" path="src/test/junit"/>
+	<classpathentry kind="src" path="src/main/shen/compiled-kl"/>
+	<classpathentry kind="src" path="src/main/shen/platform"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/kryo-2.20"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

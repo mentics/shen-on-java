@@ -1,0 +1,8 @@
+(defun macroexpand (X) X)
+(defun shen-walk (X Y) X)
+(defun shen-packaged? (X) X)
+(defun shen-eval-without-macros (X) X)
+(defun shen-package-contents (X) X)
+(defun map (X Y) X)
+(defun shen-elim-define (X) X)
+(defun shen-proc-input+ (X) X)
