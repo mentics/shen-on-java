@@ -55,9 +55,19 @@ public class Cons {
         if (Nil.NIL.equals(tail)) {
             return "[" + head + "]";
         } else if (tail instanceof Cons) {
-            return "[" + head + " " + tail + "]";
+            return "[" + head + " " + ((Cons) tail).continueString() + "]";
         } else {
-            return "[" + head + " | " + tail + "]";
+            return "[" + head + " | " + tail.toString() + "]";
+        }
+    }
+    
+    public String continueString() {
+        if (Nil.NIL.equals(tail)) {
+            return head + "]";
+        } else if (tail instanceof Cons) {
+            return head + " " + ((Cons) tail).continueString() + "]";
+        } else {
+            return head + " | " + tail.toString() + "]";
         }
     }
 

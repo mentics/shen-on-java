@@ -2,8 +2,10 @@ package com.mentics.shen;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,11 +59,17 @@ public class RuntimeContext {
         final Object className = Fst.LAMBDA.apply(unit4044);
         final Object classContent = Second.LAMBDA.apply(unit4044);
 
+        globalProperties.put(UpdateImage.SRC_DIR_SYM, "src/main/shen/gen/");
+        globalProperties.put(UpdateImage.COMPILE_DIR_SYM, "target/classes/");
+
         Map<String, byte[]> newClasses = UpdateImage.compile((String) className, (String) classContent);
-        classes.putAll(newClasses);
-        return runClass(new DirectClassLoader(Thread.currentThread().getContextClassLoader(), classes)
-                .loadClass("shen.gen." + className));
+        // TODO: classes.putAll(newClasses);
+        return runClass(loadClass("shen.gen." + className));
         // return null;
+    }
+
+    public static Class loadClass(String name) throws Exception {
+        return new DirectClassLoader(Thread.currentThread().getContextClassLoader(), classes).loadClass(name);
     }
 
 
@@ -95,6 +103,85 @@ public class RuntimeContext {
         } else {
             throw new ShenException("Attempted to dispatch on invalid object: " + obj);
         }
+    }
+
+    public static Lambda javaDispatch(String s) {
+        return handleJavaCall(s);
+    }
+
+    private static Lambda handleJavaCall(final String label) {
+        // TODO: Limitation: can't do partial application on java calls?
+        if (label.endsWith(".")) {
+            final String name = label.substring(0, label.length() - 1);
+            return new VarLambda() {
+                public Object apply(Object[] args) throws Exception {
+                    Class c = RuntimeContext.loadClass(name);
+                    Constructor[] consts = c.getConstructors();
+                    for (Constructor con : consts) {
+                        Class[] params = con.getParameterTypes();
+                        if (params.length == args.length) {
+                            boolean compat = true;
+                            for (int i = 0; i < params.length; i++) {
+                                if (!params[i].isInstance(args[i])) {
+                                    compat = false;
+                                    break;
+                                }
+                            }
+                            if (compat) {
+                                return con.newInstance(args);
+                            }
+                        }
+                    }
+                    throw new ShenException("Could not find constructor for: " + name + "(" + Arrays.toString(args)
+                            + ")");
+                }
+            };
+        } else if (label.startsWith(".")) {
+            final String methodName = label.substring(1);
+            return new VarLambda() {
+                public Object apply(Object[] args) throws Exception {
+                    Object receiver = args[0];
+                    Object[] javaArgs = new Object[args.length - 1];
+                    for (int i = 1; i < args.length; i++) {
+                        javaArgs[i - 1] = args[i];
+                    }
+                    Class c = receiver.getClass();
+                    Method[] methods = c.getMethods();
+                    for (Method method : methods) {
+                        if (methodName.equals(method.getName())) {
+                            Class[] params = method.getParameterTypes();
+                            if (params.length == javaArgs.length) {
+                                boolean compat = true;
+                                for (int i = 0; i < params.length; i++) {
+                                    if (!wrapperize(params[i]).isInstance(javaArgs[i])) {
+                                        compat = false;
+                                        break;
+                                    }
+                                }
+                                if (compat) {
+                                    return method.invoke(receiver, javaArgs);
+                                }
+                            }
+                        }
+                    }
+                    throw new ShenException("Could not find method for: " + args[0] + "." + methodName + "("
+                            + Arrays.toString(javaArgs) + ")");
+                }
+
+                private Class wrapperize(Class c) {
+                    if (c.isPrimitive()) {
+                        if (c == int.class) {
+                            return Integer.class;
+                        } else if (c == boolean.class) {
+                            return Boolean.class;
+                        }
+                        // TODO: rest
+                    }
+                    return c;
+                }
+            };
+        }
+        return null;
     }
 
     public static void saveImage(FileOutputStream out) {

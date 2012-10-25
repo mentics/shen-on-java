@@ -8,16 +8,14 @@ public class ShenTypeSignatureOfFix {
 
 public static final Symbol SYMBOL = RuntimeContext.symbol("shen-type-signature-of-fix");
 public static final Lambda LAMBDA = new Lambda3() {
-public Object apply(final Object v4765, final Object v4766, final Object v4767) throws Exception {
-return defined(v4765, v4766, v4767);
+public Object apply(final Object v307, final Object v308, final Object v309) throws Exception {
+return defined(v307, v308, v309);
 }};
-public static Object defined(final Object v4765, final Object v4766, final Object v4767) throws Exception {
-final Object f4769 = ShenNewpv.LAMBDA.apply(v4766);
+public static Object defined(final Object v307, final Object v308, final Object v309) throws Exception {
+final Object f311 = ShenNewpv.LAMBDA.apply(v308);
 
-final Object a4768 = f4769;
-final Object f4770 = ShenIncinfs.LAMBDA.apply();
-
-
+final Object a310 = f311;
+final Object f312 = ShenIncinfs.LAMBDA.apply();
 
 
 
@@ -34,11 +32,13 @@ final Object f4770 = ShenIncinfs.LAMBDA.apply();
 
 
 
-final Object f4771 = UnifyBang.LAMBDA.apply(v4765, new Cons(new Cons(a4768, new Cons(RuntimeContext.symbol("-->"), new Cons(a4768, Nil.NIL))), new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(a4768, new Cons(RuntimeContext.symbol("-->"), new Cons(a4768, Nil.NIL))), Nil.NIL))), v4766, v4767);
-final Object f4772 = Do.LAMBDA.apply(f4770, f4771);
 
 
-    return f4772;
+final Object f313 = UnifyBang.LAMBDA.apply(v307, new Cons(new Cons(a310, new Cons(RuntimeContext.symbol("-->"), new Cons(a310, Nil.NIL))), new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(a310, new Cons(RuntimeContext.symbol("-->"), new Cons(a310, Nil.NIL))), Nil.NIL))), v308, v309);
+final Object f314 = Do.LAMBDA.apply(f312, f313);
+
+
+    return f314;
 
 }
 }

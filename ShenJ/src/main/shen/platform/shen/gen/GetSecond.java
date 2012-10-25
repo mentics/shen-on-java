@@ -5,72 +5,72 @@ package shen.gen;
 import com.mentics.shen.*;
 
 public class GetSecond {
-
-public static final Symbol SYMBOL = RuntimeContext.symbol("get-second");
-public static final Lambda LAMBDA = new Lambda2() {
-public Object apply(final Object v7250, final Object v7251) throws Exception {
-return defined(v7250, v7251);
-}};
-public static Object defined(final Object v7250, final Object v7251) throws Exception {
 
-final Object i8450;
-if ((boolean)Lang.equals(Nil.NIL, v7251)) {
-final Object f8436 = Atp.LAMBDA.apply(v7250, Nil.NIL);
-final Object f8437 = IntmakeString.LAMBDA.apply("Element not found in get-second for ~A", f8436);
+public static final Symbol SYMBOL = RuntimeContext.symbol("get-second");
+public static final Lambda LAMBDA = new Lambda2() {
+public Object apply(final Object v2297, final Object v2298) throws Exception {
+return defined(v2297, v2298);
+}};
+public static Object defined(final Object v2297, final Object v2298) throws Exception {
 
-throw new SimpleError((String)f8437);
+final Object i2313;
+if ((boolean)Lang.equals(Nil.NIL, v2298)) {
+final Object f2299 = Atp.LAMBDA.apply(v2297, Nil.NIL);
+final Object f2300 = IntmakeString.LAMBDA.apply("Element not found in get-second for ~A", f2299);
+
+throw new SimpleError((String)f2300);
 
 } else {
 
 
-final Object i8440;
-if ((boolean)(v7251 instanceof Cons)) {
+final Object i2303;
+if ((boolean)(v2298 instanceof Cons)) {
 
-final Object f8438 = TupleQ.LAMBDA.apply(((Cons)v7251).head);
+final Object f2301 = TupleQ.LAMBDA.apply(((Cons)v2298).head);
 
-final Object i8439;
-if ((boolean)f8438) {
+final Object i2302;
+if ((boolean)f2301) {
 
-i8439 = true;
+i2302 = true;
 } else {
 
-i8439 = false;
+i2302 = false;
 
 }
-i8440 = i8439;
+i2303 = i2302;
 } else {
 
-i8440 = false;
+i2303 = false;
 
 }
-final Object i8449;
-if ((boolean)i8440) {
+final Object i2312;
+if ((boolean)i2303) {
 
-final Object f8441 = Fst.LAMBDA.apply(((Cons)v7251).head);
+final Object f2304 = Fst.LAMBDA.apply(((Cons)v2298).head);
 
-final Object i8444;
-if ((boolean)Lang.equals(v7250, f8441)) {
+final Object i2307;
+if ((boolean)Lang.equals(v2297, f2304)) {
 
-final Object f8442 = Snd.LAMBDA.apply(((Cons)v7251).head);
+final Object f2305 = Snd.LAMBDA.apply(((Cons)v2298).head);
 
-i8444 = f8442;
+i2307 = f2305;
 } else {
 
-final Object f8443 = GetSecond.LAMBDA.apply(v7250, ((Cons)v7251).tail);
+final Object f2306 = GetSecond.LAMBDA.apply(v2297, ((Cons)v2298).tail);
 
-i8444 = f8443;
+i2307 = f2306;
 
 }
-i8449 = i8444;
+i2312 = i2307;
 } else {
 
-final Object i8448;
+final Object i2311;
 if ((boolean)true) {
-final Object f8445 = Atp.LAMBDA.apply(v7251, Nil.NIL);
-final Object f8446 = Atp.LAMBDA.apply(v7250, f8445);
-final Object f8447 = IntmakeString.LAMBDA.apply("get-second: X: ~A~%Y: ~A", f8446);
+final Object f2308 = Atp.LAMBDA.apply(v2298, Nil.NIL);
+final Object f2309 = Atp.LAMBDA.apply(v2297, f2308);
+final Object f2310 = IntmakeString.LAMBDA.apply("get-second: X: ~A~%Y: ~A", f2309);
 
-throw new SimpleError((String)f8447);
+throw new SimpleError((String)f2310);
 
 } else {
 
@@ -80,10 +80,10 @@ throw new SimpleError((String)"True condition not found.");
 }
 
 }
-i8450 = i8449;
+i2313 = i2312;
 
 }
-    return i8450;
+    return i2313;
 
 }
 }

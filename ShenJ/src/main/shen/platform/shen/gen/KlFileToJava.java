@@ -5,32 +5,32 @@ package shen.gen;
 import com.mentics.shen.*;
 
 public class KlFileToJava {
-
-public static final Symbol SYMBOL = RuntimeContext.symbol("kl-file-to-java");
-public static final Lambda LAMBDA = new Lambda1() {
-public Object apply(final Object v7292) throws Exception {
-return defined(v7292);
-}};
-public static Object defined(final Object v7292) throws Exception {
-final Lambda l8973 = new Lambda0() {
+
+public static final Symbol SYMBOL = RuntimeContext.symbol("kl-file-to-java");
+public static final Lambda LAMBDA = new Lambda1() {
+public Object apply(final Object v2881) throws Exception {
+return defined(v2881);
+}};
+public static Object defined(final Object v2881) throws Exception {
+final Lambda l2889 = new Lambda0() {
   public Object apply() throws Exception {
-    final Lambda l8970 = new Lambda1() {
+    final Lambda l2886 = new Lambda1() {
   public Object apply(final Object parsed) throws Exception {
-    final Object f8966 = JavaEval.LAMBDA.apply(parsed);
-final Object f8967 = Atp.LAMBDA.apply(f8966, Nil.NIL);
-final Object f8968 = IntmakeString.LAMBDA.apply("~A~%", f8967);
-final Object f8969 = Intoutput.LAMBDA.apply(f8968, Nil.NIL);
+    final Object f2882 = JavaEval.LAMBDA.apply(parsed);
+final Object f2883 = Atp.LAMBDA.apply(f2882, Nil.NIL);
+final Object f2884 = IntmakeString.LAMBDA.apply("~A~%", f2883);
+final Object f2885 = Intoutput.LAMBDA.apply(f2884, Nil.NIL);
 
-    return f8969;
+    return f2885;
   }
-};final Object f8971 = ReadFile.LAMBDA.apply(v7292);
-final Object f8972 = Map.LAMBDA.apply(l8970, f8971);
+};final Object f2887 = ReadFile.LAMBDA.apply(v2881);
+final Object f2888 = Map.LAMBDA.apply(l2886, f2887);
 
-    return f8972;
+    return f2888;
   }
-};final Object f8974 = RunWithoutMacros.LAMBDA.apply(l8973);
+};final Object f2890 = RunWithoutMacros.LAMBDA.apply(l2889);
 
-    return f8974;
+    return f2890;
 
 }
 }

@@ -8,16 +8,14 @@ public class ShenTypeSignatureOfVectorZ {
 
 public static final Symbol SYMBOL = RuntimeContext.symbol("shen-type-signature-of-vector->");
 public static final Lambda LAMBDA = new Lambda3() {
-public Object apply(final Object v4825, final Object v4826, final Object v4827) throws Exception {
-return defined(v4825, v4826, v4827);
+public Object apply(final Object v367, final Object v368, final Object v369) throws Exception {
+return defined(v367, v368, v369);
 }};
-public static Object defined(final Object v4825, final Object v4826, final Object v4827) throws Exception {
-final Object f4829 = ShenNewpv.LAMBDA.apply(v4826);
+public static Object defined(final Object v367, final Object v368, final Object v369) throws Exception {
+final Object f371 = ShenNewpv.LAMBDA.apply(v368);
 
-final Object a4828 = f4829;
-final Object f4830 = ShenIncinfs.LAMBDA.apply();
-
-
+final Object a370 = f371;
+final Object f372 = ShenIncinfs.LAMBDA.apply();
 
 
 
@@ -42,11 +40,13 @@ final Object f4830 = ShenIncinfs.LAMBDA.apply();
 
 
 
-final Object f4831 = UnifyBang.LAMBDA.apply(v4825, new Cons(new Cons(RuntimeContext.symbol("vector"), new Cons(a4828, Nil.NIL)), new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(RuntimeContext.symbol("number"), new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(a4828, new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(RuntimeContext.symbol("vector"), new Cons(a4828, Nil.NIL)), Nil.NIL))), Nil.NIL))), Nil.NIL))), v4826, v4827);
-final Object f4832 = Do.LAMBDA.apply(f4830, f4831);
 
 
-    return f4832;
+final Object f373 = UnifyBang.LAMBDA.apply(v367, new Cons(new Cons(RuntimeContext.symbol("vector"), new Cons(a370, Nil.NIL)), new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(RuntimeContext.symbol("number"), new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(a370, new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(RuntimeContext.symbol("vector"), new Cons(a370, Nil.NIL)), Nil.NIL))), Nil.NIL))), Nil.NIL))), v368, v369);
+final Object f374 = Do.LAMBDA.apply(f372, f373);
+
+
+    return f374;
 
 }
 }

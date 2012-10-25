@@ -5,35 +5,35 @@ package shen.gen;
 import com.mentics.shen.*;
 
 public class JavaPrimitiveQ {
-
-public static final Symbol SYMBOL = RuntimeContext.symbol("java-primitive?");
-public static final Lambda LAMBDA = new Lambda1() {
-public Object apply(final Object v7258) throws Exception {
-return defined(v7258);
-}};
-public static Object defined(final Object v7258) throws Exception {
+
+public static final Symbol SYMBOL = RuntimeContext.symbol("java-primitive?");
+public static final Lambda LAMBDA = new Lambda1() {
+public Object apply(final Object v2666) throws Exception {
+return defined(v2666);
+}};
+public static Object defined(final Object v2666) throws Exception {
 
 
-final Object i8787;
-if ((boolean)(v7258 instanceof Number)) {
+final Object i2669;
+if ((boolean)(v2666 instanceof Number)) {
 
-i8787 = true;
+i2669 = true;
 } else {
-final Object f8785 = BooleanQ.LAMBDA.apply(v7258);
+final Object f2667 = BooleanQ.LAMBDA.apply(v2666);
 
-final Object i8786;
-if ((boolean)f8785) {
+final Object i2668;
+if ((boolean)f2667) {
 
-i8786 = true;
+i2668 = true;
 } else {
 
-i8786 = false;
+i2668 = false;
 
 }
-i8787 = i8786;
+i2669 = i2668;
 
 }
-    return i8787;
+    return i2669;
 
 }
 }

@@ -8,19 +8,17 @@ public class ShenTypeSignatureOfDo {
 
 public static final Symbol SYMBOL = RuntimeContext.symbol("shen-type-signature-of-do");
 public static final Lambda LAMBDA = new Lambda3() {
-public Object apply(final Object v4687, final Object v4688, final Object v4689) throws Exception {
-return defined(v4687, v4688, v4689);
+public Object apply(final Object v229, final Object v230, final Object v231) throws Exception {
+return defined(v229, v230, v231);
 }};
-public static Object defined(final Object v4687, final Object v4688, final Object v4689) throws Exception {
-final Object f4691 = ShenNewpv.LAMBDA.apply(v4688);
+public static Object defined(final Object v229, final Object v230, final Object v231) throws Exception {
+final Object f233 = ShenNewpv.LAMBDA.apply(v230);
 
-final Object a4690 = f4691;
-final Object f4693 = ShenNewpv.LAMBDA.apply(v4688);
+final Object a232 = f233;
+final Object f235 = ShenNewpv.LAMBDA.apply(v230);
 
-final Object b4692 = f4693;
-final Object f4694 = ShenIncinfs.LAMBDA.apply();
-
-
+final Object b234 = f235;
+final Object f236 = ShenIncinfs.LAMBDA.apply();
 
 
 
@@ -31,12 +29,14 @@ final Object f4694 = ShenIncinfs.LAMBDA.apply();
 
 
 
-final Object f4695 = UnifyBang.LAMBDA.apply(v4687, new Cons(a4690, new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(b4692, new Cons(RuntimeContext.symbol("-->"), new Cons(b4692, Nil.NIL))), Nil.NIL))), v4688, v4689);
-final Object f4696 = Do.LAMBDA.apply(f4694, f4695);
+
+
+final Object f237 = UnifyBang.LAMBDA.apply(v229, new Cons(a232, new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(b234, new Cons(RuntimeContext.symbol("-->"), new Cons(b234, Nil.NIL))), Nil.NIL))), v230, v231);
+final Object f238 = Do.LAMBDA.apply(f236, f237);
 
 
 
-    return f4696;
+    return f238;
 
 }
 }

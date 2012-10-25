@@ -8,25 +8,25 @@ public class ShenTypeSignatureOfBooleanQ {
 
 public static final Symbol SYMBOL = RuntimeContext.symbol("shen-type-signature-of-boolean?");
 public static final Lambda LAMBDA = new Lambda3() {
-public Object apply(final Object v4601, final Object v4602, final Object v4603) throws Exception {
-return defined(v4601, v4602, v4603);
+public Object apply(final Object v143, final Object v144, final Object v145) throws Exception {
+return defined(v143, v144, v145);
 }};
-public static Object defined(final Object v4601, final Object v4602, final Object v4603) throws Exception {
-final Object f4605 = ShenNewpv.LAMBDA.apply(v4602);
+public static Object defined(final Object v143, final Object v144, final Object v145) throws Exception {
+final Object f147 = ShenNewpv.LAMBDA.apply(v144);
 
-final Object a4604 = f4605;
-final Object f4606 = ShenIncinfs.LAMBDA.apply();
-
-
+final Object a146 = f147;
+final Object f148 = ShenIncinfs.LAMBDA.apply();
 
 
 
 
-final Object f4607 = UnifyBang.LAMBDA.apply(v4601, new Cons(a4604, new Cons(RuntimeContext.symbol("-->"), new Cons(RuntimeContext.symbol("boolean"), Nil.NIL))), v4602, v4603);
-final Object f4608 = Do.LAMBDA.apply(f4606, f4607);
 
 
-    return f4608;
+final Object f149 = UnifyBang.LAMBDA.apply(v143, new Cons(a146, new Cons(RuntimeContext.symbol("-->"), new Cons(RuntimeContext.symbol("boolean"), Nil.NIL))), v144, v145);
+final Object f150 = Do.LAMBDA.apply(f148, f149);
+
+
+    return f150;
 
 }
 }

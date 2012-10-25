@@ -5,44 +5,44 @@ package shen.gen;
 import com.mentics.shen.*;
 
 public class LogicToJava {
-
-public static final Symbol SYMBOL = RuntimeContext.symbol("logic-to-java");
-public static final Lambda LAMBDA = new Lambda1() {
-public Object apply(final Object v7280) throws Exception {
-return defined(v7280);
-}};
-public static Object defined(final Object v7280) throws Exception {
 
-final Object i8920;
-if ((boolean)Lang.equals(RuntimeContext.symbol("and"), v7280)) {
+public static final Symbol SYMBOL = RuntimeContext.symbol("logic-to-java");
+public static final Lambda LAMBDA = new Lambda1() {
+public Object apply(final Object v2820) throws Exception {
+return defined(v2820);
+}};
+public static Object defined(final Object v2820) throws Exception {
 
-i8920 = "&&";
+final Object i2824;
+if ((boolean)Lang.equals(RuntimeContext.symbol("and"), v2820)) {
+
+i2824 = "&&";
 } else {
 
-final Object i8919;
-if ((boolean)Lang.equals(RuntimeContext.symbol("or"), v7280)) {
+final Object i2823;
+if ((boolean)Lang.equals(RuntimeContext.symbol("or"), v2820)) {
 
-i8919 = "||";
+i2823 = "||";
 } else {
 
-final Object i8918;
+final Object i2822;
 if ((boolean)true) {
-final Object f8917 = ShenF_error.LAMBDA.apply(RuntimeContext.symbol("logic-to-java"));
+final Object f2821 = ShenF_error.LAMBDA.apply(RuntimeContext.symbol("logic-to-java"));
 
-i8918 = f8917;
+i2822 = f2821;
 } else {
 
 throw new SimpleError((String)"True condition not found.");
 
 
 }
-i8919 = i8918;
+i2823 = i2822;
 
 }
-i8920 = i8919;
+i2824 = i2823;
 
 }
-    return i8920;
+    return i2824;
 
 }
 }

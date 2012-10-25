@@ -8,25 +8,25 @@ public class ShenTypeSignatureOfVariableQ {
 
 public static final Symbol SYMBOL = RuntimeContext.symbol("shen-type-signature-of-variable?");
 public static final Lambda LAMBDA = new Lambda3() {
-public Object apply(final Object v5457, final Object v5458, final Object v5459) throws Exception {
-return defined(v5457, v5458, v5459);
+public Object apply(final Object v999, final Object v1000, final Object v1001) throws Exception {
+return defined(v999, v1000, v1001);
 }};
-public static Object defined(final Object v5457, final Object v5458, final Object v5459) throws Exception {
-final Object f5461 = ShenNewpv.LAMBDA.apply(v5458);
+public static Object defined(final Object v999, final Object v1000, final Object v1001) throws Exception {
+final Object f1003 = ShenNewpv.LAMBDA.apply(v1000);
 
-final Object a5460 = f5461;
-final Object f5462 = ShenIncinfs.LAMBDA.apply();
-
-
+final Object a1002 = f1003;
+final Object f1004 = ShenIncinfs.LAMBDA.apply();
 
 
 
 
-final Object f5463 = UnifyBang.LAMBDA.apply(v5457, new Cons(a5460, new Cons(RuntimeContext.symbol("-->"), new Cons(RuntimeContext.symbol("boolean"), Nil.NIL))), v5458, v5459);
-final Object f5464 = Do.LAMBDA.apply(f5462, f5463);
 
 
-    return f5464;
+final Object f1005 = UnifyBang.LAMBDA.apply(v999, new Cons(a1002, new Cons(RuntimeContext.symbol("-->"), new Cons(RuntimeContext.symbol("boolean"), Nil.NIL))), v1000, v1001);
+final Object f1006 = Do.LAMBDA.apply(f1004, f1005);
+
+
+    return f1006;
 
 }
 }

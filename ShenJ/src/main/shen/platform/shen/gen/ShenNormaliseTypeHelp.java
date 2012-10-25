@@ -14,35 +14,35 @@ return defined(v1685);
 public static Object defined(final Object v1685) throws Exception {
 
 
-final Object i4498;
+final Object i40;
 if ((boolean)(v1685 instanceof Cons)) {
-final Lambda l4493 = new Lambda1() {
+final Lambda l35 = new Lambda1() {
   public Object apply(final Object v1686) throws Exception {
-    final Object f4492 = ShenNormaliseTypeHelp.LAMBDA.apply(v1686);
+    final Object f34 = ShenNormaliseTypeHelp.LAMBDA.apply(v1686);
 
-    return f4492;
+    return f34;
   }
-};final Object f4494 = Map.LAMBDA.apply(l4493, v1685);
-final Object f4495 = ShenNormaliseX.LAMBDA.apply(f4494);
+};final Object f36 = Map.LAMBDA.apply(l35, v1685);
+final Object f37 = ShenNormaliseX.LAMBDA.apply(f36);
 
-i4498 = f4495;
+i40 = f37;
 } else {
 
-final Object i4497;
+final Object i39;
 if ((boolean)true) {
-final Object f4496 = ShenNormaliseX.LAMBDA.apply(v1685);
+final Object f38 = ShenNormaliseX.LAMBDA.apply(v1685);
 
-i4497 = f4496;
+i39 = f38;
 } else {
 
 throw new SimpleError((String)"True condition not found.");
 
 
 }
-i4498 = i4497;
+i40 = i39;
 
 }
-    return i4498;
+    return i40;
 
 }
 }

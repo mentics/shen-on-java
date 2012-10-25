@@ -367,6 +367,9 @@ public static Object defined(~A) throws Exception {~%~A~%~A~%}"
 			 Unreachable? (list-matches (/. X (= unreachable (third X))) EvaledArgs)
              Result (gensym f)
           (let Eval (cond (Unreachable? "")
+                          ((and (symbol? Func) (is-java-call (str Func)))
+                            (make-string "final Object ~A = RuntimeContext.javaDispatch(c#34;~Ac#34;).apply(~A);~%"
+                                         Result (str Func) Args-string))
                           ((find-first? Func Vars)
                             (make-string "final Object ~A = RuntimeContext.dispatch(~A).apply(~A);~%"
                                          Result Func-string Args-string))
@@ -399,6 +402,12 @@ public static Object defined(~A) throws Exception {~%~A~%~A~%}"
 				((float? X) (make-string "~Ad" X))
                 (true Str)))
         (type-of X))))
+
+(define is-java-call String -> false)
+\*(define is-java-call
+  String -> (let Dot-index (string-index "." String)
+                 Dollar-index (string-index "$" String)
+              (and (or (not (= Dot-index -1)) (not (= Dollar-index -1))) (not (= (string-length String) 1)))))*\
 
 \*(define clean-whitespace
   "" -> ""
@@ -434,8 +443,8 @@ public static Object defined(~A) throws Exception {~%~A~%~A~%}"
       (@p Class-name (java-class-file Class-name "shen.gen" Function-content))))
 
 (define java-compile-and-run Class-name File ->
-  (shell (@s "C:\dev\java\jdk1.7.0_06\bin\javaw -Xss32m -cp C:\dev\java\libraries\kryo-2.20\bin;C:\dev\java\libraries\kryo-2.20\jars\debug\onejar\kryo-debug-2.20-all.jar;C:\dev\workspace\ShenJ\target\classes com.mentics.shen.UpdateImage shen-test.image "
-             (@s "shen.gen." Class-name) " C:/dev/workspace/ShenJ/src/main/shen/" File " C:\dev\workspace\ShenJ\target\classes")))
+  (shell (@s "C:\dev\java\jdk1.7.0_06\bin\javaw -Xss32m -cp C:\dev\java\libraries\kryo-2.20\bin;C:\dev\java\libraries\kryo-2.20\jars\debug\onejar\kryo-debug-2.20-all.jar;C:\dev\git-local\shenj\ShenJ\target\classes com.mentics.shen.UpdateImage shen-test.image "
+             (@s "shen.gen." Class-name) " C:/dev/git-local/shenj/ShenJ/src/main/shen/" File " C:\dev\git-local\shenj\ShenJ\target\classes")))
 \*  (shell (@s "C:\dev\java\jdk1.7.0_06\bin\javac -cp C:\dev\workspace\ShenJ\target\classes -d C:\dev\workspace\ShenJ\target\classes " (@s (value *home-directory*) File)))) *\
 \*  (shell (@s "C:\dev\java\jdk1.7.0_06\bin\javaw -Xss32m -cp C:\dev\java\libraries\kryo-2.20\jars\debug\onejar\kryo-debug-2.20-all.jar;C:\dev\workspace\ShenJ\target\classes com.mentics.shen.UpdateImage shen-test.image " *\
 
@@ -564,3 +573,32 @@ public static Object defined(~A) throws Exception {~%~A~%~A~%}"
   integer -> true
   float -> true
   _ -> false)
+ 
+(define string-index
+   \* returns the 'index' of Str1 in Str2, or -1 if not a substring *\
+   { string --> string --> number }
+   Str1 Str2 -> (string-index-h Str1 Str2 0))
+
+(define string-index-h
+   { string --> string --> number --> number }
+    Str1 Str2 N -> N  where (string-prefix? Str1 Str2)
+    _ "" _ -> -1
+    Str1 (@s _ Str2) N -> (string-index-h Str1 Str2 (+ N 1))
+	_ _ _ -> -1)
+
+(define string-prefix?
+   \* returns true iff 1st string is a prefix of 2nd *\
+   { string --> string --> boolean }
+   "" _ -> true
+   (@s S Str1) (@s S Str2) -> (string-prefix? Str1 Str2)
+   _ _ -> false)
+
+(define string-length
+   \* returns the length of the string *\
+   { string --> number }
+   Str -> (string-length-h Str 0))
+ 
+(define string-length-h
+   { string --> number --> number }
+   "" Len -> Len
+   (@s _ Str) Len -> (string-length-h Str (+ Len 1)))

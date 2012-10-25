@@ -8,16 +8,14 @@ public class ShenTypeSignatureOfAdjoin {
 
 public static final Symbol SYMBOL = RuntimeContext.symbol("shen-type-signature-of-adjoin");
 public static final Lambda LAMBDA = new Lambda3() {
-public Object apply(final Object v4553, final Object v4554, final Object v4555) throws Exception {
-return defined(v4553, v4554, v4555);
+public Object apply(final Object v95, final Object v96, final Object v97) throws Exception {
+return defined(v95, v96, v97);
 }};
-public static Object defined(final Object v4553, final Object v4554, final Object v4555) throws Exception {
-final Object f4557 = ShenNewpv.LAMBDA.apply(v4554);
+public static Object defined(final Object v95, final Object v96, final Object v97) throws Exception {
+final Object f99 = ShenNewpv.LAMBDA.apply(v96);
 
-final Object a4556 = f4557;
-final Object f4558 = ShenIncinfs.LAMBDA.apply();
-
-
+final Object a98 = f99;
+final Object f100 = ShenIncinfs.LAMBDA.apply();
 
 
 
@@ -36,11 +34,13 @@ final Object f4558 = ShenIncinfs.LAMBDA.apply();
 
 
 
-final Object f4559 = UnifyBang.LAMBDA.apply(v4553, new Cons(a4556, new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(new Cons(RuntimeContext.symbol("list"), new Cons(a4556, Nil.NIL)), new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(RuntimeContext.symbol("list"), new Cons(a4556, Nil.NIL)), Nil.NIL))), Nil.NIL))), v4554, v4555);
-final Object f4560 = Do.LAMBDA.apply(f4558, f4559);
 
 
-    return f4560;
+final Object f101 = UnifyBang.LAMBDA.apply(v95, new Cons(a98, new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(new Cons(RuntimeContext.symbol("list"), new Cons(a98, Nil.NIL)), new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(RuntimeContext.symbol("list"), new Cons(a98, Nil.NIL)), Nil.NIL))), Nil.NIL))), v96, v97);
+final Object f102 = Do.LAMBDA.apply(f100, f101);
+
+
+    return f102;
 
 }
 }

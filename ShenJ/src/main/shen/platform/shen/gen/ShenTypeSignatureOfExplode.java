@@ -8,16 +8,14 @@ public class ShenTypeSignatureOfExplode {
 
 public static final Symbol SYMBOL = RuntimeContext.symbol("shen-type-signature-of-explode");
 public static final Lambda LAMBDA = new Lambda3() {
-public Object apply(final Object v4747, final Object v4748, final Object v4749) throws Exception {
-return defined(v4747, v4748, v4749);
+public Object apply(final Object v289, final Object v290, final Object v291) throws Exception {
+return defined(v289, v290, v291);
 }};
-public static Object defined(final Object v4747, final Object v4748, final Object v4749) throws Exception {
-final Object f4751 = ShenNewpv.LAMBDA.apply(v4748);
+public static Object defined(final Object v289, final Object v290, final Object v291) throws Exception {
+final Object f293 = ShenNewpv.LAMBDA.apply(v290);
 
-final Object a4750 = f4751;
-final Object f4752 = ShenIncinfs.LAMBDA.apply();
-
-
+final Object a292 = f293;
+final Object f294 = ShenIncinfs.LAMBDA.apply();
 
 
 
@@ -26,11 +24,13 @@ final Object f4752 = ShenIncinfs.LAMBDA.apply();
 
 
 
-final Object f4753 = UnifyBang.LAMBDA.apply(v4747, new Cons(a4750, new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(RuntimeContext.symbol("list"), new Cons(RuntimeContext.symbol("string"), Nil.NIL)), Nil.NIL))), v4748, v4749);
-final Object f4754 = Do.LAMBDA.apply(f4752, f4753);
 
 
-    return f4754;
+final Object f295 = UnifyBang.LAMBDA.apply(v289, new Cons(a292, new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(RuntimeContext.symbol("list"), new Cons(RuntimeContext.symbol("string"), Nil.NIL)), Nil.NIL))), v290, v291);
+final Object f296 = Do.LAMBDA.apply(f294, f295);
+
+
+    return f296;
 
 }
 }

@@ -5,105 +5,105 @@ package shen.gen;
 import com.mentics.shen.*;
 
 public class HandleCases {
-
-public static final Symbol SYMBOL = RuntimeContext.symbol("handle-cases");
-public static final Lambda LAMBDA = new Lambda1() {
-public Object apply(final Object v7287) throws Exception {
-return defined(v7287);
-}};
-public static Object defined(final Object v7287) throws Exception {
+
+public static final Symbol SYMBOL = RuntimeContext.symbol("handle-cases");
+public static final Lambda LAMBDA = new Lambda1() {
+public Object apply(final Object v2853) throws Exception {
+return defined(v2853);
+}};
+public static Object defined(final Object v2853) throws Exception {
 
 
-final Object i8944;
-if ((boolean)(v7287 instanceof Cons)) {
+final Object i2855;
+if ((boolean)(v2853 instanceof Cons)) {
 
 
-final Object i8943;
-if ((boolean)Lang.equals(true, ((Cons)v7287).head)) {
+final Object i2854;
+if ((boolean)Lang.equals(true, ((Cons)v2853).head)) {
 
-i8943 = true;
+i2854 = true;
 } else {
 
-i8943 = false;
+i2854 = false;
 
 }
-i8944 = i8943;
+i2855 = i2854;
 } else {
 
-i8944 = false;
+i2855 = false;
 
 }
-final Object i8954;
-if ((boolean)i8944) {
+final Object i2865;
+if ((boolean)i2855) {
 
 
-i8954 = ((Cons)v7287).tail;
+i2865 = ((Cons)v2853).tail;
 } else {
 
 
-final Object i8946;
-if ((boolean)(v7287 instanceof Cons)) {
+final Object i2857;
+if ((boolean)(v2853 instanceof Cons)) {
 
 
-final Object i8945;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)v7287).tail)) {
+final Object i2856;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)v2853).tail)) {
 
-i8945 = true;
+i2856 = true;
 } else {
 
-i8945 = false;
+i2856 = false;
 
 }
-i8946 = i8945;
+i2857 = i2856;
 } else {
 
-i8946 = false;
+i2857 = false;
 
 }
-final Object i8953;
-if ((boolean)i8946) {
+final Object i2864;
+if ((boolean)i2857) {
 
 
 
 
 
-final Object f8947 = HandleCase.LAMBDA.apply(((Cons)v7287).head, new Cons(RuntimeContext.symbol("simple-error"), new Cons("True condition not found.", Nil.NIL)));
+final Object f2858 = HandleCase.LAMBDA.apply(((Cons)v2853).head, new Cons(RuntimeContext.symbol("simple-error"), new Cons("True condition not found.", Nil.NIL)));
 
-i8953 = f8947;
+i2864 = f2858;
 } else {
 
 
-final Object i8952;
-if ((boolean)(v7287 instanceof Cons)) {
+final Object i2863;
+if ((boolean)(v2853 instanceof Cons)) {
 
 
-final Object f8948 = HandleCases.LAMBDA.apply(((Cons)v7287).tail);
-final Object f8949 = HandleCase.LAMBDA.apply(((Cons)v7287).head, f8948);
+final Object f2859 = HandleCases.LAMBDA.apply(((Cons)v2853).tail);
+final Object f2860 = HandleCase.LAMBDA.apply(((Cons)v2853).head, f2859);
 
-i8952 = f8949;
+i2863 = f2860;
 } else {
 
-final Object i8951;
+final Object i2862;
 if ((boolean)true) {
-final Object f8950 = ShenF_error.LAMBDA.apply(RuntimeContext.symbol("handle-cases"));
+final Object f2861 = ShenF_error.LAMBDA.apply(RuntimeContext.symbol("handle-cases"));
 
-i8951 = f8950;
+i2862 = f2861;
 } else {
 
 throw new SimpleError((String)"True condition not found.");
 
 
 }
-i8952 = i8951;
+i2863 = i2862;
 
 }
-i8953 = i8952;
+i2864 = i2863;
 
 }
-i8954 = i8953;
+i2865 = i2864;
 
 }
-    return i8954;
+    return i2865;
 
 }
 }

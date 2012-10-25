@@ -8,21 +8,21 @@ public class ShenTypeSignatureOfUntrack {
 
 public static final Symbol SYMBOL = RuntimeContext.symbol("shen-type-signature-of-untrack");
 public static final Lambda LAMBDA = new Lambda3() {
-public Object apply(final Object v5441, final Object v5442, final Object v5443) throws Exception {
-return defined(v5441, v5442, v5443);
+public Object apply(final Object v983, final Object v984, final Object v985) throws Exception {
+return defined(v983, v984, v985);
 }};
-public static Object defined(final Object v5441, final Object v5442, final Object v5443) throws Exception {
-final Object f5444 = ShenIncinfs.LAMBDA.apply();
+public static Object defined(final Object v983, final Object v984, final Object v985) throws Exception {
+final Object f986 = ShenIncinfs.LAMBDA.apply();
 
 
 
 
 
 
-final Object f5445 = UnifyBang.LAMBDA.apply(v5441, new Cons(RuntimeContext.symbol("symbol"), new Cons(RuntimeContext.symbol("-->"), new Cons(RuntimeContext.symbol("symbol"), Nil.NIL))), v5442, v5443);
-final Object f5446 = Do.LAMBDA.apply(f5444, f5445);
+final Object f987 = UnifyBang.LAMBDA.apply(v983, new Cons(RuntimeContext.symbol("symbol"), new Cons(RuntimeContext.symbol("-->"), new Cons(RuntimeContext.symbol("symbol"), Nil.NIL))), v984, v985);
+final Object f988 = Do.LAMBDA.apply(f986, f987);
 
-    return f5446;
+    return f988;
 
 }
 }

@@ -8,16 +8,14 @@ public class ShenTypeSignatureOfAssoc {
 
 public static final Symbol SYMBOL = RuntimeContext.symbol("shen-type-signature-of-assoc");
 public static final Lambda LAMBDA = new Lambda3() {
-public Object apply(final Object v4591, final Object v4592, final Object v4593) throws Exception {
-return defined(v4591, v4592, v4593);
+public Object apply(final Object v133, final Object v134, final Object v135) throws Exception {
+return defined(v133, v134, v135);
 }};
-public static Object defined(final Object v4591, final Object v4592, final Object v4593) throws Exception {
-final Object f4595 = ShenNewpv.LAMBDA.apply(v4592);
+public static Object defined(final Object v133, final Object v134, final Object v135) throws Exception {
+final Object f137 = ShenNewpv.LAMBDA.apply(v134);
 
-final Object a4594 = f4595;
-final Object f4596 = ShenIncinfs.LAMBDA.apply();
-
-
+final Object a136 = f137;
+final Object f138 = ShenIncinfs.LAMBDA.apply();
 
 
 
@@ -40,11 +38,13 @@ final Object f4596 = ShenIncinfs.LAMBDA.apply();
 
 
 
-final Object f4597 = UnifyBang.LAMBDA.apply(v4591, new Cons(a4594, new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(new Cons(RuntimeContext.symbol("list"), new Cons(new Cons(RuntimeContext.symbol("list"), new Cons(a4594, Nil.NIL)), Nil.NIL)), new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(RuntimeContext.symbol("list"), new Cons(a4594, Nil.NIL)), Nil.NIL))), Nil.NIL))), v4592, v4593);
-final Object f4598 = Do.LAMBDA.apply(f4596, f4597);
 
 
-    return f4598;
+final Object f139 = UnifyBang.LAMBDA.apply(v133, new Cons(a136, new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(new Cons(RuntimeContext.symbol("list"), new Cons(new Cons(RuntimeContext.symbol("list"), new Cons(a136, Nil.NIL)), Nil.NIL)), new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(RuntimeContext.symbol("list"), new Cons(a136, Nil.NIL)), Nil.NIL))), Nil.NIL))), v134, v135);
+final Object f140 = Do.LAMBDA.apply(f138, f139);
+
+
+    return f140;
 
 }
 }

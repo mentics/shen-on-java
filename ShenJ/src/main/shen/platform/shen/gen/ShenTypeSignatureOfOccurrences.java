@@ -8,19 +8,17 @@ public class ShenTypeSignatureOfOccurrences {
 
 public static final Symbol SYMBOL = RuntimeContext.symbol("shen-type-signature-of-occurrences");
 public static final Lambda LAMBDA = new Lambda3() {
-public Object apply(final Object v5061, final Object v5062, final Object v5063) throws Exception {
-return defined(v5061, v5062, v5063);
+public Object apply(final Object v603, final Object v604, final Object v605) throws Exception {
+return defined(v603, v604, v605);
 }};
-public static Object defined(final Object v5061, final Object v5062, final Object v5063) throws Exception {
-final Object f5065 = ShenNewpv.LAMBDA.apply(v5062);
+public static Object defined(final Object v603, final Object v604, final Object v605) throws Exception {
+final Object f607 = ShenNewpv.LAMBDA.apply(v604);
 
-final Object a5064 = f5065;
-final Object f5067 = ShenNewpv.LAMBDA.apply(v5062);
+final Object a606 = f607;
+final Object f609 = ShenNewpv.LAMBDA.apply(v604);
 
-final Object b5066 = f5067;
-final Object f5068 = ShenIncinfs.LAMBDA.apply();
-
-
+final Object b608 = f609;
+final Object f610 = ShenIncinfs.LAMBDA.apply();
 
 
 
@@ -31,12 +29,14 @@ final Object f5068 = ShenIncinfs.LAMBDA.apply();
 
 
 
-final Object f5069 = UnifyBang.LAMBDA.apply(v5061, new Cons(a5064, new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(b5066, new Cons(RuntimeContext.symbol("-->"), new Cons(RuntimeContext.symbol("number"), Nil.NIL))), Nil.NIL))), v5062, v5063);
-final Object f5070 = Do.LAMBDA.apply(f5068, f5069);
+
+
+final Object f611 = UnifyBang.LAMBDA.apply(v603, new Cons(a606, new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(b608, new Cons(RuntimeContext.symbol("-->"), new Cons(RuntimeContext.symbol("number"), Nil.NIL))), Nil.NIL))), v604, v605);
+final Object f612 = Do.LAMBDA.apply(f610, f611);
 
 
 
-    return f5070;
+    return f612;
 
 }
 }

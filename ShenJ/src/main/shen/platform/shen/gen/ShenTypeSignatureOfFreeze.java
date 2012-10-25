@@ -8,16 +8,14 @@ public class ShenTypeSignatureOfFreeze {
 
 public static final Symbol SYMBOL = RuntimeContext.symbol("shen-type-signature-of-freeze");
 public static final Lambda LAMBDA = new Lambda3() {
-public Object apply(final Object v4785, final Object v4786, final Object v4787) throws Exception {
-return defined(v4785, v4786, v4787);
+public Object apply(final Object v327, final Object v328, final Object v329) throws Exception {
+return defined(v327, v328, v329);
 }};
-public static Object defined(final Object v4785, final Object v4786, final Object v4787) throws Exception {
-final Object f4789 = ShenNewpv.LAMBDA.apply(v4786);
+public static Object defined(final Object v327, final Object v328, final Object v329) throws Exception {
+final Object f331 = ShenNewpv.LAMBDA.apply(v328);
 
-final Object a4788 = f4789;
-final Object f4790 = ShenIncinfs.LAMBDA.apply();
-
-
+final Object a330 = f331;
+final Object f332 = ShenIncinfs.LAMBDA.apply();
 
 
 
@@ -26,11 +24,13 @@ final Object f4790 = ShenIncinfs.LAMBDA.apply();
 
 
 
-final Object f4791 = UnifyBang.LAMBDA.apply(v4785, new Cons(a4788, new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(RuntimeContext.symbol("lazy"), new Cons(a4788, Nil.NIL)), Nil.NIL))), v4786, v4787);
-final Object f4792 = Do.LAMBDA.apply(f4790, f4791);
 
 
-    return f4792;
+final Object f333 = UnifyBang.LAMBDA.apply(v327, new Cons(a330, new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(RuntimeContext.symbol("lazy"), new Cons(a330, Nil.NIL)), Nil.NIL))), v328, v329);
+final Object f334 = Do.LAMBDA.apply(f332, f333);
+
+
+    return f334;
 
 }
 }

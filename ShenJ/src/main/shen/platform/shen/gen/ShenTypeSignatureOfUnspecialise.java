@@ -8,21 +8,21 @@ public class ShenTypeSignatureOfUnspecialise {
 
 public static final Symbol SYMBOL = RuntimeContext.symbol("shen-type-signature-of-unspecialise");
 public static final Lambda LAMBDA = new Lambda3() {
-public Object apply(final Object v5449, final Object v5450, final Object v5451) throws Exception {
-return defined(v5449, v5450, v5451);
+public Object apply(final Object v991, final Object v992, final Object v993) throws Exception {
+return defined(v991, v992, v993);
 }};
-public static Object defined(final Object v5449, final Object v5450, final Object v5451) throws Exception {
-final Object f5452 = ShenIncinfs.LAMBDA.apply();
+public static Object defined(final Object v991, final Object v992, final Object v993) throws Exception {
+final Object f994 = ShenIncinfs.LAMBDA.apply();
 
 
 
 
 
 
-final Object f5453 = UnifyBang.LAMBDA.apply(v5449, new Cons(RuntimeContext.symbol("symbol"), new Cons(RuntimeContext.symbol("-->"), new Cons(RuntimeContext.symbol("symbol"), Nil.NIL))), v5450, v5451);
-final Object f5454 = Do.LAMBDA.apply(f5452, f5453);
+final Object f995 = UnifyBang.LAMBDA.apply(v991, new Cons(RuntimeContext.symbol("symbol"), new Cons(RuntimeContext.symbol("-->"), new Cons(RuntimeContext.symbol("symbol"), Nil.NIL))), v992, v993);
+final Object f996 = Do.LAMBDA.apply(f994, f995);
 
-    return f5454;
+    return f996;
 
 }
 }

@@ -5,35 +5,35 @@ package shen.gen;
 import com.mentics.shen.*;
 
 public class TwoParams {
-
-public static final Symbol SYMBOL = RuntimeContext.symbol("two-params");
-public static final Lambda LAMBDA = new Lambda6() {
-public Object apply(final Object v7265, final Object v7266, final Object v7267, final Object v7268, final Object v7269, final Object v7270) throws Exception {
-return defined(v7265, v7266, v7267, v7268, v7269, v7270);
-}};
-public static Object defined(final Object v7265, final Object v7266, final Object v7267, final Object v7268, final Object v7269, final Object v7270) throws Exception {
-final Object f8801 = KlToJavaTraverse.LAMBDA.apply(v7265, RuntimeContext.symbol("object"), v7268);
 
-final Object arg0TOxDO8800 = f8801;
-final Object f8803 = KlToJavaTraverse.LAMBDA.apply(v7266, RuntimeContext.symbol("object"), v7268);
+public static final Symbol SYMBOL = RuntimeContext.symbol("two-params");
+public static final Lambda LAMBDA = new Lambda6() {
+public Object apply(final Object v2688, final Object v2689, final Object v2690, final Object v2691, final Object v2692, final Object v2693) throws Exception {
+return defined(v2688, v2689, v2690, v2691, v2692, v2693);
+}};
+public static Object defined(final Object v2688, final Object v2689, final Object v2690, final Object v2691, final Object v2692, final Object v2693) throws Exception {
+final Object f2695 = KlToJavaTraverse.LAMBDA.apply(v2688, RuntimeContext.symbol("object"), v2691);
 
-final Object arg1TOxDO8802 = f8803;
-final Object f8804 = Fst.LAMBDA.apply(arg0TOxDO8800);
-final Object f8805 = Fst.LAMBDA.apply(arg1TOxDO8802);
-final Object f8806 = Atp.LAMBDA.apply(f8805, Nil.NIL);
-final Object f8807 = Atp.LAMBDA.apply(f8804, f8806);
-final Object f8808 = IntmakeString.LAMBDA.apply("~A~%~A~%", f8807);
-final Object f8809 = Second.LAMBDA.apply(arg0TOxDO8800);
-final Object f8810 = Second.LAMBDA.apply(arg1TOxDO8802);
-final Object f8811 = Atp.LAMBDA.apply(f8810, Nil.NIL);
-final Object f8812 = Atp.LAMBDA.apply(f8809, f8811);
-final Object f8813 = IntmakeString.LAMBDA.apply(v7269, f8812);
-final Object f8814 = Atp.LAMBDA.apply(f8813, v7270);
-final Object f8815 = Atp.LAMBDA.apply(f8808, f8814);
+final Object arg0TOxDO2694 = f2695;
+final Object f2697 = KlToJavaTraverse.LAMBDA.apply(v2689, RuntimeContext.symbol("object"), v2691);
+
+final Object arg1TOxDO2696 = f2697;
+final Object f2698 = Fst.LAMBDA.apply(arg0TOxDO2694);
+final Object f2699 = Fst.LAMBDA.apply(arg1TOxDO2696);
+final Object f2700 = Atp.LAMBDA.apply(f2699, Nil.NIL);
+final Object f2701 = Atp.LAMBDA.apply(f2698, f2700);
+final Object f2702 = IntmakeString.LAMBDA.apply("~A~%~A~%", f2701);
+final Object f2703 = Second.LAMBDA.apply(arg0TOxDO2694);
+final Object f2704 = Second.LAMBDA.apply(arg1TOxDO2696);
+final Object f2705 = Atp.LAMBDA.apply(f2704, Nil.NIL);
+final Object f2706 = Atp.LAMBDA.apply(f2703, f2705);
+final Object f2707 = IntmakeString.LAMBDA.apply(v2692, f2706);
+final Object f2708 = Atp.LAMBDA.apply(f2707, v2693);
+final Object f2709 = Atp.LAMBDA.apply(f2702, f2708);
 
 
 
-    return f8815;
+    return f2709;
 
 }
 }

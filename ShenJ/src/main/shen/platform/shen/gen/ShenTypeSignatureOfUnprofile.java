@@ -8,19 +8,17 @@ public class ShenTypeSignatureOfUnprofile {
 
 public static final Symbol SYMBOL = RuntimeContext.symbol("shen-type-signature-of-unprofile");
 public static final Lambda LAMBDA = new Lambda3() {
-public Object apply(final Object v5429, final Object v5430, final Object v5431) throws Exception {
-return defined(v5429, v5430, v5431);
+public Object apply(final Object v971, final Object v972, final Object v973) throws Exception {
+return defined(v971, v972, v973);
 }};
-public static Object defined(final Object v5429, final Object v5430, final Object v5431) throws Exception {
-final Object f5433 = ShenNewpv.LAMBDA.apply(v5430);
+public static Object defined(final Object v971, final Object v972, final Object v973) throws Exception {
+final Object f975 = ShenNewpv.LAMBDA.apply(v972);
 
-final Object a5432 = f5433;
-final Object f5435 = ShenNewpv.LAMBDA.apply(v5430);
+final Object a974 = f975;
+final Object f977 = ShenNewpv.LAMBDA.apply(v972);
 
-final Object b5434 = f5435;
-final Object f5436 = ShenIncinfs.LAMBDA.apply();
-
-
+final Object b976 = f977;
+final Object f978 = ShenIncinfs.LAMBDA.apply();
 
 
 
@@ -37,12 +35,14 @@ final Object f5436 = ShenIncinfs.LAMBDA.apply();
 
 
 
-final Object f5437 = UnifyBang.LAMBDA.apply(v5429, new Cons(new Cons(a5432, new Cons(RuntimeContext.symbol("-->"), new Cons(b5434, Nil.NIL))), new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(a5432, new Cons(RuntimeContext.symbol("-->"), new Cons(b5434, Nil.NIL))), Nil.NIL))), v5430, v5431);
-final Object f5438 = Do.LAMBDA.apply(f5436, f5437);
+
+
+final Object f979 = UnifyBang.LAMBDA.apply(v971, new Cons(new Cons(a974, new Cons(RuntimeContext.symbol("-->"), new Cons(b976, Nil.NIL))), new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(a974, new Cons(RuntimeContext.symbol("-->"), new Cons(b976, Nil.NIL))), Nil.NIL))), v972, v973);
+final Object f980 = Do.LAMBDA.apply(f978, f979);
 
 
 
-    return f5438;
+    return f980;
 
 }
 }

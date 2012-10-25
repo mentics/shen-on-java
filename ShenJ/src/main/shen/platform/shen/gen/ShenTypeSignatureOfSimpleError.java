@@ -8,25 +8,25 @@ public class ShenTypeSignatureOfSimpleError {
 
 public static final Symbol SYMBOL = RuntimeContext.symbol("shen-type-signature-of-simple-error");
 public static final Lambda LAMBDA = new Lambda3() {
-public Object apply(final Object v5215, final Object v5216, final Object v5217) throws Exception {
-return defined(v5215, v5216, v5217);
+public Object apply(final Object v757, final Object v758, final Object v759) throws Exception {
+return defined(v757, v758, v759);
 }};
-public static Object defined(final Object v5215, final Object v5216, final Object v5217) throws Exception {
-final Object f5219 = ShenNewpv.LAMBDA.apply(v5216);
+public static Object defined(final Object v757, final Object v758, final Object v759) throws Exception {
+final Object f761 = ShenNewpv.LAMBDA.apply(v758);
 
-final Object a5218 = f5219;
-final Object f5220 = ShenIncinfs.LAMBDA.apply();
-
-
+final Object a760 = f761;
+final Object f762 = ShenIncinfs.LAMBDA.apply();
 
 
 
 
-final Object f5221 = UnifyBang.LAMBDA.apply(v5215, new Cons(RuntimeContext.symbol("string"), new Cons(RuntimeContext.symbol("-->"), new Cons(a5218, Nil.NIL))), v5216, v5217);
-final Object f5222 = Do.LAMBDA.apply(f5220, f5221);
 
 
-    return f5222;
+final Object f763 = UnifyBang.LAMBDA.apply(v757, new Cons(RuntimeContext.symbol("string"), new Cons(RuntimeContext.symbol("-->"), new Cons(a760, Nil.NIL))), v758, v759);
+final Object f764 = Do.LAMBDA.apply(f762, f763);
+
+
+    return f764;
 
 }
 }

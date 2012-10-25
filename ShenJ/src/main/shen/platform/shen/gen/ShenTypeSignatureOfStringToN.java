@@ -8,21 +8,21 @@ public class ShenTypeSignatureOfStringToN {
 
 public static final Symbol SYMBOL = RuntimeContext.symbol("shen-type-signature-of-string->n");
 public static final Lambda LAMBDA = new Lambda3() {
-public Object apply(final Object v5309, final Object v5310, final Object v5311) throws Exception {
-return defined(v5309, v5310, v5311);
+public Object apply(final Object v851, final Object v852, final Object v853) throws Exception {
+return defined(v851, v852, v853);
 }};
-public static Object defined(final Object v5309, final Object v5310, final Object v5311) throws Exception {
-final Object f5312 = ShenIncinfs.LAMBDA.apply();
+public static Object defined(final Object v851, final Object v852, final Object v853) throws Exception {
+final Object f854 = ShenIncinfs.LAMBDA.apply();
 
 
 
 
 
 
-final Object f5313 = UnifyBang.LAMBDA.apply(v5309, new Cons(RuntimeContext.symbol("string"), new Cons(RuntimeContext.symbol("-->"), new Cons(RuntimeContext.symbol("number"), Nil.NIL))), v5310, v5311);
-final Object f5314 = Do.LAMBDA.apply(f5312, f5313);
+final Object f855 = UnifyBang.LAMBDA.apply(v851, new Cons(RuntimeContext.symbol("string"), new Cons(RuntimeContext.symbol("-->"), new Cons(RuntimeContext.symbol("number"), Nil.NIL))), v852, v853);
+final Object f856 = Do.LAMBDA.apply(f854, f855);
 
-    return f5314;
+    return f856;
 
 }
 }

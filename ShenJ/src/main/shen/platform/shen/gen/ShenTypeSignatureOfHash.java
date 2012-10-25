@@ -8,16 +8,14 @@ public class ShenTypeSignatureOfHash {
 
 public static final Symbol SYMBOL = RuntimeContext.symbol("shen-type-signature-of-hash");
 public static final Lambda LAMBDA = new Lambda3() {
-public Object apply(final Object v4853, final Object v4854, final Object v4855) throws Exception {
-return defined(v4853, v4854, v4855);
+public Object apply(final Object v395, final Object v396, final Object v397) throws Exception {
+return defined(v395, v396, v397);
 }};
-public static Object defined(final Object v4853, final Object v4854, final Object v4855) throws Exception {
-final Object f4857 = ShenNewpv.LAMBDA.apply(v4854);
+public static Object defined(final Object v395, final Object v396, final Object v397) throws Exception {
+final Object f399 = ShenNewpv.LAMBDA.apply(v396);
 
-final Object a4856 = f4857;
-final Object f4858 = ShenIncinfs.LAMBDA.apply();
-
-
+final Object a398 = f399;
+final Object f400 = ShenIncinfs.LAMBDA.apply();
 
 
 
@@ -28,11 +26,13 @@ final Object f4858 = ShenIncinfs.LAMBDA.apply();
 
 
 
-final Object f4859 = UnifyBang.LAMBDA.apply(v4853, new Cons(a4856, new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(RuntimeContext.symbol("number"), new Cons(RuntimeContext.symbol("-->"), new Cons(RuntimeContext.symbol("number"), Nil.NIL))), Nil.NIL))), v4854, v4855);
-final Object f4860 = Do.LAMBDA.apply(f4858, f4859);
 
 
-    return f4860;
+final Object f401 = UnifyBang.LAMBDA.apply(v395, new Cons(a398, new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(RuntimeContext.symbol("number"), new Cons(RuntimeContext.symbol("-->"), new Cons(RuntimeContext.symbol("number"), Nil.NIL))), Nil.NIL))), v396, v397);
+final Object f402 = Do.LAMBDA.apply(f400, f401);
+
+
+    return f402;
 
 }
 }

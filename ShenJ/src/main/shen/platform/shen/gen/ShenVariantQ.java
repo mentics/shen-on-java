@@ -13,230 +13,230 @@ return defined(v1698, v1699);
 }};
 public static Object defined(final Object v1698, final Object v1699) throws Exception {
 
-final Object i4540;
+final Object i82;
 if ((boolean)Lang.equals(v1699, v1698)) {
 
-i4540 = true;
+i82 = true;
 } else {
 
 
-final Object i4514;
+final Object i56;
 if ((boolean)(v1698 instanceof Cons)) {
 
 
-final Object i4512;
+final Object i54;
 if ((boolean)(v1699 instanceof Cons)) {
 
 
 
-final Object i4511;
+final Object i53;
 if ((boolean)Lang.equals(((Cons)v1699).head, ((Cons)v1698).head)) {
 
-i4511 = true;
+i53 = true;
 } else {
 
-i4511 = false;
+i53 = false;
 
 }
-i4512 = i4511;
+i54 = i53;
 } else {
 
-i4512 = false;
+i54 = false;
 
 }
-final Object i4513;
-if ((boolean)i4512) {
+final Object i55;
+if ((boolean)i54) {
 
-i4513 = true;
+i55 = true;
 } else {
 
-i4513 = false;
+i55 = false;
 
 }
-i4514 = i4513;
+i56 = i55;
 } else {
 
-i4514 = false;
+i56 = false;
 
 }
-final Object i4539;
-if ((boolean)i4514) {
+final Object i81;
+if ((boolean)i56) {
 
 
-final Object f4515 = ShenVariantQ.LAMBDA.apply(((Cons)v1698).tail, ((Cons)v1699).tail);
+final Object f57 = ShenVariantQ.LAMBDA.apply(((Cons)v1698).tail, ((Cons)v1699).tail);
 
-i4539 = f4515;
+i81 = f57;
 } else {
 
 
-final Object i4523;
+final Object i65;
 if ((boolean)(v1698 instanceof Cons)) {
 
 
-final Object i4521;
+final Object i63;
 if ((boolean)(v1699 instanceof Cons)) {
 
-final Object f4516 = ShenPvarQ.LAMBDA.apply(((Cons)v1698).head);
+final Object f58 = ShenPvarQ.LAMBDA.apply(((Cons)v1698).head);
 
-final Object i4519;
-if ((boolean)f4516) {
+final Object i61;
+if ((boolean)f58) {
 
-final Object f4517 = VariableQ.LAMBDA.apply(((Cons)v1699).head);
+final Object f59 = VariableQ.LAMBDA.apply(((Cons)v1699).head);
 
-final Object i4518;
-if ((boolean)f4517) {
+final Object i60;
+if ((boolean)f59) {
 
-i4518 = true;
+i60 = true;
 } else {
 
-i4518 = false;
+i60 = false;
 
 }
-i4519 = i4518;
+i61 = i60;
 } else {
 
-i4519 = false;
+i61 = false;
 
 }
-final Object i4520;
-if ((boolean)i4519) {
+final Object i62;
+if ((boolean)i61) {
 
-i4520 = true;
+i62 = true;
 } else {
 
-i4520 = false;
+i62 = false;
 
 }
-i4521 = i4520;
+i63 = i62;
 } else {
 
-i4521 = false;
+i63 = false;
 
 }
-final Object i4522;
-if ((boolean)i4521) {
+final Object i64;
+if ((boolean)i63) {
 
-i4522 = true;
+i64 = true;
 } else {
 
-i4522 = false;
+i64 = false;
 
 }
-i4523 = i4522;
+i65 = i64;
 } else {
 
-i4523 = false;
+i65 = false;
 
 }
-final Object i4538;
-if ((boolean)i4523) {
+final Object i80;
+if ((boolean)i65) {
 
 
-final Object f4524 = Subst.LAMBDA.apply(RuntimeContext.symbol("shen-a"), ((Cons)v1698).head, ((Cons)v1698).tail);
+final Object f66 = Subst.LAMBDA.apply(RuntimeContext.symbol("shen-a"), ((Cons)v1698).head, ((Cons)v1698).tail);
 
 
-final Object f4525 = Subst.LAMBDA.apply(RuntimeContext.symbol("shen-a"), ((Cons)v1699).head, ((Cons)v1699).tail);
-final Object f4526 = ShenVariantQ.LAMBDA.apply(f4524, f4525);
+final Object f67 = Subst.LAMBDA.apply(RuntimeContext.symbol("shen-a"), ((Cons)v1699).head, ((Cons)v1699).tail);
+final Object f68 = ShenVariantQ.LAMBDA.apply(f66, f67);
 
-i4538 = f4526;
+i80 = f68;
 } else {
 
 
-final Object i4532;
+final Object i74;
 if ((boolean)(v1698 instanceof Cons)) {
 
 
 
-final Object i4530;
+final Object i72;
 if ((boolean)(((Cons)v1698).head instanceof Cons)) {
 
 
-final Object i4528;
+final Object i70;
 if ((boolean)(v1699 instanceof Cons)) {
 
 
 
-final Object i4527;
+final Object i69;
 if ((boolean)(((Cons)v1699).head instanceof Cons)) {
 
-i4527 = true;
+i69 = true;
 } else {
 
-i4527 = false;
+i69 = false;
 
 }
-i4528 = i4527;
+i70 = i69;
 } else {
 
-i4528 = false;
+i70 = false;
 
 }
-final Object i4529;
-if ((boolean)i4528) {
+final Object i71;
+if ((boolean)i70) {
 
-i4529 = true;
+i71 = true;
 } else {
 
-i4529 = false;
+i71 = false;
 
 }
-i4530 = i4529;
+i72 = i71;
 } else {
 
-i4530 = false;
+i72 = false;
 
 }
-final Object i4531;
-if ((boolean)i4530) {
+final Object i73;
+if ((boolean)i72) {
 
-i4531 = true;
+i73 = true;
 } else {
 
-i4531 = false;
+i73 = false;
 
 }
-i4532 = i4531;
+i74 = i73;
 } else {
 
-i4532 = false;
+i74 = false;
 
 }
-final Object i4537;
-if ((boolean)i4532) {
+final Object i79;
+if ((boolean)i74) {
 
 
-final Object f4533 = Append.LAMBDA.apply(((Cons)v1698).head, ((Cons)v1698).tail);
+final Object f75 = Append.LAMBDA.apply(((Cons)v1698).head, ((Cons)v1698).tail);
 
 
-final Object f4534 = Append.LAMBDA.apply(((Cons)v1699).head, ((Cons)v1699).tail);
-final Object f4535 = ShenVariantQ.LAMBDA.apply(f4533, f4534);
+final Object f76 = Append.LAMBDA.apply(((Cons)v1699).head, ((Cons)v1699).tail);
+final Object f77 = ShenVariantQ.LAMBDA.apply(f75, f76);
 
-i4537 = f4535;
+i79 = f77;
 } else {
 
-final Object i4536;
+final Object i78;
 if ((boolean)true) {
 
-i4536 = false;
+i78 = false;
 } else {
 
 throw new SimpleError((String)"True condition not found.");
 
 
 }
-i4537 = i4536;
+i79 = i78;
 
 }
-i4538 = i4537;
+i80 = i79;
 
 }
-i4539 = i4538;
+i81 = i80;
 
 }
-i4540 = i4539;
+i82 = i81;
 
 }
-    return i4540;
+    return i82;
 
 }
 }

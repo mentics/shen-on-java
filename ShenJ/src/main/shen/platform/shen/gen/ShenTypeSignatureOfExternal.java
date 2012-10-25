@@ -8,11 +8,11 @@ public class ShenTypeSignatureOfExternal {
 
 public static final Symbol SYMBOL = RuntimeContext.symbol("shen-type-signature-of-external");
 public static final Lambda LAMBDA = new Lambda3() {
-public Object apply(final Object v4719, final Object v4720, final Object v4721) throws Exception {
-return defined(v4719, v4720, v4721);
+public Object apply(final Object v261, final Object v262, final Object v263) throws Exception {
+return defined(v261, v262, v263);
 }};
-public static Object defined(final Object v4719, final Object v4720, final Object v4721) throws Exception {
-final Object f4722 = ShenIncinfs.LAMBDA.apply();
+public static Object defined(final Object v261, final Object v262, final Object v263) throws Exception {
+final Object f264 = ShenIncinfs.LAMBDA.apply();
 
 
 
@@ -23,10 +23,10 @@ final Object f4722 = ShenIncinfs.LAMBDA.apply();
 
 
 
-final Object f4723 = UnifyBang.LAMBDA.apply(v4719, new Cons(RuntimeContext.symbol("symbol"), new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(RuntimeContext.symbol("list"), new Cons(RuntimeContext.symbol("symbol"), Nil.NIL)), Nil.NIL))), v4720, v4721);
-final Object f4724 = Do.LAMBDA.apply(f4722, f4723);
+final Object f265 = UnifyBang.LAMBDA.apply(v261, new Cons(RuntimeContext.symbol("symbol"), new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(RuntimeContext.symbol("list"), new Cons(RuntimeContext.symbol("symbol"), Nil.NIL)), Nil.NIL))), v262, v263);
+final Object f266 = Do.LAMBDA.apply(f264, f265);
 
-    return f4724;
+    return f266;
 
 }
 }

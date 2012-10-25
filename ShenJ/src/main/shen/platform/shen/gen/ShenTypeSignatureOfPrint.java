@@ -8,25 +8,25 @@ public class ShenTypeSignatureOfPrint {
 
 public static final Symbol SYMBOL = RuntimeContext.symbol("shen-type-signature-of-print");
 public static final Lambda LAMBDA = new Lambda3() {
-public Object apply(final Object v5115, final Object v5116, final Object v5117) throws Exception {
-return defined(v5115, v5116, v5117);
+public Object apply(final Object v657, final Object v658, final Object v659) throws Exception {
+return defined(v657, v658, v659);
 }};
-public static Object defined(final Object v5115, final Object v5116, final Object v5117) throws Exception {
-final Object f5119 = ShenNewpv.LAMBDA.apply(v5116);
+public static Object defined(final Object v657, final Object v658, final Object v659) throws Exception {
+final Object f661 = ShenNewpv.LAMBDA.apply(v658);
 
-final Object a5118 = f5119;
-final Object f5120 = ShenIncinfs.LAMBDA.apply();
-
-
+final Object a660 = f661;
+final Object f662 = ShenIncinfs.LAMBDA.apply();
 
 
 
 
-final Object f5121 = UnifyBang.LAMBDA.apply(v5115, new Cons(a5118, new Cons(RuntimeContext.symbol("-->"), new Cons(a5118, Nil.NIL))), v5116, v5117);
-final Object f5122 = Do.LAMBDA.apply(f5120, f5121);
 
 
-    return f5122;
+final Object f663 = UnifyBang.LAMBDA.apply(v657, new Cons(a660, new Cons(RuntimeContext.symbol("-->"), new Cons(a660, Nil.NIL))), v658, v659);
+final Object f664 = Do.LAMBDA.apply(f662, f663);
+
+
+    return f664;
 
 }
 }

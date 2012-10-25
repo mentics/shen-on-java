@@ -5,33 +5,33 @@ package shen.gen;
 import com.mentics.shen.*;
 
 public class PrimitiveTypeQ {
-
-public static final Symbol SYMBOL = RuntimeContext.symbol("primitive-type?");
-public static final Lambda LAMBDA = new Lambda1() {
-public Object apply(final Object v7259) throws Exception {
-return defined(v7259);
-}};
-public static Object defined(final Object v7259) throws Exception {
 
-final Object i8789;
-if ((boolean)Lang.equals(v7259, RuntimeContext.symbol("number"))) {
+public static final Symbol SYMBOL = RuntimeContext.symbol("primitive-type?");
+public static final Lambda LAMBDA = new Lambda1() {
+public Object apply(final Object v2670) throws Exception {
+return defined(v2670);
+}};
+public static Object defined(final Object v2670) throws Exception {
 
-i8789 = true;
+final Object i2672;
+if ((boolean)Lang.equals(v2670, RuntimeContext.symbol("number"))) {
+
+i2672 = true;
 } else {
 
-final Object i8788;
-if ((boolean)Lang.equals(v7259, RuntimeContext.symbol("boolean"))) {
+final Object i2671;
+if ((boolean)Lang.equals(v2670, RuntimeContext.symbol("boolean"))) {
 
-i8788 = true;
+i2671 = true;
 } else {
 
-i8788 = false;
+i2671 = false;
 
 }
-i8789 = i8788;
+i2672 = i2671;
 
 }
-    return i8789;
+    return i2672;
 
 }
 }

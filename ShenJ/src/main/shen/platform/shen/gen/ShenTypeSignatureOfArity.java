@@ -8,25 +8,25 @@ public class ShenTypeSignatureOfArity {
 
 public static final Symbol SYMBOL = RuntimeContext.symbol("shen-type-signature-of-arity");
 public static final Lambda LAMBDA = new Lambda3() {
-public Object apply(final Object v4581, final Object v4582, final Object v4583) throws Exception {
-return defined(v4581, v4582, v4583);
+public Object apply(final Object v123, final Object v124, final Object v125) throws Exception {
+return defined(v123, v124, v125);
 }};
-public static Object defined(final Object v4581, final Object v4582, final Object v4583) throws Exception {
-final Object f4585 = ShenNewpv.LAMBDA.apply(v4582);
+public static Object defined(final Object v123, final Object v124, final Object v125) throws Exception {
+final Object f127 = ShenNewpv.LAMBDA.apply(v124);
 
-final Object a4584 = f4585;
-final Object f4586 = ShenIncinfs.LAMBDA.apply();
-
-
+final Object a126 = f127;
+final Object f128 = ShenIncinfs.LAMBDA.apply();
 
 
 
 
-final Object f4587 = UnifyBang.LAMBDA.apply(v4581, new Cons(a4584, new Cons(RuntimeContext.symbol("-->"), new Cons(RuntimeContext.symbol("number"), Nil.NIL))), v4582, v4583);
-final Object f4588 = Do.LAMBDA.apply(f4586, f4587);
 
 
-    return f4588;
+final Object f129 = UnifyBang.LAMBDA.apply(v123, new Cons(a126, new Cons(RuntimeContext.symbol("-->"), new Cons(RuntimeContext.symbol("number"), Nil.NIL))), v124, v125);
+final Object f130 = Do.LAMBDA.apply(f128, f129);
+
+
+    return f130;
 
 }
 }

@@ -8,16 +8,14 @@ public class ShenTypeSignatureOfTail {
 
 public static final Symbol SYMBOL = RuntimeContext.symbol("shen-type-signature-of-tail");
 public static final Lambda LAMBDA = new Lambda3() {
-public Object apply(final Object v5335, final Object v5336, final Object v5337) throws Exception {
-return defined(v5335, v5336, v5337);
+public Object apply(final Object v877, final Object v878, final Object v879) throws Exception {
+return defined(v877, v878, v879);
 }};
-public static Object defined(final Object v5335, final Object v5336, final Object v5337) throws Exception {
-final Object f5339 = ShenNewpv.LAMBDA.apply(v5336);
+public static Object defined(final Object v877, final Object v878, final Object v879) throws Exception {
+final Object f881 = ShenNewpv.LAMBDA.apply(v878);
 
-final Object a5338 = f5339;
-final Object f5340 = ShenIncinfs.LAMBDA.apply();
-
-
+final Object a880 = f881;
+final Object f882 = ShenIncinfs.LAMBDA.apply();
 
 
 
@@ -30,11 +28,13 @@ final Object f5340 = ShenIncinfs.LAMBDA.apply();
 
 
 
-final Object f5341 = UnifyBang.LAMBDA.apply(v5335, new Cons(new Cons(RuntimeContext.symbol("list"), new Cons(a5338, Nil.NIL)), new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(RuntimeContext.symbol("list"), new Cons(a5338, Nil.NIL)), Nil.NIL))), v5336, v5337);
-final Object f5342 = Do.LAMBDA.apply(f5340, f5341);
 
 
-    return f5342;
+final Object f883 = UnifyBang.LAMBDA.apply(v877, new Cons(new Cons(RuntimeContext.symbol("list"), new Cons(a880, Nil.NIL)), new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(RuntimeContext.symbol("list"), new Cons(a880, Nil.NIL)), Nil.NIL))), v878, v879);
+final Object f884 = Do.LAMBDA.apply(f882, f883);
+
+
+    return f884;
 
 }
 }

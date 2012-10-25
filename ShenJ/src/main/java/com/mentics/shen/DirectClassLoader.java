@@ -1,5 +1,6 @@
 package com.mentics.shen;
 
+import java.io.File;
 import java.io.InputStream;
 import java.net.URLClassLoader;
 import java.util.Map;
@@ -9,8 +10,8 @@ public class DirectClassLoader extends URLClassLoader {
     private final Map<String, byte[]> direct;
 
 
-    public DirectClassLoader(ClassLoader parent, Map<String, byte[]> classes) {
-        super(((URLClassLoader) parent).getURLs(), parent);
+    public DirectClassLoader(ClassLoader parent, Map<String, byte[]> classes) throws Exception {
+        super(ArrayUtil.add(((URLClassLoader) parent).getURLs(), new File("target/classes").toURI().toURL()), parent);
         direct = classes;
     }
 

@@ -5,32 +5,32 @@ package shen.gen;
 import com.mentics.shen.*;
 
 public class HandleUnreachableAssignment {
-
-public static final Symbol SYMBOL = RuntimeContext.symbol("handle-unreachable-assignment");
-public static final Lambda LAMBDA = new Lambda2() {
-public Object apply(final Object v7285, final Object v7286) throws Exception {
-return defined(v7285, v7286);
-}};
-public static Object defined(final Object v7285, final Object v7286) throws Exception {
-final Object f8937 = Second.LAMBDA.apply(v7286);
 
-final Object second8936 = f8937;
-final Object f8938 = Third.LAMBDA.apply(v7286);
+public static final Symbol SYMBOL = RuntimeContext.symbol("handle-unreachable-assignment");
+public static final Lambda LAMBDA = new Lambda2() {
+public Object apply(final Object v2844, final Object v2845) throws Exception {
+return defined(v2844, v2845);
+}};
+public static Object defined(final Object v2844, final Object v2845) throws Exception {
+final Object f2847 = Second.LAMBDA.apply(v2845);
 
-final Object i8942;
-if ((boolean)Lang.equals(RuntimeContext.symbol("unreachable"), f8938)) {
+final Object second2846 = f2847;
+final Object f2848 = Third.LAMBDA.apply(v2845);
 
-i8942 = "";
+final Object i2852;
+if ((boolean)Lang.equals(RuntimeContext.symbol("unreachable"), f2848)) {
+
+i2852 = "";
 } else {
-final Object f8939 = Atp.LAMBDA.apply(second8936, Nil.NIL);
-final Object f8940 = Atp.LAMBDA.apply(v7285, f8939);
-final Object f8941 = IntmakeString.LAMBDA.apply("~A = ~A;~%", f8940);
+final Object f2849 = Atp.LAMBDA.apply(second2846, Nil.NIL);
+final Object f2850 = Atp.LAMBDA.apply(v2844, f2849);
+final Object f2851 = IntmakeString.LAMBDA.apply("~A = ~A;~%", f2850);
 
-i8942 = f8941;
+i2852 = f2851;
 
 }
 
-    return i8942;
+    return i2852;
 
 }
 }

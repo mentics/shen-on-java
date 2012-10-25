@@ -5,41 +5,39 @@ package shen.gen;
 import com.mentics.shen.*;
 
 public class Comparison {
-
-public static final Symbol SYMBOL = RuntimeContext.symbol("comparison");
-public static final Lambda LAMBDA = new Lambda3() {
-public Object apply(final Object v7274, final Object v7275, final Object v7276) throws Exception {
-return defined(v7274, v7275, v7276);
-}};
-public static Object defined(final Object v7274, final Object v7275, final Object v7276) throws Exception {
+
+public static final Symbol SYMBOL = RuntimeContext.symbol("comparison");
+public static final Lambda LAMBDA = new Lambda3() {
+public Object apply(final Object v2747, final Object v2748, final Object v2749) throws Exception {
+return defined(v2747, v2748, v2749);
+}};
+public static Object defined(final Object v2747, final Object v2748, final Object v2749) throws Exception {
 
 
-final Object i8851;
-if ((boolean)(v7275 instanceof Cons)) {
+final Object i2751;
+if ((boolean)(v2748 instanceof Cons)) {
 
 
-final Object i8850;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)v7275).tail)) {
+final Object i2750;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)v2748).tail)) {
 
-i8850 = true;
+i2750 = true;
 } else {
 
-i8850 = false;
+i2750 = false;
 
 }
-i8851 = i8850;
+i2751 = i2750;
 } else {
 
-i8851 = false;
+i2751 = false;
 
 }
-final Object i8882;
-if ((boolean)i8851) {
-final Object f8853 = Gensym.LAMBDA.apply(RuntimeContext.symbol("a"));
+final Object i2782;
+if ((boolean)i2751) {
+final Object f2753 = Gensym.LAMBDA.apply(RuntimeContext.symbol("a"));
 
-final Object var8852 = f8853;
-
-
+final Object var2752 = f2753;
 
 
 
@@ -51,97 +49,99 @@ final Object var8852 = f8853;
 
 
 
-final Object f8854 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(var8852, new Cons(new Cons(v7274, new Cons(((Cons)v7275).head, new Cons(var8852, Nil.NIL))), Nil.NIL))), RuntimeContext.symbol("lambda"), v7276);
 
 
-i8882 = f8854;
+final Object f2754 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(var2752, new Cons(new Cons(v2747, new Cons(((Cons)v2748).head, new Cons(var2752, Nil.NIL))), Nil.NIL))), RuntimeContext.symbol("lambda"), v2749);
+
+
+i2782 = f2754;
 } else {
 
 
-final Object i8858;
-if ((boolean)(v7275 instanceof Cons)) {
+final Object i2758;
+if ((boolean)(v2748 instanceof Cons)) {
 
 
 
-final Object i8856;
-if ((boolean)(((Cons)v7275).tail instanceof Cons)) {
+final Object i2756;
+if ((boolean)(((Cons)v2748).tail instanceof Cons)) {
 
 
 
-final Object i8855;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7275).tail).tail)) {
+final Object i2755;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v2748).tail).tail)) {
 
-i8855 = true;
+i2755 = true;
 } else {
 
-i8855 = false;
+i2755 = false;
 
 }
-i8856 = i8855;
+i2756 = i2755;
 } else {
 
-i8856 = false;
+i2756 = false;
 
 }
-final Object i8857;
-if ((boolean)i8856) {
+final Object i2757;
+if ((boolean)i2756) {
 
-i8857 = true;
+i2757 = true;
 } else {
 
-i8857 = false;
+i2757 = false;
 
 }
-i8858 = i8857;
+i2758 = i2757;
 } else {
 
-i8858 = false;
+i2758 = false;
 
 }
-final Object i8881;
-if ((boolean)i8858) {
+final Object i2781;
+if ((boolean)i2758) {
 
-final Object f8860 = KlToJavaTraverse.LAMBDA.apply(((Cons)v7275).head, RuntimeContext.symbol("number"), v7276);
+final Object f2760 = KlToJavaTraverse.LAMBDA.apply(((Cons)v2748).head, RuntimeContext.symbol("number"), v2749);
 
-final Object a0Eval8859 = f8860;
-
-
-final Object f8862 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v7275).tail).head, RuntimeContext.symbol("number"), v7276);
-
-final Object a1Eval8861 = f8862;
-final Object f8864 = Fst.LAMBDA.apply(a0Eval8859);
-
-final Object a0Content8863 = f8864;
-final Object f8866 = Second.LAMBDA.apply(a0Eval8859);
-
-final Object a0Expression8865 = f8866;
-final Object f8868 = Fst.LAMBDA.apply(a1Eval8861);
-
-final Object a1Content8867 = f8868;
-final Object f8870 = Second.LAMBDA.apply(a1Eval8861);
-
-final Object a1Expression8869 = f8870;
-final Object f8871 = Atp.LAMBDA.apply(a1Content8867, Nil.NIL);
-final Object f8872 = Atp.LAMBDA.apply(a0Content8863, f8871);
-final Object f8873 = IntmakeString.LAMBDA.apply("~A~%~A~%", f8872);
-
-final Object f8874 = Atp.LAMBDA.apply(a1Expression8869, Nil.NIL);
-final Object f8875 = Atp.LAMBDA.apply(String.valueOf(v7274), f8874);
-final Object f8876 = Atp.LAMBDA.apply(a0Expression8865, f8875);
-final Object f8877 = IntmakeString.LAMBDA.apply("(((Number)(~A)).doubleValue() ~A ((Number)(~A)).doubleValue())", f8876);
-final Object f8878 = Atp.LAMBDA.apply(f8877, RuntimeContext.symbol("boolean"));
-final Object f8879 = Atp.LAMBDA.apply(f8873, f8878);
+final Object a0Eval2759 = f2760;
 
 
+final Object f2762 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v2748).tail).head, RuntimeContext.symbol("number"), v2749);
+
+final Object a1Eval2761 = f2762;
+final Object f2764 = Fst.LAMBDA.apply(a0Eval2759);
+
+final Object a0Content2763 = f2764;
+final Object f2766 = Second.LAMBDA.apply(a0Eval2759);
+
+final Object a0Expression2765 = f2766;
+final Object f2768 = Fst.LAMBDA.apply(a1Eval2761);
+
+final Object a1Content2767 = f2768;
+final Object f2770 = Second.LAMBDA.apply(a1Eval2761);
+
+final Object a1Expression2769 = f2770;
+final Object f2771 = Atp.LAMBDA.apply(a1Content2767, Nil.NIL);
+final Object f2772 = Atp.LAMBDA.apply(a0Content2763, f2771);
+final Object f2773 = IntmakeString.LAMBDA.apply("~A~%~A~%", f2772);
+
+final Object f2774 = Atp.LAMBDA.apply(a1Expression2769, Nil.NIL);
+final Object f2775 = Atp.LAMBDA.apply(String.valueOf(v2747), f2774);
+final Object f2776 = Atp.LAMBDA.apply(a0Expression2765, f2775);
+final Object f2777 = IntmakeString.LAMBDA.apply("(((Number)(~A)).doubleValue() ~A ((Number)(~A)).doubleValue())", f2776);
+final Object f2778 = Atp.LAMBDA.apply(f2777, RuntimeContext.symbol("boolean"));
+final Object f2779 = Atp.LAMBDA.apply(f2773, f2778);
 
 
 
 
 
-i8881 = f8879;
+
+
+i2781 = f2779;
 } else {
 
-final Object i8880;
+final Object i2780;
 if ((boolean)true) {
 
 throw new SimpleError((String)"Bad args to comparison");
@@ -154,10 +154,10 @@ throw new SimpleError((String)"True condition not found.");
 }
 
 }
-i8882 = i8881;
+i2782 = i2781;
 
 }
-    return i8882;
+    return i2782;
 
 }
 }

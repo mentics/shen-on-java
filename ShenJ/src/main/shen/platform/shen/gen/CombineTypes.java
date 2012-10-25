@@ -5,53 +5,53 @@ package shen.gen;
 import com.mentics.shen.*;
 
 public class CombineTypes {
-
-public static final Symbol SYMBOL = RuntimeContext.symbol("combine-types");
-public static final Lambda LAMBDA = new Lambda2() {
-public Object apply(final Object v7282, final Object v7283) throws Exception {
-return defined(v7282, v7283);
-}};
-public static Object defined(final Object v7282, final Object v7283) throws Exception {
 
-final Object i8930;
-if ((boolean)Lang.equals(RuntimeContext.symbol("unreachable"), v7282)) {
+public static final Symbol SYMBOL = RuntimeContext.symbol("combine-types");
+public static final Lambda LAMBDA = new Lambda2() {
+public Object apply(final Object v2832, final Object v2833) throws Exception {
+return defined(v2832, v2833);
+}};
+public static Object defined(final Object v2832, final Object v2833) throws Exception {
 
-i8930 = v7283;
+final Object i2837;
+if ((boolean)Lang.equals(RuntimeContext.symbol("unreachable"), v2832)) {
+
+i2837 = v2833;
 } else {
 
-final Object i8929;
-if ((boolean)Lang.equals(RuntimeContext.symbol("unreachable"), v7283)) {
+final Object i2836;
+if ((boolean)Lang.equals(RuntimeContext.symbol("unreachable"), v2833)) {
 
-i8929 = v7282;
+i2836 = v2832;
 } else {
 
-final Object i8928;
+final Object i2835;
 if ((boolean)true) {
 
 
-final Object i8927;
-if ((boolean)!((boolean)Lang.equals(RuntimeContext.symbol("object"), v7282))) {
+final Object i2834;
+if ((boolean)!((boolean)Lang.equals(RuntimeContext.symbol("object"), v2832))) {
 
-i8927 = v7282;
+i2834 = v2832;
 } else {
 
-i8927 = v7283;
+i2834 = v2833;
 
 }
-i8928 = i8927;
+i2835 = i2834;
 } else {
 
 throw new SimpleError((String)"True condition not found.");
 
 
 }
-i8929 = i8928;
+i2836 = i2835;
 
 }
-i8930 = i8929;
+i2837 = i2836;
 
 }
-    return i8930;
+    return i2837;
 
 }
 }

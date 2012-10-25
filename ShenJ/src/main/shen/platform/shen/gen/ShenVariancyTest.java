@@ -12,32 +12,32 @@ public Object apply(final Object v1688, final Object v1689) throws Exception {
 return defined(v1688, v1689);
 }};
 public static Object defined(final Object v1688, final Object v1689) throws Exception {
-final Object f4504 = ShenTypecheck.LAMBDA.apply(v1688, RuntimeContext.symbol("B"));
+final Object f46 = ShenTypecheck.LAMBDA.apply(v1688, RuntimeContext.symbol("B"));
 
-final Object typeF4503 = f4504;
+final Object typeF45 = f46;
 
-final Object i4510;
-if ((boolean)Lang.equals(RuntimeContext.symbol("symbol"), typeF4503)) {
+final Object i52;
+if ((boolean)Lang.equals(RuntimeContext.symbol("symbol"), typeF45)) {
 
-i4510 = RuntimeContext.symbol("shen-skip");
+i52 = RuntimeContext.symbol("shen-skip");
 } else {
-final Object f4506 = ShenVariantQ.LAMBDA.apply(typeF4503, v1689);
+final Object f48 = ShenVariantQ.LAMBDA.apply(typeF45, v1689);
 
-final Object i4509;
-if ((boolean)f4506) {
+final Object i51;
+if ((boolean)f48) {
 
-i4509 = RuntimeContext.symbol("shen-skip");
+i51 = RuntimeContext.symbol("shen-skip");
 } else {
-final Object f4507 = Atp.LAMBDA.apply(v1688, Nil.NIL);
-final Object f4508 = Intoutput.LAMBDA.apply("warning: changing the type of ~A may create errors~%", f4507);
+final Object f49 = Atp.LAMBDA.apply(v1688, Nil.NIL);
+final Object f50 = Intoutput.LAMBDA.apply("warning: changing the type of ~A may create errors~%", f49);
 
-i4509 = f4508;
+i51 = f50;
 
 }
-i4510 = i4509;
+i52 = i51;
 
 }
-final Object check4505 = i4510;
+final Object check47 = i52;
 
 
 

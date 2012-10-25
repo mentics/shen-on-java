@@ -5,67 +5,67 @@ package shen.gen;
 import com.mentics.shen.*;
 
 public class FindFirstQ {
-
-public static final Symbol SYMBOL = RuntimeContext.symbol("find-first?");
-public static final Lambda LAMBDA = new Lambda2() {
-public Object apply(final Object v7248, final Object v7249) throws Exception {
-return defined(v7248, v7249);
-}};
-public static Object defined(final Object v7248, final Object v7249) throws Exception {
 
-final Object i8435;
-if ((boolean)Lang.equals(Nil.NIL, v7249)) {
+public static final Symbol SYMBOL = RuntimeContext.symbol("find-first?");
+public static final Lambda LAMBDA = new Lambda2() {
+public Object apply(final Object v2283, final Object v2284) throws Exception {
+return defined(v2283, v2284);
+}};
+public static Object defined(final Object v2283, final Object v2284) throws Exception {
 
-i8435 = false;
+final Object i2296;
+if ((boolean)Lang.equals(Nil.NIL, v2284)) {
+
+i2296 = false;
 } else {
 
 
-final Object i8426;
-if ((boolean)(v7249 instanceof Cons)) {
+final Object i2287;
+if ((boolean)(v2284 instanceof Cons)) {
 
-final Object f8424 = TupleQ.LAMBDA.apply(((Cons)v7249).head);
+final Object f2285 = TupleQ.LAMBDA.apply(((Cons)v2284).head);
 
-final Object i8425;
-if ((boolean)f8424) {
+final Object i2286;
+if ((boolean)f2285) {
 
-i8425 = true;
+i2286 = true;
 } else {
 
-i8425 = false;
+i2286 = false;
 
 }
-i8426 = i8425;
+i2287 = i2286;
 } else {
 
-i8426 = false;
+i2287 = false;
 
 }
-final Object i8434;
-if ((boolean)i8426) {
+final Object i2295;
+if ((boolean)i2287) {
 
-final Object f8427 = Fst.LAMBDA.apply(((Cons)v7249).head);
+final Object f2288 = Fst.LAMBDA.apply(((Cons)v2284).head);
 
-final Object i8429;
-if ((boolean)Lang.equals(v7248, f8427)) {
+final Object i2290;
+if ((boolean)Lang.equals(v2283, f2288)) {
 
-i8429 = true;
+i2290 = true;
 } else {
 
-final Object f8428 = FindFirstQ.LAMBDA.apply(v7248, ((Cons)v7249).tail);
+final Object f2289 = FindFirstQ.LAMBDA.apply(v2283, ((Cons)v2284).tail);
 
-i8429 = f8428;
+i2290 = f2289;
 
 }
-i8434 = i8429;
+i2295 = i2290;
 } else {
 
-final Object i8433;
+final Object i2294;
 if ((boolean)true) {
-final Object f8430 = Atp.LAMBDA.apply(v7249, Nil.NIL);
-final Object f8431 = Atp.LAMBDA.apply(v7248, f8430);
-final Object f8432 = IntmakeString.LAMBDA.apply("find-first: X: ~A~%Y: ~A", f8431);
+final Object f2291 = Atp.LAMBDA.apply(v2284, Nil.NIL);
+final Object f2292 = Atp.LAMBDA.apply(v2283, f2291);
+final Object f2293 = IntmakeString.LAMBDA.apply("find-first: X: ~A~%Y: ~A", f2292);
 
-throw new SimpleError((String)f8432);
+throw new SimpleError((String)f2293);
 
 } else {
 
@@ -75,10 +75,10 @@ throw new SimpleError((String)"True condition not found.");
 }
 
 }
-i8435 = i8434;
+i2296 = i2295;
 
 }
-    return i8435;
+    return i2296;
 
 }
 }

@@ -8,21 +8,21 @@ public class ShenTypeSignatureOfStep {
 
 public static final Symbol SYMBOL = RuntimeContext.symbol("shen-type-signature-of-step");
 public static final Lambda LAMBDA = new Lambda3() {
-public Object apply(final Object v5253, final Object v5254, final Object v5255) throws Exception {
-return defined(v5253, v5254, v5255);
+public Object apply(final Object v795, final Object v796, final Object v797) throws Exception {
+return defined(v795, v796, v797);
 }};
-public static Object defined(final Object v5253, final Object v5254, final Object v5255) throws Exception {
-final Object f5256 = ShenIncinfs.LAMBDA.apply();
+public static Object defined(final Object v795, final Object v796, final Object v797) throws Exception {
+final Object f798 = ShenIncinfs.LAMBDA.apply();
 
 
 
 
 
 
-final Object f5257 = UnifyBang.LAMBDA.apply(v5253, new Cons(RuntimeContext.symbol("symbol"), new Cons(RuntimeContext.symbol("-->"), new Cons(RuntimeContext.symbol("boolean"), Nil.NIL))), v5254, v5255);
-final Object f5258 = Do.LAMBDA.apply(f5256, f5257);
+final Object f799 = UnifyBang.LAMBDA.apply(v795, new Cons(RuntimeContext.symbol("symbol"), new Cons(RuntimeContext.symbol("-->"), new Cons(RuntimeContext.symbol("boolean"), Nil.NIL))), v796, v797);
+final Object f800 = Do.LAMBDA.apply(f798, f799);
 
-    return f5258;
+    return f800;
 
 }
 }

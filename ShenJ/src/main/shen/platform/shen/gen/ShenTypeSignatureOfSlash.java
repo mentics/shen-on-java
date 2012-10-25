@@ -8,11 +8,11 @@ public class ShenTypeSignatureOfSlash {
 
 public static final Symbol SYMBOL = RuntimeContext.symbol("shen-type-signature-of-/");
 public static final Lambda LAMBDA = new Lambda3() {
-public Object apply(final Object v5553, final Object v5554, final Object v5555) throws Exception {
-return defined(v5553, v5554, v5555);
+public Object apply(final Object v1095, final Object v1096, final Object v1097) throws Exception {
+return defined(v1095, v1096, v1097);
 }};
-public static Object defined(final Object v5553, final Object v5554, final Object v5555) throws Exception {
-final Object f5556 = ShenIncinfs.LAMBDA.apply();
+public static Object defined(final Object v1095, final Object v1096, final Object v1097) throws Exception {
+final Object f1098 = ShenIncinfs.LAMBDA.apply();
 
 
 
@@ -25,10 +25,10 @@ final Object f5556 = ShenIncinfs.LAMBDA.apply();
 
 
 
-final Object f5557 = UnifyBang.LAMBDA.apply(v5553, new Cons(RuntimeContext.symbol("number"), new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(RuntimeContext.symbol("number"), new Cons(RuntimeContext.symbol("-->"), new Cons(RuntimeContext.symbol("number"), Nil.NIL))), Nil.NIL))), v5554, v5555);
-final Object f5558 = Do.LAMBDA.apply(f5556, f5557);
+final Object f1099 = UnifyBang.LAMBDA.apply(v1095, new Cons(RuntimeContext.symbol("number"), new Cons(RuntimeContext.symbol("-->"), new Cons(new Cons(RuntimeContext.symbol("number"), new Cons(RuntimeContext.symbol("-->"), new Cons(RuntimeContext.symbol("number"), Nil.NIL))), Nil.NIL))), v1096, v1097);
+final Object f1100 = Do.LAMBDA.apply(f1098, f1099);
 
-    return f5558;
+    return f1100;
 
 }
 }

@@ -8,19 +8,17 @@ public class ShenTypeSignatureOfFst {
 
 public static final Symbol SYMBOL = RuntimeContext.symbol("shen-type-signature-of-fst");
 public static final Lambda LAMBDA = new Lambda3() {
-public Object apply(final Object v4795, final Object v4796, final Object v4797) throws Exception {
-return defined(v4795, v4796, v4797);
+public Object apply(final Object v337, final Object v338, final Object v339) throws Exception {
+return defined(v337, v338, v339);
 }};
-public static Object defined(final Object v4795, final Object v4796, final Object v4797) throws Exception {
-final Object f4799 = ShenNewpv.LAMBDA.apply(v4796);
+public static Object defined(final Object v337, final Object v338, final Object v339) throws Exception {
+final Object f341 = ShenNewpv.LAMBDA.apply(v338);
 
-final Object b4798 = f4799;
-final Object f4801 = ShenNewpv.LAMBDA.apply(v4796);
+final Object b340 = f341;
+final Object f343 = ShenNewpv.LAMBDA.apply(v338);
 
-final Object a4800 = f4801;
-final Object f4802 = ShenIncinfs.LAMBDA.apply();
-
-
+final Object a342 = f343;
+final Object f344 = ShenIncinfs.LAMBDA.apply();
 
 
 
@@ -31,12 +29,14 @@ final Object f4802 = ShenIncinfs.LAMBDA.apply();
 
 
 
-final Object f4803 = UnifyBang.LAMBDA.apply(v4795, new Cons(new Cons(a4800, new Cons(RuntimeContext.symbol("*"), new Cons(b4798, Nil.NIL))), new Cons(RuntimeContext.symbol("-->"), new Cons(a4800, Nil.NIL))), v4796, v4797);
-final Object f4804 = Do.LAMBDA.apply(f4802, f4803);
+
+
+final Object f345 = UnifyBang.LAMBDA.apply(v337, new Cons(new Cons(a342, new Cons(RuntimeContext.symbol("*"), new Cons(b340, Nil.NIL))), new Cons(RuntimeContext.symbol("-->"), new Cons(a342, Nil.NIL))), v338, v339);
+final Object f346 = Do.LAMBDA.apply(f344, f345);
 
 
 
-    return f4804;
+    return f346;
 
 }
 }

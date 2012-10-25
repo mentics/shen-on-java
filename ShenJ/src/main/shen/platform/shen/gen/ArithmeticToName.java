@@ -5,62 +5,62 @@ package shen.gen;
 import com.mentics.shen.*;
 
 public class ArithmeticToName {
-
-public static final Symbol SYMBOL = RuntimeContext.symbol("arithmetic-to-name");
-public static final Lambda LAMBDA = new Lambda1() {
-public Object apply(final Object v7281) throws Exception {
-return defined(v7281);
-}};
-public static Object defined(final Object v7281) throws Exception {
 
-final Object i8926;
-if ((boolean)Lang.equals(RuntimeContext.symbol("+"), v7281)) {
+public static final Symbol SYMBOL = RuntimeContext.symbol("arithmetic-to-name");
+public static final Lambda LAMBDA = new Lambda1() {
+public Object apply(final Object v2825) throws Exception {
+return defined(v2825);
+}};
+public static Object defined(final Object v2825) throws Exception {
 
-i8926 = "plus";
+final Object i2831;
+if ((boolean)Lang.equals(RuntimeContext.symbol("+"), v2825)) {
+
+i2831 = "plus";
 } else {
 
-final Object i8925;
-if ((boolean)Lang.equals(RuntimeContext.symbol("-"), v7281)) {
+final Object i2830;
+if ((boolean)Lang.equals(RuntimeContext.symbol("-"), v2825)) {
 
-i8925 = "minus";
+i2830 = "minus";
 } else {
 
-final Object i8924;
-if ((boolean)Lang.equals(RuntimeContext.symbol("*"), v7281)) {
+final Object i2829;
+if ((boolean)Lang.equals(RuntimeContext.symbol("*"), v2825)) {
 
-i8924 = "multiply";
+i2829 = "multiply";
 } else {
 
-final Object i8923;
-if ((boolean)Lang.equals(RuntimeContext.symbol("/"), v7281)) {
+final Object i2828;
+if ((boolean)Lang.equals(RuntimeContext.symbol("/"), v2825)) {
 
-i8923 = "divide";
+i2828 = "divide";
 } else {
 
-final Object i8922;
+final Object i2827;
 if ((boolean)true) {
-final Object f8921 = ShenF_error.LAMBDA.apply(RuntimeContext.symbol("arithmetic-to-name"));
+final Object f2826 = ShenF_error.LAMBDA.apply(RuntimeContext.symbol("arithmetic-to-name"));
 
-i8922 = f8921;
+i2827 = f2826;
 } else {
 
 throw new SimpleError((String)"True condition not found.");
 
 
 }
-i8923 = i8922;
+i2828 = i2827;
 
 }
-i8924 = i8923;
+i2829 = i2828;
 
 }
-i8925 = i8924;
+i2830 = i2829;
 
 }
-i8926 = i8925;
+i2831 = i2830;
 
 }
-    return i8926;
+    return i2831;
 
 }
 }

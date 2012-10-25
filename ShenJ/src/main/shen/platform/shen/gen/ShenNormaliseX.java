@@ -13,23 +13,23 @@ return defined(v1687);
 }};
 public static Object defined(final Object v1687) throws Exception {
 
-final Object f4500 = Assoc.LAMBDA.apply(v1687, RuntimeContext.globalProperties.get(RuntimeContext.symbol("shen-*synonyms*")));
+final Object f42 = Assoc.LAMBDA.apply(v1687, RuntimeContext.globalProperties.get(RuntimeContext.symbol("shen-*synonyms*")));
 
-final Object val4499 = f4500;
-final Object f4501 = EmptyQ.LAMBDA.apply(val4499);
+final Object val41 = f42;
+final Object f43 = EmptyQ.LAMBDA.apply(val41);
 
-final Object i4502;
-if ((boolean)f4501) {
+final Object i44;
+if ((boolean)f43) {
 
-i4502 = v1687;
+i44 = v1687;
 } else {
 
 
-i4502 = ((Cons)val4499).tail;
+i44 = ((Cons)val41).tail;
 
 }
 
-    return i4502;
+    return i44;
 
 }
 }

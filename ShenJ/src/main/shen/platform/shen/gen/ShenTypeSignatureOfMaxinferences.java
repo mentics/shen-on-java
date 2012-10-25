@@ -8,21 +8,21 @@ public class ShenTypeSignatureOfMaxinferences {
 
 public static final Symbol SYMBOL = RuntimeContext.symbol("shen-type-signature-of-maxinferences");
 public static final Lambda LAMBDA = new Lambda3() {
-public Object apply(final Object v5009, final Object v5010, final Object v5011) throws Exception {
-return defined(v5009, v5010, v5011);
+public Object apply(final Object v551, final Object v552, final Object v553) throws Exception {
+return defined(v551, v552, v553);
 }};
-public static Object defined(final Object v5009, final Object v5010, final Object v5011) throws Exception {
-final Object f5012 = ShenIncinfs.LAMBDA.apply();
+public static Object defined(final Object v551, final Object v552, final Object v553) throws Exception {
+final Object f554 = ShenIncinfs.LAMBDA.apply();
 
 
 
 
 
 
-final Object f5013 = UnifyBang.LAMBDA.apply(v5009, new Cons(RuntimeContext.symbol("number"), new Cons(RuntimeContext.symbol("-->"), new Cons(RuntimeContext.symbol("number"), Nil.NIL))), v5010, v5011);
-final Object f5014 = Do.LAMBDA.apply(f5012, f5013);
+final Object f555 = UnifyBang.LAMBDA.apply(v551, new Cons(RuntimeContext.symbol("number"), new Cons(RuntimeContext.symbol("-->"), new Cons(RuntimeContext.symbol("number"), Nil.NIL))), v552, v553);
+final Object f556 = Do.LAMBDA.apply(f554, f555);
 
-    return f5014;
+    return f556;
 
 }
 }

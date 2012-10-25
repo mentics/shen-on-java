@@ -5,1870 +5,1870 @@ package shen.gen;
 import com.mentics.shen.*;
 
 public class KlToJavaTraverse {
-
-public static final Symbol SYMBOL = RuntimeContext.symbol("kl-to-java-traverse");
-public static final Lambda LAMBDA = new Lambda3() {
-public Object apply(final Object v7243, final Object v7244, final Object v7245) throws Exception {
-return defined(v7243, v7244, v7245);
-}};
-public static Object defined(final Object v7243, final Object v7244, final Object v7245) throws Exception {
 
+public static final Symbol SYMBOL = RuntimeContext.symbol("kl-to-java-traverse");
+public static final Lambda LAMBDA = new Lambda3() {
+public Object apply(final Object v1181, final Object v1182, final Object v1183) throws Exception {
+return defined(v1181, v1182, v1183);
+}};
+public static Object defined(final Object v1181, final Object v1182, final Object v1183) throws Exception {
 
-final Object i7346;
-if ((boolean)(v7243 instanceof Cons)) {
 
+final Object i1193;
+if ((boolean)(v1181 instanceof Cons)) {
 
-final Object i7344;
-if ((boolean)Lang.equals(RuntimeContext.symbol("defun"), ((Cons)v7243).head)) {
 
+final Object i1191;
+if ((boolean)Lang.equals(RuntimeContext.symbol("defun"), ((Cons)v1181).head)) {
 
 
-final Object i7342;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
 
+final Object i1189;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i7340;
-if ((boolean)(((Cons)((Cons)v7243).tail).tail instanceof Cons)) {
 
+final Object i1187;
+if ((boolean)(((Cons)((Cons)v1181).tail).tail instanceof Cons)) {
 
 
 
 
-final Object i7338;
-if ((boolean)(((Cons)((Cons)((Cons)v7243).tail).tail).tail instanceof Cons)) {
 
+final Object i1185;
+if ((boolean)(((Cons)((Cons)((Cons)v1181).tail).tail).tail instanceof Cons)) {
 
 
 
 
-final Object i7337;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)((Cons)v7243).tail).tail).tail).tail)) {
 
-i7337 = true;
+final Object i1184;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)((Cons)v1181).tail).tail).tail).tail)) {
+
+i1184 = true;
 } else {
 
-i7337 = false;
+i1184 = false;
 
 }
-i7338 = i7337;
+i1185 = i1184;
 } else {
 
-i7338 = false;
+i1185 = false;
 
 }
-final Object i7339;
-if ((boolean)i7338) {
+final Object i1186;
+if ((boolean)i1185) {
 
-i7339 = true;
+i1186 = true;
 } else {
 
-i7339 = false;
+i1186 = false;
 
 }
-i7340 = i7339;
+i1187 = i1186;
 } else {
 
-i7340 = false;
+i1187 = false;
 
 }
-final Object i7341;
-if ((boolean)i7340) {
+final Object i1188;
+if ((boolean)i1187) {
 
-i7341 = true;
+i1188 = true;
 } else {
 
-i7341 = false;
+i1188 = false;
 
 }
-i7342 = i7341;
+i1189 = i1188;
 } else {
 
-i7342 = false;
+i1189 = false;
 
 }
-final Object i7343;
-if ((boolean)i7342) {
+final Object i1190;
+if ((boolean)i1189) {
 
-i7343 = true;
+i1190 = true;
 } else {
 
-i7343 = false;
+i1190 = false;
 
 }
-i7344 = i7343;
+i1191 = i1190;
 } else {
 
-i7344 = false;
+i1191 = false;
 
 }
-final Object i7345;
-if ((boolean)i7344) {
+final Object i1192;
+if ((boolean)i1191) {
 
-i7345 = true;
+i1192 = true;
 } else {
 
-i7345 = false;
+i1192 = false;
 
 }
-i7346 = i7345;
+i1193 = i1192;
 } else {
 
-i7346 = false;
+i1193 = false;
 
 }
-final Object i8423;
-if ((boolean)i7346) {
+final Object i2279;
+if ((boolean)i1193) {
 
 
 
-final Object f7348 = Length.LAMBDA.apply(((Cons)((Cons)((Cons)v7243).tail).tail).head);
+final Object f1195 = Length.LAMBDA.apply(((Cons)((Cons)((Cons)v1181).tail).tail).head);
 
-final Object arity7347 = f7348;
-final Object f7350 = ToVar.LAMBDA.apply();
+final Object arity1194 = f1195;
+final Object f1197 = ToVar.LAMBDA.apply();
 
 
 
-final Object f7351 = Map.LAMBDA.apply(f7350, ((Cons)((Cons)((Cons)v7243).tail).tail).head);
-final Object f7352 = MethodSig.LAMBDA.apply(f7351);
+final Object f1198 = Map.LAMBDA.apply(f1197, ((Cons)((Cons)((Cons)v1181).tail).tail).head);
+final Object f1199 = MethodSig.LAMBDA.apply(f1198);
 
-final Object signature7349 = f7352;
-final Object f7354 = ToVar.LAMBDA.apply();
+final Object signature1196 = f1199;
+final Object f1201 = ToVar.LAMBDA.apply();
 
 
 
-final Object f7355 = Map.LAMBDA.apply(f7354, ((Cons)((Cons)((Cons)v7243).tail).tail).head);
-final Object f7356 = MethodArgstring.LAMBDA.apply(f7355);
+final Object f1202 = Map.LAMBDA.apply(f1201, ((Cons)((Cons)((Cons)v1181).tail).tail).head);
+final Object f1203 = MethodArgstring.LAMBDA.apply(f1202);
 
-final Object argstring7353 = f7356;
+final Object argstring1200 = f1203;
 
 
 
 
 
-final Object f7357 = Length.LAMBDA.apply(((Cons)((Cons)((Cons)v7243).tail).tail).head);
+final Object f1204 = Length.LAMBDA.apply(((Cons)((Cons)((Cons)v1181).tail).tail).head);
 
-final Object f7358 = Put.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, RuntimeContext.symbol("arity"), f7357, RuntimeContext.globalProperties.get(RuntimeContext.symbol("shen-*property-vector*")));
+final Object f1205 = Put.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, RuntimeContext.symbol("arity"), f1204, RuntimeContext.globalProperties.get(RuntimeContext.symbol("shen-*property-vector*")));
 
 
 
 
-final Object f7360 = ToVarPair.LAMBDA.apply();
+final Object f1207 = ToVarPair.LAMBDA.apply();
 
 
 
-final Object f7361 = Map.LAMBDA.apply(f7360, ((Cons)((Cons)((Cons)v7243).tail).tail).head);
-final Object f7362 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)((Cons)v7243).tail).tail).tail).head, RuntimeContext.symbol("object"), f7361);
+final Object f1208 = Map.LAMBDA.apply(f1207, ((Cons)((Cons)((Cons)v1181).tail).tail).head);
+final Object f1209 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)((Cons)v1181).tail).tail).tail).head, RuntimeContext.symbol("object"), f1208);
 
-final Object result7359 = f7362;
+final Object result1206 = f1209;
 
 
 
 
 
-final Object f7363 = Length.LAMBDA.apply(((Cons)((Cons)((Cons)v7243).tail).tail).head);
-final Object f7364 = Fst.LAMBDA.apply(result7359);
-final Object f7365 = HandleUnreachableReturn.LAMBDA.apply(result7359);
-final Object f7366 = Atp.LAMBDA.apply(f7365, Nil.NIL);
-final Object f7367 = Atp.LAMBDA.apply(f7364, f7366);
-final Object f7368 = Atp.LAMBDA.apply(signature7349, f7367);
-final Object f7369 = Atp.LAMBDA.apply(argstring7353, f7368);
-final Object f7370 = Atp.LAMBDA.apply(signature7349, f7369);
-final Object f7371 = Atp.LAMBDA.apply(f7363, f7370);
-final Object f7372 = Atp.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, f7371);
-final Object f7373 = IntmakeString.LAMBDA.apply("\r\npublic static final Symbol SYMBOL = RuntimeContext.symbol(\"~A\");\r\npublic static final Lambda LAMBDA = new Lambda~A() {\r\npublic Object apply(~A) throws Exception {\r\nreturn defined(~A);\r\n}};\r\npublic static Object defined(~A) throws Exception {~%~A~%~A~%}", f7372);
+final Object f1210 = Length.LAMBDA.apply(((Cons)((Cons)((Cons)v1181).tail).tail).head);
+final Object f1211 = Fst.LAMBDA.apply(result1206);
+final Object f1212 = HandleUnreachableReturn.LAMBDA.apply(result1206);
+final Object f1213 = Atp.LAMBDA.apply(f1212, Nil.NIL);
+final Object f1214 = Atp.LAMBDA.apply(f1211, f1213);
+final Object f1215 = Atp.LAMBDA.apply(signature1196, f1214);
+final Object f1216 = Atp.LAMBDA.apply(argstring1200, f1215);
+final Object f1217 = Atp.LAMBDA.apply(signature1196, f1216);
+final Object f1218 = Atp.LAMBDA.apply(f1210, f1217);
+final Object f1219 = Atp.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, f1218);
+final Object f1220 = IntmakeString.LAMBDA.apply("\r\npublic static final Symbol SYMBOL = RuntimeContext.symbol(\"~A\");\r\npublic static final Lambda LAMBDA = new Lambda~A() {\r\npublic Object apply(~A) throws Exception {\r\nreturn defined(~A);\r\n}};\r\npublic static Object defined(~A) throws Exception {~%~A~%~A~%}", f1219);
 
 
 
 
-final Object f7374 = Atp.LAMBDA.apply(String.valueOf(((Cons)((Cons)v7243).tail).head), RuntimeContext.symbol("func"));
-final Object f7375 = Atp.LAMBDA.apply(f7373, f7374);
-final Object f7376 = Do.LAMBDA.apply(f7358, f7375);
+final Object f1221 = Atp.LAMBDA.apply(String.valueOf(((Cons)((Cons)v1181).tail).head), RuntimeContext.symbol("func"));
+final Object f1222 = Atp.LAMBDA.apply(f1220, f1221);
+final Object f1223 = Do.LAMBDA.apply(f1205, f1222);
 
 
 
 
-i8423 = f7376;
+i2279 = f1223;
 } else {
 
 
-final Object i7386;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1233;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7384;
-if ((boolean)Lang.equals(RuntimeContext.symbol("let"), ((Cons)v7243).head)) {
+final Object i1231;
+if ((boolean)Lang.equals(RuntimeContext.symbol("let"), ((Cons)v1181).head)) {
 
 
 
-final Object i7382;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1229;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
 
-final Object i7380;
-if ((boolean)(((Cons)((Cons)v7243).tail).tail instanceof Cons)) {
+final Object i1227;
+if ((boolean)(((Cons)((Cons)v1181).tail).tail instanceof Cons)) {
 
 
 
 
 
-final Object i7378;
-if ((boolean)(((Cons)((Cons)((Cons)v7243).tail).tail).tail instanceof Cons)) {
+final Object i1225;
+if ((boolean)(((Cons)((Cons)((Cons)v1181).tail).tail).tail instanceof Cons)) {
 
 
 
 
 
-final Object i7377;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)((Cons)v7243).tail).tail).tail).tail)) {
+final Object i1224;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)((Cons)v1181).tail).tail).tail).tail)) {
 
-i7377 = true;
+i1224 = true;
 } else {
 
-i7377 = false;
+i1224 = false;
 
 }
-i7378 = i7377;
+i1225 = i1224;
 } else {
 
-i7378 = false;
+i1225 = false;
 
 }
-final Object i7379;
-if ((boolean)i7378) {
+final Object i1226;
+if ((boolean)i1225) {
 
-i7379 = true;
+i1226 = true;
 } else {
 
-i7379 = false;
+i1226 = false;
 
 }
-i7380 = i7379;
+i1227 = i1226;
 } else {
 
-i7380 = false;
+i1227 = false;
 
 }
-final Object i7381;
-if ((boolean)i7380) {
+final Object i1228;
+if ((boolean)i1227) {
 
-i7381 = true;
+i1228 = true;
 } else {
 
-i7381 = false;
+i1228 = false;
 
 }
-i7382 = i7381;
+i1229 = i1228;
 } else {
 
-i7382 = false;
+i1229 = false;
 
 }
-final Object i7383;
-if ((boolean)i7382) {
+final Object i1230;
+if ((boolean)i1229) {
 
-i7383 = true;
+i1230 = true;
 } else {
 
-i7383 = false;
+i1230 = false;
 
 }
-i7384 = i7383;
+i1231 = i1230;
 } else {
 
-i7384 = false;
+i1231 = false;
 
 }
-final Object i7385;
-if ((boolean)i7384) {
+final Object i1232;
+if ((boolean)i1231) {
 
-i7385 = true;
+i1232 = true;
 } else {
 
-i7385 = false;
+i1232 = false;
 
 }
-i7386 = i7385;
+i1233 = i1232;
 } else {
 
-i7386 = false;
+i1233 = false;
 
 }
-final Object i8422;
-if ((boolean)i7386) {
+final Object i2278;
+if ((boolean)i1233) {
 
 
-final Object f7388 = Gensym.LAMBDA.apply(((Cons)((Cons)v7243).tail).head);
-final Object f7389 = ToVar.LAMBDA.apply(f7388);
+final Object f1235 = Gensym.LAMBDA.apply(((Cons)((Cons)v1181).tail).head);
+final Object f1236 = ToVar.LAMBDA.apply(f1235);
 
-final Object varTOxDO7387 = f7389;
+final Object varTOxDO1234 = f1236;
 
 
 
-final Object f7391 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)v7243).tail).tail).head, RuntimeContext.symbol("object"), v7245);
+final Object f1238 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)v1181).tail).tail).head, RuntimeContext.symbol("object"), v1183);
 
-final Object pValue7390 = f7391;
+final Object pValue1237 = f1238;
 
 
 
 
 
 
-final Object f7393 = Atp.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, varTOxDO7387);
+final Object f1240 = Atp.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, varTOxDO1234);
 
 
-final Object f7394 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)((Cons)v7243).tail).tail).tail).head, v7244, new Cons(f7393, v7245));
+final Object f1241 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)((Cons)v1181).tail).tail).tail).head, v1182, new Cons(f1240, v1183));
 
-final Object pBody7392 = f7394;
-final Object f7395 = Fst.LAMBDA.apply(pValue7390);
-final Object f7396 = Second.LAMBDA.apply(pValue7390);
-final Object f7397 = Fst.LAMBDA.apply(pBody7392);
-final Object f7398 = Atp.LAMBDA.apply(f7397, Nil.NIL);
-final Object f7399 = Atp.LAMBDA.apply(f7396, f7398);
-final Object f7400 = Atp.LAMBDA.apply(varTOxDO7387, f7399);
-final Object f7401 = Atp.LAMBDA.apply(f7395, f7400);
-final Object f7402 = IntmakeString.LAMBDA.apply("~A~%final Object ~A = ~A;~%~A~%", f7401);
-final Object f7403 = Second.LAMBDA.apply(pBody7392);
-final Object f7404 = Third.LAMBDA.apply(pBody7392);
-final Object f7405 = Atp.LAMBDA.apply(f7403, f7404);
-final Object f7406 = Atp.LAMBDA.apply(f7402, f7405);
+final Object pBody1239 = f1241;
+final Object f1242 = Fst.LAMBDA.apply(pValue1237);
+final Object f1243 = Second.LAMBDA.apply(pValue1237);
+final Object f1244 = Fst.LAMBDA.apply(pBody1239);
+final Object f1245 = Atp.LAMBDA.apply(f1244, Nil.NIL);
+final Object f1246 = Atp.LAMBDA.apply(f1243, f1245);
+final Object f1247 = Atp.LAMBDA.apply(varTOxDO1234, f1246);
+final Object f1248 = Atp.LAMBDA.apply(f1242, f1247);
+final Object f1249 = IntmakeString.LAMBDA.apply("~A~%final Object ~A = ~A;~%~A~%", f1248);
+final Object f1250 = Second.LAMBDA.apply(pBody1239);
+final Object f1251 = Third.LAMBDA.apply(pBody1239);
+final Object f1252 = Atp.LAMBDA.apply(f1250, f1251);
+final Object f1253 = Atp.LAMBDA.apply(f1249, f1252);
 
 
 
 
-i8422 = f7406;
+i2278 = f1253;
 } else {
 
 
-final Object i7416;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1263;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7414;
-if ((boolean)Lang.equals(RuntimeContext.symbol("if"), ((Cons)v7243).head)) {
+final Object i1261;
+if ((boolean)Lang.equals(RuntimeContext.symbol("if"), ((Cons)v1181).head)) {
 
 
 
-final Object i7412;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1259;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
 
-final Object i7410;
-if ((boolean)(((Cons)((Cons)v7243).tail).tail instanceof Cons)) {
+final Object i1257;
+if ((boolean)(((Cons)((Cons)v1181).tail).tail instanceof Cons)) {
 
 
 
 
 
-final Object i7408;
-if ((boolean)(((Cons)((Cons)((Cons)v7243).tail).tail).tail instanceof Cons)) {
+final Object i1255;
+if ((boolean)(((Cons)((Cons)((Cons)v1181).tail).tail).tail instanceof Cons)) {
 
 
 
 
 
-final Object i7407;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)((Cons)v7243).tail).tail).tail).tail)) {
+final Object i1254;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)((Cons)v1181).tail).tail).tail).tail)) {
 
-i7407 = true;
+i1254 = true;
 } else {
 
-i7407 = false;
+i1254 = false;
 
 }
-i7408 = i7407;
+i1255 = i1254;
 } else {
 
-i7408 = false;
+i1255 = false;
 
 }
-final Object i7409;
-if ((boolean)i7408) {
+final Object i1256;
+if ((boolean)i1255) {
 
-i7409 = true;
+i1256 = true;
 } else {
 
-i7409 = false;
+i1256 = false;
 
 }
-i7410 = i7409;
+i1257 = i1256;
 } else {
 
-i7410 = false;
+i1257 = false;
 
 }
-final Object i7411;
-if ((boolean)i7410) {
+final Object i1258;
+if ((boolean)i1257) {
 
-i7411 = true;
+i1258 = true;
 } else {
 
-i7411 = false;
+i1258 = false;
 
 }
-i7412 = i7411;
+i1259 = i1258;
 } else {
 
-i7412 = false;
+i1259 = false;
 
 }
-final Object i7413;
-if ((boolean)i7412) {
+final Object i1260;
+if ((boolean)i1259) {
 
-i7413 = true;
+i1260 = true;
 } else {
 
-i7413 = false;
+i1260 = false;
 
 }
-i7414 = i7413;
+i1261 = i1260;
 } else {
 
-i7414 = false;
+i1261 = false;
 
 }
-final Object i7415;
-if ((boolean)i7414) {
+final Object i1262;
+if ((boolean)i1261) {
 
-i7415 = true;
+i1262 = true;
 } else {
 
-i7415 = false;
+i1262 = false;
 
 }
-i7416 = i7415;
+i1263 = i1262;
 } else {
 
-i7416 = false;
+i1263 = false;
 
 }
-final Object i8421;
-if ((boolean)i7416) {
+final Object i2277;
+if ((boolean)i1263) {
 
 
-final Object f7418 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, RuntimeContext.symbol("boolean"), v7245);
+final Object f1265 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, RuntimeContext.symbol("boolean"), v1183);
 
-final Object pX07417 = f7418;
+final Object pX01264 = f1265;
 
 
 
-final Object f7420 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)v7243).tail).tail).head, v7244, v7245);
+final Object f1267 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)v1181).tail).tail).head, v1182, v1183);
 
-final Object pX17419 = f7420;
+final Object pX11266 = f1267;
 
 
 
 
-final Object f7422 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)((Cons)v7243).tail).tail).tail).head, v7244, v7245);
+final Object f1269 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)((Cons)v1181).tail).tail).tail).head, v1182, v1183);
 
-final Object pX27421 = f7422;
-final Object f7424 = Gensym.LAMBDA.apply(RuntimeContext.symbol("i"));
+final Object pX21268 = f1269;
+final Object f1271 = Gensym.LAMBDA.apply(RuntimeContext.symbol("i"));
 
-final Object var7423 = f7424;
-final Object f7426 = Third.LAMBDA.apply(pX07417);
+final Object var1270 = f1271;
+final Object f1273 = Third.LAMBDA.apply(pX01264);
 
-final Object i7444;
-if ((boolean)Lang.equals(RuntimeContext.symbol("unreachable"), f7426)) {
-final Object f7427 = Fst.LAMBDA.apply(pX07417);
-final Object f7428 = Atp.LAMBDA.apply(f7427, Nil.NIL);
-final Object f7429 = IntmakeString.LAMBDA.apply("~A~%", f7428);
+final Object i1291;
+if ((boolean)Lang.equals(RuntimeContext.symbol("unreachable"), f1273)) {
+final Object f1274 = Fst.LAMBDA.apply(pX01264);
+final Object f1275 = Atp.LAMBDA.apply(f1274, Nil.NIL);
+final Object f1276 = IntmakeString.LAMBDA.apply("~A~%", f1275);
 
-i7444 = f7429;
+i1291 = f1276;
 } else {
-final Object f7430 = Fst.LAMBDA.apply(pX07417);
-final Object f7431 = Second.LAMBDA.apply(pX07417);
-final Object f7432 = Fst.LAMBDA.apply(pX17419);
-final Object f7433 = HandleUnreachableAssignment.LAMBDA.apply(var7423, pX17419);
-final Object f7434 = Fst.LAMBDA.apply(pX27421);
-final Object f7435 = HandleUnreachableAssignment.LAMBDA.apply(var7423, pX27421);
-final Object f7436 = Atp.LAMBDA.apply(f7435, Nil.NIL);
-final Object f7437 = Atp.LAMBDA.apply(f7434, f7436);
-final Object f7438 = Atp.LAMBDA.apply(f7433, f7437);
-final Object f7439 = Atp.LAMBDA.apply(f7432, f7438);
-final Object f7440 = Atp.LAMBDA.apply(f7431, f7439);
-final Object f7441 = Atp.LAMBDA.apply(var7423, f7440);
-final Object f7442 = Atp.LAMBDA.apply(f7430, f7441);
-final Object f7443 = IntmakeString.LAMBDA.apply("~A~%final Object ~A;~%if ((boolean)~A) {~%~A~%~A} else {~%~A~%~A~%}", f7442);
+final Object f1277 = Fst.LAMBDA.apply(pX01264);
+final Object f1278 = Second.LAMBDA.apply(pX01264);
+final Object f1279 = Fst.LAMBDA.apply(pX11266);
+final Object f1280 = HandleUnreachableAssignment.LAMBDA.apply(var1270, pX11266);
+final Object f1281 = Fst.LAMBDA.apply(pX21268);
+final Object f1282 = HandleUnreachableAssignment.LAMBDA.apply(var1270, pX21268);
+final Object f1283 = Atp.LAMBDA.apply(f1282, Nil.NIL);
+final Object f1284 = Atp.LAMBDA.apply(f1281, f1283);
+final Object f1285 = Atp.LAMBDA.apply(f1280, f1284);
+final Object f1286 = Atp.LAMBDA.apply(f1279, f1285);
+final Object f1287 = Atp.LAMBDA.apply(f1278, f1286);
+final Object f1288 = Atp.LAMBDA.apply(var1270, f1287);
+final Object f1289 = Atp.LAMBDA.apply(f1277, f1288);
+final Object f1290 = IntmakeString.LAMBDA.apply("~A~%final Object ~A;~%if ((boolean)~A) {~%~A~%~A} else {~%~A~%~A~%}", f1289);
 
-i7444 = f7443;
+i1291 = f1290;
 
 }
-final Object first7425 = i7444;
+final Object first1272 = i1291;
 
-final Object f7445 = Third.LAMBDA.apply(pX07417);
+final Object f1292 = Third.LAMBDA.apply(pX01264);
 
-final Object i7449;
-if ((boolean)Lang.equals(RuntimeContext.symbol("unreachable"), f7445)) {
+final Object i1296;
+if ((boolean)Lang.equals(RuntimeContext.symbol("unreachable"), f1292)) {
 
-i7449 = RuntimeContext.symbol("unreachable");
+i1296 = RuntimeContext.symbol("unreachable");
 } else {
-final Object f7446 = Third.LAMBDA.apply(pX17419);
-final Object f7447 = Third.LAMBDA.apply(pX27421);
-final Object f7448 = CombineTypes.LAMBDA.apply(f7446, f7447);
+final Object f1293 = Third.LAMBDA.apply(pX11266);
+final Object f1294 = Third.LAMBDA.apply(pX21268);
+final Object f1295 = CombineTypes.LAMBDA.apply(f1293, f1294);
 
-i7449 = f7448;
+i1296 = f1295;
 
-}final Object f7450 = Atp.LAMBDA.apply(String.valueOf(var7423), i7449);
-final Object f7451 = Atp.LAMBDA.apply(first7425, f7450);
+}final Object f1297 = Atp.LAMBDA.apply(String.valueOf(var1270), i1296);
+final Object f1298 = Atp.LAMBDA.apply(first1272, f1297);
 
 
 
 
 
 
-i8421 = f7451;
+i2277 = f1298;
 } else {
 
 
-final Object i7453;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1300;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7452;
-if ((boolean)Lang.equals(RuntimeContext.symbol("cond"), ((Cons)v7243).head)) {
+final Object i1299;
+if ((boolean)Lang.equals(RuntimeContext.symbol("cond"), ((Cons)v1181).head)) {
 
-i7452 = true;
+i1299 = true;
 } else {
 
-i7452 = false;
+i1299 = false;
 
 }
-i7453 = i7452;
+i1300 = i1299;
 } else {
 
-i7453 = false;
+i1300 = false;
 
 }
-final Object i8420;
-if ((boolean)i7453) {
+final Object i2276;
+if ((boolean)i1300) {
 
-final Object f7454 = HandleCases.LAMBDA.apply(((Cons)v7243).tail);
-final Object f7455 = KlToJavaTraverse.LAMBDA.apply(f7454, v7244, v7245);
+final Object f1301 = HandleCases.LAMBDA.apply(((Cons)v1181).tail);
+final Object f1302 = KlToJavaTraverse.LAMBDA.apply(f1301, v1182, v1183);
 
-i8420 = f7455;
+i2276 = f1302;
 } else {
 
 
-final Object i7463;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1310;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7461;
-if ((boolean)Lang.equals(RuntimeContext.symbol("trap-error"), ((Cons)v7243).head)) {
+final Object i1308;
+if ((boolean)Lang.equals(RuntimeContext.symbol("trap-error"), ((Cons)v1181).head)) {
 
 
 
-final Object i7459;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1306;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
 
-final Object i7457;
-if ((boolean)(((Cons)((Cons)v7243).tail).tail instanceof Cons)) {
+final Object i1304;
+if ((boolean)(((Cons)((Cons)v1181).tail).tail instanceof Cons)) {
 
 
 
 
-final Object i7456;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)v7243).tail).tail).tail)) {
+final Object i1303;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)v1181).tail).tail).tail)) {
 
-i7456 = true;
+i1303 = true;
 } else {
 
-i7456 = false;
+i1303 = false;
 
 }
-i7457 = i7456;
+i1304 = i1303;
 } else {
 
-i7457 = false;
+i1304 = false;
 
 }
-final Object i7458;
-if ((boolean)i7457) {
+final Object i1305;
+if ((boolean)i1304) {
 
-i7458 = true;
+i1305 = true;
 } else {
 
-i7458 = false;
+i1305 = false;
 
 }
-i7459 = i7458;
+i1306 = i1305;
 } else {
 
-i7459 = false;
+i1306 = false;
 
 }
-final Object i7460;
-if ((boolean)i7459) {
+final Object i1307;
+if ((boolean)i1306) {
 
-i7460 = true;
+i1307 = true;
 } else {
 
-i7460 = false;
+i1307 = false;
 
 }
-i7461 = i7460;
+i1308 = i1307;
 } else {
 
-i7461 = false;
+i1308 = false;
 
 }
-final Object i7462;
-if ((boolean)i7461) {
+final Object i1309;
+if ((boolean)i1308) {
 
-i7462 = true;
+i1309 = true;
 } else {
 
-i7462 = false;
+i1309 = false;
 
 }
-i7463 = i7462;
+i1310 = i1309;
 } else {
 
-i7463 = false;
+i1310 = false;
 
 }
-final Object i8419;
-if ((boolean)i7463) {
+final Object i2275;
+if ((boolean)i1310) {
 
 
-final Object f7465 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, RuntimeContext.symbol("object"), v7245);
+final Object f1312 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, RuntimeContext.symbol("object"), v1183);
 
-final Object evaled7464 = f7465;
+final Object evaled1311 = f1312;
 
 
 
-final Object f7467 = ToVarPair.LAMBDA.apply(RuntimeContext.symbol("t"));
+final Object f1314 = ToVarPair.LAMBDA.apply(RuntimeContext.symbol("t"));
 
 
-final Object f7468 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)v7243).tail).tail).head, RuntimeContext.symbol("lambda"), new Cons(f7467, v7245));
+final Object f1315 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)v1181).tail).tail).head, RuntimeContext.symbol("lambda"), new Cons(f1314, v1183));
 
-final Object handlerTOxDO7466 = f7468;
-final Object f7470 = Gensym.LAMBDA.apply(RuntimeContext.symbol("t"));
+final Object handlerTOxDO1313 = f1315;
+final Object f1317 = Gensym.LAMBDA.apply(RuntimeContext.symbol("t"));
 
-final Object temp7469 = f7470;
-final Object f7472 = Gensym.LAMBDA.apply(RuntimeContext.symbol("t"));
+final Object temp1316 = f1317;
+final Object f1319 = Gensym.LAMBDA.apply(RuntimeContext.symbol("t"));
 
-final Object result7471 = f7472;
-final Object f7473 = Fst.LAMBDA.apply(evaled7464);
-final Object f7474 = Second.LAMBDA.apply(evaled7464);
-final Object f7475 = Fst.LAMBDA.apply(handlerTOxDO7466);
-final Object f7476 = Second.LAMBDA.apply(handlerTOxDO7466);
-final Object f7477 = Atp.LAMBDA.apply(temp7469, Nil.NIL);
-final Object f7478 = Atp.LAMBDA.apply(result7471, f7477);
-final Object f7479 = Atp.LAMBDA.apply(f7476, f7478);
-final Object f7480 = Atp.LAMBDA.apply(temp7469, f7479);
-final Object f7481 = Atp.LAMBDA.apply(f7475, f7480);
-final Object f7482 = Atp.LAMBDA.apply(f7474, f7481);
-final Object f7483 = Atp.LAMBDA.apply(temp7469, f7482);
-final Object f7484 = Atp.LAMBDA.apply(f7473, f7483);
-final Object f7485 = Atp.LAMBDA.apply(temp7469, f7484);
-final Object f7486 = IntmakeString.LAMBDA.apply("Object ~A;~%try {~%~A~%~A = ~A;~%} catch (Throwable t) {~%~A~%~A = ~A.apply(t);~%}~%final Object ~A = ~A;~%", f7485);
+final Object result1318 = f1319;
+final Object f1320 = Fst.LAMBDA.apply(evaled1311);
+final Object f1321 = Second.LAMBDA.apply(evaled1311);
+final Object f1322 = Fst.LAMBDA.apply(handlerTOxDO1313);
+final Object f1323 = Second.LAMBDA.apply(handlerTOxDO1313);
+final Object f1324 = Atp.LAMBDA.apply(temp1316, Nil.NIL);
+final Object f1325 = Atp.LAMBDA.apply(result1318, f1324);
+final Object f1326 = Atp.LAMBDA.apply(f1323, f1325);
+final Object f1327 = Atp.LAMBDA.apply(temp1316, f1326);
+final Object f1328 = Atp.LAMBDA.apply(f1322, f1327);
+final Object f1329 = Atp.LAMBDA.apply(f1321, f1328);
+final Object f1330 = Atp.LAMBDA.apply(temp1316, f1329);
+final Object f1331 = Atp.LAMBDA.apply(f1320, f1330);
+final Object f1332 = Atp.LAMBDA.apply(temp1316, f1331);
+final Object f1333 = IntmakeString.LAMBDA.apply("Object ~A;~%try {~%~A~%~A = ~A;~%} catch (Throwable t) {~%~A~%~A = ~A.apply(t);~%}~%final Object ~A = ~A;~%", f1332);
 
-final Object f7487 = Atp.LAMBDA.apply(String.valueOf(result7471), RuntimeContext.symbol("object"));
-final Object f7488 = Atp.LAMBDA.apply(f7486, f7487);
+final Object f1334 = Atp.LAMBDA.apply(String.valueOf(result1318), RuntimeContext.symbol("object"));
+final Object f1335 = Atp.LAMBDA.apply(f1333, f1334);
 
 
 
 
 
-i8419 = f7488;
+i2275 = f1335;
 } else {
 
 
-final Object i7498;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1345;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7496;
-if ((boolean)Lang.equals(RuntimeContext.symbol("lambda"), ((Cons)v7243).head)) {
+final Object i1343;
+if ((boolean)Lang.equals(RuntimeContext.symbol("lambda"), ((Cons)v1181).head)) {
 
 
 
-final Object i7494;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1341;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i7492;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).head)) {
+final Object i1339;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).head)) {
 
 
 
 
-final Object i7490;
-if ((boolean)(((Cons)((Cons)v7243).tail).tail instanceof Cons)) {
+final Object i1337;
+if ((boolean)(((Cons)((Cons)v1181).tail).tail instanceof Cons)) {
 
 
 
 
-final Object i7489;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)v7243).tail).tail).tail)) {
+final Object i1336;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)v1181).tail).tail).tail)) {
 
-i7489 = true;
+i1336 = true;
 } else {
 
-i7489 = false;
+i1336 = false;
 
 }
-i7490 = i7489;
+i1337 = i1336;
 } else {
 
-i7490 = false;
+i1337 = false;
 
 }
-final Object i7491;
-if ((boolean)i7490) {
+final Object i1338;
+if ((boolean)i1337) {
 
-i7491 = true;
+i1338 = true;
 } else {
 
-i7491 = false;
+i1338 = false;
 
 }
-i7492 = i7491;
+i1339 = i1338;
 } else {
 
-i7492 = false;
+i1339 = false;
 
 }
-final Object i7493;
-if ((boolean)i7492) {
+final Object i1340;
+if ((boolean)i1339) {
 
-i7493 = true;
+i1340 = true;
 } else {
 
-i7493 = false;
+i1340 = false;
 
 }
-i7494 = i7493;
+i1341 = i1340;
 } else {
 
-i7494 = false;
+i1341 = false;
 
 }
-final Object i7495;
-if ((boolean)i7494) {
+final Object i1342;
+if ((boolean)i1341) {
 
-i7495 = true;
+i1342 = true;
 } else {
 
-i7495 = false;
+i1342 = false;
 
 }
-i7496 = i7495;
+i1343 = i1342;
 } else {
 
-i7496 = false;
+i1343 = false;
 
 }
-final Object i7497;
-if ((boolean)i7496) {
+final Object i1344;
+if ((boolean)i1343) {
 
-i7497 = true;
+i1344 = true;
 } else {
 
-i7497 = false;
+i1344 = false;
 
 }
-i7498 = i7497;
+i1345 = i1344;
 } else {
 
-i7498 = false;
+i1345 = false;
 
 }
-final Object i8418;
-if ((boolean)i7498) {
+final Object i2274;
+if ((boolean)i1345) {
 
 
 
-final Object f7500 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)v7243).tail).tail).head, RuntimeContext.symbol("object"), v7245);
+final Object f1347 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)v1181).tail).tail).head, RuntimeContext.symbol("object"), v1183);
 
-final Object bodyTOxDO7499 = f7500;
-final Object f7502 = Gensym.LAMBDA.apply(RuntimeContext.symbol("l"));
+final Object bodyTOxDO1346 = f1347;
+final Object f1349 = Gensym.LAMBDA.apply(RuntimeContext.symbol("l"));
 
-final Object result7501 = f7502;
-final Object f7503 = Fst.LAMBDA.apply(bodyTOxDO7499);
-final Object f7504 = HandleUnreachableReturn.LAMBDA.apply(bodyTOxDO7499);
-final Object f7505 = Atp.LAMBDA.apply(f7504, Nil.NIL);
-final Object f7506 = Atp.LAMBDA.apply(f7503, f7505);
-final Object f7507 = Atp.LAMBDA.apply(result7501, f7506);
-final Object f7508 = IntmakeString.LAMBDA.apply("final Lambda ~A = new Lambda0() {~%  public Object apply() throws Exception {~%    ~A~%~A  }~%};", f7507);
+final Object result1348 = f1349;
+final Object f1350 = Fst.LAMBDA.apply(bodyTOxDO1346);
+final Object f1351 = HandleUnreachableReturn.LAMBDA.apply(bodyTOxDO1346);
+final Object f1352 = Atp.LAMBDA.apply(f1351, Nil.NIL);
+final Object f1353 = Atp.LAMBDA.apply(f1350, f1352);
+final Object f1354 = Atp.LAMBDA.apply(result1348, f1353);
+final Object f1355 = IntmakeString.LAMBDA.apply("final Lambda ~A = new Lambda0() {~%  public Object apply() throws Exception {~%    ~A~%~A  }~%};", f1354);
 
-final Object f7509 = Atp.LAMBDA.apply(String.valueOf(result7501), RuntimeContext.symbol("lambda"));
-final Object f7510 = Atp.LAMBDA.apply(f7508, f7509);
+final Object f1356 = Atp.LAMBDA.apply(String.valueOf(result1348), RuntimeContext.symbol("lambda"));
+final Object f1357 = Atp.LAMBDA.apply(f1355, f1356);
 
 
 
-i8418 = f7510;
+i2274 = f1357;
 } else {
 
 
-final Object i7518;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1365;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7516;
-if ((boolean)Lang.equals(RuntimeContext.symbol("lambda"), ((Cons)v7243).head)) {
+final Object i1363;
+if ((boolean)Lang.equals(RuntimeContext.symbol("lambda"), ((Cons)v1181).head)) {
 
 
 
-final Object i7514;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1361;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
 
-final Object i7512;
-if ((boolean)(((Cons)((Cons)v7243).tail).tail instanceof Cons)) {
+final Object i1359;
+if ((boolean)(((Cons)((Cons)v1181).tail).tail instanceof Cons)) {
 
 
 
 
-final Object i7511;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)v7243).tail).tail).tail)) {
+final Object i1358;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)v1181).tail).tail).tail)) {
 
-i7511 = true;
+i1358 = true;
 } else {
 
-i7511 = false;
+i1358 = false;
 
 }
-i7512 = i7511;
+i1359 = i1358;
 } else {
 
-i7512 = false;
+i1359 = false;
 
 }
-final Object i7513;
-if ((boolean)i7512) {
+final Object i1360;
+if ((boolean)i1359) {
 
-i7513 = true;
+i1360 = true;
 } else {
 
-i7513 = false;
+i1360 = false;
 
 }
-i7514 = i7513;
+i1361 = i1360;
 } else {
 
-i7514 = false;
+i1361 = false;
 
 }
-final Object i7515;
-if ((boolean)i7514) {
+final Object i1362;
+if ((boolean)i1361) {
 
-i7515 = true;
+i1362 = true;
 } else {
 
-i7515 = false;
+i1362 = false;
 
 }
-i7516 = i7515;
+i1363 = i1362;
 } else {
 
-i7516 = false;
+i1363 = false;
 
 }
-final Object i7517;
-if ((boolean)i7516) {
+final Object i1364;
+if ((boolean)i1363) {
 
-i7517 = true;
+i1364 = true;
 } else {
 
-i7517 = false;
+i1364 = false;
 
 }
-i7518 = i7517;
+i1365 = i1364;
 } else {
 
-i7518 = false;
+i1365 = false;
 
 }
-final Object i8417;
-if ((boolean)i7518) {
+final Object i2273;
+if ((boolean)i1365) {
 
 
-final Object f7520 = ToVar.LAMBDA.apply(((Cons)((Cons)v7243).tail).head);
+final Object f1367 = ToVar.LAMBDA.apply(((Cons)((Cons)v1181).tail).head);
 
-final Object varTOxDO7519 = f7520;
+final Object varTOxDO1366 = f1367;
 
 
 
 
 
-final Object f7522 = ToVarPair.LAMBDA.apply(((Cons)((Cons)v7243).tail).head);
+final Object f1369 = ToVarPair.LAMBDA.apply(((Cons)((Cons)v1181).tail).head);
 
 
-final Object f7523 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)v7243).tail).tail).head, RuntimeContext.symbol("object"), new Cons(f7522, v7245));
+final Object f1370 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)v1181).tail).tail).head, RuntimeContext.symbol("object"), new Cons(f1369, v1183));
 
-final Object bodyTOxDO7521 = f7523;
-final Object f7525 = Gensym.LAMBDA.apply(RuntimeContext.symbol("l"));
+final Object bodyTOxDO1368 = f1370;
+final Object f1372 = Gensym.LAMBDA.apply(RuntimeContext.symbol("l"));
 
-final Object result7524 = f7525;
-final Object f7526 = Fst.LAMBDA.apply(bodyTOxDO7521);
-final Object f7527 = HandleUnreachableReturn.LAMBDA.apply(bodyTOxDO7521);
-final Object f7528 = Atp.LAMBDA.apply(f7527, Nil.NIL);
-final Object f7529 = Atp.LAMBDA.apply(f7526, f7528);
-final Object f7530 = Atp.LAMBDA.apply(varTOxDO7519, f7529);
-final Object f7531 = Atp.LAMBDA.apply(result7524, f7530);
-final Object f7532 = IntmakeString.LAMBDA.apply("final Lambda ~A = new Lambda1() {~%  public Object apply(final Object ~A) throws Exception {~%    ~A~%~A  }~%};", f7531);
+final Object result1371 = f1372;
+final Object f1373 = Fst.LAMBDA.apply(bodyTOxDO1368);
+final Object f1374 = HandleUnreachableReturn.LAMBDA.apply(bodyTOxDO1368);
+final Object f1375 = Atp.LAMBDA.apply(f1374, Nil.NIL);
+final Object f1376 = Atp.LAMBDA.apply(f1373, f1375);
+final Object f1377 = Atp.LAMBDA.apply(varTOxDO1366, f1376);
+final Object f1378 = Atp.LAMBDA.apply(result1371, f1377);
+final Object f1379 = IntmakeString.LAMBDA.apply("final Lambda ~A = new Lambda1() {~%  public Object apply(final Object ~A) throws Exception {~%    ~A~%~A  }~%};", f1378);
 
-final Object f7533 = Atp.LAMBDA.apply(String.valueOf(result7524), RuntimeContext.symbol("lambda"));
-final Object f7534 = Atp.LAMBDA.apply(f7532, f7533);
+final Object f1380 = Atp.LAMBDA.apply(String.valueOf(result1371), RuntimeContext.symbol("lambda"));
+final Object f1381 = Atp.LAMBDA.apply(f1379, f1380);
 
 
 
 
-i8417 = f7534;
+i2273 = f1381;
 } else {
 
 
-final Object i7540;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1387;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7538;
-if ((boolean)Lang.equals(RuntimeContext.symbol("simple-error"), ((Cons)v7243).head)) {
+final Object i1385;
+if ((boolean)Lang.equals(RuntimeContext.symbol("simple-error"), ((Cons)v1181).head)) {
 
 
 
-final Object i7536;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1383;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i7535;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i1382;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i7535 = true;
+i1382 = true;
 } else {
 
-i7535 = false;
+i1382 = false;
 
 }
-i7536 = i7535;
+i1383 = i1382;
 } else {
 
-i7536 = false;
+i1383 = false;
 
 }
-final Object i7537;
-if ((boolean)i7536) {
+final Object i1384;
+if ((boolean)i1383) {
 
-i7537 = true;
+i1384 = true;
 } else {
 
-i7537 = false;
+i1384 = false;
 
 }
-i7538 = i7537;
+i1385 = i1384;
 } else {
 
-i7538 = false;
+i1385 = false;
 
 }
-final Object i7539;
-if ((boolean)i7538) {
+final Object i1386;
+if ((boolean)i1385) {
 
-i7539 = true;
+i1386 = true;
 } else {
 
-i7539 = false;
+i1386 = false;
 
 }
-i7540 = i7539;
+i1387 = i1386;
 } else {
 
-i7540 = false;
+i1387 = false;
 
 }
-final Object i8416;
-if ((boolean)i7540) {
+final Object i2272;
+if ((boolean)i1387) {
 
 
-final Object f7542 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, RuntimeContext.symbol("string"), v7245);
+final Object f1389 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, RuntimeContext.symbol("string"), v1183);
 
-final Object messageTOxDO7541 = f7542;
-final Object f7543 = Fst.LAMBDA.apply(messageTOxDO7541);
-final Object f7544 = Second.LAMBDA.apply(messageTOxDO7541);
-final Object f7545 = Atp.LAMBDA.apply(f7544, Nil.NIL);
-final Object f7546 = Atp.LAMBDA.apply(f7543, f7545);
-final Object f7547 = IntmakeString.LAMBDA.apply("~A~%throw new SimpleError((String)~A);~%", f7546);
-final Object f7548 = Atp.LAMBDA.apply("", RuntimeContext.symbol("unreachable"));
-final Object f7549 = Atp.LAMBDA.apply(f7547, f7548);
+final Object messageTOxDO1388 = f1389;
+final Object f1390 = Fst.LAMBDA.apply(messageTOxDO1388);
+final Object f1391 = Second.LAMBDA.apply(messageTOxDO1388);
+final Object f1392 = Atp.LAMBDA.apply(f1391, Nil.NIL);
+final Object f1393 = Atp.LAMBDA.apply(f1390, f1392);
+final Object f1394 = IntmakeString.LAMBDA.apply("~A~%throw new SimpleError((String)~A);~%", f1393);
+final Object f1395 = Atp.LAMBDA.apply("", RuntimeContext.symbol("unreachable"));
+final Object f1396 = Atp.LAMBDA.apply(f1394, f1395);
 
 
-i8416 = f7549;
+i2272 = f1396;
 } else {
 
 
-final Object i7555;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1402;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7553;
-if ((boolean)Lang.equals(RuntimeContext.symbol("error-to-string"), ((Cons)v7243).head)) {
+final Object i1400;
+if ((boolean)Lang.equals(RuntimeContext.symbol("error-to-string"), ((Cons)v1181).head)) {
 
 
 
-final Object i7551;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1398;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i7550;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i1397;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i7550 = true;
+i1397 = true;
 } else {
 
-i7550 = false;
+i1397 = false;
 
 }
-i7551 = i7550;
+i1398 = i1397;
 } else {
 
-i7551 = false;
+i1398 = false;
 
 }
-final Object i7552;
-if ((boolean)i7551) {
+final Object i1399;
+if ((boolean)i1398) {
 
-i7552 = true;
+i1399 = true;
 } else {
 
-i7552 = false;
+i1399 = false;
 
 }
-i7553 = i7552;
+i1400 = i1399;
 } else {
 
-i7553 = false;
+i1400 = false;
 
 }
-final Object i7554;
-if ((boolean)i7553) {
+final Object i1401;
+if ((boolean)i1400) {
 
-i7554 = true;
+i1401 = true;
 } else {
 
-i7554 = false;
+i1401 = false;
 
 }
-i7555 = i7554;
+i1402 = i1401;
 } else {
 
-i7555 = false;
+i1402 = false;
 
 }
-final Object i8415;
-if ((boolean)i7555) {
+final Object i2271;
+if ((boolean)i1402) {
 
 
-final Object f7557 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, RuntimeContext.symbol("exception"), v7245);
+final Object f1404 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, RuntimeContext.symbol("exception"), v1183);
 
-final Object exceptionTOxDO7556 = f7557;
-final Object f7558 = Fst.LAMBDA.apply(exceptionTOxDO7556);
-final Object f7559 = Atp.LAMBDA.apply(f7558, Nil.NIL);
-final Object f7560 = IntmakeString.LAMBDA.apply("~A~%", f7559);
-final Object f7561 = Second.LAMBDA.apply(exceptionTOxDO7556);
-final Object f7562 = Atp.LAMBDA.apply(f7561, Nil.NIL);
-final Object f7563 = IntmakeString.LAMBDA.apply("Lang.errorToString(~A)", f7562);
-final Object f7564 = Atp.LAMBDA.apply(f7563, RuntimeContext.symbol("string"));
-final Object f7565 = Atp.LAMBDA.apply(f7560, f7564);
+final Object exceptionTOxDO1403 = f1404;
+final Object f1405 = Fst.LAMBDA.apply(exceptionTOxDO1403);
+final Object f1406 = Atp.LAMBDA.apply(f1405, Nil.NIL);
+final Object f1407 = IntmakeString.LAMBDA.apply("~A~%", f1406);
+final Object f1408 = Second.LAMBDA.apply(exceptionTOxDO1403);
+final Object f1409 = Atp.LAMBDA.apply(f1408, Nil.NIL);
+final Object f1410 = IntmakeString.LAMBDA.apply("Lang.errorToString(~A)", f1409);
+final Object f1411 = Atp.LAMBDA.apply(f1410, RuntimeContext.symbol("string"));
+final Object f1412 = Atp.LAMBDA.apply(f1407, f1411);
 
 
-i8415 = f7565;
+i2271 = f1412;
 } else {
 
 
-final Object i7571;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1418;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7569;
-if ((boolean)Lang.equals(RuntimeContext.symbol("str"), ((Cons)v7243).head)) {
+final Object i1416;
+if ((boolean)Lang.equals(RuntimeContext.symbol("str"), ((Cons)v1181).head)) {
 
 
 
-final Object i7567;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1414;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i7566;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i1413;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i7566 = true;
+i1413 = true;
 } else {
 
-i7566 = false;
+i1413 = false;
 
 }
-i7567 = i7566;
+i1414 = i1413;
 } else {
 
-i7567 = false;
+i1414 = false;
 
 }
-final Object i7568;
-if ((boolean)i7567) {
+final Object i1415;
+if ((boolean)i1414) {
 
-i7568 = true;
+i1415 = true;
 } else {
 
-i7568 = false;
+i1415 = false;
 
 }
-i7569 = i7568;
+i1416 = i1415;
 } else {
 
-i7569 = false;
+i1416 = false;
 
 }
-final Object i7570;
-if ((boolean)i7569) {
+final Object i1417;
+if ((boolean)i1416) {
 
-i7570 = true;
+i1417 = true;
 } else {
 
-i7570 = false;
+i1417 = false;
 
 }
-i7571 = i7570;
+i1418 = i1417;
 } else {
 
-i7571 = false;
+i1418 = false;
 
 }
-final Object i8414;
-if ((boolean)i7571) {
+final Object i2270;
+if ((boolean)i1418) {
 
 
-final Object f7572 = SingleParam.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, v7244, v7245, "String.valueOf(~A)", RuntimeContext.symbol("string"));
+final Object f1419 = SingleParam.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, v1182, v1183, "String.valueOf(~A)", RuntimeContext.symbol("string"));
 
-i8414 = f7572;
+i2270 = f1419;
 } else {
 
 
-final Object i7578;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1425;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7576;
-if ((boolean)Lang.equals(RuntimeContext.symbol("intern"), ((Cons)v7243).head)) {
+final Object i1423;
+if ((boolean)Lang.equals(RuntimeContext.symbol("intern"), ((Cons)v1181).head)) {
 
 
 
-final Object i7574;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1421;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i7573;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i1420;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i7573 = true;
+i1420 = true;
 } else {
 
-i7573 = false;
+i1420 = false;
 
 }
-i7574 = i7573;
+i1421 = i1420;
 } else {
 
-i7574 = false;
+i1421 = false;
 
 }
-final Object i7575;
-if ((boolean)i7574) {
+final Object i1422;
+if ((boolean)i1421) {
 
-i7575 = true;
+i1422 = true;
 } else {
 
-i7575 = false;
+i1422 = false;
 
 }
-i7576 = i7575;
+i1423 = i1422;
 } else {
 
-i7576 = false;
+i1423 = false;
 
 }
-final Object i7577;
-if ((boolean)i7576) {
+final Object i1424;
+if ((boolean)i1423) {
 
-i7577 = true;
+i1424 = true;
 } else {
 
-i7577 = false;
+i1424 = false;
 
 }
-i7578 = i7577;
+i1425 = i1424;
 } else {
 
-i7578 = false;
+i1425 = false;
 
 }
-final Object i8413;
-if ((boolean)i7578) {
+final Object i2269;
+if ((boolean)i1425) {
 
 
-final Object f7579 = SingleParam.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, v7244, v7245, "RuntimeContext.symbol((String)~A)", RuntimeContext.symbol("symbol"));
+final Object f1426 = SingleParam.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, v1182, v1183, "RuntimeContext.symbol((String)~A)", RuntimeContext.symbol("symbol"));
 
-i8413 = f7579;
+i2269 = f1426;
 } else {
 
 
-final Object i7585;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1432;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7583;
-if ((boolean)Lang.equals(RuntimeContext.symbol("absvector?"), ((Cons)v7243).head)) {
+final Object i1430;
+if ((boolean)Lang.equals(RuntimeContext.symbol("absvector?"), ((Cons)v1181).head)) {
 
 
 
-final Object i7581;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1428;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i7580;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i1427;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i7580 = true;
+i1427 = true;
 } else {
 
-i7580 = false;
+i1427 = false;
 
 }
-i7581 = i7580;
+i1428 = i1427;
 } else {
 
-i7581 = false;
+i1428 = false;
 
 }
-final Object i7582;
-if ((boolean)i7581) {
+final Object i1429;
+if ((boolean)i1428) {
 
-i7582 = true;
+i1429 = true;
 } else {
 
-i7582 = false;
+i1429 = false;
 
 }
-i7583 = i7582;
+i1430 = i1429;
 } else {
 
-i7583 = false;
+i1430 = false;
 
 }
-final Object i7584;
-if ((boolean)i7583) {
+final Object i1431;
+if ((boolean)i1430) {
 
-i7584 = true;
+i1431 = true;
 } else {
 
-i7584 = false;
+i1431 = false;
 
 }
-i7585 = i7584;
+i1432 = i1431;
 } else {
 
-i7585 = false;
+i1432 = false;
 
 }
-final Object i8412;
-if ((boolean)i7585) {
+final Object i2268;
+if ((boolean)i1432) {
 
 
-final Object f7586 = SingleParam.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, v7244, v7245, "(~A instanceof Object[])", RuntimeContext.symbol("boolean"));
+final Object f1433 = SingleParam.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, v1182, v1183, "(~A instanceof Object[])", RuntimeContext.symbol("boolean"));
 
-i8412 = f7586;
+i2268 = f1433;
 } else {
 
 
-final Object i7592;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1439;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7590;
-if ((boolean)Lang.equals(RuntimeContext.symbol("get-time"), ((Cons)v7243).head)) {
+final Object i1437;
+if ((boolean)Lang.equals(RuntimeContext.symbol("get-time"), ((Cons)v1181).head)) {
 
 
 
-final Object i7588;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1435;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i7587;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i1434;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i7587 = true;
+i1434 = true;
 } else {
 
-i7587 = false;
+i1434 = false;
 
 }
-i7588 = i7587;
+i1435 = i1434;
 } else {
 
-i7588 = false;
+i1435 = false;
 
 }
-final Object i7589;
-if ((boolean)i7588) {
+final Object i1436;
+if ((boolean)i1435) {
 
-i7589 = true;
+i1436 = true;
 } else {
 
-i7589 = false;
+i1436 = false;
 
 }
-i7590 = i7589;
+i1437 = i1436;
 } else {
 
-i7590 = false;
+i1437 = false;
 
 }
-final Object i7591;
-if ((boolean)i7590) {
+final Object i1438;
+if ((boolean)i1437) {
 
-i7591 = true;
+i1438 = true;
 } else {
 
-i7591 = false;
+i1438 = false;
 
 }
-i7592 = i7591;
+i1439 = i1438;
 } else {
 
-i7592 = false;
+i1439 = false;
 
 }
-final Object i8411;
-if ((boolean)i7592) {
+final Object i2267;
+if ((boolean)i1439) {
 
 
-final Object f7593 = SingleParam.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, v7244, v7245, "Lang.getTime(~A)", RuntimeContext.symbol("object"));
+final Object f1440 = SingleParam.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, v1182, v1183, "Lang.getTime(~A)", RuntimeContext.symbol("object"));
 
-i8411 = f7593;
+i2267 = f1440;
 } else {
 
 
-final Object i7603;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1450;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7601;
-if ((boolean)Lang.equals(RuntimeContext.symbol("open"), ((Cons)v7243).head)) {
+final Object i1448;
+if ((boolean)Lang.equals(RuntimeContext.symbol("open"), ((Cons)v1181).head)) {
 
 
 
-final Object i7599;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1446;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
 
-final Object i7597;
-if ((boolean)(((Cons)((Cons)v7243).tail).tail instanceof Cons)) {
+final Object i1444;
+if ((boolean)(((Cons)((Cons)v1181).tail).tail instanceof Cons)) {
 
 
 
 
 
-final Object i7595;
-if ((boolean)(((Cons)((Cons)((Cons)v7243).tail).tail).tail instanceof Cons)) {
+final Object i1442;
+if ((boolean)(((Cons)((Cons)((Cons)v1181).tail).tail).tail instanceof Cons)) {
 
 
 
 
 
-final Object i7594;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)((Cons)v7243).tail).tail).tail).tail)) {
+final Object i1441;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)((Cons)v1181).tail).tail).tail).tail)) {
 
-i7594 = true;
+i1441 = true;
 } else {
 
-i7594 = false;
+i1441 = false;
 
 }
-i7595 = i7594;
+i1442 = i1441;
 } else {
 
-i7595 = false;
+i1442 = false;
 
 }
-final Object i7596;
-if ((boolean)i7595) {
+final Object i1443;
+if ((boolean)i1442) {
 
-i7596 = true;
+i1443 = true;
 } else {
 
-i7596 = false;
+i1443 = false;
 
 }
-i7597 = i7596;
+i1444 = i1443;
 } else {
 
-i7597 = false;
+i1444 = false;
 
 }
-final Object i7598;
-if ((boolean)i7597) {
+final Object i1445;
+if ((boolean)i1444) {
 
-i7598 = true;
+i1445 = true;
 } else {
 
-i7598 = false;
+i1445 = false;
 
 }
-i7599 = i7598;
+i1446 = i1445;
 } else {
 
-i7599 = false;
+i1446 = false;
 
 }
-final Object i7600;
-if ((boolean)i7599) {
+final Object i1447;
+if ((boolean)i1446) {
 
-i7600 = true;
+i1447 = true;
 } else {
 
-i7600 = false;
+i1447 = false;
 
 }
-i7601 = i7600;
+i1448 = i1447;
 } else {
 
-i7601 = false;
+i1448 = false;
 
 }
-final Object i7602;
-if ((boolean)i7601) {
+final Object i1449;
+if ((boolean)i1448) {
 
-i7602 = true;
+i1449 = true;
 } else {
 
-i7602 = false;
+i1449 = false;
 
 }
-i7603 = i7602;
+i1450 = i1449;
 } else {
 
-i7603 = false;
+i1450 = false;
 
 }
-final Object i8410;
-if ((boolean)i7603) {
+final Object i2266;
+if ((boolean)i1450) {
 
 
-final Object f7605 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, RuntimeContext.symbol("symbol"), v7245);
+final Object f1452 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, RuntimeContext.symbol("symbol"), v1183);
 
-final Object streamTypeTOxDO7604 = f7605;
+final Object streamTypeTOxDO1451 = f1452;
 
 
 
-final Object f7607 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)v7243).tail).tail).head, RuntimeContext.symbol("string"), v7245);
+final Object f1454 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)v1181).tail).tail).head, RuntimeContext.symbol("string"), v1183);
 
-final Object locationTOxDO7606 = f7607;
+final Object locationTOxDO1453 = f1454;
 
 
 
 
-final Object f7609 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)((Cons)v7243).tail).tail).tail).head, RuntimeContext.symbol("symbol"), v7245);
+final Object f1456 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)((Cons)v1181).tail).tail).tail).head, RuntimeContext.symbol("symbol"), v1183);
 
-final Object directionTOxDO7608 = f7609;
-final Object f7611 = Gensym.LAMBDA.apply(RuntimeContext.symbol("o"));
+final Object directionTOxDO1455 = f1456;
+final Object f1458 = Gensym.LAMBDA.apply(RuntimeContext.symbol("o"));
 
-final Object var7610 = f7611;
-final Object f7612 = Fst.LAMBDA.apply(streamTypeTOxDO7604);
-final Object f7613 = Fst.LAMBDA.apply(locationTOxDO7606);
-final Object f7614 = Fst.LAMBDA.apply(directionTOxDO7608);
-final Object f7615 = Second.LAMBDA.apply(streamTypeTOxDO7604);
-final Object f7616 = Second.LAMBDA.apply(locationTOxDO7606);
-final Object f7617 = Second.LAMBDA.apply(directionTOxDO7608);
-final Object f7618 = Atp.LAMBDA.apply(f7617, Nil.NIL);
-final Object f7619 = Atp.LAMBDA.apply(f7616, f7618);
-final Object f7620 = Atp.LAMBDA.apply(f7615, f7619);
-final Object f7621 = Atp.LAMBDA.apply(var7610, f7620);
-final Object f7622 = Atp.LAMBDA.apply(f7614, f7621);
-final Object f7623 = Atp.LAMBDA.apply(f7613, f7622);
-final Object f7624 = Atp.LAMBDA.apply(f7612, f7623);
-final Object f7625 = IntmakeString.LAMBDA.apply("~A~%~A~%~A~%final Object ~A = Lang.open(~A, ~A, ~A);", f7624);
+final Object var1457 = f1458;
+final Object f1459 = Fst.LAMBDA.apply(streamTypeTOxDO1451);
+final Object f1460 = Fst.LAMBDA.apply(locationTOxDO1453);
+final Object f1461 = Fst.LAMBDA.apply(directionTOxDO1455);
+final Object f1462 = Second.LAMBDA.apply(streamTypeTOxDO1451);
+final Object f1463 = Second.LAMBDA.apply(locationTOxDO1453);
+final Object f1464 = Second.LAMBDA.apply(directionTOxDO1455);
+final Object f1465 = Atp.LAMBDA.apply(f1464, Nil.NIL);
+final Object f1466 = Atp.LAMBDA.apply(f1463, f1465);
+final Object f1467 = Atp.LAMBDA.apply(f1462, f1466);
+final Object f1468 = Atp.LAMBDA.apply(var1457, f1467);
+final Object f1469 = Atp.LAMBDA.apply(f1461, f1468);
+final Object f1470 = Atp.LAMBDA.apply(f1460, f1469);
+final Object f1471 = Atp.LAMBDA.apply(f1459, f1470);
+final Object f1472 = IntmakeString.LAMBDA.apply("~A~%~A~%~A~%final Object ~A = Lang.open(~A, ~A, ~A);", f1471);
 
-final Object f7626 = Atp.LAMBDA.apply(String.valueOf(var7610), RuntimeContext.symbol("stream"));
-final Object f7627 = Atp.LAMBDA.apply(f7625, f7626);
+final Object f1473 = Atp.LAMBDA.apply(String.valueOf(var1457), RuntimeContext.symbol("stream"));
+final Object f1474 = Atp.LAMBDA.apply(f1472, f1473);
 
 
 
 
 
-i8410 = f7627;
+i2266 = f1474;
 } else {
 
 
-final Object i7633;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1480;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7631;
-if ((boolean)Lang.equals(RuntimeContext.symbol("close"), ((Cons)v7243).head)) {
+final Object i1478;
+if ((boolean)Lang.equals(RuntimeContext.symbol("close"), ((Cons)v1181).head)) {
 
 
 
-final Object i7629;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1476;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i7628;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i1475;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i7628 = true;
+i1475 = true;
 } else {
 
-i7628 = false;
+i1475 = false;
 
 }
-i7629 = i7628;
+i1476 = i1475;
 } else {
 
-i7629 = false;
+i1476 = false;
 
 }
-final Object i7630;
-if ((boolean)i7629) {
+final Object i1477;
+if ((boolean)i1476) {
 
-i7630 = true;
+i1477 = true;
 } else {
 
-i7630 = false;
+i1477 = false;
 
 }
-i7631 = i7630;
+i1478 = i1477;
 } else {
 
-i7631 = false;
+i1478 = false;
 
 }
-final Object i7632;
-if ((boolean)i7631) {
+final Object i1479;
+if ((boolean)i1478) {
 
-i7632 = true;
+i1479 = true;
 } else {
 
-i7632 = false;
+i1479 = false;
 
 }
-i7633 = i7632;
+i1480 = i1479;
 } else {
 
-i7633 = false;
+i1480 = false;
 
 }
-final Object i8409;
-if ((boolean)i7633) {
+final Object i2265;
+if ((boolean)i1480) {
 
 
-final Object f7635 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, RuntimeContext.symbol("stream"), v7245);
+final Object f1482 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, RuntimeContext.symbol("stream"), v1183);
 
-final Object streamTOxDO7634 = f7635;
-final Object f7636 = Fst.LAMBDA.apply(streamTOxDO7634);
-final Object f7637 = Second.LAMBDA.apply(streamTOxDO7634);
-final Object f7638 = Atp.LAMBDA.apply(f7637, Nil.NIL);
-final Object f7639 = Atp.LAMBDA.apply(f7636, f7638);
-final Object f7640 = IntmakeString.LAMBDA.apply("~A~%((java.io.Closeable)~A).close();~%", f7639);
-final Object f7641 = Atp.LAMBDA.apply("Nil.NIL", RuntimeContext.symbol("list"));
-final Object f7642 = Atp.LAMBDA.apply(f7640, f7641);
+final Object streamTOxDO1481 = f1482;
+final Object f1483 = Fst.LAMBDA.apply(streamTOxDO1481);
+final Object f1484 = Second.LAMBDA.apply(streamTOxDO1481);
+final Object f1485 = Atp.LAMBDA.apply(f1484, Nil.NIL);
+final Object f1486 = Atp.LAMBDA.apply(f1483, f1485);
+final Object f1487 = IntmakeString.LAMBDA.apply("~A~%((java.io.Closeable)~A).close();~%", f1486);
+final Object f1488 = Atp.LAMBDA.apply("Nil.NIL", RuntimeContext.symbol("list"));
+final Object f1489 = Atp.LAMBDA.apply(f1487, f1488);
 
 
-i8409 = f7642;
+i2265 = f1489;
 } else {
 
 
-final Object i7650;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1497;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7648;
-if ((boolean)Lang.equals(RuntimeContext.symbol("pr"), ((Cons)v7243).head)) {
+final Object i1495;
+if ((boolean)Lang.equals(RuntimeContext.symbol("pr"), ((Cons)v1181).head)) {
 
 
 
-final Object i7646;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1493;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
 
-final Object i7644;
-if ((boolean)(((Cons)((Cons)v7243).tail).tail instanceof Cons)) {
+final Object i1491;
+if ((boolean)(((Cons)((Cons)v1181).tail).tail instanceof Cons)) {
 
 
 
 
-final Object i7643;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)v7243).tail).tail).tail)) {
+final Object i1490;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)v1181).tail).tail).tail)) {
 
-i7643 = true;
+i1490 = true;
 } else {
 
-i7643 = false;
+i1490 = false;
 
 }
-i7644 = i7643;
+i1491 = i1490;
 } else {
 
-i7644 = false;
+i1491 = false;
 
 }
-final Object i7645;
-if ((boolean)i7644) {
+final Object i1492;
+if ((boolean)i1491) {
 
-i7645 = true;
+i1492 = true;
 } else {
 
-i7645 = false;
+i1492 = false;
 
 }
-i7646 = i7645;
+i1493 = i1492;
 } else {
 
-i7646 = false;
+i1493 = false;
 
 }
-final Object i7647;
-if ((boolean)i7646) {
+final Object i1494;
+if ((boolean)i1493) {
 
-i7647 = true;
+i1494 = true;
 } else {
 
-i7647 = false;
+i1494 = false;
 
 }
-i7648 = i7647;
+i1495 = i1494;
 } else {
 
-i7648 = false;
+i1495 = false;
 
 }
-final Object i7649;
-if ((boolean)i7648) {
+final Object i1496;
+if ((boolean)i1495) {
 
-i7649 = true;
+i1496 = true;
 } else {
 
-i7649 = false;
+i1496 = false;
 
 }
-i7650 = i7649;
+i1497 = i1496;
 } else {
 
-i7650 = false;
+i1497 = false;
 
 }
-final Object i8408;
-if ((boolean)i7650) {
+final Object i2264;
+if ((boolean)i1497) {
 
 
-final Object f7652 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, RuntimeContext.symbol("string"), v7245);
+final Object f1499 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, RuntimeContext.symbol("string"), v1183);
 
-final Object stringTOxDO7651 = f7652;
+final Object stringTOxDO1498 = f1499;
 
 
 
-final Object f7654 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)v7243).tail).tail).head, RuntimeContext.symbol("stream"), v7245);
+final Object f1501 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)v1181).tail).tail).head, RuntimeContext.symbol("stream"), v1183);
 
-final Object streamTOxDO7653 = f7654;
-final Object f7655 = Fst.LAMBDA.apply(stringTOxDO7651);
-final Object f7656 = Fst.LAMBDA.apply(streamTOxDO7653);
-final Object f7657 = Second.LAMBDA.apply(streamTOxDO7653);
-final Object f7658 = Second.LAMBDA.apply(stringTOxDO7651);
-final Object f7659 = Atp.LAMBDA.apply(f7658, Nil.NIL);
-final Object f7660 = Atp.LAMBDA.apply(f7657, f7659);
-final Object f7661 = Atp.LAMBDA.apply(f7656, f7660);
-final Object f7662 = Atp.LAMBDA.apply(f7655, f7661);
-final Object f7663 = IntmakeString.LAMBDA.apply("~A~%~A~%((java.io.OutputStream)~A).write(((String)~A).getBytes());", f7662);
-final Object f7664 = Second.LAMBDA.apply(stringTOxDO7651);
-final Object f7665 = Atp.LAMBDA.apply(f7664, RuntimeContext.symbol("string"));
-final Object f7666 = Atp.LAMBDA.apply(f7663, f7665);
+final Object streamTOxDO1500 = f1501;
+final Object f1502 = Fst.LAMBDA.apply(stringTOxDO1498);
+final Object f1503 = Fst.LAMBDA.apply(streamTOxDO1500);
+final Object f1504 = Second.LAMBDA.apply(streamTOxDO1500);
+final Object f1505 = Second.LAMBDA.apply(stringTOxDO1498);
+final Object f1506 = Atp.LAMBDA.apply(f1505, Nil.NIL);
+final Object f1507 = Atp.LAMBDA.apply(f1504, f1506);
+final Object f1508 = Atp.LAMBDA.apply(f1503, f1507);
+final Object f1509 = Atp.LAMBDA.apply(f1502, f1508);
+final Object f1510 = IntmakeString.LAMBDA.apply("~A~%~A~%((java.io.OutputStream)~A).write(((String)~A).getBytes());", f1509);
+final Object f1511 = Second.LAMBDA.apply(stringTOxDO1498);
+final Object f1512 = Atp.LAMBDA.apply(f1511, RuntimeContext.symbol("string"));
+final Object f1513 = Atp.LAMBDA.apply(f1510, f1512);
 
 
 
-i8408 = f7666;
+i2264 = f1513;
 } else {
 
 
-final Object i7670;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1517;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7668;
-if ((boolean)Lang.equals(RuntimeContext.symbol("read-byte"), ((Cons)v7243).head)) {
+final Object i1515;
+if ((boolean)Lang.equals(RuntimeContext.symbol("read-byte"), ((Cons)v1181).head)) {
 
 
-final Object i7667;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)v7243).tail)) {
+final Object i1514;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)v1181).tail)) {
 
-i7667 = true;
+i1514 = true;
 } else {
 
-i7667 = false;
+i1514 = false;
 
 }
-i7668 = i7667;
+i1515 = i1514;
 } else {
 
-i7668 = false;
+i1515 = false;
 
 }
-final Object i7669;
-if ((boolean)i7668) {
+final Object i1516;
+if ((boolean)i1515) {
 
-i7669 = true;
+i1516 = true;
 } else {
 
-i7669 = false;
+i1516 = false;
 
 }
-i7670 = i7669;
+i1517 = i1516;
 } else {
 
-i7670 = false;
+i1517 = false;
 
 }
-final Object i8407;
-if ((boolean)i7670) {
-final Object f7671 = SingleParam.LAMBDA.apply("", v7244, v7245, "System.in.read()", RuntimeContext.symbol("number"));
+final Object i2263;
+if ((boolean)i1517) {
+final Object f1518 = SingleParam.LAMBDA.apply("", v1182, v1183, "System.in.read()", RuntimeContext.symbol("number"));
 
-i8407 = f7671;
+i2263 = f1518;
 } else {
 
 
-final Object i7677;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1524;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7675;
-if ((boolean)Lang.equals(RuntimeContext.symbol("read-byte"), ((Cons)v7243).head)) {
+final Object i1522;
+if ((boolean)Lang.equals(RuntimeContext.symbol("read-byte"), ((Cons)v1181).head)) {
 
 
 
-final Object i7673;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1520;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i7672;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i1519;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i7672 = true;
+i1519 = true;
 } else {
 
-i7672 = false;
+i1519 = false;
 
 }
-i7673 = i7672;
+i1520 = i1519;
 } else {
 
-i7673 = false;
+i1520 = false;
 
 }
-final Object i7674;
-if ((boolean)i7673) {
+final Object i1521;
+if ((boolean)i1520) {
 
-i7674 = true;
+i1521 = true;
 } else {
 
-i7674 = false;
+i1521 = false;
 
 }
-i7675 = i7674;
+i1522 = i1521;
 } else {
 
-i7675 = false;
+i1522 = false;
 
 }
-final Object i7676;
-if ((boolean)i7675) {
+final Object i1523;
+if ((boolean)i1522) {
 
-i7676 = true;
+i1523 = true;
 } else {
 
-i7676 = false;
+i1523 = false;
 
 }
-i7677 = i7676;
+i1524 = i1523;
 } else {
 
-i7677 = false;
+i1524 = false;
 
 }
-final Object i8406;
-if ((boolean)i7677) {
+final Object i2262;
+if ((boolean)i1524) {
 
 
-final Object f7678 = SingleParam.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, v7244, v7245, "((java.io.InputStream)~A).read()", RuntimeContext.symbol("number"));
+final Object f1525 = SingleParam.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, v1182, v1183, "((java.io.InputStream)~A).read()", RuntimeContext.symbol("number"));
 
-i8406 = f7678;
+i2262 = f1525;
 } else {
 
 
-final Object i7682;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1529;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7680;
-if ((boolean)Lang.equals(RuntimeContext.symbol("not"), ((Cons)v7243).head)) {
+final Object i1527;
+if ((boolean)Lang.equals(RuntimeContext.symbol("not"), ((Cons)v1181).head)) {
 
 
-final Object i7679;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)v7243).tail)) {
+final Object i1526;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)v1181).tail)) {
 
-i7679 = true;
+i1526 = true;
 } else {
 
-i7679 = false;
+i1526 = false;
 
 }
-i7680 = i7679;
+i1527 = i1526;
 } else {
 
-i7680 = false;
+i1527 = false;
 
 }
-final Object i7681;
-if ((boolean)i7680) {
+final Object i1528;
+if ((boolean)i1527) {
 
-i7681 = true;
+i1528 = true;
 } else {
 
-i7681 = false;
+i1528 = false;
 
 }
-i7682 = i7681;
+i1529 = i1528;
 } else {
 
-i7682 = false;
+i1529 = false;
 
 }
-final Object i8405;
-if ((boolean)i7682) {
-final Object f7684 = Gensym.LAMBDA.apply(RuntimeContext.symbol("n"));
+final Object i2261;
+if ((boolean)i1529) {
+final Object f1531 = Gensym.LAMBDA.apply(RuntimeContext.symbol("n"));
 
-final Object expression7683 = f7684;
+final Object expression1530 = f1531;
 
 
 
@@ -1879,158 +1879,158 @@ final Object expression7683 = f7684;
 
 
 
-final Object f7685 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(expression7683, new Cons(new Cons(RuntimeContext.symbol("not"), new Cons(expression7683, Nil.NIL)), Nil.NIL))), RuntimeContext.symbol("lambda"), v7245);
+final Object f1532 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(expression1530, new Cons(new Cons(RuntimeContext.symbol("not"), new Cons(expression1530, Nil.NIL)), Nil.NIL))), RuntimeContext.symbol("lambda"), v1183);
 
 
-i8405 = f7685;
+i2261 = f1532;
 } else {
 
 
-final Object i7691;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1538;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7689;
-if ((boolean)Lang.equals(RuntimeContext.symbol("not"), ((Cons)v7243).head)) {
+final Object i1536;
+if ((boolean)Lang.equals(RuntimeContext.symbol("not"), ((Cons)v1181).head)) {
 
 
 
-final Object i7687;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1534;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i7686;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i1533;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i7686 = true;
+i1533 = true;
 } else {
 
-i7686 = false;
+i1533 = false;
 
 }
-i7687 = i7686;
+i1534 = i1533;
 } else {
 
-i7687 = false;
+i1534 = false;
 
 }
-final Object i7688;
-if ((boolean)i7687) {
+final Object i1535;
+if ((boolean)i1534) {
 
-i7688 = true;
+i1535 = true;
 } else {
 
-i7688 = false;
+i1535 = false;
 
 }
-i7689 = i7688;
+i1536 = i1535;
 } else {
 
-i7689 = false;
+i1536 = false;
 
 }
-final Object i7690;
-if ((boolean)i7689) {
+final Object i1537;
+if ((boolean)i1536) {
 
-i7690 = true;
+i1537 = true;
 } else {
 
-i7690 = false;
+i1537 = false;
 
 }
-i7691 = i7690;
+i1538 = i1537;
 } else {
 
-i7691 = false;
+i1538 = false;
 
 }
-final Object i8404;
-if ((boolean)i7691) {
+final Object i2260;
+if ((boolean)i1538) {
 
-final Object i7693;
-if ((boolean)Lang.equals(RuntimeContext.symbol("boolean"), v7244)) {
+final Object i1540;
+if ((boolean)Lang.equals(RuntimeContext.symbol("boolean"), v1182)) {
 
-i7693 = true;
+i1540 = true;
 } else {
 
-final Object i7692;
-if ((boolean)Lang.equals(RuntimeContext.symbol("object"), v7244)) {
+final Object i1539;
+if ((boolean)Lang.equals(RuntimeContext.symbol("object"), v1182)) {
 
-i7692 = true;
+i1539 = true;
 } else {
 
-i7692 = false;
+i1539 = false;
 
 }
-i7693 = i7692;
+i1540 = i1539;
 
 }
 
-final Object f7695 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, RuntimeContext.symbol("boolean"), v7245);
+final Object f1542 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, RuntimeContext.symbol("boolean"), v1183);
 
-final Object expressionTOxDO7694 = f7695;
-final Object f7696 = Fst.LAMBDA.apply(expressionTOxDO7694);
-final Object f7697 = Atp.LAMBDA.apply(f7696, Nil.NIL);
-final Object f7698 = IntmakeString.LAMBDA.apply("~A~%", f7697);
-final Object f7699 = Second.LAMBDA.apply(expressionTOxDO7694);
-final Object f7700 = Atp.LAMBDA.apply(f7699, Nil.NIL);
-final Object f7701 = IntmakeString.LAMBDA.apply("!((boolean)~A)", f7700);
-final Object f7702 = Atp.LAMBDA.apply(f7701, RuntimeContext.symbol("boolean"));
-final Object f7703 = Atp.LAMBDA.apply(f7698, f7702);
+final Object expressionTOxDO1541 = f1542;
+final Object f1543 = Fst.LAMBDA.apply(expressionTOxDO1541);
+final Object f1544 = Atp.LAMBDA.apply(f1543, Nil.NIL);
+final Object f1545 = IntmakeString.LAMBDA.apply("~A~%", f1544);
+final Object f1546 = Second.LAMBDA.apply(expressionTOxDO1541);
+final Object f1547 = Atp.LAMBDA.apply(f1546, Nil.NIL);
+final Object f1548 = IntmakeString.LAMBDA.apply("!((boolean)~A)", f1547);
+final Object f1549 = Atp.LAMBDA.apply(f1548, RuntimeContext.symbol("boolean"));
+final Object f1550 = Atp.LAMBDA.apply(f1545, f1549);
 
-final Object f7704 = Assert.LAMBDA.apply(i7693, "Expected boolean or object for not operation.", f7703);
+final Object f1551 = Assert.LAMBDA.apply(i1540, "Expected boolean or object for not operation.", f1550);
 
-i8404 = f7704;
+i2260 = f1551;
 } else {
 
 
-final Object i7708;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1555;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7706;
-if ((boolean)Lang.equals(RuntimeContext.symbol("and"), ((Cons)v7243).head)) {
+final Object i1553;
+if ((boolean)Lang.equals(RuntimeContext.symbol("and"), ((Cons)v1181).head)) {
 
 
-final Object i7705;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)v7243).tail)) {
+final Object i1552;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)v1181).tail)) {
 
-i7705 = true;
+i1552 = true;
 } else {
 
-i7705 = false;
+i1552 = false;
 
 }
-i7706 = i7705;
+i1553 = i1552;
 } else {
 
-i7706 = false;
+i1553 = false;
 
 }
-final Object i7707;
-if ((boolean)i7706) {
+final Object i1554;
+if ((boolean)i1553) {
 
-i7707 = true;
+i1554 = true;
 } else {
 
-i7707 = false;
+i1554 = false;
 
 }
-i7708 = i7707;
+i1555 = i1554;
 } else {
 
-i7708 = false;
+i1555 = false;
 
 }
-final Object i8403;
-if ((boolean)i7708) {
-final Object f7710 = Gensym.LAMBDA.apply(RuntimeContext.symbol("a"));
+final Object i2259;
+if ((boolean)i1555) {
+final Object f1557 = Gensym.LAMBDA.apply(RuntimeContext.symbol("a"));
 
-final Object arg07709 = f7710;
-final Object f7712 = Gensym.LAMBDA.apply(RuntimeContext.symbol("a"));
+final Object arg01556 = f1557;
+final Object f1559 = Gensym.LAMBDA.apply(RuntimeContext.symbol("a"));
 
-final Object arg17711 = f7712;
+final Object arg11558 = f1559;
 
 
 
@@ -2049,78 +2049,78 @@ final Object arg17711 = f7712;
 
 
 
-final Object f7713 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(arg07709, new Cons(new Cons(RuntimeContext.symbol("lambda"), new Cons(arg17711, new Cons(new Cons(RuntimeContext.symbol("and"), new Cons(arg07709, new Cons(arg17711, Nil.NIL))), Nil.NIL))), Nil.NIL))), RuntimeContext.symbol("lambda"), v7245);
+final Object f1560 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(arg01556, new Cons(new Cons(RuntimeContext.symbol("lambda"), new Cons(arg11558, new Cons(new Cons(RuntimeContext.symbol("and"), new Cons(arg01556, new Cons(arg11558, Nil.NIL))), Nil.NIL))), Nil.NIL))), RuntimeContext.symbol("lambda"), v1183);
 
 
 
-i8403 = f7713;
+i2259 = f1560;
 } else {
 
 
-final Object i7719;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1566;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7717;
-if ((boolean)Lang.equals(RuntimeContext.symbol("and"), ((Cons)v7243).head)) {
+final Object i1564;
+if ((boolean)Lang.equals(RuntimeContext.symbol("and"), ((Cons)v1181).head)) {
 
 
 
-final Object i7715;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1562;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i7714;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i1561;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i7714 = true;
+i1561 = true;
 } else {
 
-i7714 = false;
+i1561 = false;
 
 }
-i7715 = i7714;
+i1562 = i1561;
 } else {
 
-i7715 = false;
+i1562 = false;
 
 }
-final Object i7716;
-if ((boolean)i7715) {
+final Object i1563;
+if ((boolean)i1562) {
 
-i7716 = true;
+i1563 = true;
 } else {
 
-i7716 = false;
+i1563 = false;
 
 }
-i7717 = i7716;
+i1564 = i1563;
 } else {
 
-i7717 = false;
+i1564 = false;
 
 }
-final Object i7718;
-if ((boolean)i7717) {
+final Object i1565;
+if ((boolean)i1564) {
 
-i7718 = true;
+i1565 = true;
 } else {
 
-i7718 = false;
+i1565 = false;
 
 }
-i7719 = i7718;
+i1566 = i1565;
 } else {
 
-i7719 = false;
+i1566 = false;
 
 }
-final Object i8402;
-if ((boolean)i7719) {
-final Object f7721 = Gensym.LAMBDA.apply(RuntimeContext.symbol("a"));
+final Object i2258;
+if ((boolean)i1566) {
+final Object f1568 = Gensym.LAMBDA.apply(RuntimeContext.symbol("a"));
 
-final Object arg17720 = f7721;
+final Object arg11567 = f1568;
 
 
 
@@ -2135,96 +2135,96 @@ final Object arg17720 = f7721;
 
 
 
-final Object f7722 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(arg17720, new Cons(new Cons(RuntimeContext.symbol("and"), new Cons(((Cons)((Cons)v7243).tail).head, new Cons(arg17720, Nil.NIL))), Nil.NIL))), RuntimeContext.symbol("lambda"), v7245);
+final Object f1569 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(arg11567, new Cons(new Cons(RuntimeContext.symbol("and"), new Cons(((Cons)((Cons)v1181).tail).head, new Cons(arg11567, Nil.NIL))), Nil.NIL))), RuntimeContext.symbol("lambda"), v1183);
 
 
-i8402 = f7722;
+i2258 = f1569;
 } else {
 
 
-final Object i7730;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1577;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7728;
-if ((boolean)Lang.equals(RuntimeContext.symbol("and"), ((Cons)v7243).head)) {
+final Object i1575;
+if ((boolean)Lang.equals(RuntimeContext.symbol("and"), ((Cons)v1181).head)) {
 
 
 
-final Object i7726;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1573;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
 
-final Object i7724;
-if ((boolean)(((Cons)((Cons)v7243).tail).tail instanceof Cons)) {
+final Object i1571;
+if ((boolean)(((Cons)((Cons)v1181).tail).tail instanceof Cons)) {
 
 
 
 
-final Object i7723;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)v7243).tail).tail).tail)) {
+final Object i1570;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)v1181).tail).tail).tail)) {
 
-i7723 = true;
+i1570 = true;
 } else {
 
-i7723 = false;
+i1570 = false;
 
 }
-i7724 = i7723;
+i1571 = i1570;
 } else {
 
-i7724 = false;
+i1571 = false;
 
 }
-final Object i7725;
-if ((boolean)i7724) {
+final Object i1572;
+if ((boolean)i1571) {
 
-i7725 = true;
+i1572 = true;
 } else {
 
-i7725 = false;
+i1572 = false;
 
 }
-i7726 = i7725;
+i1573 = i1572;
 } else {
 
-i7726 = false;
+i1573 = false;
 
 }
-final Object i7727;
-if ((boolean)i7726) {
+final Object i1574;
+if ((boolean)i1573) {
 
-i7727 = true;
+i1574 = true;
 } else {
 
-i7727 = false;
+i1574 = false;
 
 }
-i7728 = i7727;
+i1575 = i1574;
 } else {
 
-i7728 = false;
+i1575 = false;
 
 }
-final Object i7729;
-if ((boolean)i7728) {
+final Object i1576;
+if ((boolean)i1575) {
 
-i7729 = true;
+i1576 = true;
 } else {
 
-i7729 = false;
+i1576 = false;
 
 }
-i7730 = i7729;
+i1577 = i1576;
 } else {
 
-i7730 = false;
+i1577 = false;
 
 }
-final Object i8401;
-if ((boolean)i7730) {
+final Object i2257;
+if ((boolean)i1577) {
 
 
 
@@ -2246,58 +2246,58 @@ if ((boolean)i7730) {
 
 
 
-final Object f7731 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("if"), new Cons(((Cons)((Cons)v7243).tail).head, new Cons(new Cons(RuntimeContext.symbol("if"), new Cons(((Cons)((Cons)((Cons)v7243).tail).tail).head, new Cons(true, new Cons(false, Nil.NIL)))), new Cons(false, Nil.NIL)))), RuntimeContext.symbol("boolean"), v7245);
+final Object f1578 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("if"), new Cons(((Cons)((Cons)v1181).tail).head, new Cons(new Cons(RuntimeContext.symbol("if"), new Cons(((Cons)((Cons)((Cons)v1181).tail).tail).head, new Cons(true, new Cons(false, Nil.NIL)))), new Cons(false, Nil.NIL)))), RuntimeContext.symbol("boolean"), v1183);
 
-i8401 = f7731;
+i2257 = f1578;
 } else {
 
 
-final Object i7735;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1582;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7733;
-if ((boolean)Lang.equals(RuntimeContext.symbol("or"), ((Cons)v7243).head)) {
+final Object i1580;
+if ((boolean)Lang.equals(RuntimeContext.symbol("or"), ((Cons)v1181).head)) {
 
 
-final Object i7732;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)v7243).tail)) {
+final Object i1579;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)v1181).tail)) {
 
-i7732 = true;
+i1579 = true;
 } else {
 
-i7732 = false;
+i1579 = false;
 
 }
-i7733 = i7732;
+i1580 = i1579;
 } else {
 
-i7733 = false;
+i1580 = false;
 
 }
-final Object i7734;
-if ((boolean)i7733) {
+final Object i1581;
+if ((boolean)i1580) {
 
-i7734 = true;
+i1581 = true;
 } else {
 
-i7734 = false;
+i1581 = false;
 
 }
-i7735 = i7734;
+i1582 = i1581;
 } else {
 
-i7735 = false;
+i1582 = false;
 
 }
-final Object i8400;
-if ((boolean)i7735) {
-final Object f7737 = Gensym.LAMBDA.apply(RuntimeContext.symbol("a"));
+final Object i2256;
+if ((boolean)i1582) {
+final Object f1584 = Gensym.LAMBDA.apply(RuntimeContext.symbol("a"));
 
-final Object arg07736 = f7737;
-final Object f7739 = Gensym.LAMBDA.apply(RuntimeContext.symbol("a"));
+final Object arg01583 = f1584;
+final Object f1586 = Gensym.LAMBDA.apply(RuntimeContext.symbol("a"));
 
-final Object arg17738 = f7739;
+final Object arg11585 = f1586;
 
 
 
@@ -2316,78 +2316,78 @@ final Object arg17738 = f7739;
 
 
 
-final Object f7740 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(arg07736, new Cons(new Cons(RuntimeContext.symbol("lambda"), new Cons(arg17738, new Cons(new Cons(RuntimeContext.symbol("and"), new Cons(arg07736, new Cons(arg17738, Nil.NIL))), Nil.NIL))), Nil.NIL))), RuntimeContext.symbol("lambda"), v7245);
+final Object f1587 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(arg01583, new Cons(new Cons(RuntimeContext.symbol("lambda"), new Cons(arg11585, new Cons(new Cons(RuntimeContext.symbol("and"), new Cons(arg01583, new Cons(arg11585, Nil.NIL))), Nil.NIL))), Nil.NIL))), RuntimeContext.symbol("lambda"), v1183);
 
 
 
-i8400 = f7740;
+i2256 = f1587;
 } else {
 
 
-final Object i7746;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1593;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7744;
-if ((boolean)Lang.equals(RuntimeContext.symbol("or"), ((Cons)v7243).head)) {
+final Object i1591;
+if ((boolean)Lang.equals(RuntimeContext.symbol("or"), ((Cons)v1181).head)) {
 
 
 
-final Object i7742;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1589;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i7741;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i1588;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i7741 = true;
+i1588 = true;
 } else {
 
-i7741 = false;
+i1588 = false;
 
 }
-i7742 = i7741;
+i1589 = i1588;
 } else {
 
-i7742 = false;
+i1589 = false;
 
 }
-final Object i7743;
-if ((boolean)i7742) {
+final Object i1590;
+if ((boolean)i1589) {
 
-i7743 = true;
+i1590 = true;
 } else {
 
-i7743 = false;
+i1590 = false;
 
 }
-i7744 = i7743;
+i1591 = i1590;
 } else {
 
-i7744 = false;
+i1591 = false;
 
 }
-final Object i7745;
-if ((boolean)i7744) {
+final Object i1592;
+if ((boolean)i1591) {
 
-i7745 = true;
+i1592 = true;
 } else {
 
-i7745 = false;
+i1592 = false;
 
 }
-i7746 = i7745;
+i1593 = i1592;
 } else {
 
-i7746 = false;
+i1593 = false;
 
 }
-final Object i8399;
-if ((boolean)i7746) {
-final Object f7748 = Gensym.LAMBDA.apply(RuntimeContext.symbol("a"));
+final Object i2255;
+if ((boolean)i1593) {
+final Object f1595 = Gensym.LAMBDA.apply(RuntimeContext.symbol("a"));
 
-final Object arg17747 = f7748;
+final Object arg11594 = f1595;
 
 
 
@@ -2402,96 +2402,96 @@ final Object arg17747 = f7748;
 
 
 
-final Object f7749 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(arg17747, new Cons(new Cons(RuntimeContext.symbol("and"), new Cons(((Cons)((Cons)v7243).tail).head, new Cons(arg17747, Nil.NIL))), Nil.NIL))), RuntimeContext.symbol("lambda"), v7245);
+final Object f1596 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(arg11594, new Cons(new Cons(RuntimeContext.symbol("and"), new Cons(((Cons)((Cons)v1181).tail).head, new Cons(arg11594, Nil.NIL))), Nil.NIL))), RuntimeContext.symbol("lambda"), v1183);
 
 
-i8399 = f7749;
+i2255 = f1596;
 } else {
 
 
-final Object i7757;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1604;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7755;
-if ((boolean)Lang.equals(RuntimeContext.symbol("or"), ((Cons)v7243).head)) {
+final Object i1602;
+if ((boolean)Lang.equals(RuntimeContext.symbol("or"), ((Cons)v1181).head)) {
 
 
 
-final Object i7753;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1600;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
 
-final Object i7751;
-if ((boolean)(((Cons)((Cons)v7243).tail).tail instanceof Cons)) {
+final Object i1598;
+if ((boolean)(((Cons)((Cons)v1181).tail).tail instanceof Cons)) {
 
 
 
 
-final Object i7750;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)v7243).tail).tail).tail)) {
+final Object i1597;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)v1181).tail).tail).tail)) {
 
-i7750 = true;
+i1597 = true;
 } else {
 
-i7750 = false;
+i1597 = false;
 
 }
-i7751 = i7750;
+i1598 = i1597;
 } else {
 
-i7751 = false;
+i1598 = false;
 
 }
-final Object i7752;
-if ((boolean)i7751) {
+final Object i1599;
+if ((boolean)i1598) {
 
-i7752 = true;
+i1599 = true;
 } else {
 
-i7752 = false;
+i1599 = false;
 
 }
-i7753 = i7752;
+i1600 = i1599;
 } else {
 
-i7753 = false;
+i1600 = false;
 
 }
-final Object i7754;
-if ((boolean)i7753) {
+final Object i1601;
+if ((boolean)i1600) {
 
-i7754 = true;
+i1601 = true;
 } else {
 
-i7754 = false;
+i1601 = false;
 
 }
-i7755 = i7754;
+i1602 = i1601;
 } else {
 
-i7755 = false;
+i1602 = false;
 
 }
-final Object i7756;
-if ((boolean)i7755) {
+final Object i1603;
+if ((boolean)i1602) {
 
-i7756 = true;
+i1603 = true;
 } else {
 
-i7756 = false;
+i1603 = false;
 
 }
-i7757 = i7756;
+i1604 = i1603;
 } else {
 
-i7757 = false;
+i1604 = false;
 
 }
-final Object i8398;
-if ((boolean)i7757) {
+final Object i2254;
+if ((boolean)i1604) {
 
 
 
@@ -2513,58 +2513,58 @@ if ((boolean)i7757) {
 
 
 
-final Object f7758 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("if"), new Cons(((Cons)((Cons)v7243).tail).head, new Cons(true, new Cons(new Cons(RuntimeContext.symbol("if"), new Cons(((Cons)((Cons)((Cons)v7243).tail).tail).head, new Cons(true, new Cons(false, Nil.NIL)))), Nil.NIL)))), RuntimeContext.symbol("boolean"), v7245);
+final Object f1605 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("if"), new Cons(((Cons)((Cons)v1181).tail).head, new Cons(true, new Cons(new Cons(RuntimeContext.symbol("if"), new Cons(((Cons)((Cons)((Cons)v1181).tail).tail).head, new Cons(true, new Cons(false, Nil.NIL)))), Nil.NIL)))), RuntimeContext.symbol("boolean"), v1183);
 
-i8398 = f7758;
+i2254 = f1605;
 } else {
 
 
-final Object i7762;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1609;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7760;
-if ((boolean)Lang.equals(RuntimeContext.symbol("set"), ((Cons)v7243).head)) {
+final Object i1607;
+if ((boolean)Lang.equals(RuntimeContext.symbol("set"), ((Cons)v1181).head)) {
 
 
-final Object i7759;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)v7243).tail)) {
+final Object i1606;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)v1181).tail)) {
 
-i7759 = true;
+i1606 = true;
 } else {
 
-i7759 = false;
+i1606 = false;
 
 }
-i7760 = i7759;
+i1607 = i1606;
 } else {
 
-i7760 = false;
+i1607 = false;
 
 }
-final Object i7761;
-if ((boolean)i7760) {
+final Object i1608;
+if ((boolean)i1607) {
 
-i7761 = true;
+i1608 = true;
 } else {
 
-i7761 = false;
+i1608 = false;
 
 }
-i7762 = i7761;
+i1609 = i1608;
 } else {
 
-i7762 = false;
+i1609 = false;
 
 }
-final Object i8397;
-if ((boolean)i7762) {
-final Object f7764 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object i2253;
+if ((boolean)i1609) {
+final Object f1611 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object name7763 = f7764;
-final Object f7766 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object name1610 = f1611;
+final Object f1613 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object value7765 = f7766;
+final Object value1612 = f1613;
 
 
 
@@ -2583,78 +2583,78 @@ final Object value7765 = f7766;
 
 
 
-final Object f7767 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(name7763, new Cons(new Cons(RuntimeContext.symbol("lambda"), new Cons(value7765, new Cons(new Cons(RuntimeContext.symbol("set"), new Cons(name7763, new Cons(value7765, Nil.NIL))), Nil.NIL))), Nil.NIL))), RuntimeContext.symbol("lambda"), v7245);
+final Object f1614 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(name1610, new Cons(new Cons(RuntimeContext.symbol("lambda"), new Cons(value1612, new Cons(new Cons(RuntimeContext.symbol("set"), new Cons(name1610, new Cons(value1612, Nil.NIL))), Nil.NIL))), Nil.NIL))), RuntimeContext.symbol("lambda"), v1183);
 
 
 
-i8397 = f7767;
+i2253 = f1614;
 } else {
 
 
-final Object i7773;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1620;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7771;
-if ((boolean)Lang.equals(RuntimeContext.symbol("set"), ((Cons)v7243).head)) {
+final Object i1618;
+if ((boolean)Lang.equals(RuntimeContext.symbol("set"), ((Cons)v1181).head)) {
 
 
 
-final Object i7769;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1616;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i7768;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i1615;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i7768 = true;
+i1615 = true;
 } else {
 
-i7768 = false;
+i1615 = false;
 
 }
-i7769 = i7768;
+i1616 = i1615;
 } else {
 
-i7769 = false;
+i1616 = false;
 
 }
-final Object i7770;
-if ((boolean)i7769) {
+final Object i1617;
+if ((boolean)i1616) {
 
-i7770 = true;
+i1617 = true;
 } else {
 
-i7770 = false;
+i1617 = false;
 
 }
-i7771 = i7770;
+i1618 = i1617;
 } else {
 
-i7771 = false;
+i1618 = false;
 
 }
-final Object i7772;
-if ((boolean)i7771) {
+final Object i1619;
+if ((boolean)i1618) {
 
-i7772 = true;
+i1619 = true;
 } else {
 
-i7772 = false;
+i1619 = false;
 
 }
-i7773 = i7772;
+i1620 = i1619;
 } else {
 
-i7773 = false;
+i1620 = false;
 
 }
-final Object i8396;
-if ((boolean)i7773) {
-final Object f7775 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object i2252;
+if ((boolean)i1620) {
+final Object f1622 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object value7774 = f7775;
+final Object value1621 = f1622;
 
 
 
@@ -2669,170 +2669,170 @@ final Object value7774 = f7775;
 
 
 
-final Object f7776 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(value7774, new Cons(new Cons(RuntimeContext.symbol("set"), new Cons(((Cons)((Cons)v7243).tail).head, new Cons(value7774, Nil.NIL))), Nil.NIL))), RuntimeContext.symbol("lambda"), v7245);
+final Object f1623 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(value1621, new Cons(new Cons(RuntimeContext.symbol("set"), new Cons(((Cons)((Cons)v1181).tail).head, new Cons(value1621, Nil.NIL))), Nil.NIL))), RuntimeContext.symbol("lambda"), v1183);
 
 
-i8396 = f7776;
+i2252 = f1623;
 } else {
 
 
-final Object i7784;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1631;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7782;
-if ((boolean)Lang.equals(RuntimeContext.symbol("set"), ((Cons)v7243).head)) {
+final Object i1629;
+if ((boolean)Lang.equals(RuntimeContext.symbol("set"), ((Cons)v1181).head)) {
 
 
 
-final Object i7780;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1627;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
 
-final Object i7778;
-if ((boolean)(((Cons)((Cons)v7243).tail).tail instanceof Cons)) {
+final Object i1625;
+if ((boolean)(((Cons)((Cons)v1181).tail).tail instanceof Cons)) {
 
 
 
 
-final Object i7777;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)v7243).tail).tail).tail)) {
+final Object i1624;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)v1181).tail).tail).tail)) {
 
-i7777 = true;
+i1624 = true;
 } else {
 
-i7777 = false;
+i1624 = false;
 
 }
-i7778 = i7777;
+i1625 = i1624;
 } else {
 
-i7778 = false;
+i1625 = false;
 
 }
-final Object i7779;
-if ((boolean)i7778) {
+final Object i1626;
+if ((boolean)i1625) {
 
-i7779 = true;
+i1626 = true;
 } else {
 
-i7779 = false;
+i1626 = false;
 
 }
-i7780 = i7779;
+i1627 = i1626;
 } else {
 
-i7780 = false;
+i1627 = false;
 
 }
-final Object i7781;
-if ((boolean)i7780) {
+final Object i1628;
+if ((boolean)i1627) {
 
-i7781 = true;
+i1628 = true;
 } else {
 
-i7781 = false;
+i1628 = false;
 
 }
-i7782 = i7781;
+i1629 = i1628;
 } else {
 
-i7782 = false;
+i1629 = false;
 
 }
-final Object i7783;
-if ((boolean)i7782) {
+final Object i1630;
+if ((boolean)i1629) {
 
-i7783 = true;
+i1630 = true;
 } else {
 
-i7783 = false;
+i1630 = false;
 
 }
-i7784 = i7783;
+i1631 = i1630;
 } else {
 
-i7784 = false;
+i1631 = false;
 
 }
-final Object i8395;
-if ((boolean)i7784) {
+final Object i2251;
+if ((boolean)i1631) {
 
 
-final Object f7786 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, v7244, v7245);
+final Object f1633 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, v1182, v1183);
 
-final Object nameTOxDO7785 = f7786;
+final Object nameTOxDO1632 = f1633;
 
 
 
-final Object f7788 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)v7243).tail).tail).head, v7244, v7245);
+final Object f1635 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)v1181).tail).tail).head, v1182, v1183);
 
-final Object valueTOxDO7787 = f7788;
-final Object f7789 = Fst.LAMBDA.apply(valueTOxDO7787);
-final Object f7790 = Fst.LAMBDA.apply(nameTOxDO7785);
-final Object f7791 = Second.LAMBDA.apply(nameTOxDO7785);
-final Object f7792 = Second.LAMBDA.apply(valueTOxDO7787);
-final Object f7793 = Atp.LAMBDA.apply(f7792, Nil.NIL);
-final Object f7794 = Atp.LAMBDA.apply(f7791, f7793);
-final Object f7795 = Atp.LAMBDA.apply(f7790, f7794);
-final Object f7796 = Atp.LAMBDA.apply(f7789, f7795);
-final Object f7797 = IntmakeString.LAMBDA.apply("~A~%~A~%RuntimeContext.globalProperties.put((Symbol)~A, ~A);", f7796);
-final Object f7798 = Second.LAMBDA.apply(valueTOxDO7787);
-final Object f7799 = Third.LAMBDA.apply(valueTOxDO7787);
-final Object f7800 = Atp.LAMBDA.apply(f7798, f7799);
-final Object f7801 = Atp.LAMBDA.apply(f7797, f7800);
+final Object valueTOxDO1634 = f1635;
+final Object f1636 = Fst.LAMBDA.apply(valueTOxDO1634);
+final Object f1637 = Fst.LAMBDA.apply(nameTOxDO1632);
+final Object f1638 = Second.LAMBDA.apply(nameTOxDO1632);
+final Object f1639 = Second.LAMBDA.apply(valueTOxDO1634);
+final Object f1640 = Atp.LAMBDA.apply(f1639, Nil.NIL);
+final Object f1641 = Atp.LAMBDA.apply(f1638, f1640);
+final Object f1642 = Atp.LAMBDA.apply(f1637, f1641);
+final Object f1643 = Atp.LAMBDA.apply(f1636, f1642);
+final Object f1644 = IntmakeString.LAMBDA.apply("~A~%~A~%RuntimeContext.globalProperties.put((Symbol)~A, ~A);", f1643);
+final Object f1645 = Second.LAMBDA.apply(valueTOxDO1634);
+final Object f1646 = Third.LAMBDA.apply(valueTOxDO1634);
+final Object f1647 = Atp.LAMBDA.apply(f1645, f1646);
+final Object f1648 = Atp.LAMBDA.apply(f1644, f1647);
 
 
 
-i8395 = f7801;
+i2251 = f1648;
 } else {
 
 
-final Object i7805;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1652;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7803;
-if ((boolean)Lang.equals(RuntimeContext.symbol("value"), ((Cons)v7243).head)) {
+final Object i1650;
+if ((boolean)Lang.equals(RuntimeContext.symbol("value"), ((Cons)v1181).head)) {
 
 
-final Object i7802;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)v7243).tail)) {
+final Object i1649;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)v1181).tail)) {
 
-i7802 = true;
+i1649 = true;
 } else {
 
-i7802 = false;
+i1649 = false;
 
 }
-i7803 = i7802;
+i1650 = i1649;
 } else {
 
-i7803 = false;
+i1650 = false;
 
 }
-final Object i7804;
-if ((boolean)i7803) {
+final Object i1651;
+if ((boolean)i1650) {
 
-i7804 = true;
+i1651 = true;
 } else {
 
-i7804 = false;
+i1651 = false;
 
 }
-i7805 = i7804;
+i1652 = i1651;
 } else {
 
-i7805 = false;
+i1652 = false;
 
 }
-final Object i8394;
-if ((boolean)i7805) {
-final Object f7807 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object i2250;
+if ((boolean)i1652) {
+final Object f1654 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object name7806 = f7807;
+final Object name1653 = f1654;
 
 
 
@@ -2843,125 +2843,125 @@ final Object name7806 = f7807;
 
 
 
-final Object f7808 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(name7806, new Cons(new Cons(RuntimeContext.symbol("value"), new Cons(name7806, Nil.NIL)), Nil.NIL))), RuntimeContext.symbol("lambda"), v7245);
+final Object f1655 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(name1653, new Cons(new Cons(RuntimeContext.symbol("value"), new Cons(name1653, Nil.NIL)), Nil.NIL))), RuntimeContext.symbol("lambda"), v1183);
 
 
-i8394 = f7808;
+i2250 = f1655;
 } else {
 
 
-final Object i7814;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1661;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7812;
-if ((boolean)Lang.equals(RuntimeContext.symbol("value"), ((Cons)v7243).head)) {
+final Object i1659;
+if ((boolean)Lang.equals(RuntimeContext.symbol("value"), ((Cons)v1181).head)) {
 
 
 
-final Object i7810;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1657;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i7809;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i1656;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i7809 = true;
+i1656 = true;
 } else {
 
-i7809 = false;
+i1656 = false;
 
 }
-i7810 = i7809;
+i1657 = i1656;
 } else {
 
-i7810 = false;
+i1657 = false;
 
 }
-final Object i7811;
-if ((boolean)i7810) {
+final Object i1658;
+if ((boolean)i1657) {
 
-i7811 = true;
+i1658 = true;
 } else {
 
-i7811 = false;
+i1658 = false;
 
 }
-i7812 = i7811;
+i1659 = i1658;
 } else {
 
-i7812 = false;
+i1659 = false;
 
 }
-final Object i7813;
-if ((boolean)i7812) {
+final Object i1660;
+if ((boolean)i1659) {
 
-i7813 = true;
+i1660 = true;
 } else {
 
-i7813 = false;
+i1660 = false;
 
 }
-i7814 = i7813;
+i1661 = i1660;
 } else {
 
-i7814 = false;
+i1661 = false;
 
 }
-final Object i8393;
-if ((boolean)i7814) {
+final Object i2249;
+if ((boolean)i1661) {
 
 
-final Object f7815 = SingleParam.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, v7244, v7245, "RuntimeContext.globalProperties.get(~A)", RuntimeContext.symbol("object"));
+final Object f1662 = SingleParam.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, v1182, v1183, "RuntimeContext.globalProperties.get(~A)", RuntimeContext.symbol("object"));
 
-i8393 = f7815;
+i2249 = f1662;
 } else {
 
 
-final Object i7819;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1666;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7817;
-if ((boolean)Lang.equals(RuntimeContext.symbol("cons?"), ((Cons)v7243).head)) {
+final Object i1664;
+if ((boolean)Lang.equals(RuntimeContext.symbol("cons?"), ((Cons)v1181).head)) {
 
 
-final Object i7816;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)v7243).tail)) {
+final Object i1663;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)v1181).tail)) {
 
-i7816 = true;
+i1663 = true;
 } else {
 
-i7816 = false;
+i1663 = false;
 
 }
-i7817 = i7816;
+i1664 = i1663;
 } else {
 
-i7817 = false;
+i1664 = false;
 
 }
-final Object i7818;
-if ((boolean)i7817) {
+final Object i1665;
+if ((boolean)i1664) {
 
-i7818 = true;
+i1665 = true;
 } else {
 
-i7818 = false;
+i1665 = false;
 
 }
-i7819 = i7818;
+i1666 = i1665;
 } else {
 
-i7819 = false;
+i1666 = false;
 
 }
-final Object i8392;
-if ((boolean)i7819) {
-final Object f7821 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object i2248;
+if ((boolean)i1666) {
+final Object f1668 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object a07820 = f7821;
+final Object a01667 = f1668;
 
 
 
@@ -2972,128 +2972,128 @@ final Object a07820 = f7821;
 
 
 
-final Object f7822 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(a07820, new Cons(new Cons(RuntimeContext.symbol("value"), new Cons(a07820, Nil.NIL)), Nil.NIL))), RuntimeContext.symbol("lambda"), v7245);
+final Object f1669 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(a01667, new Cons(new Cons(RuntimeContext.symbol("value"), new Cons(a01667, Nil.NIL)), Nil.NIL))), RuntimeContext.symbol("lambda"), v1183);
 
 
-i8392 = f7822;
+i2248 = f1669;
 } else {
 
 
-final Object i7828;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1675;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7826;
-if ((boolean)Lang.equals(RuntimeContext.symbol("cons?"), ((Cons)v7243).head)) {
+final Object i1673;
+if ((boolean)Lang.equals(RuntimeContext.symbol("cons?"), ((Cons)v1181).head)) {
 
 
 
-final Object i7824;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1671;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i7823;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i1670;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i7823 = true;
+i1670 = true;
 } else {
 
-i7823 = false;
+i1670 = false;
 
 }
-i7824 = i7823;
+i1671 = i1670;
 } else {
 
-i7824 = false;
+i1671 = false;
 
 }
-final Object i7825;
-if ((boolean)i7824) {
+final Object i1672;
+if ((boolean)i1671) {
 
-i7825 = true;
+i1672 = true;
 } else {
 
-i7825 = false;
+i1672 = false;
 
 }
-i7826 = i7825;
+i1673 = i1672;
 } else {
 
-i7826 = false;
+i1673 = false;
 
 }
-final Object i7827;
-if ((boolean)i7826) {
+final Object i1674;
+if ((boolean)i1673) {
 
-i7827 = true;
+i1674 = true;
 } else {
 
-i7827 = false;
+i1674 = false;
 
 }
-i7828 = i7827;
+i1675 = i1674;
 } else {
 
-i7828 = false;
+i1675 = false;
 
 }
-final Object i8391;
-if ((boolean)i7828) {
+final Object i2247;
+if ((boolean)i1675) {
 
 
-final Object f7829 = SingleParam.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, v7244, v7245, "(~A instanceof Cons)", RuntimeContext.symbol("boolean"));
+final Object f1676 = SingleParam.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, v1182, v1183, "(~A instanceof Cons)", RuntimeContext.symbol("boolean"));
 
-i8391 = f7829;
+i2247 = f1676;
 } else {
 
 
-final Object i7833;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1680;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7831;
-if ((boolean)Lang.equals(RuntimeContext.symbol("cons"), ((Cons)v7243).head)) {
+final Object i1678;
+if ((boolean)Lang.equals(RuntimeContext.symbol("cons"), ((Cons)v1181).head)) {
 
 
-final Object i7830;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)v7243).tail)) {
+final Object i1677;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)v1181).tail)) {
 
-i7830 = true;
+i1677 = true;
 } else {
 
-i7830 = false;
+i1677 = false;
 
 }
-i7831 = i7830;
+i1678 = i1677;
 } else {
 
-i7831 = false;
+i1678 = false;
 
 }
-final Object i7832;
-if ((boolean)i7831) {
+final Object i1679;
+if ((boolean)i1678) {
 
-i7832 = true;
+i1679 = true;
 } else {
 
-i7832 = false;
+i1679 = false;
 
 }
-i7833 = i7832;
+i1680 = i1679;
 } else {
 
-i7833 = false;
+i1680 = false;
 
 }
-final Object i8390;
-if ((boolean)i7833) {
-final Object f7835 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object i2246;
+if ((boolean)i1680) {
+final Object f1682 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object a07834 = f7835;
-final Object f7837 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object a01681 = f1682;
+final Object f1684 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object a17836 = f7837;
+final Object a11683 = f1684;
 
 
 
@@ -3112,78 +3112,78 @@ final Object a17836 = f7837;
 
 
 
-final Object f7838 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(a07834, new Cons(new Cons(RuntimeContext.symbol("lambda"), new Cons(a17836, new Cons(new Cons(RuntimeContext.symbol("cons"), new Cons(a07834, new Cons(a17836, Nil.NIL))), Nil.NIL))), Nil.NIL))), RuntimeContext.symbol("lambda"), v7245);
+final Object f1685 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(a01681, new Cons(new Cons(RuntimeContext.symbol("lambda"), new Cons(a11683, new Cons(new Cons(RuntimeContext.symbol("cons"), new Cons(a01681, new Cons(a11683, Nil.NIL))), Nil.NIL))), Nil.NIL))), RuntimeContext.symbol("lambda"), v1183);
 
 
 
-i8390 = f7838;
+i2246 = f1685;
 } else {
 
 
-final Object i7844;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1691;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7842;
-if ((boolean)Lang.equals(RuntimeContext.symbol("cons"), ((Cons)v7243).head)) {
+final Object i1689;
+if ((boolean)Lang.equals(RuntimeContext.symbol("cons"), ((Cons)v1181).head)) {
 
 
 
-final Object i7840;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1687;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i7839;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i1686;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i7839 = true;
+i1686 = true;
 } else {
 
-i7839 = false;
+i1686 = false;
 
 }
-i7840 = i7839;
+i1687 = i1686;
 } else {
 
-i7840 = false;
+i1687 = false;
 
 }
-final Object i7841;
-if ((boolean)i7840) {
+final Object i1688;
+if ((boolean)i1687) {
 
-i7841 = true;
+i1688 = true;
 } else {
 
-i7841 = false;
+i1688 = false;
 
 }
-i7842 = i7841;
+i1689 = i1688;
 } else {
 
-i7842 = false;
+i1689 = false;
 
 }
-final Object i7843;
-if ((boolean)i7842) {
+final Object i1690;
+if ((boolean)i1689) {
 
-i7843 = true;
+i1690 = true;
 } else {
 
-i7843 = false;
+i1690 = false;
 
 }
-i7844 = i7843;
+i1691 = i1690;
 } else {
 
-i7844 = false;
+i1691 = false;
 
 }
-final Object i8389;
-if ((boolean)i7844) {
-final Object f7846 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object i2245;
+if ((boolean)i1691) {
+final Object f1693 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object a17845 = f7846;
+final Object a11692 = f1693;
 
 
 
@@ -3198,150 +3198,150 @@ final Object a17845 = f7846;
 
 
 
-final Object f7847 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(a17845, new Cons(new Cons(RuntimeContext.symbol("cons"), new Cons(((Cons)((Cons)v7243).tail).head, new Cons(a17845, Nil.NIL))), Nil.NIL))), RuntimeContext.symbol("lambda"), v7245);
+final Object f1694 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(a11692, new Cons(new Cons(RuntimeContext.symbol("cons"), new Cons(((Cons)((Cons)v1181).tail).head, new Cons(a11692, Nil.NIL))), Nil.NIL))), RuntimeContext.symbol("lambda"), v1183);
 
 
-i8389 = f7847;
+i2245 = f1694;
 } else {
 
 
-final Object i7855;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1702;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7853;
-if ((boolean)Lang.equals(RuntimeContext.symbol("cons"), ((Cons)v7243).head)) {
+final Object i1700;
+if ((boolean)Lang.equals(RuntimeContext.symbol("cons"), ((Cons)v1181).head)) {
 
 
 
-final Object i7851;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1698;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
 
-final Object i7849;
-if ((boolean)(((Cons)((Cons)v7243).tail).tail instanceof Cons)) {
+final Object i1696;
+if ((boolean)(((Cons)((Cons)v1181).tail).tail instanceof Cons)) {
 
 
 
 
-final Object i7848;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)v7243).tail).tail).tail)) {
+final Object i1695;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)v1181).tail).tail).tail)) {
 
-i7848 = true;
+i1695 = true;
 } else {
 
-i7848 = false;
+i1695 = false;
 
 }
-i7849 = i7848;
+i1696 = i1695;
 } else {
 
-i7849 = false;
+i1696 = false;
 
 }
-final Object i7850;
-if ((boolean)i7849) {
+final Object i1697;
+if ((boolean)i1696) {
 
-i7850 = true;
+i1697 = true;
 } else {
 
-i7850 = false;
+i1697 = false;
 
 }
-i7851 = i7850;
+i1698 = i1697;
 } else {
 
-i7851 = false;
+i1698 = false;
 
 }
-final Object i7852;
-if ((boolean)i7851) {
+final Object i1699;
+if ((boolean)i1698) {
 
-i7852 = true;
+i1699 = true;
 } else {
 
-i7852 = false;
+i1699 = false;
 
 }
-i7853 = i7852;
+i1700 = i1699;
 } else {
 
-i7853 = false;
+i1700 = false;
 
 }
-final Object i7854;
-if ((boolean)i7853) {
+final Object i1701;
+if ((boolean)i1700) {
 
-i7854 = true;
+i1701 = true;
 } else {
 
-i7854 = false;
+i1701 = false;
 
 }
-i7855 = i7854;
+i1702 = i1701;
 } else {
 
-i7855 = false;
+i1702 = false;
 
 }
-final Object i8388;
-if ((boolean)i7855) {
+final Object i2244;
+if ((boolean)i1702) {
 
 
 
 
 
-final Object f7856 = TwoParams.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, ((Cons)((Cons)((Cons)v7243).tail).tail).head, v7244, v7245, "new Cons(~A, ~A)", RuntimeContext.symbol("cons"));
+final Object f1703 = TwoParams.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, ((Cons)((Cons)((Cons)v1181).tail).tail).head, v1182, v1183, "new Cons(~A, ~A)", RuntimeContext.symbol("cons"));
 
-i8388 = f7856;
+i2244 = f1703;
 } else {
 
 
-final Object i7860;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1707;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7858;
-if ((boolean)Lang.equals(RuntimeContext.symbol("hd"), ((Cons)v7243).head)) {
+final Object i1705;
+if ((boolean)Lang.equals(RuntimeContext.symbol("hd"), ((Cons)v1181).head)) {
 
 
-final Object i7857;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)v7243).tail)) {
+final Object i1704;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)v1181).tail)) {
 
-i7857 = true;
+i1704 = true;
 } else {
 
-i7857 = false;
+i1704 = false;
 
 }
-i7858 = i7857;
+i1705 = i1704;
 } else {
 
-i7858 = false;
+i1705 = false;
 
 }
-final Object i7859;
-if ((boolean)i7858) {
+final Object i1706;
+if ((boolean)i1705) {
 
-i7859 = true;
+i1706 = true;
 } else {
 
-i7859 = false;
+i1706 = false;
 
 }
-i7860 = i7859;
+i1707 = i1706;
 } else {
 
-i7860 = false;
+i1707 = false;
 
 }
-final Object i8387;
-if ((boolean)i7860) {
-final Object f7862 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object i2243;
+if ((boolean)i1707) {
+final Object f1709 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object a07861 = f7862;
+final Object a01708 = f1709;
 
 
 
@@ -3352,125 +3352,125 @@ final Object a07861 = f7862;
 
 
 
-final Object f7863 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(a07861, new Cons(new Cons(RuntimeContext.symbol("hd"), new Cons(a07861, Nil.NIL)), Nil.NIL))), RuntimeContext.symbol("lambda"), v7245);
+final Object f1710 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(a01708, new Cons(new Cons(RuntimeContext.symbol("hd"), new Cons(a01708, Nil.NIL)), Nil.NIL))), RuntimeContext.symbol("lambda"), v1183);
 
 
-i8387 = f7863;
+i2243 = f1710;
 } else {
 
 
-final Object i7869;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1716;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7867;
-if ((boolean)Lang.equals(RuntimeContext.symbol("hd"), ((Cons)v7243).head)) {
+final Object i1714;
+if ((boolean)Lang.equals(RuntimeContext.symbol("hd"), ((Cons)v1181).head)) {
 
 
 
-final Object i7865;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1712;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i7864;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i1711;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i7864 = true;
+i1711 = true;
 } else {
 
-i7864 = false;
+i1711 = false;
 
 }
-i7865 = i7864;
+i1712 = i1711;
 } else {
 
-i7865 = false;
+i1712 = false;
 
 }
-final Object i7866;
-if ((boolean)i7865) {
+final Object i1713;
+if ((boolean)i1712) {
 
-i7866 = true;
+i1713 = true;
 } else {
 
-i7866 = false;
+i1713 = false;
 
 }
-i7867 = i7866;
+i1714 = i1713;
 } else {
 
-i7867 = false;
+i1714 = false;
 
 }
-final Object i7868;
-if ((boolean)i7867) {
+final Object i1715;
+if ((boolean)i1714) {
 
-i7868 = true;
+i1715 = true;
 } else {
 
-i7868 = false;
+i1715 = false;
 
 }
-i7869 = i7868;
+i1716 = i1715;
 } else {
 
-i7869 = false;
+i1716 = false;
 
 }
-final Object i8386;
-if ((boolean)i7869) {
+final Object i2242;
+if ((boolean)i1716) {
 
 
-final Object f7870 = SingleParam.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, v7244, v7245, "((Cons)~A).head", RuntimeContext.symbol("object"));
+final Object f1717 = SingleParam.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, v1182, v1183, "((Cons)~A).head", RuntimeContext.symbol("object"));
 
-i8386 = f7870;
+i2242 = f1717;
 } else {
 
 
-final Object i7874;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1721;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7872;
-if ((boolean)Lang.equals(RuntimeContext.symbol("tl"), ((Cons)v7243).head)) {
+final Object i1719;
+if ((boolean)Lang.equals(RuntimeContext.symbol("tl"), ((Cons)v1181).head)) {
 
 
-final Object i7871;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)v7243).tail)) {
+final Object i1718;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)v1181).tail)) {
 
-i7871 = true;
+i1718 = true;
 } else {
 
-i7871 = false;
+i1718 = false;
 
 }
-i7872 = i7871;
+i1719 = i1718;
 } else {
 
-i7872 = false;
+i1719 = false;
 
 }
-final Object i7873;
-if ((boolean)i7872) {
+final Object i1720;
+if ((boolean)i1719) {
 
-i7873 = true;
+i1720 = true;
 } else {
 
-i7873 = false;
+i1720 = false;
 
 }
-i7874 = i7873;
+i1721 = i1720;
 } else {
 
-i7874 = false;
+i1721 = false;
 
 }
-final Object i8385;
-if ((boolean)i7874) {
-final Object f7876 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object i2241;
+if ((boolean)i1721) {
+final Object f1723 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object a07875 = f7876;
+final Object a01722 = f1723;
 
 
 
@@ -3481,125 +3481,125 @@ final Object a07875 = f7876;
 
 
 
-final Object f7877 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(a07875, new Cons(new Cons(RuntimeContext.symbol("tl"), new Cons(a07875, Nil.NIL)), Nil.NIL))), RuntimeContext.symbol("lambda"), v7245);
+final Object f1724 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(a01722, new Cons(new Cons(RuntimeContext.symbol("tl"), new Cons(a01722, Nil.NIL)), Nil.NIL))), RuntimeContext.symbol("lambda"), v1183);
 
 
-i8385 = f7877;
+i2241 = f1724;
 } else {
 
 
-final Object i7883;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1730;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7881;
-if ((boolean)Lang.equals(RuntimeContext.symbol("tl"), ((Cons)v7243).head)) {
+final Object i1728;
+if ((boolean)Lang.equals(RuntimeContext.symbol("tl"), ((Cons)v1181).head)) {
 
 
 
-final Object i7879;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1726;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i7878;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i1725;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i7878 = true;
+i1725 = true;
 } else {
 
-i7878 = false;
+i1725 = false;
 
 }
-i7879 = i7878;
+i1726 = i1725;
 } else {
 
-i7879 = false;
+i1726 = false;
 
 }
-final Object i7880;
-if ((boolean)i7879) {
+final Object i1727;
+if ((boolean)i1726) {
 
-i7880 = true;
+i1727 = true;
 } else {
 
-i7880 = false;
+i1727 = false;
 
 }
-i7881 = i7880;
+i1728 = i1727;
 } else {
 
-i7881 = false;
+i1728 = false;
 
 }
-final Object i7882;
-if ((boolean)i7881) {
+final Object i1729;
+if ((boolean)i1728) {
 
-i7882 = true;
+i1729 = true;
 } else {
 
-i7882 = false;
+i1729 = false;
 
 }
-i7883 = i7882;
+i1730 = i1729;
 } else {
 
-i7883 = false;
+i1730 = false;
 
 }
-final Object i8384;
-if ((boolean)i7883) {
+final Object i2240;
+if ((boolean)i1730) {
 
 
-final Object f7884 = SingleParam.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, v7244, v7245, "((Cons)~A).tail", RuntimeContext.symbol("object"));
+final Object f1731 = SingleParam.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, v1182, v1183, "((Cons)~A).tail", RuntimeContext.symbol("object"));
 
-i8384 = f7884;
+i2240 = f1731;
 } else {
 
 
-final Object i7888;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1735;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7886;
-if ((boolean)Lang.equals(RuntimeContext.symbol("freeze"), ((Cons)v7243).head)) {
+final Object i1733;
+if ((boolean)Lang.equals(RuntimeContext.symbol("freeze"), ((Cons)v1181).head)) {
 
 
-final Object i7885;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)v7243).tail)) {
+final Object i1732;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)v1181).tail)) {
 
-i7885 = true;
+i1732 = true;
 } else {
 
-i7885 = false;
+i1732 = false;
 
 }
-i7886 = i7885;
+i1733 = i1732;
 } else {
 
-i7886 = false;
+i1733 = false;
 
 }
-final Object i7887;
-if ((boolean)i7886) {
+final Object i1734;
+if ((boolean)i1733) {
 
-i7887 = true;
+i1734 = true;
 } else {
 
-i7887 = false;
+i1734 = false;
 
 }
-i7888 = i7887;
+i1735 = i1734;
 } else {
 
-i7888 = false;
+i1735 = false;
 
 }
-final Object i8383;
-if ((boolean)i7888) {
-final Object f7890 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object i2239;
+if ((boolean)i1735) {
+final Object f1737 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object expression7889 = f7890;
+final Object expression1736 = f1737;
 
 
 
@@ -3610,128 +3610,128 @@ final Object expression7889 = f7890;
 
 
 
-final Object f7891 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(expression7889, new Cons(new Cons(RuntimeContext.symbol("freeze"), new Cons(expression7889, Nil.NIL)), Nil.NIL))), RuntimeContext.symbol("lambda"), v7245);
+final Object f1738 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(expression1736, new Cons(new Cons(RuntimeContext.symbol("freeze"), new Cons(expression1736, Nil.NIL)), Nil.NIL))), RuntimeContext.symbol("lambda"), v1183);
 
 
-i8383 = f7891;
+i2239 = f1738;
 } else {
 
 
-final Object i7897;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1744;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7895;
-if ((boolean)Lang.equals(RuntimeContext.symbol("freeze"), ((Cons)v7243).head)) {
+final Object i1742;
+if ((boolean)Lang.equals(RuntimeContext.symbol("freeze"), ((Cons)v1181).head)) {
 
 
 
-final Object i7893;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1740;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i7892;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i1739;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i7892 = true;
+i1739 = true;
 } else {
 
-i7892 = false;
+i1739 = false;
 
 }
-i7893 = i7892;
+i1740 = i1739;
 } else {
 
-i7893 = false;
+i1740 = false;
 
 }
-final Object i7894;
-if ((boolean)i7893) {
+final Object i1741;
+if ((boolean)i1740) {
 
-i7894 = true;
+i1741 = true;
 } else {
 
-i7894 = false;
+i1741 = false;
 
 }
-i7895 = i7894;
+i1742 = i1741;
 } else {
 
-i7895 = false;
+i1742 = false;
 
 }
-final Object i7896;
-if ((boolean)i7895) {
+final Object i1743;
+if ((boolean)i1742) {
 
-i7896 = true;
+i1743 = true;
 } else {
 
-i7896 = false;
+i1743 = false;
 
 }
-i7897 = i7896;
+i1744 = i1743;
 } else {
 
-i7897 = false;
+i1744 = false;
 
 }
-final Object i8382;
-if ((boolean)i7897) {
+final Object i2238;
+if ((boolean)i1744) {
 
 
 
 
 
-final Object f7898 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(Nil.NIL, ((Cons)v7243).tail)), RuntimeContext.symbol("lambda"), v7245);
+final Object f1745 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(Nil.NIL, ((Cons)v1181).tail)), RuntimeContext.symbol("lambda"), v1183);
 
-i8382 = f7898;
+i2238 = f1745;
 } else {
 
 
-final Object i7902;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1749;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7900;
-if ((boolean)Lang.equals(RuntimeContext.symbol("eval-kl"), ((Cons)v7243).head)) {
+final Object i1747;
+if ((boolean)Lang.equals(RuntimeContext.symbol("eval-kl"), ((Cons)v1181).head)) {
 
 
-final Object i7899;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)v7243).tail)) {
+final Object i1746;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)v1181).tail)) {
 
-i7899 = true;
+i1746 = true;
 } else {
 
-i7899 = false;
+i1746 = false;
 
 }
-i7900 = i7899;
+i1747 = i1746;
 } else {
 
-i7900 = false;
+i1747 = false;
 
 }
-final Object i7901;
-if ((boolean)i7900) {
+final Object i1748;
+if ((boolean)i1747) {
 
-i7901 = true;
+i1748 = true;
 } else {
 
-i7901 = false;
+i1748 = false;
 
 }
-i7902 = i7901;
+i1749 = i1748;
 } else {
 
-i7902 = false;
+i1749 = false;
 
 }
-final Object i8381;
-if ((boolean)i7902) {
-final Object f7904 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object i2237;
+if ((boolean)i1749) {
+final Object f1751 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object expression7903 = f7904;
+final Object expression1750 = f1751;
 
 
 
@@ -3742,125 +3742,125 @@ final Object expression7903 = f7904;
 
 
 
-final Object f7905 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(expression7903, new Cons(new Cons(RuntimeContext.symbol("eval-kl"), new Cons(expression7903, Nil.NIL)), Nil.NIL))), RuntimeContext.symbol("lambda"), v7245);
+final Object f1752 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(expression1750, new Cons(new Cons(RuntimeContext.symbol("eval-kl"), new Cons(expression1750, Nil.NIL)), Nil.NIL))), RuntimeContext.symbol("lambda"), v1183);
 
 
-i8381 = f7905;
+i2237 = f1752;
 } else {
 
 
-final Object i7911;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1758;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7909;
-if ((boolean)Lang.equals(RuntimeContext.symbol("eval-kl"), ((Cons)v7243).head)) {
+final Object i1756;
+if ((boolean)Lang.equals(RuntimeContext.symbol("eval-kl"), ((Cons)v1181).head)) {
 
 
 
-final Object i7907;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1754;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i7906;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i1753;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i7906 = true;
+i1753 = true;
 } else {
 
-i7906 = false;
+i1753 = false;
 
 }
-i7907 = i7906;
+i1754 = i1753;
 } else {
 
-i7907 = false;
+i1754 = false;
 
 }
-final Object i7908;
-if ((boolean)i7907) {
+final Object i1755;
+if ((boolean)i1754) {
 
-i7908 = true;
+i1755 = true;
 } else {
 
-i7908 = false;
+i1755 = false;
 
 }
-i7909 = i7908;
+i1756 = i1755;
 } else {
 
-i7909 = false;
+i1756 = false;
 
 }
-final Object i7910;
-if ((boolean)i7909) {
+final Object i1757;
+if ((boolean)i1756) {
 
-i7910 = true;
+i1757 = true;
 } else {
 
-i7910 = false;
+i1757 = false;
 
 }
-i7911 = i7910;
+i1758 = i1757;
 } else {
 
-i7911 = false;
+i1758 = false;
 
 }
-final Object i8380;
-if ((boolean)i7911) {
+final Object i2236;
+if ((boolean)i1758) {
 
 
-final Object f7912 = SingleParam.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, v7244, v7245, "RuntimeContext.evalKl(~A)", RuntimeContext.symbol("object"));
+final Object f1759 = SingleParam.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, v1182, v1183, "RuntimeContext.evalKl(~A)", RuntimeContext.symbol("object"));
 
-i8380 = f7912;
+i2236 = f1759;
 } else {
 
 
-final Object i7916;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1763;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7914;
-if ((boolean)Lang.equals(RuntimeContext.symbol("number?"), ((Cons)v7243).head)) {
+final Object i1761;
+if ((boolean)Lang.equals(RuntimeContext.symbol("number?"), ((Cons)v1181).head)) {
 
 
-final Object i7913;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)v7243).tail)) {
+final Object i1760;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)v1181).tail)) {
 
-i7913 = true;
+i1760 = true;
 } else {
 
-i7913 = false;
+i1760 = false;
 
 }
-i7914 = i7913;
+i1761 = i1760;
 } else {
 
-i7914 = false;
+i1761 = false;
 
 }
-final Object i7915;
-if ((boolean)i7914) {
+final Object i1762;
+if ((boolean)i1761) {
 
-i7915 = true;
+i1762 = true;
 } else {
 
-i7915 = false;
+i1762 = false;
 
 }
-i7916 = i7915;
+i1763 = i1762;
 } else {
 
-i7916 = false;
+i1763 = false;
 
 }
-final Object i8379;
-if ((boolean)i7916) {
-final Object f7918 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object i2235;
+if ((boolean)i1763) {
+final Object f1765 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object a07917 = f7918;
+final Object a01764 = f1765;
 
 
 
@@ -3871,158 +3871,158 @@ final Object a07917 = f7918;
 
 
 
-final Object f7919 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(a07917, new Cons(new Cons(RuntimeContext.symbol("number?"), new Cons(a07917, Nil.NIL)), Nil.NIL))), RuntimeContext.symbol("lambda"), v7245);
+final Object f1766 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(a01764, new Cons(new Cons(RuntimeContext.symbol("number?"), new Cons(a01764, Nil.NIL)), Nil.NIL))), RuntimeContext.symbol("lambda"), v1183);
 
 
-i8379 = f7919;
+i2235 = f1766;
 } else {
 
 
-final Object i7925;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1772;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7923;
-if ((boolean)Lang.equals(RuntimeContext.symbol("number?"), ((Cons)v7243).head)) {
+final Object i1770;
+if ((boolean)Lang.equals(RuntimeContext.symbol("number?"), ((Cons)v1181).head)) {
 
 
 
-final Object i7921;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1768;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i7920;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i1767;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i7920 = true;
+i1767 = true;
 } else {
 
-i7920 = false;
+i1767 = false;
 
 }
-i7921 = i7920;
+i1768 = i1767;
 } else {
 
-i7921 = false;
+i1768 = false;
 
 }
-final Object i7922;
-if ((boolean)i7921) {
+final Object i1769;
+if ((boolean)i1768) {
 
-i7922 = true;
+i1769 = true;
 } else {
 
-i7922 = false;
+i1769 = false;
 
 }
-i7923 = i7922;
+i1770 = i1769;
 } else {
 
-i7923 = false;
+i1770 = false;
 
 }
-final Object i7924;
-if ((boolean)i7923) {
+final Object i1771;
+if ((boolean)i1770) {
 
-i7924 = true;
+i1771 = true;
 } else {
 
-i7924 = false;
+i1771 = false;
 
 }
-i7925 = i7924;
+i1772 = i1771;
 } else {
 
-i7925 = false;
+i1772 = false;
 
 }
-final Object i8378;
-if ((boolean)i7925) {
+final Object i2234;
+if ((boolean)i1772) {
 
 
-final Object f7927 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, RuntimeContext.symbol("object"), v7245);
+final Object f1774 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, RuntimeContext.symbol("object"), v1183);
 
-final Object a0TOxDO7926 = f7927;
-final Object f7928 = Fst.LAMBDA.apply(a0TOxDO7926);
-final Object f7929 = Atp.LAMBDA.apply(f7928, Nil.NIL);
-final Object f7930 = IntmakeString.LAMBDA.apply("~A~%", f7929);
-final Object f7931 = Third.LAMBDA.apply(a0TOxDO7926);
+final Object a0TOxDO1773 = f1774;
+final Object f1775 = Fst.LAMBDA.apply(a0TOxDO1773);
+final Object f1776 = Atp.LAMBDA.apply(f1775, Nil.NIL);
+final Object f1777 = IntmakeString.LAMBDA.apply("~A~%", f1776);
+final Object f1778 = Third.LAMBDA.apply(a0TOxDO1773);
 
-final Object i7934;
-if ((boolean)Lang.equals(RuntimeContext.symbol("symbol"), f7931)) {
+final Object i1781;
+if ((boolean)Lang.equals(RuntimeContext.symbol("symbol"), f1778)) {
 
 
-final Object f7932 = FindFirstQ.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, v7245);
+final Object f1779 = FindFirstQ.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, v1183);
 
 
-final Object i7933;
-if ((boolean)!((boolean)f7932)) {
+final Object i1780;
+if ((boolean)!((boolean)f1779)) {
 
-i7933 = true;
+i1780 = true;
 } else {
 
-i7933 = false;
+i1780 = false;
 
 }
-i7934 = i7933;
+i1781 = i1780;
 } else {
 
-i7934 = false;
+i1781 = false;
 
 }
-final Object i7944;
-if ((boolean)i7934) {
+final Object i1791;
+if ((boolean)i1781) {
 
-i7944 = "false";
+i1791 = "false";
 } else {
-final Object f7935 = Third.LAMBDA.apply(a0TOxDO7926);
+final Object f1782 = Third.LAMBDA.apply(a0TOxDO1773);
 
-final Object i7943;
-if ((boolean)Lang.equals(RuntimeContext.symbol("string"), f7935)) {
+final Object i1790;
+if ((boolean)Lang.equals(RuntimeContext.symbol("string"), f1782)) {
 
-i7943 = "false";
+i1790 = "false";
 } else {
-final Object f7936 = Third.LAMBDA.apply(a0TOxDO7926);
-final Object f7937 = NumericTypeQ.LAMBDA.apply(f7936);
+final Object f1783 = Third.LAMBDA.apply(a0TOxDO1773);
+final Object f1784 = NumericTypeQ.LAMBDA.apply(f1783);
 
-final Object i7942;
-if ((boolean)f7937) {
+final Object i1789;
+if ((boolean)f1784) {
 
-i7942 = "true";
+i1789 = "true";
 } else {
 
-final Object i7941;
+final Object i1788;
 if ((boolean)true) {
-final Object f7938 = Second.LAMBDA.apply(a0TOxDO7926);
-final Object f7939 = Atp.LAMBDA.apply(f7938, Nil.NIL);
-final Object f7940 = IntmakeString.LAMBDA.apply("(~A instanceof Number)", f7939);
+final Object f1785 = Second.LAMBDA.apply(a0TOxDO1773);
+final Object f1786 = Atp.LAMBDA.apply(f1785, Nil.NIL);
+final Object f1787 = IntmakeString.LAMBDA.apply("(~A instanceof Number)", f1786);
 
-i7941 = f7940;
+i1788 = f1787;
 } else {
 
 throw new SimpleError((String)"True condition not found.");
 
 
 }
-i7942 = i7941;
+i1789 = i1788;
 
 }
-i7943 = i7942;
+i1790 = i1789;
 
 }
-i7944 = i7943;
+i1791 = i1790;
 
-}final Object f7945 = Atp.LAMBDA.apply(i7944, RuntimeContext.symbol("boolean"));
-final Object f7946 = Atp.LAMBDA.apply(f7930, f7945);
+}final Object f1792 = Atp.LAMBDA.apply(i1791, RuntimeContext.symbol("boolean"));
+final Object f1793 = Atp.LAMBDA.apply(f1777, f1792);
 
 
-i8378 = f7946;
+i2234 = f1793;
 } else {
 
 
-final Object i7949;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1796;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
 
@@ -4032,35 +4032,35 @@ if ((boolean)(v7243 instanceof Cons)) {
 
 
 
-final Object f7947 = ElementQ.LAMBDA.apply(((Cons)v7243).head, new Cons(RuntimeContext.symbol("+"), new Cons(RuntimeContext.symbol("-"), new Cons(RuntimeContext.symbol("*"), new Cons(RuntimeContext.symbol("/"), Nil.NIL)))));
+final Object f1794 = ElementQ.LAMBDA.apply(((Cons)v1181).head, new Cons(RuntimeContext.symbol("+"), new Cons(RuntimeContext.symbol("-"), new Cons(RuntimeContext.symbol("*"), new Cons(RuntimeContext.symbol("/"), Nil.NIL)))));
 
-final Object i7948;
-if ((boolean)f7947) {
+final Object i1795;
+if ((boolean)f1794) {
 
-i7948 = true;
+i1795 = true;
 } else {
 
-i7948 = false;
+i1795 = false;
 
 }
-i7949 = i7948;
+i1796 = i1795;
 } else {
 
-i7949 = false;
+i1796 = false;
 
 }
-final Object i8377;
-if ((boolean)i7949) {
+final Object i2233;
+if ((boolean)i1796) {
 
 
-final Object f7950 = Arithmetic.LAMBDA.apply(((Cons)v7243).head, ((Cons)v7243).tail, v7245);
+final Object f1797 = Arithmetic.LAMBDA.apply(((Cons)v1181).head, ((Cons)v1181).tail, v1183);
 
-i8377 = f7950;
+i2233 = f1797;
 } else {
 
 
-final Object i7953;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1800;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
 
@@ -4070,79 +4070,79 @@ if ((boolean)(v7243 instanceof Cons)) {
 
 
 
-final Object f7951 = ElementQ.LAMBDA.apply(((Cons)v7243).head, new Cons(RuntimeContext.symbol("<"), new Cons(RuntimeContext.symbol(">"), new Cons(RuntimeContext.symbol("<="), new Cons(RuntimeContext.symbol(">="), Nil.NIL)))));
+final Object f1798 = ElementQ.LAMBDA.apply(((Cons)v1181).head, new Cons(RuntimeContext.symbol("<"), new Cons(RuntimeContext.symbol(">"), new Cons(RuntimeContext.symbol("<="), new Cons(RuntimeContext.symbol(">="), Nil.NIL)))));
 
-final Object i7952;
-if ((boolean)f7951) {
+final Object i1799;
+if ((boolean)f1798) {
 
-i7952 = true;
+i1799 = true;
 } else {
 
-i7952 = false;
+i1799 = false;
 
 }
-i7953 = i7952;
+i1800 = i1799;
 } else {
 
-i7953 = false;
+i1800 = false;
 
 }
-final Object i8376;
-if ((boolean)i7953) {
+final Object i2232;
+if ((boolean)i1800) {
 
 
-final Object f7954 = Comparison.LAMBDA.apply(((Cons)v7243).head, ((Cons)v7243).tail, v7245);
+final Object f1801 = Comparison.LAMBDA.apply(((Cons)v1181).head, ((Cons)v1181).tail, v1183);
 
-i8376 = f7954;
+i2232 = f1801;
 } else {
 
 
-final Object i7958;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1805;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7956;
-if ((boolean)Lang.equals(RuntimeContext.symbol("="), ((Cons)v7243).head)) {
+final Object i1803;
+if ((boolean)Lang.equals(RuntimeContext.symbol("="), ((Cons)v1181).head)) {
 
 
-final Object i7955;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)v7243).tail)) {
+final Object i1802;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)v1181).tail)) {
 
-i7955 = true;
+i1802 = true;
 } else {
 
-i7955 = false;
+i1802 = false;
 
 }
-i7956 = i7955;
+i1803 = i1802;
 } else {
 
-i7956 = false;
+i1803 = false;
 
 }
-final Object i7957;
-if ((boolean)i7956) {
+final Object i1804;
+if ((boolean)i1803) {
 
-i7957 = true;
+i1804 = true;
 } else {
 
-i7957 = false;
+i1804 = false;
 
 }
-i7958 = i7957;
+i1805 = i1804;
 } else {
 
-i7958 = false;
+i1805 = false;
 
 }
-final Object i8375;
-if ((boolean)i7958) {
-final Object f7960 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object i2231;
+if ((boolean)i1805) {
+final Object f1807 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object a07959 = f7960;
-final Object f7962 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object a01806 = f1807;
+final Object f1809 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object a17961 = f7962;
+final Object a11808 = f1809;
 
 
 
@@ -4161,78 +4161,78 @@ final Object a17961 = f7962;
 
 
 
-final Object f7963 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(a07959, new Cons(new Cons(RuntimeContext.symbol("lambda"), new Cons(a17961, new Cons(new Cons(RuntimeContext.symbol("="), new Cons(a07959, new Cons(a17961, Nil.NIL))), Nil.NIL))), Nil.NIL))), RuntimeContext.symbol("lambda"), v7245);
+final Object f1810 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(a01806, new Cons(new Cons(RuntimeContext.symbol("lambda"), new Cons(a11808, new Cons(new Cons(RuntimeContext.symbol("="), new Cons(a01806, new Cons(a11808, Nil.NIL))), Nil.NIL))), Nil.NIL))), RuntimeContext.symbol("lambda"), v1183);
 
 
 
-i8375 = f7963;
+i2231 = f1810;
 } else {
 
 
-final Object i7969;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1816;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7967;
-if ((boolean)Lang.equals(RuntimeContext.symbol("="), ((Cons)v7243).head)) {
+final Object i1814;
+if ((boolean)Lang.equals(RuntimeContext.symbol("="), ((Cons)v1181).head)) {
 
 
 
-final Object i7965;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1812;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i7964;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i1811;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i7964 = true;
+i1811 = true;
 } else {
 
-i7964 = false;
+i1811 = false;
 
 }
-i7965 = i7964;
+i1812 = i1811;
 } else {
 
-i7965 = false;
+i1812 = false;
 
 }
-final Object i7966;
-if ((boolean)i7965) {
+final Object i1813;
+if ((boolean)i1812) {
 
-i7966 = true;
+i1813 = true;
 } else {
 
-i7966 = false;
+i1813 = false;
 
 }
-i7967 = i7966;
+i1814 = i1813;
 } else {
 
-i7967 = false;
+i1814 = false;
 
 }
-final Object i7968;
-if ((boolean)i7967) {
+final Object i1815;
+if ((boolean)i1814) {
 
-i7968 = true;
+i1815 = true;
 } else {
 
-i7968 = false;
+i1815 = false;
 
 }
-i7969 = i7968;
+i1816 = i1815;
 } else {
 
-i7969 = false;
+i1816 = false;
 
 }
-final Object i8374;
-if ((boolean)i7969) {
-final Object f7971 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object i2230;
+if ((boolean)i1816) {
+final Object f1818 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object a17970 = f7971;
+final Object a11817 = f1818;
 
 
 
@@ -4247,213 +4247,213 @@ final Object a17970 = f7971;
 
 
 
-final Object f7972 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(a17970, new Cons(new Cons(RuntimeContext.symbol("="), new Cons(((Cons)((Cons)v7243).tail).head, new Cons(a17970, Nil.NIL))), Nil.NIL))), RuntimeContext.symbol("lambda"), v7245);
+final Object f1819 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(a11817, new Cons(new Cons(RuntimeContext.symbol("="), new Cons(((Cons)((Cons)v1181).tail).head, new Cons(a11817, Nil.NIL))), Nil.NIL))), RuntimeContext.symbol("lambda"), v1183);
 
 
-i8374 = f7972;
+i2230 = f1819;
 } else {
 
 
-final Object i7980;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1827;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i7978;
-if ((boolean)Lang.equals(RuntimeContext.symbol("="), ((Cons)v7243).head)) {
+final Object i1825;
+if ((boolean)Lang.equals(RuntimeContext.symbol("="), ((Cons)v1181).head)) {
 
 
 
-final Object i7976;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1823;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
 
-final Object i7974;
-if ((boolean)(((Cons)((Cons)v7243).tail).tail instanceof Cons)) {
+final Object i1821;
+if ((boolean)(((Cons)((Cons)v1181).tail).tail instanceof Cons)) {
 
 
 
 
-final Object i7973;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)v7243).tail).tail).tail)) {
+final Object i1820;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)v1181).tail).tail).tail)) {
 
-i7973 = true;
+i1820 = true;
 } else {
 
-i7973 = false;
+i1820 = false;
 
 }
-i7974 = i7973;
+i1821 = i1820;
 } else {
 
-i7974 = false;
+i1821 = false;
 
 }
-final Object i7975;
-if ((boolean)i7974) {
+final Object i1822;
+if ((boolean)i1821) {
 
-i7975 = true;
+i1822 = true;
 } else {
 
-i7975 = false;
+i1822 = false;
 
 }
-i7976 = i7975;
+i1823 = i1822;
 } else {
 
-i7976 = false;
+i1823 = false;
 
 }
-final Object i7977;
-if ((boolean)i7976) {
+final Object i1824;
+if ((boolean)i1823) {
 
-i7977 = true;
+i1824 = true;
 } else {
 
-i7977 = false;
+i1824 = false;
 
 }
-i7978 = i7977;
+i1825 = i1824;
 } else {
 
-i7978 = false;
+i1825 = false;
 
 }
-final Object i7979;
-if ((boolean)i7978) {
+final Object i1826;
+if ((boolean)i1825) {
 
-i7979 = true;
+i1826 = true;
 } else {
 
-i7979 = false;
+i1826 = false;
 
 }
-i7980 = i7979;
+i1827 = i1826;
 } else {
 
-i7980 = false;
+i1827 = false;
 
 }
-final Object i8373;
-if ((boolean)i7980) {
+final Object i2229;
+if ((boolean)i1827) {
 
-final Object i7982;
-if ((boolean)Lang.equals(v7244, RuntimeContext.symbol("boolean"))) {
+final Object i1829;
+if ((boolean)Lang.equals(v1182, RuntimeContext.symbol("boolean"))) {
 
-i7982 = true;
+i1829 = true;
 } else {
 
-final Object i7981;
-if ((boolean)Lang.equals(v7244, RuntimeContext.symbol("object"))) {
+final Object i1828;
+if ((boolean)Lang.equals(v1182, RuntimeContext.symbol("object"))) {
 
-i7981 = true;
+i1828 = true;
 } else {
 
-i7981 = false;
+i1828 = false;
 
 }
-i7982 = i7981;
+i1829 = i1828;
 
 }
-final Object i8007;
-if ((boolean)i7982) {
+final Object i1854;
+if ((boolean)i1829) {
 
 
-final Object f7984 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, RuntimeContext.symbol("object"), v7245);
+final Object f1831 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, RuntimeContext.symbol("object"), v1183);
 
-final Object pX07983 = f7984;
+final Object pX01830 = f1831;
 
 
 
-final Object f7986 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)v7243).tail).tail).head, RuntimeContext.symbol("object"), v7245);
+final Object f1833 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)v1181).tail).tail).head, RuntimeContext.symbol("object"), v1183);
 
-final Object pX17985 = f7986;
-final Object f7987 = Fst.LAMBDA.apply(pX07983);
-final Object f7988 = Fst.LAMBDA.apply(pX17985);
-final Object f7989 = Ats.LAMBDA.apply(f7987, f7988);
-final Object f7990 = Third.LAMBDA.apply(pX07983);
-final Object f7991 = PrimitiveTypeQ.LAMBDA.apply(f7990);
+final Object pX11832 = f1833;
+final Object f1834 = Fst.LAMBDA.apply(pX01830);
+final Object f1835 = Fst.LAMBDA.apply(pX11832);
+final Object f1836 = Ats.LAMBDA.apply(f1834, f1835);
+final Object f1837 = Third.LAMBDA.apply(pX01830);
+final Object f1838 = PrimitiveTypeQ.LAMBDA.apply(f1837);
 
-final Object i8002;
-if ((boolean)f7991) {
-final Object f7992 = Second.LAMBDA.apply(pX07983);
-final Object f7993 = Second.LAMBDA.apply(pX17985);
-final Object f7994 = Atp.LAMBDA.apply(f7993, Nil.NIL);
-final Object f7995 = Atp.LAMBDA.apply(f7992, f7994);
-final Object f7996 = IntmakeString.LAMBDA.apply("Lang.equals(~A, ~A)", f7995);
+final Object i1849;
+if ((boolean)f1838) {
+final Object f1839 = Second.LAMBDA.apply(pX01830);
+final Object f1840 = Second.LAMBDA.apply(pX11832);
+final Object f1841 = Atp.LAMBDA.apply(f1840, Nil.NIL);
+final Object f1842 = Atp.LAMBDA.apply(f1839, f1841);
+final Object f1843 = IntmakeString.LAMBDA.apply("Lang.equals(~A, ~A)", f1842);
 
-i8002 = f7996;
+i1849 = f1843;
 } else {
-final Object f7997 = Second.LAMBDA.apply(pX07983);
-final Object f7998 = Second.LAMBDA.apply(pX17985);
-final Object f7999 = Atp.LAMBDA.apply(f7998, Nil.NIL);
-final Object f8000 = Atp.LAMBDA.apply(f7997, f7999);
-final Object f8001 = IntmakeString.LAMBDA.apply("Lang.equals(~A, ~A)", f8000);
+final Object f1844 = Second.LAMBDA.apply(pX01830);
+final Object f1845 = Second.LAMBDA.apply(pX11832);
+final Object f1846 = Atp.LAMBDA.apply(f1845, Nil.NIL);
+final Object f1847 = Atp.LAMBDA.apply(f1844, f1846);
+final Object f1848 = IntmakeString.LAMBDA.apply("Lang.equals(~A, ~A)", f1847);
 
-i8002 = f8001;
+i1849 = f1848;
 
-}final Object f8003 = Atp.LAMBDA.apply(i8002, RuntimeContext.symbol("boolean"));
-final Object f8004 = Atp.LAMBDA.apply(f7989, f8003);
+}final Object f1850 = Atp.LAMBDA.apply(i1849, RuntimeContext.symbol("boolean"));
+final Object f1851 = Atp.LAMBDA.apply(f1836, f1850);
 
 
 
-i8007 = f8004;
+i1854 = f1851;
 } else {
-final Object f8005 = Atp.LAMBDA.apply(v7244, Nil.NIL);
-final Object f8006 = IntmakeString.LAMBDA.apply("Expected boolean type assertion for = operator, but was ~A", f8005);
+final Object f1852 = Atp.LAMBDA.apply(v1182, Nil.NIL);
+final Object f1853 = IntmakeString.LAMBDA.apply("Expected boolean type assertion for = operator, but was ~A", f1852);
 
-throw new SimpleError((String)f8006);
+throw new SimpleError((String)f1853);
 
 
 }
-i8373 = i8007;
+i2229 = i1854;
 } else {
 
 
-final Object i8011;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1858;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i8009;
-if ((boolean)Lang.equals(RuntimeContext.symbol("string?"), ((Cons)v7243).head)) {
+final Object i1856;
+if ((boolean)Lang.equals(RuntimeContext.symbol("string?"), ((Cons)v1181).head)) {
 
 
-final Object i8008;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)v7243).tail)) {
+final Object i1855;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)v1181).tail)) {
 
-i8008 = true;
+i1855 = true;
 } else {
 
-i8008 = false;
+i1855 = false;
 
 }
-i8009 = i8008;
+i1856 = i1855;
 } else {
 
-i8009 = false;
+i1856 = false;
 
 }
-final Object i8010;
-if ((boolean)i8009) {
+final Object i1857;
+if ((boolean)i1856) {
 
-i8010 = true;
+i1857 = true;
 } else {
 
-i8010 = false;
+i1857 = false;
 
 }
-i8011 = i8010;
+i1858 = i1857;
 } else {
 
-i8011 = false;
+i1858 = false;
 
 }
-final Object i8372;
-if ((boolean)i8011) {
-final Object f8013 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object i2228;
+if ((boolean)i1858) {
+final Object f1860 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object a08012 = f8013;
+final Object a01859 = f1860;
 
 
 
@@ -4464,351 +4464,351 @@ final Object a08012 = f8013;
 
 
 
-final Object f8014 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(a08012, new Cons(new Cons(RuntimeContext.symbol("string?"), new Cons(a08012, Nil.NIL)), Nil.NIL))), RuntimeContext.symbol("lambda"), v7245);
+final Object f1861 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(a01859, new Cons(new Cons(RuntimeContext.symbol("string?"), new Cons(a01859, Nil.NIL)), Nil.NIL))), RuntimeContext.symbol("lambda"), v1183);
 
 
-i8372 = f8014;
+i2228 = f1861;
 } else {
 
 
-final Object i8020;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1867;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i8018;
-if ((boolean)Lang.equals(RuntimeContext.symbol("string?"), ((Cons)v7243).head)) {
+final Object i1865;
+if ((boolean)Lang.equals(RuntimeContext.symbol("string?"), ((Cons)v1181).head)) {
 
 
 
-final Object i8016;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1863;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i8015;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i1862;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i8015 = true;
+i1862 = true;
 } else {
 
-i8015 = false;
+i1862 = false;
 
 }
-i8016 = i8015;
+i1863 = i1862;
 } else {
 
-i8016 = false;
+i1863 = false;
 
 }
-final Object i8017;
-if ((boolean)i8016) {
+final Object i1864;
+if ((boolean)i1863) {
 
-i8017 = true;
+i1864 = true;
 } else {
 
-i8017 = false;
+i1864 = false;
 
 }
-i8018 = i8017;
+i1865 = i1864;
 } else {
 
-i8018 = false;
+i1865 = false;
 
 }
-final Object i8019;
-if ((boolean)i8018) {
+final Object i1866;
+if ((boolean)i1865) {
 
-i8019 = true;
+i1866 = true;
 } else {
 
-i8019 = false;
+i1866 = false;
 
 }
-i8020 = i8019;
+i1867 = i1866;
 } else {
 
-i8020 = false;
+i1867 = false;
 
 }
-final Object i8371;
-if ((boolean)i8020) {
+final Object i2227;
+if ((boolean)i1867) {
 
 
-final Object f8022 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, RuntimeContext.symbol("string"), v7245);
+final Object f1869 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, RuntimeContext.symbol("string"), v1183);
 
-final Object a0TOxDO8021 = f8022;
-final Object f8023 = Fst.LAMBDA.apply(a0TOxDO8021);
-final Object f8024 = Atp.LAMBDA.apply(f8023, Nil.NIL);
-final Object f8025 = IntmakeString.LAMBDA.apply("~A~%", f8024);
-final Object f8026 = Second.LAMBDA.apply(a0TOxDO8021);
-final Object f8027 = Atp.LAMBDA.apply(f8026, Nil.NIL);
-final Object f8028 = IntmakeString.LAMBDA.apply("(~A instanceof String)", f8027);
-final Object f8029 = Atp.LAMBDA.apply(f8028, RuntimeContext.symbol("boolean"));
-final Object f8030 = Atp.LAMBDA.apply(f8025, f8029);
+final Object a0TOxDO1868 = f1869;
+final Object f1870 = Fst.LAMBDA.apply(a0TOxDO1868);
+final Object f1871 = Atp.LAMBDA.apply(f1870, Nil.NIL);
+final Object f1872 = IntmakeString.LAMBDA.apply("~A~%", f1871);
+final Object f1873 = Second.LAMBDA.apply(a0TOxDO1868);
+final Object f1874 = Atp.LAMBDA.apply(f1873, Nil.NIL);
+final Object f1875 = IntmakeString.LAMBDA.apply("(~A instanceof String)", f1874);
+final Object f1876 = Atp.LAMBDA.apply(f1875, RuntimeContext.symbol("boolean"));
+final Object f1877 = Atp.LAMBDA.apply(f1872, f1876);
 
 
-i8371 = f8030;
+i2227 = f1877;
 } else {
 
 
-final Object i8034;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1881;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i8032;
-if ((boolean)Lang.equals(RuntimeContext.symbol("tlstr"), ((Cons)v7243).head)) {
+final Object i1879;
+if ((boolean)Lang.equals(RuntimeContext.symbol("tlstr"), ((Cons)v1181).head)) {
 
 
-final Object i8031;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)v7243).tail)) {
+final Object i1878;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)v1181).tail)) {
 
-i8031 = true;
+i1878 = true;
 } else {
 
-i8031 = false;
+i1878 = false;
 
 }
-i8032 = i8031;
+i1879 = i1878;
 } else {
 
-i8032 = false;
+i1879 = false;
 
 }
-final Object i8033;
-if ((boolean)i8032) {
+final Object i1880;
+if ((boolean)i1879) {
 
-i8033 = true;
+i1880 = true;
 } else {
 
-i8033 = false;
+i1880 = false;
 
 }
-i8034 = i8033;
+i1881 = i1880;
 } else {
 
-i8034 = false;
+i1881 = false;
 
 }
-final Object i8370;
-if ((boolean)i8034) {
-final Object f8036 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object i2226;
+if ((boolean)i1881) {
+final Object f1883 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object string8035 = f8036;
+final Object string1882 = f1883;
 
 
 
 
-final Object f8037 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("tlstr"), new Cons(string8035, Nil.NIL)), RuntimeContext.symbol("string"), v7245);
+final Object f1884 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("tlstr"), new Cons(string1882, Nil.NIL)), RuntimeContext.symbol("string"), v1183);
 
 
-i8370 = f8037;
+i2226 = f1884;
 } else {
 
 
-final Object i8043;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1890;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i8041;
-if ((boolean)Lang.equals(RuntimeContext.symbol("tlstr"), ((Cons)v7243).head)) {
+final Object i1888;
+if ((boolean)Lang.equals(RuntimeContext.symbol("tlstr"), ((Cons)v1181).head)) {
 
 
 
-final Object i8039;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1886;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i8038;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i1885;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i8038 = true;
+i1885 = true;
 } else {
 
-i8038 = false;
+i1885 = false;
 
 }
-i8039 = i8038;
+i1886 = i1885;
 } else {
 
-i8039 = false;
+i1886 = false;
 
 }
-final Object i8040;
-if ((boolean)i8039) {
+final Object i1887;
+if ((boolean)i1886) {
 
-i8040 = true;
+i1887 = true;
 } else {
 
-i8040 = false;
+i1887 = false;
 
 }
-i8041 = i8040;
+i1888 = i1887;
 } else {
 
-i8041 = false;
+i1888 = false;
 
 }
-final Object i8042;
-if ((boolean)i8041) {
+final Object i1889;
+if ((boolean)i1888) {
 
-i8042 = true;
+i1889 = true;
 } else {
 
-i8042 = false;
+i1889 = false;
 
 }
-i8043 = i8042;
+i1890 = i1889;
 } else {
 
-i8043 = false;
+i1890 = false;
 
 }
-final Object i8369;
-if ((boolean)i8043) {
+final Object i2225;
+if ((boolean)i1890) {
 
 
-final Object f8045 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, RuntimeContext.symbol("string"), v7245);
+final Object f1892 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, RuntimeContext.symbol("string"), v1183);
 
-final Object stringTOxDO8044 = f8045;
-final Object f8046 = Fst.LAMBDA.apply(stringTOxDO8044);
-final Object f8047 = Atp.LAMBDA.apply(f8046, Nil.NIL);
-final Object f8048 = IntmakeString.LAMBDA.apply("~A~%", f8047);
-final Object f8049 = Second.LAMBDA.apply(stringTOxDO8044);
-final Object f8050 = Atp.LAMBDA.apply(f8049, Nil.NIL);
-final Object f8051 = IntmakeString.LAMBDA.apply("((String)~A).substring(1)", f8050);
-final Object f8052 = Atp.LAMBDA.apply(f8051, RuntimeContext.symbol("string"));
-final Object f8053 = Atp.LAMBDA.apply(f8048, f8052);
+final Object stringTOxDO1891 = f1892;
+final Object f1893 = Fst.LAMBDA.apply(stringTOxDO1891);
+final Object f1894 = Atp.LAMBDA.apply(f1893, Nil.NIL);
+final Object f1895 = IntmakeString.LAMBDA.apply("~A~%", f1894);
+final Object f1896 = Second.LAMBDA.apply(stringTOxDO1891);
+final Object f1897 = Atp.LAMBDA.apply(f1896, Nil.NIL);
+final Object f1898 = IntmakeString.LAMBDA.apply("((String)~A).substring(1)", f1897);
+final Object f1899 = Atp.LAMBDA.apply(f1898, RuntimeContext.symbol("string"));
+final Object f1900 = Atp.LAMBDA.apply(f1895, f1899);
 
 
-i8369 = f8053;
+i2225 = f1900;
 } else {
 
 
-final Object i8057;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1904;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i8055;
-if ((boolean)Lang.equals(RuntimeContext.symbol("pos"), ((Cons)v7243).head)) {
+final Object i1902;
+if ((boolean)Lang.equals(RuntimeContext.symbol("pos"), ((Cons)v1181).head)) {
 
 
-final Object i8054;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)v7243).tail)) {
+final Object i1901;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)v1181).tail)) {
 
-i8054 = true;
+i1901 = true;
 } else {
 
-i8054 = false;
+i1901 = false;
 
 }
-i8055 = i8054;
+i1902 = i1901;
 } else {
 
-i8055 = false;
+i1902 = false;
 
 }
-final Object i8056;
-if ((boolean)i8055) {
+final Object i1903;
+if ((boolean)i1902) {
 
-i8056 = true;
+i1903 = true;
 } else {
 
-i8056 = false;
+i1903 = false;
 
 }
-i8057 = i8056;
+i1904 = i1903;
 } else {
 
-i8057 = false;
+i1904 = false;
 
 }
-final Object i8368;
-if ((boolean)i8057) {
-final Object f8059 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object i2224;
+if ((boolean)i1904) {
+final Object f1906 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object string8058 = f8059;
-final Object f8061 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object string1905 = f1906;
+final Object f1908 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object position8060 = f8061;
+final Object position1907 = f1908;
 
 
 
 
 
 
-final Object f8062 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("pos"), new Cons(string8058, new Cons(position8060, Nil.NIL))), RuntimeContext.symbol("boolean"), v7245);
+final Object f1909 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("pos"), new Cons(string1905, new Cons(position1907, Nil.NIL))), RuntimeContext.symbol("boolean"), v1183);
 
 
 
-i8368 = f8062;
+i2224 = f1909;
 } else {
 
 
-final Object i8068;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1915;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i8066;
-if ((boolean)Lang.equals(RuntimeContext.symbol("pos"), ((Cons)v7243).head)) {
+final Object i1913;
+if ((boolean)Lang.equals(RuntimeContext.symbol("pos"), ((Cons)v1181).head)) {
 
 
 
-final Object i8064;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1911;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i8063;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i1910;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i8063 = true;
+i1910 = true;
 } else {
 
-i8063 = false;
+i1910 = false;
 
 }
-i8064 = i8063;
+i1911 = i1910;
 } else {
 
-i8064 = false;
+i1911 = false;
 
 }
-final Object i8065;
-if ((boolean)i8064) {
+final Object i1912;
+if ((boolean)i1911) {
 
-i8065 = true;
+i1912 = true;
 } else {
 
-i8065 = false;
+i1912 = false;
 
 }
-i8066 = i8065;
+i1913 = i1912;
 } else {
 
-i8066 = false;
+i1913 = false;
 
 }
-final Object i8067;
-if ((boolean)i8066) {
+final Object i1914;
+if ((boolean)i1913) {
 
-i8067 = true;
+i1914 = true;
 } else {
 
-i8067 = false;
+i1914 = false;
 
 }
-i8068 = i8067;
+i1915 = i1914;
 } else {
 
-i8068 = false;
+i1915 = false;
 
 }
-final Object i8367;
-if ((boolean)i8068) {
-final Object f8070 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object i2223;
+if ((boolean)i1915) {
+final Object f1917 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object position8069 = f8070;
+final Object position1916 = f1917;
 
 
 
@@ -4817,174 +4817,174 @@ final Object position8069 = f8070;
 
 
 
-final Object f8071 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("pos"), new Cons(((Cons)((Cons)v7243).tail).head, new Cons(position8069, Nil.NIL))), RuntimeContext.symbol("boolean"), v7245);
+final Object f1918 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("pos"), new Cons(((Cons)((Cons)v1181).tail).head, new Cons(position1916, Nil.NIL))), RuntimeContext.symbol("boolean"), v1183);
 
 
-i8367 = f8071;
+i2223 = f1918;
 } else {
 
 
-final Object i8079;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1926;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i8077;
-if ((boolean)Lang.equals(RuntimeContext.symbol("pos"), ((Cons)v7243).head)) {
+final Object i1924;
+if ((boolean)Lang.equals(RuntimeContext.symbol("pos"), ((Cons)v1181).head)) {
 
 
 
-final Object i8075;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1922;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
 
-final Object i8073;
-if ((boolean)(((Cons)((Cons)v7243).tail).tail instanceof Cons)) {
+final Object i1920;
+if ((boolean)(((Cons)((Cons)v1181).tail).tail instanceof Cons)) {
 
 
 
 
-final Object i8072;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)v7243).tail).tail).tail)) {
+final Object i1919;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)v1181).tail).tail).tail)) {
 
-i8072 = true;
+i1919 = true;
 } else {
 
-i8072 = false;
+i1919 = false;
 
 }
-i8073 = i8072;
+i1920 = i1919;
 } else {
 
-i8073 = false;
+i1920 = false;
 
 }
-final Object i8074;
-if ((boolean)i8073) {
+final Object i1921;
+if ((boolean)i1920) {
 
-i8074 = true;
+i1921 = true;
 } else {
 
-i8074 = false;
+i1921 = false;
 
 }
-i8075 = i8074;
+i1922 = i1921;
 } else {
 
-i8075 = false;
+i1922 = false;
 
 }
-final Object i8076;
-if ((boolean)i8075) {
+final Object i1923;
+if ((boolean)i1922) {
 
-i8076 = true;
+i1923 = true;
 } else {
 
-i8076 = false;
+i1923 = false;
 
 }
-i8077 = i8076;
+i1924 = i1923;
 } else {
 
-i8077 = false;
+i1924 = false;
 
 }
-final Object i8078;
-if ((boolean)i8077) {
+final Object i1925;
+if ((boolean)i1924) {
 
-i8078 = true;
+i1925 = true;
 } else {
 
-i8078 = false;
+i1925 = false;
 
 }
-i8079 = i8078;
+i1926 = i1925;
 } else {
 
-i8079 = false;
+i1926 = false;
 
 }
-final Object i8366;
-if ((boolean)i8079) {
+final Object i2222;
+if ((boolean)i1926) {
 
 
-final Object f8081 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, RuntimeContext.symbol("string"), v7245);
+final Object f1928 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, RuntimeContext.symbol("string"), v1183);
 
-final Object stringTOxDO8080 = f8081;
+final Object stringTOxDO1927 = f1928;
 
 
 
-final Object f8083 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)v7243).tail).tail).head, RuntimeContext.symbol("number"), v7245);
+final Object f1930 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)v1181).tail).tail).head, RuntimeContext.symbol("number"), v1183);
 
-final Object positionTOxDO8082 = f8083;
-final Object f8084 = Fst.LAMBDA.apply(stringTOxDO8080);
-final Object f8085 = Fst.LAMBDA.apply(positionTOxDO8082);
-final Object f8086 = Atp.LAMBDA.apply(f8085, Nil.NIL);
-final Object f8087 = Atp.LAMBDA.apply(f8084, f8086);
-final Object f8088 = IntmakeString.LAMBDA.apply("~A~%~A~%", f8087);
-final Object f8089 = Second.LAMBDA.apply(stringTOxDO8080);
-final Object f8090 = Second.LAMBDA.apply(positionTOxDO8082);
-final Object f8091 = Second.LAMBDA.apply(positionTOxDO8082);
-final Object f8092 = Atp.LAMBDA.apply(f8091, Nil.NIL);
-final Object f8093 = Atp.LAMBDA.apply(f8090, f8092);
-final Object f8094 = Atp.LAMBDA.apply(f8089, f8093);
-final Object f8095 = IntmakeString.LAMBDA.apply("((String)~A).substring(((Number)~A).intValue(), ((Number)~A).intValue()+1)", f8094);
-final Object f8096 = Atp.LAMBDA.apply(f8095, RuntimeContext.symbol("string"));
-final Object f8097 = Atp.LAMBDA.apply(f8088, f8096);
+final Object positionTOxDO1929 = f1930;
+final Object f1931 = Fst.LAMBDA.apply(stringTOxDO1927);
+final Object f1932 = Fst.LAMBDA.apply(positionTOxDO1929);
+final Object f1933 = Atp.LAMBDA.apply(f1932, Nil.NIL);
+final Object f1934 = Atp.LAMBDA.apply(f1931, f1933);
+final Object f1935 = IntmakeString.LAMBDA.apply("~A~%~A~%", f1934);
+final Object f1936 = Second.LAMBDA.apply(stringTOxDO1927);
+final Object f1937 = Second.LAMBDA.apply(positionTOxDO1929);
+final Object f1938 = Second.LAMBDA.apply(positionTOxDO1929);
+final Object f1939 = Atp.LAMBDA.apply(f1938, Nil.NIL);
+final Object f1940 = Atp.LAMBDA.apply(f1937, f1939);
+final Object f1941 = Atp.LAMBDA.apply(f1936, f1940);
+final Object f1942 = IntmakeString.LAMBDA.apply("((String)~A).substring(((Number)~A).intValue(), ((Number)~A).intValue()+1)", f1941);
+final Object f1943 = Atp.LAMBDA.apply(f1942, RuntimeContext.symbol("string"));
+final Object f1944 = Atp.LAMBDA.apply(f1935, f1943);
 
 
 
-i8366 = f8097;
+i2222 = f1944;
 } else {
 
 
-final Object i8101;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1948;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i8099;
-if ((boolean)Lang.equals(RuntimeContext.symbol("cn"), ((Cons)v7243).head)) {
+final Object i1946;
+if ((boolean)Lang.equals(RuntimeContext.symbol("cn"), ((Cons)v1181).head)) {
 
 
-final Object i8098;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)v7243).tail)) {
+final Object i1945;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)v1181).tail)) {
 
-i8098 = true;
+i1945 = true;
 } else {
 
-i8098 = false;
+i1945 = false;
 
 }
-i8099 = i8098;
+i1946 = i1945;
 } else {
 
-i8099 = false;
+i1946 = false;
 
 }
-final Object i8100;
-if ((boolean)i8099) {
+final Object i1947;
+if ((boolean)i1946) {
 
-i8100 = true;
+i1947 = true;
 } else {
 
-i8100 = false;
+i1947 = false;
 
 }
-i8101 = i8100;
+i1948 = i1947;
 } else {
 
-i8101 = false;
+i1948 = false;
 
 }
-final Object i8365;
-if ((boolean)i8101) {
-final Object f8103 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object i2221;
+if ((boolean)i1948) {
+final Object f1950 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object string08102 = f8103;
-final Object f8105 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object string01949 = f1950;
+final Object f1952 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object string18104 = f8105;
+final Object string11951 = f1952;
 
 
 
@@ -5003,78 +5003,78 @@ final Object string18104 = f8105;
 
 
 
-final Object f8106 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(string08102, new Cons(new Cons(RuntimeContext.symbol("lambda"), new Cons(string18104, new Cons(new Cons(RuntimeContext.symbol("cn"), new Cons(string08102, new Cons(string18104, Nil.NIL))), Nil.NIL))), Nil.NIL))), RuntimeContext.symbol("lambda"), v7245);
+final Object f1953 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(string01949, new Cons(new Cons(RuntimeContext.symbol("lambda"), new Cons(string11951, new Cons(new Cons(RuntimeContext.symbol("cn"), new Cons(string01949, new Cons(string11951, Nil.NIL))), Nil.NIL))), Nil.NIL))), RuntimeContext.symbol("lambda"), v1183);
 
 
 
-i8365 = f8106;
+i2221 = f1953;
 } else {
 
 
-final Object i8112;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1959;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i8110;
-if ((boolean)Lang.equals(RuntimeContext.symbol("cn"), ((Cons)v7243).head)) {
+final Object i1957;
+if ((boolean)Lang.equals(RuntimeContext.symbol("cn"), ((Cons)v1181).head)) {
 
 
 
-final Object i8108;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1955;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i8107;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i1954;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i8107 = true;
+i1954 = true;
 } else {
 
-i8107 = false;
+i1954 = false;
 
 }
-i8108 = i8107;
+i1955 = i1954;
 } else {
 
-i8108 = false;
+i1955 = false;
 
 }
-final Object i8109;
-if ((boolean)i8108) {
+final Object i1956;
+if ((boolean)i1955) {
 
-i8109 = true;
+i1956 = true;
 } else {
 
-i8109 = false;
+i1956 = false;
 
 }
-i8110 = i8109;
+i1957 = i1956;
 } else {
 
-i8110 = false;
+i1957 = false;
 
 }
-final Object i8111;
-if ((boolean)i8110) {
+final Object i1958;
+if ((boolean)i1957) {
 
-i8111 = true;
+i1958 = true;
 } else {
 
-i8111 = false;
+i1958 = false;
 
 }
-i8112 = i8111;
+i1959 = i1958;
 } else {
 
-i8112 = false;
+i1959 = false;
 
 }
-final Object i8364;
-if ((boolean)i8112) {
-final Object f8114 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object i2220;
+if ((boolean)i1959) {
+final Object f1961 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object string18113 = f8114;
+final Object string11960 = f1961;
 
 
 
@@ -5089,150 +5089,150 @@ final Object string18113 = f8114;
 
 
 
-final Object f8115 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(string18113, new Cons(new Cons(RuntimeContext.symbol("cn"), new Cons(((Cons)((Cons)v7243).tail).head, new Cons(string18113, Nil.NIL))), Nil.NIL))), RuntimeContext.symbol("lambda"), v7245);
+final Object f1962 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(string11960, new Cons(new Cons(RuntimeContext.symbol("cn"), new Cons(((Cons)((Cons)v1181).tail).head, new Cons(string11960, Nil.NIL))), Nil.NIL))), RuntimeContext.symbol("lambda"), v1183);
 
 
-i8364 = f8115;
+i2220 = f1962;
 } else {
 
 
-final Object i8123;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1970;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i8121;
-if ((boolean)Lang.equals(RuntimeContext.symbol("cn"), ((Cons)v7243).head)) {
+final Object i1968;
+if ((boolean)Lang.equals(RuntimeContext.symbol("cn"), ((Cons)v1181).head)) {
 
 
 
-final Object i8119;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1966;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
 
-final Object i8117;
-if ((boolean)(((Cons)((Cons)v7243).tail).tail instanceof Cons)) {
+final Object i1964;
+if ((boolean)(((Cons)((Cons)v1181).tail).tail instanceof Cons)) {
 
 
 
 
-final Object i8116;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)v7243).tail).tail).tail)) {
+final Object i1963;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)v1181).tail).tail).tail)) {
 
-i8116 = true;
+i1963 = true;
 } else {
 
-i8116 = false;
+i1963 = false;
 
 }
-i8117 = i8116;
+i1964 = i1963;
 } else {
 
-i8117 = false;
+i1964 = false;
 
 }
-final Object i8118;
-if ((boolean)i8117) {
+final Object i1965;
+if ((boolean)i1964) {
 
-i8118 = true;
+i1965 = true;
 } else {
 
-i8118 = false;
+i1965 = false;
 
 }
-i8119 = i8118;
+i1966 = i1965;
 } else {
 
-i8119 = false;
+i1966 = false;
 
 }
-final Object i8120;
-if ((boolean)i8119) {
+final Object i1967;
+if ((boolean)i1966) {
 
-i8120 = true;
+i1967 = true;
 } else {
 
-i8120 = false;
+i1967 = false;
 
 }
-i8121 = i8120;
+i1968 = i1967;
 } else {
 
-i8121 = false;
+i1968 = false;
 
 }
-final Object i8122;
-if ((boolean)i8121) {
+final Object i1969;
+if ((boolean)i1968) {
 
-i8122 = true;
+i1969 = true;
 } else {
 
-i8122 = false;
+i1969 = false;
 
 }
-i8123 = i8122;
+i1970 = i1969;
 } else {
 
-i8123 = false;
+i1970 = false;
 
 }
-final Object i8363;
-if ((boolean)i8123) {
+final Object i2219;
+if ((boolean)i1970) {
 
 
 
 
 
-final Object f8124 = TwoParams.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, ((Cons)((Cons)((Cons)v7243).tail).tail).head, v7244, v7245, "((String)~A + (String)~A)", RuntimeContext.symbol("string"));
+final Object f1971 = TwoParams.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, ((Cons)((Cons)((Cons)v1181).tail).tail).head, v1182, v1183, "((String)~A + (String)~A)", RuntimeContext.symbol("string"));
 
-i8363 = f8124;
+i2219 = f1971;
 } else {
 
 
-final Object i8128;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1975;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i8126;
-if ((boolean)Lang.equals(RuntimeContext.symbol("n->string"), ((Cons)v7243).head)) {
+final Object i1973;
+if ((boolean)Lang.equals(RuntimeContext.symbol("n->string"), ((Cons)v1181).head)) {
 
 
-final Object i8125;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)v7243).tail)) {
+final Object i1972;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)v1181).tail)) {
 
-i8125 = true;
+i1972 = true;
 } else {
 
-i8125 = false;
+i1972 = false;
 
 }
-i8126 = i8125;
+i1973 = i1972;
 } else {
 
-i8126 = false;
+i1973 = false;
 
 }
-final Object i8127;
-if ((boolean)i8126) {
+final Object i1974;
+if ((boolean)i1973) {
 
-i8127 = true;
+i1974 = true;
 } else {
 
-i8127 = false;
+i1974 = false;
 
 }
-i8128 = i8127;
+i1975 = i1974;
 } else {
 
-i8128 = false;
+i1975 = false;
 
 }
-final Object i8362;
-if ((boolean)i8128) {
-final Object f8130 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object i2218;
+if ((boolean)i1975) {
+final Object f1977 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object number8129 = f8130;
+final Object number1976 = f1977;
 
 
 
@@ -5243,149 +5243,149 @@ final Object number8129 = f8130;
 
 
 
-final Object f8131 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(number8129, new Cons(new Cons(RuntimeContext.symbol("n->string"), new Cons(number8129, Nil.NIL)), Nil.NIL))), RuntimeContext.symbol("lambda"), v7245);
+final Object f1978 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(number1976, new Cons(new Cons(RuntimeContext.symbol("n->string"), new Cons(number1976, Nil.NIL)), Nil.NIL))), RuntimeContext.symbol("lambda"), v1183);
 
 
-i8362 = f8131;
+i2218 = f1978;
 } else {
 
 
-final Object i8137;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i1984;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i8135;
-if ((boolean)Lang.equals(RuntimeContext.symbol("n->string"), ((Cons)v7243).head)) {
+final Object i1982;
+if ((boolean)Lang.equals(RuntimeContext.symbol("n->string"), ((Cons)v1181).head)) {
 
 
 
-final Object i8133;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i1980;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i8132;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i1979;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i8132 = true;
+i1979 = true;
 } else {
 
-i8132 = false;
+i1979 = false;
 
 }
-i8133 = i8132;
+i1980 = i1979;
 } else {
 
-i8133 = false;
+i1980 = false;
 
 }
-final Object i8134;
-if ((boolean)i8133) {
+final Object i1981;
+if ((boolean)i1980) {
 
-i8134 = true;
+i1981 = true;
 } else {
 
-i8134 = false;
+i1981 = false;
 
 }
-i8135 = i8134;
+i1982 = i1981;
 } else {
 
-i8135 = false;
+i1982 = false;
 
 }
-final Object i8136;
-if ((boolean)i8135) {
+final Object i1983;
+if ((boolean)i1982) {
 
-i8136 = true;
+i1983 = true;
 } else {
 
-i8136 = false;
+i1983 = false;
 
 }
-i8137 = i8136;
+i1984 = i1983;
 } else {
 
-i8137 = false;
+i1984 = false;
 
 }
-final Object i8361;
-if ((boolean)i8137) {
+final Object i2217;
+if ((boolean)i1984) {
 
 
-final Object f8139 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, RuntimeContext.symbol("number"), v7245);
+final Object f1986 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, RuntimeContext.symbol("number"), v1183);
 
-final Object numberTOxDO8138 = f8139;
-final Object f8141 = Third.LAMBDA.apply(numberTOxDO8138);
+final Object numberTOxDO1985 = f1986;
+final Object f1988 = Third.LAMBDA.apply(numberTOxDO1985);
 
-final Object i8142;
-if ((boolean)Lang.equals(RuntimeContext.symbol("number"), f8141)) {
+final Object i1989;
+if ((boolean)Lang.equals(RuntimeContext.symbol("number"), f1988)) {
 
-i8142 = "new String(Character.toChars(((Number) (~A)).intValue()))";
+i1989 = "new String(Character.toChars(((Number) (~A)).intValue()))";
 } else {
 
-i8142 = "new String(Character.toChars(((Number) (~A)).intValue()))";
+i1989 = "new String(Character.toChars(((Number) (~A)).intValue()))";
 
 }
-final Object template8140 = i8142;
-final Object f8143 = Fst.LAMBDA.apply(numberTOxDO8138);
-final Object f8144 = Atp.LAMBDA.apply(f8143, Nil.NIL);
-final Object f8145 = IntmakeString.LAMBDA.apply("~A~%", f8144);
-final Object f8146 = Second.LAMBDA.apply(numberTOxDO8138);
-final Object f8147 = Atp.LAMBDA.apply(f8146, Nil.NIL);
-final Object f8148 = IntmakeString.LAMBDA.apply(template8140, f8147);
-final Object f8149 = Atp.LAMBDA.apply(f8148, RuntimeContext.symbol("string"));
-final Object f8150 = Atp.LAMBDA.apply(f8145, f8149);
+final Object template1987 = i1989;
+final Object f1990 = Fst.LAMBDA.apply(numberTOxDO1985);
+final Object f1991 = Atp.LAMBDA.apply(f1990, Nil.NIL);
+final Object f1992 = IntmakeString.LAMBDA.apply("~A~%", f1991);
+final Object f1993 = Second.LAMBDA.apply(numberTOxDO1985);
+final Object f1994 = Atp.LAMBDA.apply(f1993, Nil.NIL);
+final Object f1995 = IntmakeString.LAMBDA.apply(template1987, f1994);
+final Object f1996 = Atp.LAMBDA.apply(f1995, RuntimeContext.symbol("string"));
+final Object f1997 = Atp.LAMBDA.apply(f1992, f1996);
 
 
 
-i8361 = f8150;
+i2217 = f1997;
 } else {
 
 
-final Object i8154;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i2001;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i8152;
-if ((boolean)Lang.equals(RuntimeContext.symbol("string->n"), ((Cons)v7243).head)) {
+final Object i1999;
+if ((boolean)Lang.equals(RuntimeContext.symbol("string->n"), ((Cons)v1181).head)) {
 
 
-final Object i8151;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)v7243).tail)) {
+final Object i1998;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)v1181).tail)) {
 
-i8151 = true;
+i1998 = true;
 } else {
 
-i8151 = false;
+i1998 = false;
 
 }
-i8152 = i8151;
+i1999 = i1998;
 } else {
 
-i8152 = false;
+i1999 = false;
 
 }
-final Object i8153;
-if ((boolean)i8152) {
+final Object i2000;
+if ((boolean)i1999) {
 
-i8153 = true;
+i2000 = true;
 } else {
 
-i8153 = false;
+i2000 = false;
 
 }
-i8154 = i8153;
+i2001 = i2000;
 } else {
 
-i8154 = false;
+i2001 = false;
 
 }
-final Object i8360;
-if ((boolean)i8154) {
-final Object f8156 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object i2216;
+if ((boolean)i2001) {
+final Object f2003 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object string8155 = f8156;
+final Object string2002 = f2003;
 
 
 
@@ -5396,125 +5396,125 @@ final Object string8155 = f8156;
 
 
 
-final Object f8157 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(string8155, new Cons(new Cons(RuntimeContext.symbol("string->n"), new Cons(string8155, Nil.NIL)), Nil.NIL))), RuntimeContext.symbol("lambda"), v7245);
+final Object f2004 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(string2002, new Cons(new Cons(RuntimeContext.symbol("string->n"), new Cons(string2002, Nil.NIL)), Nil.NIL))), RuntimeContext.symbol("lambda"), v1183);
 
 
-i8360 = f8157;
+i2216 = f2004;
 } else {
 
 
-final Object i8163;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i2010;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i8161;
-if ((boolean)Lang.equals(RuntimeContext.symbol("string->n"), ((Cons)v7243).head)) {
+final Object i2008;
+if ((boolean)Lang.equals(RuntimeContext.symbol("string->n"), ((Cons)v1181).head)) {
 
 
 
-final Object i8159;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i2006;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i8158;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i2005;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i8158 = true;
+i2005 = true;
 } else {
 
-i8158 = false;
+i2005 = false;
 
 }
-i8159 = i8158;
+i2006 = i2005;
 } else {
 
-i8159 = false;
+i2006 = false;
 
 }
-final Object i8160;
-if ((boolean)i8159) {
+final Object i2007;
+if ((boolean)i2006) {
 
-i8160 = true;
+i2007 = true;
 } else {
 
-i8160 = false;
+i2007 = false;
 
 }
-i8161 = i8160;
+i2008 = i2007;
 } else {
 
-i8161 = false;
+i2008 = false;
 
 }
-final Object i8162;
-if ((boolean)i8161) {
+final Object i2009;
+if ((boolean)i2008) {
 
-i8162 = true;
+i2009 = true;
 } else {
 
-i8162 = false;
+i2009 = false;
 
 }
-i8163 = i8162;
+i2010 = i2009;
 } else {
 
-i8163 = false;
+i2010 = false;
 
 }
-final Object i8359;
-if ((boolean)i8163) {
+final Object i2215;
+if ((boolean)i2010) {
 
 
-final Object f8164 = SingleParam.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, v7244, v7245, "Integer.valueOf(((String) ~A).charAt(0))", RuntimeContext.symbol("number"));
+final Object f2011 = SingleParam.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, v1182, v1183, "Integer.valueOf(((String) ~A).charAt(0))", RuntimeContext.symbol("number"));
 
-i8359 = f8164;
+i2215 = f2011;
 } else {
 
 
-final Object i8168;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i2015;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i8166;
-if ((boolean)Lang.equals(RuntimeContext.symbol("absvector"), ((Cons)v7243).head)) {
+final Object i2013;
+if ((boolean)Lang.equals(RuntimeContext.symbol("absvector"), ((Cons)v1181).head)) {
 
 
-final Object i8165;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)v7243).tail)) {
+final Object i2012;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)v1181).tail)) {
 
-i8165 = true;
+i2012 = true;
 } else {
 
-i8165 = false;
+i2012 = false;
 
 }
-i8166 = i8165;
+i2013 = i2012;
 } else {
 
-i8166 = false;
+i2013 = false;
 
 }
-final Object i8167;
-if ((boolean)i8166) {
+final Object i2014;
+if ((boolean)i2013) {
 
-i8167 = true;
+i2014 = true;
 } else {
 
-i8167 = false;
+i2014 = false;
 
 }
-i8168 = i8167;
+i2015 = i2014;
 } else {
 
-i8168 = false;
+i2015 = false;
 
 }
-final Object i8358;
-if ((boolean)i8168) {
-final Object f8170 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object i2214;
+if ((boolean)i2015) {
+final Object f2017 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object arg8169 = f8170;
+final Object arg2016 = f2017;
 
 
 
@@ -5525,292 +5525,292 @@ final Object arg8169 = f8170;
 
 
 
-final Object f8171 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(arg8169, new Cons(new Cons(RuntimeContext.symbol("absvector"), new Cons(arg8169, Nil.NIL)), Nil.NIL))), RuntimeContext.symbol("lambda"), v7245);
+final Object f2018 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(arg2016, new Cons(new Cons(RuntimeContext.symbol("absvector"), new Cons(arg2016, Nil.NIL)), Nil.NIL))), RuntimeContext.symbol("lambda"), v1183);
 
 
-i8358 = f8171;
+i2214 = f2018;
 } else {
 
 
-final Object i8177;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i2024;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i8175;
-if ((boolean)Lang.equals(RuntimeContext.symbol("absvector"), ((Cons)v7243).head)) {
+final Object i2022;
+if ((boolean)Lang.equals(RuntimeContext.symbol("absvector"), ((Cons)v1181).head)) {
 
 
 
-final Object i8173;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i2020;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i8172;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i2019;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i8172 = true;
+i2019 = true;
 } else {
 
-i8172 = false;
+i2019 = false;
 
 }
-i8173 = i8172;
+i2020 = i2019;
 } else {
 
-i8173 = false;
+i2020 = false;
 
 }
-final Object i8174;
-if ((boolean)i8173) {
+final Object i2021;
+if ((boolean)i2020) {
 
-i8174 = true;
+i2021 = true;
 } else {
 
-i8174 = false;
+i2021 = false;
 
 }
-i8175 = i8174;
+i2022 = i2021;
 } else {
 
-i8175 = false;
+i2022 = false;
 
 }
-final Object i8176;
-if ((boolean)i8175) {
+final Object i2023;
+if ((boolean)i2022) {
 
-i8176 = true;
+i2023 = true;
 } else {
 
-i8176 = false;
+i2023 = false;
 
 }
-i8177 = i8176;
+i2024 = i2023;
 } else {
 
-i8177 = false;
+i2024 = false;
 
 }
-final Object i8357;
-if ((boolean)i8177) {
+final Object i2213;
+if ((boolean)i2024) {
 
 
-final Object f8179 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, RuntimeContext.symbol("integer"), v7245);
+final Object f2026 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, RuntimeContext.symbol("integer"), v1183);
 
-final Object sizeTOxDO8178 = f8179;
-final Object f8181 = Gensym.LAMBDA.apply(RuntimeContext.symbol("a"));
+final Object sizeTOxDO2025 = f2026;
+final Object f2028 = Gensym.LAMBDA.apply(RuntimeContext.symbol("a"));
 
-final Object result8180 = f8181;
-final Object f8182 = Fst.LAMBDA.apply(sizeTOxDO8178);
-final Object f8183 = Second.LAMBDA.apply(sizeTOxDO8178);
-final Object f8184 = Atp.LAMBDA.apply(f8183, Nil.NIL);
-final Object f8185 = Atp.LAMBDA.apply(result8180, f8184);
-final Object f8186 = Atp.LAMBDA.apply(f8182, f8185);
-final Object f8187 = IntmakeString.LAMBDA.apply("~A~%final Object[] ~A = new Object[((Number)~A).intValue()];~%", f8186);
+final Object result2027 = f2028;
+final Object f2029 = Fst.LAMBDA.apply(sizeTOxDO2025);
+final Object f2030 = Second.LAMBDA.apply(sizeTOxDO2025);
+final Object f2031 = Atp.LAMBDA.apply(f2030, Nil.NIL);
+final Object f2032 = Atp.LAMBDA.apply(result2027, f2031);
+final Object f2033 = Atp.LAMBDA.apply(f2029, f2032);
+final Object f2034 = IntmakeString.LAMBDA.apply("~A~%final Object[] ~A = new Object[((Number)~A).intValue()];~%", f2033);
 
-final Object f8188 = Atp.LAMBDA.apply(String.valueOf(result8180), RuntimeContext.symbol("vector"));
-final Object f8189 = Atp.LAMBDA.apply(f8187, f8188);
+final Object f2035 = Atp.LAMBDA.apply(String.valueOf(result2027), RuntimeContext.symbol("vector"));
+final Object f2036 = Atp.LAMBDA.apply(f2034, f2035);
 
 
 
-i8357 = f8189;
+i2213 = f2036;
 } else {
 
 
-final Object i8199;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i2046;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i8197;
-if ((boolean)Lang.equals(RuntimeContext.symbol("address->"), ((Cons)v7243).head)) {
+final Object i2044;
+if ((boolean)Lang.equals(RuntimeContext.symbol("address->"), ((Cons)v1181).head)) {
 
 
 
-final Object i8195;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i2042;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
 
-final Object i8193;
-if ((boolean)(((Cons)((Cons)v7243).tail).tail instanceof Cons)) {
+final Object i2040;
+if ((boolean)(((Cons)((Cons)v1181).tail).tail instanceof Cons)) {
 
 
 
 
 
-final Object i8191;
-if ((boolean)(((Cons)((Cons)((Cons)v7243).tail).tail).tail instanceof Cons)) {
+final Object i2038;
+if ((boolean)(((Cons)((Cons)((Cons)v1181).tail).tail).tail instanceof Cons)) {
 
 
 
 
 
-final Object i8190;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)((Cons)v7243).tail).tail).tail).tail)) {
+final Object i2037;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)((Cons)v1181).tail).tail).tail).tail)) {
 
-i8190 = true;
+i2037 = true;
 } else {
 
-i8190 = false;
+i2037 = false;
 
 }
-i8191 = i8190;
+i2038 = i2037;
 } else {
 
-i8191 = false;
+i2038 = false;
 
 }
-final Object i8192;
-if ((boolean)i8191) {
+final Object i2039;
+if ((boolean)i2038) {
 
-i8192 = true;
+i2039 = true;
 } else {
 
-i8192 = false;
+i2039 = false;
 
 }
-i8193 = i8192;
+i2040 = i2039;
 } else {
 
-i8193 = false;
+i2040 = false;
 
 }
-final Object i8194;
-if ((boolean)i8193) {
+final Object i2041;
+if ((boolean)i2040) {
 
-i8194 = true;
+i2041 = true;
 } else {
 
-i8194 = false;
+i2041 = false;
 
 }
-i8195 = i8194;
+i2042 = i2041;
 } else {
 
-i8195 = false;
+i2042 = false;
 
 }
-final Object i8196;
-if ((boolean)i8195) {
+final Object i2043;
+if ((boolean)i2042) {
 
-i8196 = true;
+i2043 = true;
 } else {
 
-i8196 = false;
+i2043 = false;
 
 }
-i8197 = i8196;
+i2044 = i2043;
 } else {
 
-i8197 = false;
+i2044 = false;
 
 }
-final Object i8198;
-if ((boolean)i8197) {
+final Object i2045;
+if ((boolean)i2044) {
 
-i8198 = true;
+i2045 = true;
 } else {
 
-i8198 = false;
+i2045 = false;
 
 }
-i8199 = i8198;
+i2046 = i2045;
 } else {
 
-i8199 = false;
+i2046 = false;
 
 }
-final Object i8356;
-if ((boolean)i8199) {
+final Object i2212;
+if ((boolean)i2046) {
 
 
-final Object f8201 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, RuntimeContext.symbol("vector"), v7245);
+final Object f2048 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, RuntimeContext.symbol("vector"), v1183);
 
-final Object vectorTOxDO8200 = f8201;
+final Object vectorTOxDO2047 = f2048;
 
 
 
-final Object f8203 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)v7243).tail).tail).head, RuntimeContext.symbol("number"), v7245);
+final Object f2050 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)v1181).tail).tail).head, RuntimeContext.symbol("number"), v1183);
 
-final Object indexTOxDO8202 = f8203;
+final Object indexTOxDO2049 = f2050;
 
 
 
 
-final Object f8205 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)((Cons)v7243).tail).tail).tail).head, RuntimeContext.symbol("object"), v7245);
+final Object f2052 = KlToJavaTraverse.LAMBDA.apply(((Cons)((Cons)((Cons)((Cons)v1181).tail).tail).tail).head, RuntimeContext.symbol("object"), v1183);
 
-final Object valueTOxDO8204 = f8205;
-final Object f8206 = Fst.LAMBDA.apply(vectorTOxDO8200);
-final Object f8207 = Fst.LAMBDA.apply(indexTOxDO8202);
-final Object f8208 = Fst.LAMBDA.apply(valueTOxDO8204);
-final Object f8209 = Second.LAMBDA.apply(vectorTOxDO8200);
-final Object f8210 = Second.LAMBDA.apply(indexTOxDO8202);
-final Object f8211 = Second.LAMBDA.apply(valueTOxDO8204);
-final Object f8212 = Atp.LAMBDA.apply(f8211, Nil.NIL);
-final Object f8213 = Atp.LAMBDA.apply(f8210, f8212);
-final Object f8214 = Atp.LAMBDA.apply(f8209, f8213);
-final Object f8215 = Atp.LAMBDA.apply(f8208, f8214);
-final Object f8216 = Atp.LAMBDA.apply(f8207, f8215);
-final Object f8217 = Atp.LAMBDA.apply(f8206, f8216);
-final Object f8218 = IntmakeString.LAMBDA.apply("~A~%~A~%~A~%((Object[])~A)[((Number)~A).intValue()] = ~A;", f8217);
-final Object f8219 = Second.LAMBDA.apply(vectorTOxDO8200);
-final Object f8220 = Atp.LAMBDA.apply(f8219, RuntimeContext.symbol("vector"));
-final Object f8221 = Atp.LAMBDA.apply(f8218, f8220);
+final Object valueTOxDO2051 = f2052;
+final Object f2053 = Fst.LAMBDA.apply(vectorTOxDO2047);
+final Object f2054 = Fst.LAMBDA.apply(indexTOxDO2049);
+final Object f2055 = Fst.LAMBDA.apply(valueTOxDO2051);
+final Object f2056 = Second.LAMBDA.apply(vectorTOxDO2047);
+final Object f2057 = Second.LAMBDA.apply(indexTOxDO2049);
+final Object f2058 = Second.LAMBDA.apply(valueTOxDO2051);
+final Object f2059 = Atp.LAMBDA.apply(f2058, Nil.NIL);
+final Object f2060 = Atp.LAMBDA.apply(f2057, f2059);
+final Object f2061 = Atp.LAMBDA.apply(f2056, f2060);
+final Object f2062 = Atp.LAMBDA.apply(f2055, f2061);
+final Object f2063 = Atp.LAMBDA.apply(f2054, f2062);
+final Object f2064 = Atp.LAMBDA.apply(f2053, f2063);
+final Object f2065 = IntmakeString.LAMBDA.apply("~A~%~A~%~A~%((Object[])~A)[((Number)~A).intValue()] = ~A;", f2064);
+final Object f2066 = Second.LAMBDA.apply(vectorTOxDO2047);
+final Object f2067 = Atp.LAMBDA.apply(f2066, RuntimeContext.symbol("vector"));
+final Object f2068 = Atp.LAMBDA.apply(f2065, f2067);
 
 
 
 
-i8356 = f8221;
+i2212 = f2068;
 } else {
 
 
-final Object i8225;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i2072;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i8223;
-if ((boolean)Lang.equals(RuntimeContext.symbol("<-address"), ((Cons)v7243).head)) {
+final Object i2070;
+if ((boolean)Lang.equals(RuntimeContext.symbol("<-address"), ((Cons)v1181).head)) {
 
 
-final Object i8222;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)v7243).tail)) {
+final Object i2069;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)v1181).tail)) {
 
-i8222 = true;
+i2069 = true;
 } else {
 
-i8222 = false;
+i2069 = false;
 
 }
-i8223 = i8222;
+i2070 = i2069;
 } else {
 
-i8223 = false;
+i2070 = false;
 
 }
-final Object i8224;
-if ((boolean)i8223) {
+final Object i2071;
+if ((boolean)i2070) {
 
-i8224 = true;
+i2071 = true;
 } else {
 
-i8224 = false;
+i2071 = false;
 
 }
-i8225 = i8224;
+i2072 = i2071;
 } else {
 
-i8225 = false;
+i2072 = false;
 
 }
-final Object i8355;
-if ((boolean)i8225) {
-final Object f8227 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object i2211;
+if ((boolean)i2072) {
+final Object f2074 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object vector8226 = f8227;
-final Object f8229 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object vector2073 = f2074;
+final Object f2076 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object index8228 = f8229;
+final Object index2075 = f2076;
 
 
 
@@ -5821,78 +5821,78 @@ final Object index8228 = f8229;
 
 
 
-final Object f8230 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(new Cons(RuntimeContext.symbol("<-address"), new Cons(vector8226, new Cons(index8228, Nil.NIL))), Nil.NIL)), RuntimeContext.symbol("lambda"), v7245);
+final Object f2077 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(new Cons(RuntimeContext.symbol("<-address"), new Cons(vector2073, new Cons(index2075, Nil.NIL))), Nil.NIL)), RuntimeContext.symbol("lambda"), v1183);
 
 
 
-i8355 = f8230;
+i2211 = f2077;
 } else {
 
 
-final Object i8236;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i2083;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i8234;
-if ((boolean)Lang.equals(RuntimeContext.symbol("<-address"), ((Cons)v7243).head)) {
+final Object i2081;
+if ((boolean)Lang.equals(RuntimeContext.symbol("<-address"), ((Cons)v1181).head)) {
 
 
 
-final Object i8232;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i2079;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
-final Object i8231;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v7243).tail).tail)) {
+final Object i2078;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)v1181).tail).tail)) {
 
-i8231 = true;
+i2078 = true;
 } else {
 
-i8231 = false;
+i2078 = false;
 
 }
-i8232 = i8231;
+i2079 = i2078;
 } else {
 
-i8232 = false;
+i2079 = false;
 
 }
-final Object i8233;
-if ((boolean)i8232) {
+final Object i2080;
+if ((boolean)i2079) {
 
-i8233 = true;
+i2080 = true;
 } else {
 
-i8233 = false;
+i2080 = false;
 
 }
-i8234 = i8233;
+i2081 = i2080;
 } else {
 
-i8234 = false;
+i2081 = false;
 
 }
-final Object i8235;
-if ((boolean)i8234) {
+final Object i2082;
+if ((boolean)i2081) {
 
-i8235 = true;
+i2082 = true;
 } else {
 
-i8235 = false;
+i2082 = false;
 
 }
-i8236 = i8235;
+i2083 = i2082;
 } else {
 
-i8236 = false;
+i2083 = false;
 
 }
-final Object i8354;
-if ((boolean)i8236) {
-final Object f8238 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
+final Object i2210;
+if ((boolean)i2083) {
+final Object f2085 = Gensym.LAMBDA.apply(RuntimeContext.symbol("s"));
 
-final Object index8237 = f8238;
+final Object index2084 = f2085;
 
 
 
@@ -5905,316 +5905,352 @@ final Object index8237 = f8238;
 
 
 
-final Object f8239 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(new Cons(RuntimeContext.symbol("<-address"), new Cons(((Cons)((Cons)v7243).tail).head, new Cons(index8237, Nil.NIL))), Nil.NIL)), RuntimeContext.symbol("lambda"), v7245);
+final Object f2086 = KlToJavaTraverse.LAMBDA.apply(new Cons(RuntimeContext.symbol("lambda"), new Cons(new Cons(RuntimeContext.symbol("<-address"), new Cons(((Cons)((Cons)v1181).tail).head, new Cons(index2084, Nil.NIL))), Nil.NIL)), RuntimeContext.symbol("lambda"), v1183);
 
 
-i8354 = f8239;
+i2210 = f2086;
 } else {
 
 
-final Object i8247;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i2094;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i8245;
-if ((boolean)Lang.equals(RuntimeContext.symbol("<-address"), ((Cons)v7243).head)) {
+final Object i2092;
+if ((boolean)Lang.equals(RuntimeContext.symbol("<-address"), ((Cons)v1181).head)) {
 
 
 
-final Object i8243;
-if ((boolean)(((Cons)v7243).tail instanceof Cons)) {
+final Object i2090;
+if ((boolean)(((Cons)v1181).tail instanceof Cons)) {
 
 
 
 
-final Object i8241;
-if ((boolean)(((Cons)((Cons)v7243).tail).tail instanceof Cons)) {
+final Object i2088;
+if ((boolean)(((Cons)((Cons)v1181).tail).tail instanceof Cons)) {
 
 
 
 
-final Object i8240;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)v7243).tail).tail).tail)) {
+final Object i2087;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)((Cons)((Cons)v1181).tail).tail).tail)) {
 
-i8240 = true;
+i2087 = true;
 } else {
 
-i8240 = false;
+i2087 = false;
 
 }
-i8241 = i8240;
+i2088 = i2087;
 } else {
 
-i8241 = false;
+i2088 = false;
 
 }
-final Object i8242;
-if ((boolean)i8241) {
+final Object i2089;
+if ((boolean)i2088) {
 
-i8242 = true;
+i2089 = true;
 } else {
 
-i8242 = false;
+i2089 = false;
 
 }
-i8243 = i8242;
+i2090 = i2089;
 } else {
 
-i8243 = false;
+i2090 = false;
 
 }
-final Object i8244;
-if ((boolean)i8243) {
+final Object i2091;
+if ((boolean)i2090) {
 
-i8244 = true;
+i2091 = true;
 } else {
 
-i8244 = false;
+i2091 = false;
 
 }
-i8245 = i8244;
+i2092 = i2091;
 } else {
 
-i8245 = false;
+i2092 = false;
 
 }
-final Object i8246;
-if ((boolean)i8245) {
+final Object i2093;
+if ((boolean)i2092) {
 
-i8246 = true;
+i2093 = true;
 } else {
 
-i8246 = false;
+i2093 = false;
 
 }
-i8247 = i8246;
+i2094 = i2093;
 } else {
 
-i8247 = false;
+i2094 = false;
 
 }
-final Object i8353;
-if ((boolean)i8247) {
+final Object i2209;
+if ((boolean)i2094) {
 
 
 
 
 
-final Object f8248 = TwoParams.LAMBDA.apply(((Cons)((Cons)v7243).tail).head, ((Cons)((Cons)((Cons)v7243).tail).tail).head, v7244, v7245, "((Object[])~A)[((Number)~A).intValue()]", RuntimeContext.symbol("object"));
+final Object f2095 = TwoParams.LAMBDA.apply(((Cons)((Cons)v1181).tail).head, ((Cons)((Cons)((Cons)v1181).tail).tail).head, v1182, v1183, "((Object[])~A)[((Number)~A).intValue()]", RuntimeContext.symbol("object"));
 
-i8353 = f8248;
+i2209 = f2095;
 } else {
 
 
-final Object i8252;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i2099;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
-final Object i8250;
-if ((boolean)Lang.equals(RuntimeContext.symbol("fail"), ((Cons)v7243).head)) {
+final Object i2097;
+if ((boolean)Lang.equals(RuntimeContext.symbol("fail"), ((Cons)v1181).head)) {
 
 
-final Object i8249;
-if ((boolean)Lang.equals(Nil.NIL, ((Cons)v7243).tail)) {
+final Object i2096;
+if ((boolean)Lang.equals(Nil.NIL, ((Cons)v1181).tail)) {
 
-i8249 = true;
+i2096 = true;
 } else {
 
-i8249 = false;
+i2096 = false;
 
 }
-i8250 = i8249;
+i2097 = i2096;
 } else {
 
-i8250 = false;
+i2097 = false;
 
 }
-final Object i8251;
-if ((boolean)i8250) {
+final Object i2098;
+if ((boolean)i2097) {
 
-i8251 = true;
+i2098 = true;
 } else {
 
-i8251 = false;
+i2098 = false;
 
 }
-i8252 = i8251;
+i2099 = i2098;
 } else {
 
-i8252 = false;
+i2099 = false;
 
 }
-final Object i8352;
-if ((boolean)i8252) {
-final Object f8253 = Atp.LAMBDA.apply("null", RuntimeContext.symbol("object"));
-final Object f8254 = Atp.LAMBDA.apply("", f8253);
+final Object i2208;
+if ((boolean)i2099) {
+final Object f2100 = Atp.LAMBDA.apply("null", RuntimeContext.symbol("object"));
+final Object f2101 = Atp.LAMBDA.apply("", f2100);
 
-i8352 = f8254;
+i2208 = f2101;
 } else {
 
 
-final Object i8351;
-if ((boolean)(v7243 instanceof Cons)) {
+final Object i2207;
+if ((boolean)(v1181 instanceof Cons)) {
 
 
 
 
-final Object directQ8255 = !((boolean)(((Cons)v7243).head instanceof Cons));
+final Object directQ2102 = !((boolean)(((Cons)v1181).head instanceof Cons));
 
 
 
-final Object i8261;
-if ((boolean)(((Cons)v7243).head instanceof Cons)) {
+final Object i2108;
+if ((boolean)(((Cons)v1181).head instanceof Cons)) {
 
-final Object f8257 = KlToJavaTraverse.LAMBDA.apply(((Cons)v7243).head, RuntimeContext.symbol("lambda"), v7245);
+final Object f2104 = KlToJavaTraverse.LAMBDA.apply(((Cons)v1181).head, RuntimeContext.symbol("lambda"), v1183);
 
-i8261 = f8257;
+i2108 = f2104;
 } else {
 
-final Object f8258 = ToVar.LAMBDA.apply(((Cons)v7243).head);
-final Object f8259 = Atp.LAMBDA.apply(f8258, RuntimeContext.symbol("symbol"));
-final Object f8260 = Atp.LAMBDA.apply("", f8259);
+final Object f2105 = ToVar.LAMBDA.apply(((Cons)v1181).head);
+final Object f2106 = Atp.LAMBDA.apply(f2105, RuntimeContext.symbol("symbol"));
+final Object f2107 = Atp.LAMBDA.apply("", f2106);
 
-i8261 = f8260;
+i2108 = f2107;
 
 }
-final Object funcTOxDO8256 = i8261;
-final Object f8263 = Flip3.LAMBDA.apply(RuntimeContext.symbol("kl-to-java-traverse"));
-final Object f8264 = ((Lambda)f8263).apply(v7245, RuntimeContext.symbol("object"));
+final Object funcTOxDO2103 = i2108;
+final Object f2110 = Flip3.LAMBDA.apply(RuntimeContext.symbol("kl-to-java-traverse"));
+final Object f2111 = ((Lambda)f2110).apply(v1183, RuntimeContext.symbol("object"));
 
-final Object f8265 = Map.LAMBDA.apply(f8264, ((Cons)v7243).tail);
+final Object f2112 = Map.LAMBDA.apply(f2111, ((Cons)v1181).tail);
 
-final Object evaledArgs8262 = f8265;
-final Object f8267 = Fst.LAMBDA.apply();
-final Object f8268 = Map.LAMBDA.apply(f8267, evaledArgs8262);
-final Object f8269 = StringJoin.LAMBDA.apply("", f8268);
+final Object evaledArgs2109 = f2112;
+final Object f2114 = Fst.LAMBDA.apply();
+final Object f2115 = Map.LAMBDA.apply(f2114, evaledArgs2109);
+final Object f2116 = StringJoin.LAMBDA.apply("", f2115);
 
-final Object argsPrepString8266 = f8269;
-final Object f8271 = Second.LAMBDA.apply();
-final Object f8272 = Map.LAMBDA.apply(f8271, evaledArgs8262);
-final Object f8273 = StringJoin.LAMBDA.apply(", ", f8272);
+final Object argsPrepString2113 = f2116;
+final Object f2118 = Second.LAMBDA.apply();
+final Object f2119 = Map.LAMBDA.apply(f2118, evaledArgs2109);
+final Object f2120 = StringJoin.LAMBDA.apply(", ", f2119);
 
-final Object argsString8270 = f8273;
-final Object f8275 = Fst.LAMBDA.apply(funcTOxDO8256);
+final Object argsString2117 = f2120;
+final Object f2122 = Fst.LAMBDA.apply(funcTOxDO2103);
 
-final Object funcPrepString8274 = f8275;
-final Object f8277 = Second.LAMBDA.apply(funcTOxDO8256);
+final Object funcPrepString2121 = f2122;
+final Object f2124 = Second.LAMBDA.apply(funcTOxDO2103);
 
-final Object funcString8276 = f8277;
-final Lambda l8280 = new Lambda1() {
+final Object funcString2123 = f2124;
+final Lambda l2127 = new Lambda1() {
   public Object apply(final Object x) throws Exception {
-    final Object f8279 = Third.LAMBDA.apply(x);
+    final Object f2126 = Third.LAMBDA.apply(x);
 
-    return Lang.equals(RuntimeContext.symbol("unreachable"), f8279);
+    return Lang.equals(RuntimeContext.symbol("unreachable"), f2126);
   }
-};final Object f8281 = ListMatches.LAMBDA.apply(l8280, evaledArgs8262);
+};final Object f2128 = ListMatches.LAMBDA.apply(l2127, evaledArgs2109);
 
-final Object unreachableQ8278 = f8281;
-final Object f8283 = Gensym.LAMBDA.apply(RuntimeContext.symbol("f"));
+final Object unreachableQ2125 = f2128;
+final Object f2130 = Gensym.LAMBDA.apply(RuntimeContext.symbol("f"));
 
-final Object result8282 = f8283;
+final Object result2129 = f2130;
 
-final Object i8314;
-if ((boolean)unreachableQ8278) {
+final Object i2170;
+if ((boolean)unreachableQ2125) {
 
-i8314 = "";
+i2170 = "";
 } else {
 
-final Object f8285 = FindFirstQ.LAMBDA.apply(((Cons)v7243).head, v7245);
+final Object f2132 = SymbolQ.LAMBDA.apply(((Cons)v1181).head);
 
-final Object i8313;
-if ((boolean)f8285) {
-final Object f8286 = Atp.LAMBDA.apply(argsString8270, Nil.NIL);
-final Object f8287 = Atp.LAMBDA.apply(funcString8276, f8286);
-final Object f8288 = Atp.LAMBDA.apply(result8282, f8287);
-final Object f8289 = IntmakeString.LAMBDA.apply("final Object ~A = RuntimeContext.dispatch(~A).apply(~A);~%", f8288);
+final Object i2135;
+if ((boolean)f2132) {
 
-i8313 = f8289;
+
+final Object f2133 = IsJavaCall.LAMBDA.apply(String.valueOf(((Cons)v1181).head));
+
+final Object i2134;
+if ((boolean)f2133) {
+
+i2134 = true;
 } else {
 
-final Object i8312;
-if ((boolean)directQ8255) {
+i2134 = false;
 
-
-final Object f8290 = NameToClassName.LAMBDA.apply(String.valueOf(((Cons)v7243).head));
-final Object f8291 = Atp.LAMBDA.apply(argsString8270, Nil.NIL);
-final Object f8292 = Atp.LAMBDA.apply(f8290, f8291);
-final Object f8293 = Atp.LAMBDA.apply(result8282, f8292);
-final Object f8294 = IntmakeString.LAMBDA.apply("final Object ~A = ~A.LAMBDA.apply(~A);~%", f8293);
-
-i8312 = f8294;
-} else {
-final Object f8295 = Third.LAMBDA.apply(funcTOxDO8256);
-
-final Object i8311;
-if ((boolean)Lang.equals(RuntimeContext.symbol("lambda"), f8295)) {
-final Object f8296 = Atp.LAMBDA.apply(argsString8270, Nil.NIL);
-final Object f8297 = Atp.LAMBDA.apply(funcString8276, f8296);
-final Object f8298 = Atp.LAMBDA.apply(result8282, f8297);
-final Object f8299 = IntmakeString.LAMBDA.apply("final Object ~A = ((Lambda)~A).apply(~A);~%", f8298);
-
-i8311 = f8299;
-} else {
-final Object f8300 = Third.LAMBDA.apply(funcTOxDO8256);
-
-final Object i8310;
-if ((boolean)Lang.equals(RuntimeContext.symbol("symbol"), f8300)) {
-final Object f8301 = Atp.LAMBDA.apply(argsString8270, Nil.NIL);
-final Object f8302 = Atp.LAMBDA.apply(funcString8276, f8301);
-final Object f8303 = Atp.LAMBDA.apply(result8282, f8302);
-final Object f8304 = IntmakeString.LAMBDA.apply("final Object ~A = RuntimeContext.symbolDispatch((Symbol)~A).apply(~A);~%", f8303);
-
-i8310 = f8304;
+}
+i2135 = i2134;
 } else {
 
-final Object i8309;
+i2135 = false;
+
+}
+final Object i2169;
+if ((boolean)i2135) {
+
+
+final Object f2136 = Atp.LAMBDA.apply(argsString2117, Nil.NIL);
+final Object f2137 = Atp.LAMBDA.apply(String.valueOf(((Cons)v1181).head), f2136);
+final Object f2138 = Atp.LAMBDA.apply(result2129, f2137);
+final Object f2139 = IntmakeString.LAMBDA.apply("final Object ~A = RuntimeContext.javaDispatch(\"~A\").apply(~A);~%", f2138);
+
+i2169 = f2139;
+} else {
+
+final Object f2140 = FindFirstQ.LAMBDA.apply(((Cons)v1181).head, v1183);
+
+final Object i2168;
+if ((boolean)f2140) {
+final Object f2141 = Atp.LAMBDA.apply(argsString2117, Nil.NIL);
+final Object f2142 = Atp.LAMBDA.apply(funcString2123, f2141);
+final Object f2143 = Atp.LAMBDA.apply(result2129, f2142);
+final Object f2144 = IntmakeString.LAMBDA.apply("final Object ~A = RuntimeContext.dispatch(~A).apply(~A);~%", f2143);
+
+i2168 = f2144;
+} else {
+
+final Object i2167;
+if ((boolean)directQ2102) {
+
+
+final Object f2145 = NameToClassName.LAMBDA.apply(String.valueOf(((Cons)v1181).head));
+final Object f2146 = Atp.LAMBDA.apply(argsString2117, Nil.NIL);
+final Object f2147 = Atp.LAMBDA.apply(f2145, f2146);
+final Object f2148 = Atp.LAMBDA.apply(result2129, f2147);
+final Object f2149 = IntmakeString.LAMBDA.apply("final Object ~A = ~A.LAMBDA.apply(~A);~%", f2148);
+
+i2167 = f2149;
+} else {
+final Object f2150 = Third.LAMBDA.apply(funcTOxDO2103);
+
+final Object i2166;
+if ((boolean)Lang.equals(RuntimeContext.symbol("lambda"), f2150)) {
+final Object f2151 = Atp.LAMBDA.apply(argsString2117, Nil.NIL);
+final Object f2152 = Atp.LAMBDA.apply(funcString2123, f2151);
+final Object f2153 = Atp.LAMBDA.apply(result2129, f2152);
+final Object f2154 = IntmakeString.LAMBDA.apply("final Object ~A = ((Lambda)~A).apply(~A);~%", f2153);
+
+i2166 = f2154;
+} else {
+final Object f2155 = Third.LAMBDA.apply(funcTOxDO2103);
+
+final Object i2165;
+if ((boolean)Lang.equals(RuntimeContext.symbol("symbol"), f2155)) {
+final Object f2156 = Atp.LAMBDA.apply(argsString2117, Nil.NIL);
+final Object f2157 = Atp.LAMBDA.apply(funcString2123, f2156);
+final Object f2158 = Atp.LAMBDA.apply(result2129, f2157);
+final Object f2159 = IntmakeString.LAMBDA.apply("final Object ~A = RuntimeContext.symbolDispatch((Symbol)~A).apply(~A);~%", f2158);
+
+i2165 = f2159;
+} else {
+
+final Object i2164;
 if ((boolean)true) {
-final Object f8305 = Atp.LAMBDA.apply(argsString8270, Nil.NIL);
-final Object f8306 = Atp.LAMBDA.apply(funcString8276, f8305);
-final Object f8307 = Atp.LAMBDA.apply(result8282, f8306);
-final Object f8308 = IntmakeString.LAMBDA.apply("final Object ~A = RuntimeContext.dispatch(~A).apply(~A);~%", f8307);
+final Object f2160 = Atp.LAMBDA.apply(argsString2117, Nil.NIL);
+final Object f2161 = Atp.LAMBDA.apply(funcString2123, f2160);
+final Object f2162 = Atp.LAMBDA.apply(result2129, f2161);
+final Object f2163 = IntmakeString.LAMBDA.apply("final Object ~A = RuntimeContext.dispatch(~A).apply(~A);~%", f2162);
 
-i8309 = f8308;
+i2164 = f2163;
 } else {
 
 throw new SimpleError((String)"True condition not found.");
 
 
 }
-i8310 = i8309;
+i2165 = i2164;
 
 }
-i8311 = i8310;
+i2166 = i2165;
 
 }
-i8312 = i8311;
+i2167 = i2166;
 
 }
-i8313 = i8312;
+i2168 = i2167;
 
 }
-i8314 = i8313;
+i2169 = i2168;
 
 }
-final Object eval8284 = i8314;
-final Object f8315 = Atp.LAMBDA.apply(eval8284, Nil.NIL);
-final Object f8316 = Atp.LAMBDA.apply(argsPrepString8266, f8315);
-final Object f8317 = Atp.LAMBDA.apply(funcPrepString8274, f8316);
-final Object f8318 = IntmakeString.LAMBDA.apply("~A~A~A", f8317);
+i2170 = i2169;
+
+}
+final Object eval2131 = i2170;
+final Object f2171 = Atp.LAMBDA.apply(eval2131, Nil.NIL);
+final Object f2172 = Atp.LAMBDA.apply(argsPrepString2113, f2171);
+final Object f2173 = Atp.LAMBDA.apply(funcPrepString2121, f2172);
+final Object f2174 = IntmakeString.LAMBDA.apply("~A~A~A", f2173);
 
 
-final Object i8319;
-if ((boolean)unreachableQ8278) {
+final Object i2175;
+if ((boolean)unreachableQ2125) {
 
-i8319 = RuntimeContext.symbol("unreachable");
+i2175 = RuntimeContext.symbol("unreachable");
 } else {
 
-i8319 = v7244;
+i2175 = v1182;
 
-}final Object f8320 = Atp.LAMBDA.apply(String.valueOf(result8282), i8319);
-final Object f8321 = Atp.LAMBDA.apply(f8318, f8320);
-
-
+}final Object f2176 = Atp.LAMBDA.apply(String.valueOf(result2129), i2175);
+final Object f2177 = Atp.LAMBDA.apply(f2174, f2176);
 
 
 
@@ -6224,330 +6260,332 @@ final Object f8321 = Atp.LAMBDA.apply(f8318, f8320);
 
 
 
-i8351 = f8321;
+
+
+i2207 = f2177;
 } else {
 
-final Object i8350;
-if ((boolean)Lang.equals(Nil.NIL, v7243)) {
-final Object f8322 = Atp.LAMBDA.apply("Nil.NIL", RuntimeContext.symbol("nil"));
-final Object f8323 = Atp.LAMBDA.apply("", f8322);
+final Object i2206;
+if ((boolean)Lang.equals(Nil.NIL, v1181)) {
+final Object f2178 = Atp.LAMBDA.apply("Nil.NIL", RuntimeContext.symbol("nil"));
+final Object f2179 = Atp.LAMBDA.apply("", f2178);
 
-i8350 = f8323;
+i2206 = f2179;
 } else {
 
-final Object i8349;
+final Object i2205;
 if ((boolean)true) {
 
 
 
 
-final Object str8324 = String.valueOf(v7243);
-final Object f8325 = FindFirstQ.LAMBDA.apply(v7243, v7245);
+final Object str2180 = String.valueOf(v1181);
+final Object f2181 = FindFirstQ.LAMBDA.apply(v1181, v1183);
 
-final Object i8344;
-if ((boolean)f8325) {
-final Object f8326 = GetSecond.LAMBDA.apply(v7243, v7245);
+final Object i2200;
+if ((boolean)f2181) {
+final Object f2182 = GetSecond.LAMBDA.apply(v1181, v1183);
 
-i8344 = f8326;
+i2200 = f2182;
 } else {
-final Object f8327 = SymbolQ.LAMBDA.apply(v7243);
+final Object f2183 = SymbolQ.LAMBDA.apply(v1181);
 
-final Object i8343;
-if ((boolean)f8327) {
-final Object f8328 = Atp.LAMBDA.apply(str8324, Nil.NIL);
-final Object f8329 = IntmakeString.LAMBDA.apply("RuntimeContext.symbol(\"~A\")", f8328);
+final Object i2199;
+if ((boolean)f2183) {
+final Object f2184 = Atp.LAMBDA.apply(str2180, Nil.NIL);
+final Object f2185 = IntmakeString.LAMBDA.apply("RuntimeContext.symbol(\"~A\")", f2184);
 
-i8343 = f8329;
-} else {
-
-
-final Object i8342;
-if ((boolean)(v7243 instanceof String)) {
-final Object f8330 = EscapeJavaString.LAMBDA.apply(v7243);
-final Object f8331 = Ats.LAMBDA.apply(f8330, "\"");
-final Object f8332 = Ats.LAMBDA.apply("\"", f8331);
-
-i8342 = f8332;
-} else {
-final Object f8333 = IntegerQ.LAMBDA.apply(v7243);
-
-final Object i8341;
-if ((boolean)f8333) {
-final Object f8334 = Atp.LAMBDA.apply(v7243, Nil.NIL);
-final Object f8335 = IntmakeString.LAMBDA.apply("~A", f8334);
-
-i8341 = f8335;
-} else {
-final Object f8336 = FloatQ.LAMBDA.apply(v7243);
-
-final Object i8340;
-if ((boolean)f8336) {
-final Object f8337 = Atp.LAMBDA.apply(v7243, Nil.NIL);
-final Object f8338 = IntmakeString.LAMBDA.apply("~Ad", f8337);
-
-i8340 = f8338;
+i2199 = f2185;
 } else {
 
-final Object i8339;
+
+final Object i2198;
+if ((boolean)(v1181 instanceof String)) {
+final Object f2186 = EscapeJavaString.LAMBDA.apply(v1181);
+final Object f2187 = Ats.LAMBDA.apply(f2186, "\"");
+final Object f2188 = Ats.LAMBDA.apply("\"", f2187);
+
+i2198 = f2188;
+} else {
+final Object f2189 = IntegerQ.LAMBDA.apply(v1181);
+
+final Object i2197;
+if ((boolean)f2189) {
+final Object f2190 = Atp.LAMBDA.apply(v1181, Nil.NIL);
+final Object f2191 = IntmakeString.LAMBDA.apply("~A", f2190);
+
+i2197 = f2191;
+} else {
+final Object f2192 = FloatQ.LAMBDA.apply(v1181);
+
+final Object i2196;
+if ((boolean)f2192) {
+final Object f2193 = Atp.LAMBDA.apply(v1181, Nil.NIL);
+final Object f2194 = IntmakeString.LAMBDA.apply("~Ad", f2193);
+
+i2196 = f2194;
+} else {
+
+final Object i2195;
 if ((boolean)true) {
 
-i8339 = str8324;
+i2195 = str2180;
 } else {
 
 throw new SimpleError((String)"True condition not found.");
 
 
 }
-i8340 = i8339;
+i2196 = i2195;
 
 }
-i8341 = i8340;
+i2197 = i2196;
 
 }
-i8342 = i8341;
+i2198 = i2197;
 
 }
-i8343 = i8342;
+i2199 = i2198;
 
 }
-i8344 = i8343;
+i2200 = i2199;
 
 }
-final Object f8345 = TypeOf.LAMBDA.apply(v7243);
-final Object f8346 = Atp.LAMBDA.apply(i8344, f8345);
-final Object f8347 = Atp.LAMBDA.apply("", f8346);
-final Object f8348 = Assert.LAMBDA.apply(!((boolean)(v7243 instanceof Cons)), "Invalid input to kl-to-java-traverse. List found where atom expected.", f8347);
+final Object f2201 = TypeOf.LAMBDA.apply(v1181);
+final Object f2202 = Atp.LAMBDA.apply(i2200, f2201);
+final Object f2203 = Atp.LAMBDA.apply("", f2202);
+final Object f2204 = Assert.LAMBDA.apply(!((boolean)(v1181 instanceof Cons)), "Invalid input to kl-to-java-traverse. List found where atom expected.", f2203);
 
-i8349 = f8348;
+i2205 = f2204;
 } else {
 
 throw new SimpleError((String)"True condition not found.");
 
 
 }
-i8350 = i8349;
+i2206 = i2205;
 
 }
-i8351 = i8350;
+i2207 = i2206;
 
 }
-i8352 = i8351;
+i2208 = i2207;
 
 }
-i8353 = i8352;
+i2209 = i2208;
 
 }
-i8354 = i8353;
+i2210 = i2209;
 
 }
-i8355 = i8354;
+i2211 = i2210;
 
 }
-i8356 = i8355;
+i2212 = i2211;
 
 }
-i8357 = i8356;
+i2213 = i2212;
 
 }
-i8358 = i8357;
+i2214 = i2213;
 
 }
-i8359 = i8358;
+i2215 = i2214;
 
 }
-i8360 = i8359;
+i2216 = i2215;
 
 }
-i8361 = i8360;
+i2217 = i2216;
 
 }
-i8362 = i8361;
+i2218 = i2217;
 
 }
-i8363 = i8362;
+i2219 = i2218;
 
 }
-i8364 = i8363;
+i2220 = i2219;
 
 }
-i8365 = i8364;
+i2221 = i2220;
 
 }
-i8366 = i8365;
+i2222 = i2221;
 
 }
-i8367 = i8366;
+i2223 = i2222;
 
 }
-i8368 = i8367;
+i2224 = i2223;
 
 }
-i8369 = i8368;
+i2225 = i2224;
 
 }
-i8370 = i8369;
+i2226 = i2225;
 
 }
-i8371 = i8370;
+i2227 = i2226;
 
 }
-i8372 = i8371;
+i2228 = i2227;
 
 }
-i8373 = i8372;
+i2229 = i2228;
 
 }
-i8374 = i8373;
+i2230 = i2229;
 
 }
-i8375 = i8374;
+i2231 = i2230;
 
 }
-i8376 = i8375;
+i2232 = i2231;
 
 }
-i8377 = i8376;
+i2233 = i2232;
 
 }
-i8378 = i8377;
+i2234 = i2233;
 
 }
-i8379 = i8378;
+i2235 = i2234;
 
 }
-i8380 = i8379;
+i2236 = i2235;
 
 }
-i8381 = i8380;
+i2237 = i2236;
 
 }
-i8382 = i8381;
+i2238 = i2237;
 
 }
-i8383 = i8382;
+i2239 = i2238;
 
 }
-i8384 = i8383;
+i2240 = i2239;
 
 }
-i8385 = i8384;
+i2241 = i2240;
 
 }
-i8386 = i8385;
+i2242 = i2241;
 
 }
-i8387 = i8386;
+i2243 = i2242;
 
 }
-i8388 = i8387;
+i2244 = i2243;
 
 }
-i8389 = i8388;
+i2245 = i2244;
 
 }
-i8390 = i8389;
+i2246 = i2245;
 
 }
-i8391 = i8390;
+i2247 = i2246;
 
 }
-i8392 = i8391;
+i2248 = i2247;
 
 }
-i8393 = i8392;
+i2249 = i2248;
 
 }
-i8394 = i8393;
+i2250 = i2249;
 
 }
-i8395 = i8394;
+i2251 = i2250;
 
 }
-i8396 = i8395;
+i2252 = i2251;
 
 }
-i8397 = i8396;
+i2253 = i2252;
 
 }
-i8398 = i8397;
+i2254 = i2253;
 
 }
-i8399 = i8398;
+i2255 = i2254;
 
 }
-i8400 = i8399;
+i2256 = i2255;
 
 }
-i8401 = i8400;
+i2257 = i2256;
 
 }
-i8402 = i8401;
+i2258 = i2257;
 
 }
-i8403 = i8402;
+i2259 = i2258;
 
 }
-i8404 = i8403;
+i2260 = i2259;
 
 }
-i8405 = i8404;
+i2261 = i2260;
 
 }
-i8406 = i8405;
+i2262 = i2261;
 
 }
-i8407 = i8406;
+i2263 = i2262;
 
 }
-i8408 = i8407;
+i2264 = i2263;
 
 }
-i8409 = i8408;
+i2265 = i2264;
 
 }
-i8410 = i8409;
+i2266 = i2265;
 
 }
-i8411 = i8410;
+i2267 = i2266;
 
 }
-i8412 = i8411;
+i2268 = i2267;
 
 }
-i8413 = i8412;
+i2269 = i2268;
 
 }
-i8414 = i8413;
+i2270 = i2269;
 
 }
-i8415 = i8414;
+i2271 = i2270;
 
 }
-i8416 = i8415;
+i2272 = i2271;
 
 }
-i8417 = i8416;
+i2273 = i2272;
 
 }
-i8418 = i8417;
+i2274 = i2273;
 
 }
-i8419 = i8418;
+i2275 = i2274;
 
 }
-i8420 = i8419;
+i2276 = i2275;
 
 }
-i8421 = i8420;
+i2277 = i2276;
 
 }
-i8422 = i8421;
+i2278 = i2277;
 
 }
-i8423 = i8422;
+i2279 = i2278;
 
 }
-    return i8423;
+    return i2279;
 
 }
 }

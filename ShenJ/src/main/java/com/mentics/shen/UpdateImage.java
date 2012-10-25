@@ -13,7 +13,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -49,10 +48,10 @@ import com.esotericsoftware.kryo.io.Output;
  * Class-name " " File " C:\dev\workspace\ShenJ\target\classes")
  */
 public class UpdateImage {
-    private static final String COMPILE_TO_DIRECTORY = "*compile-to-directory*";
-    private static final Symbol COMPILE_DIR_SYM = symbol(COMPILE_TO_DIRECTORY);
-    private static final String GEN_SOURCE_DIRECTORY = "*gen-source-directory*";
-    private static final Symbol SRC_DIR_SYM = symbol(GEN_SOURCE_DIRECTORY);
+    public static final String COMPILE_TO_DIRECTORY = "*compile-to-directory*";
+    public static final Symbol COMPILE_DIR_SYM = symbol(COMPILE_TO_DIRECTORY);
+    public static final String GEN_SOURCE_DIRECTORY = "*gen-source-directory*";
+    public static final Symbol SRC_DIR_SYM = symbol(GEN_SOURCE_DIRECTORY);
     static Kryo kryo = new Kryo();
 
 
@@ -122,7 +121,7 @@ public class UpdateImage {
                 try {
                     byte[] bytes = readBinaryFile(classFile);
                     map.put(convertFileToClassFQN(compileToDir, classFile), bytes);
-                    new File(classFile).delete();
+//                    TODO: new File(classFile).delete();
                 } catch (Exception e) {
                     System.out.println("**** Error processing class file: " + classFile);
                     ShenException.rethrow(e);
@@ -135,7 +134,10 @@ public class UpdateImage {
     }
 
     public static String convertFileToClassFQN(String compileToDir, String classFile) {
-        String pathClassWithClass = classFile.substring(compileToDir.length() + 1).replace(File.separatorChar, '.');
+        String pathClassWithClass = classFile.substring(compileToDir.length()).replace(File.separatorChar, '.');
+        if (pathClassWithClass.startsWith(".")) {
+            pathClassWithClass = pathClassWithClass.substring(1);
+        }
         String pathClass = pathClassWithClass.substring(0, pathClassWithClass.length() - ".class".length());
         return pathClass;
     }
@@ -190,7 +192,7 @@ public class UpdateImage {
                         Set<JavaFileObject.Kind> kinds, boolean recurse) throws IOException {
                     Iterable<JavaFileObject> superResult = super.list(location, packageName, kinds, recurse);
                     if (kinds.contains(JavaFileObject.Kind.CLASS) && "shen.gen".equals(packageName)) {
-//                        System.out.println("returning extra classes");
+                        // System.out.println("returning extra classes");
                         List<JavaFileObject> result = new ArrayList<>();
                         for (String cls : RuntimeContext.classes.keySet()) {
                             result.add(new BinaryJavaFileObject(cls, RuntimeContext.classes.get(cls)));
@@ -303,7 +305,9 @@ public class UpdateImage {
         if (numParams > 0) {
             sig = sig.substring(0, sig.length() - 2);
         }
-        String file = "C:/dev/workspace/ShenJ/src/main/shen/gen/" + missingClassFQN.replace('.', '/') + ".java";
+//        String file = "C:/dev/workspace/ShenJ/src/main/shen/gen/" + missingClassFQN.replace('.', '/') + ".java";
+        String file = System.getProperty("java.io.tmpdir") + missingClassFQN.replace('.', '/') + ".java";
+        new File(file).getParentFile().mkdirs();
         try {
             out = new FileWriter(file);
             out.append("package " + removeLastToken(".", missingClassFQN) + ";");
@@ -372,7 +376,7 @@ public class UpdateImage {
 
     public static void saveImage(String imageFilePath) {
         try {
-//            System.out.println("saving image: " + imageFilePath);
+            // System.out.println("saving image: " + imageFilePath);
             RuntimeContext.saveImage(new FileOutputStream(imageFilePath));
         } catch (FileNotFoundException e) {
             throw new ShenException(e);
@@ -381,7 +385,7 @@ public class UpdateImage {
 
     static void loadImage(String imageFilePath) {
         try {
-//            System.out.println("loading image: " + imageFilePath);
+            // System.out.println("loading image: " + imageFilePath);
             RuntimeContext.loadImage(new FileInputStream(imageFilePath));
         } catch (FileNotFoundException e) {
             System.out.println("Image file not found: " + imageFilePath);
