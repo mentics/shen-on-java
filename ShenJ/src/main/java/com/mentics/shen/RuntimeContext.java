@@ -36,10 +36,9 @@ public class RuntimeContext {
     public static void installGlobalConstants() {
         globalProperties.put(symbol("*stoutput*"), System.out);
         globalProperties.put(symbol("*stinput*"), System.in);
-        // globalProperties.put(symbol("*home-directory*"), new File(".").getAbsolutePath());
-        // globalProperties.put(symbol("*language*"), "JVM Bytecode");
-        // globalProperties.put(symbol("*port*"), "0.0");
-        // globalProperties.put(symbol("*porters*"), "Joel Shellman");
+        globalProperties.put(symbol("*language*"), "Java");
+        globalProperties.put(symbol("*port*"), "0.1");
+        globalProperties.put(symbol("*porters*"), "Joel Shellman");
     }
 
     public static void clearGlobalConstants() {

@@ -403,11 +403,10 @@ public static Object defined(~A) throws Exception {~%~A~%~A~%}"
                 (true Str)))
         (type-of X))))
 
-(define is-java-call String -> false)
-\*(define is-java-call
+(define is-java-call
   String -> (let Dot-index (string-index "." String)
                  Dollar-index (string-index "$" String)
-              (and (or (not (= Dot-index -1)) (not (= Dollar-index -1))) (not (= (string-length String) 1)))))*\
+              (and (or (not (= Dot-index -1)) (not (= Dollar-index -1))) (not (= (string-length String) 1)))))
 
 \*(define clean-whitespace
   "" -> ""
