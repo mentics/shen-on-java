@@ -2,20 +2,19 @@ package com.mentics.shen;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
-import shen.gen.Fst;
-import shen.gen.ParsedKlToJava;
-import shen.gen.Second;
-import shen.gen.ToJavaUnit;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
 
 
 public class RuntimeContext {
@@ -24,20 +23,20 @@ public class RuntimeContext {
         kryo.register(int.class, 1030);
     }
 
-    public static final String TEMP_DIR = System.getProperty("java.io.tmpdir");
-
     public static Map<Symbol, Object> globalProperties = new HashMap<>();
     public static Map<String, Symbol> symbols = new HashMap<>();
     public static Map<Symbol, Lambda> functions = new HashMap<>();
-
     public static Map<String, byte[]> classes = new HashMap<String, byte[]>();
+
+    public static final String GEN_SOURCE_DIRECTORY = "*gen-source-directory*";
+    public static final Symbol SRC_DIR_SYM = symbol(GEN_SOURCE_DIRECTORY);
 
 
     public static void installGlobalConstants() {
         globalProperties.put(symbol("*stoutput*"), System.out);
         globalProperties.put(symbol("*stinput*"), System.in);
         globalProperties.put(symbol("*language*"), "Java");
-        globalProperties.put(symbol("*port*"), "0.1");
+        globalProperties.put(symbol("*port*"), "0.2-SNAPSHOT");
         globalProperties.put(symbol("*porters*"), "Joel Shellman");
     }
 
@@ -46,29 +45,21 @@ public class RuntimeContext {
         globalProperties.remove(symbol("*stinput*"));
     }
 
-    public static Object evalKl(Object ast) throws Exception {
-        // TODO: we need to compile in a temporary location so it doesn't get "stuck" on the classpath
-        // Right now we're deleting it. Maybe that's sufficient.
-        // System.out.println(ast);
-        final Object javaInfo = ParsedKlToJava.LAMBDA.apply(ast);
+    public static Object doEval(final Object className, final Object classContent) throws Exception,
+            CharSequenceCompilerException, ClassNotFoundException {
+        globalProperties.put(RuntimeContext.SRC_DIR_SYM, "java/shen/gen/");
+        DirectClassLoader newLoader = newLoader();
+        CharSequenceCompiler compiler = new CharSequenceCompiler(newLoader, null);
+        Map<String, byte[]> newClasses = EvalStuff.compileTask(
+                (String) globalProperties.get(RuntimeContext.SRC_DIR_SYM), (String) className, (String) classContent,
+                compiler);
 
-        final Object f4045 = Fst.LAMBDA.apply(javaInfo);
-        final Object f4046 = Second.LAMBDA.apply(javaInfo);
-        final Object unit4044 = ToJavaUnit.LAMBDA.apply(f4045, f4046);
-        final Object className = Fst.LAMBDA.apply(unit4044);
-        final Object classContent = Second.LAMBDA.apply(unit4044);
-
-        globalProperties.put(UpdateImage.SRC_DIR_SYM, "src/main/shen/gen/");
-        globalProperties.put(UpdateImage.COMPILE_DIR_SYM, "target/classes/");
-
-        Map<String, byte[]> newClasses = UpdateImage.compile((String) className, (String) classContent);
-        // TODO: classes.putAll(newClasses);
-        return runClass(loadClass("shen.gen." + className));
-        // return null;
+        classes.putAll(newClasses);
+        return runClass(newLoader().loadClass("shen.gen." + className));
     }
 
-    public static Class loadClass(String name) throws Exception {
-        return new DirectClassLoader(Thread.currentThread().getContextClassLoader(), classes).loadClass(name);
+    public static DirectClassLoader newLoader() throws Exception {
+        return new DirectClassLoader(Thread.currentThread().getContextClassLoader(), classes);
     }
 
 
@@ -91,17 +82,26 @@ public class RuntimeContext {
     }
 
     public static Lambda symbolDispatch(Symbol symbol) {
-        return functions.get(symbol);
+        Lambda ret = functions.get(symbol);
+        if (ret != null) {
+            throw new ShenException("Could not find function for symbol: " + symbol);
+        }
+        return ret;
     }
 
     public static Lambda dispatch(Object obj) {
+        Lambda ret;
         if (obj instanceof Lambda) {
-            return (Lambda) obj;
+            ret = (Lambda) obj;
         } else if (obj instanceof Symbol) {
-            return functions.get(obj);
+            ret = functions.get(obj);
+            if (ret == null) {
+                throw new ShenException("Could not find function: " + obj);
+            }
         } else {
             throw new ShenException("Attempted to dispatch on invalid object: " + obj);
         }
+        return ret;
     }
 
     public static Lambda javaDispatch(String s) {
@@ -114,7 +114,7 @@ public class RuntimeContext {
             final String name = label.substring(0, label.length() - 1);
             return new VarLambda() {
                 public Object apply(Object[] args) throws Exception {
-                    Class c = RuntimeContext.loadClass(name);
+                    Class c = RuntimeContext.newLoader().loadClass(name);
                     Constructor[] consts = c.getConstructors();
                     for (Constructor con : consts) {
                         Class[] params = con.getParameterTypes();
@@ -186,7 +186,7 @@ public class RuntimeContext {
     public static void saveImage(FileOutputStream out) {
         clearGlobalConstants();
         // UpdateImage.writeObjects(out, globalProperties, functions, classes);
-        UpdateImage.writeObjects(out, classes, globalProperties, functions);
+        RuntimeContext.writeObjects(out, classes, globalProperties, functions);
         installGlobalConstants();
         // System.out.println("Saved props to image: " + RuntimeContext.globalProperties);
     }
@@ -211,7 +211,7 @@ public class RuntimeContext {
         }
     }
 
-    public static Object runClass(Class c) {
+    private static Object runClass(Class c) {
         Object result = null;
         try {
             result = registerLambda(c.getDeclaredFields());
@@ -246,5 +246,40 @@ public class RuntimeContext {
             return sym;
         }
         return null;
+    }
+
+    public static void writeObjects(OutputStream out, Object... objects) {
+        Output output = null;
+        try {
+            output = new Output(out);
+            for (Object o : objects) {
+                kryo.writeClassAndObject(output, o);
+            }
+        } finally {
+            if (output != null) {
+                output.close();
+            }
+        }
+    }
+
+    public static List<Object> readObjects(InputStream in, Class... classes) {
+        List<Object> result = new ArrayList<>();
+        Input input = null;
+        try {
+            input = new Input(in);
+            for (Class c : classes) {
+                try {
+                    result.add(kryo.readClassAndObject(input));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    result.add(e.getMessage());
+                }
+            }
+        } finally {
+            if (input != null) {
+                input.close();
+            }
+        }
+        return result;
     }
 }

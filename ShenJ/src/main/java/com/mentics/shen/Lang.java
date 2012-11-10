@@ -14,6 +14,8 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Lang {
@@ -127,5 +129,11 @@ public class Lang {
             }
         }
         throw new ShenException("Missing end paranthesis determining arity of function " + functionString);
+    }
+
+    public static <A, B> Map<A, B> mapOf(A key, B value) {
+        Map<A, B> m = new HashMap<>();
+        m.put(key, value);
+        return m;
     }
 }

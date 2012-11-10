@@ -5,13 +5,17 @@ public class ShenException extends RuntimeException {
         super(msg);
     }
 
-    public ShenException(Exception e) {
+    public ShenException(Throwable e) {
         super(e);
     }
 
     public static void rethrow(Exception e) {
         if (e instanceof RuntimeException) {
             throw (RuntimeException) e;
+        } else if (e instanceof ShenException) {
+            throw (ShenException)e;
+        } else if (e.getCause() != null) {
+            throw new ShenException(e.getCause());
         } else {
             throw new ShenException(e);
         }

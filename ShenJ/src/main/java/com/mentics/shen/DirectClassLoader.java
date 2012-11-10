@@ -3,21 +3,34 @@ package com.mentics.shen;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+
+import javax.tools.JavaFileObject;
 
 
-public class DirectClassLoader extends URLClassLoader {
+public class DirectClassLoader extends URLClassLoader implements JavaFileObjectSource {
     private final Map<String, byte[]> direct;
+    private final List<JavaFileObject> files;
 
 
     public DirectClassLoader(ClassLoader parent, Map<String, byte[]> classes) throws Exception {
         super(ArrayUtil.add(((URLClassLoader) parent).getURLs(), new File("target/classes").toURI().toURL()), parent);
         direct = classes;
+        files = new ArrayList<>(direct.size());
+        for (Entry<String, byte[]> entry : direct.entrySet()) {
+            files.add(new JavaFileObjectImpl(entry.getKey(), JavaFileObject.Kind.CLASS, entry.getValue()));
+        }
     }
 
     @Override
     protected Class loadClass(String name, boolean resolve) throws ClassNotFoundException {
         Class<?> found;
+
+//        System.out.println("DCL Loading: " + name);
 
         byte[] cls = this.direct.get(name);
         if (name != null && name.startsWith("ShenVectorToListh")) {
@@ -25,21 +38,6 @@ public class DirectClassLoader extends URLClassLoader {
         }
 
         if (cls != null) {
-            // System.out.println("dcl match: "+direct.size());
-            // System.err.println("================");
-            // ClassReader cr = new ClassReader(cls);
-            // cr.accept(new TraceClassVisitor(new PrintWriter(System.err)), 0);
-            // System.err.println("================");
-
-            // try {
-            // FileOutputStream fos = new FileOutputStream("tmp/" + name + ".class");
-            // fos.write(cls);
-            // fos.close();
-            // } catch (Exception e) {
-            // // TODO Auto-generated catch block
-            // e.printStackTrace();
-            // }
-
             found = defineClass(name, cls, 0, cls.length);
         } else {
             // System.out.println("dcl miss: "+direct.size());
@@ -74,20 +72,9 @@ public class DirectClassLoader extends URLClassLoader {
         return found;
     }
 
-    // public List<Object> loadImage(InputStream in) throws Exception {
-    // Class<?> dcl = this.loadClass("com.mentics.shen.DirectClassLoader.class");
-    // dcl.
-    // return (List<Object>) .getMethod("doit", new Class[] { InputStream.class }).invoke(null,
-    // in);
-    // }
-    //
-    // public List<Object> doit(InputStream in) {
-    // Kryo kryo = new Kryo();
-    // Input input = new Input(in);
-    // List<Object> read = new ArrayList<>();
-    // read.add(kryo.readClassAndObject(input)); // classes
-    // read.add(kryo.readClassAndObject(input)); // global props
-    // read.add(kryo.readClassAndObject(input)); // functions
-    // return read;
-    // }
+    @Override
+    public Collection<JavaFileObject> files(String packageName) {
+        // TODO: only for packageName
+        return files;
+    }
 }

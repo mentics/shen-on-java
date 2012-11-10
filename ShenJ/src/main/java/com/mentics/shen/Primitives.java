@@ -15,6 +15,7 @@ import java.io.StringWriter;
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -257,12 +258,10 @@ public class Primitives {
     @Label("eval-kl")
     public static Object evalKl(Object kl) throws Exception {
         if (kl instanceof Cons) {
-            return RuntimeContext.evalKl(kl);
-            // Cons l = (Cons) kl;
-            // // TODO: do we need a first compile to evaluate embedded things
-            // // System.out.println("COMPILING: "+kl);
-            // Lambda0 lam = ShenCompiler.compile(Environment.theEnvironment().threadEvalContext(), Model.slist(l));
-            // return lam.apply();
+            // TODO: make more efficient. Did reflection to avoid dependency
+            Method method = newLoader().loadClass("shen.gen.EvalKl").getMethod("defined", new Class[] { Object.class });
+            return method.invoke(null, kl);
+            // return RuntimeContext.evalKl(kl);
         } else {
             return kl;
         }

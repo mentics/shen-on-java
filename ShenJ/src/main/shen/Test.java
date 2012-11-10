@@ -1,1 +1,0 @@
-import com.mentics.shen.*;public class Test {public static Object run(RuntimeContext context) {  return SomeOtherFunc.defined("blue");} }

@@ -16,7 +16,7 @@ final Object f620 = ShenProcInputPlus.LAMBDA.apply(v654);
 final Object f621 = ShenElimDefine.LAMBDA.apply(f620);
 
 
-    return RuntimeContext.evalKl(f621);
+    return EvalKl.defined(f621);
 
 }
 }

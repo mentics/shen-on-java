@@ -10,7 +10,6 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.mentics.shen.RuntimeContext;
 import com.mentics.shen.Symbol;
-import com.mentics.shen.UpdateImage;
 
 
 public class SaveGlobalProps {
@@ -31,7 +30,7 @@ public class SaveGlobalProps {
         // RuntimeContext.globalProperties = (Map<Symbol, Object>) new Kryo().readClassAndObject(new Input(
         // new FileInputStream("C:\\dev\\Shen\\Shen-6.1\\Platforms\\CLisp\\shen-test.image")));
 
-        List<Object> l = UpdateImage.readObjects(new FileInputStream(
+        List<Object> l = RuntimeContext.readObjects(new FileInputStream(
                 "C:\\dev\\Shen\\Shen-6.1\\Platforms\\CLisp\\shen-test.image"), HashMap.class, HashMap.class);
 
 
@@ -39,7 +38,7 @@ public class SaveGlobalProps {
         System.out.println(l.get(1));
         RuntimeContext.globalProperties = (Map<Symbol, Object>) l.get(1);
         RuntimeContext.clearGlobalConstants();
-        UpdateImage.writeObjects(new FileOutputStream("global-props.kryo"), RuntimeContext.globalProperties);
+        RuntimeContext.writeObjects(new FileOutputStream("global-props.kryo"), RuntimeContext.globalProperties);
     }
 
     // public static void main(String[] args) throws Exception {
