@@ -1,1 +1,0 @@
-package shen.gen;import com.mentics.shen.*;public class PackageContents {public static final Lambda LAMBDA = new Lambda1() {public Object apply(Object arg0) {  throw new ShenException("Function shen.gen.PackageContents is not defined.");} }; }

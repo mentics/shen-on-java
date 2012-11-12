@@ -1,6 +1,9 @@
 package com.mentics.shen;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Constructor;
@@ -43,6 +46,23 @@ public class RuntimeContext {
     public static void clearGlobalConstants() {
         globalProperties.remove(symbol("*stoutput*"));
         globalProperties.remove(symbol("*stinput*"));
+    }
+
+    public static void loadDefaultImage() {
+        InputStream in = null;
+        try {
+            in = Thread.currentThread().getContextClassLoader()
+                    .getResourceAsStream("shenj/platform/image/shenj-base.image");
+            loadImage(in);
+        } catch (Exception e) {
+            throw new ShenException(e);
+        } finally {
+            try {
+                in.close();
+            } catch (Exception e) {
+                // ignore
+            }
+        }
     }
 
     public static Object doEval(final Object className, final Object classContent) throws Exception,
@@ -183,6 +203,12 @@ public class RuntimeContext {
         return null;
     }
 
+    public static void saveImage(File path) throws IOException {
+        try (FileOutputStream out = new FileOutputStream(path)) {
+            saveImage(out);
+        }
+    }
+
     public static void saveImage(FileOutputStream out) {
         clearGlobalConstants();
         // UpdateImage.writeObjects(out, globalProperties, functions, classes);
@@ -191,24 +217,20 @@ public class RuntimeContext {
         // System.out.println("Saved props to image: " + RuntimeContext.globalProperties);
     }
 
-    public static void loadImage(InputStream in) {
-        // System.out.println("************* LOAD IMAGE CALLED *******************");
-        Input input = new Input(in);
-        try {
-            classes = (Map<String, byte[]>) kryo.readClassAndObject(input);
-            DirectClassLoader loader = new DirectClassLoader(Thread.currentThread().getContextClassLoader(), classes);
-            kryo.setClassLoader(loader);
-            globalProperties = (Map<Symbol, Object>) kryo.readClassAndObject(input);
-            functions = (Map<Symbol, Lambda>) kryo.readClassAndObject(input);
-            installGlobalConstants();
-            // System.out.println("num classes: "+RuntimeContext.classes.size());
-            // System.out.println("Loaded props from image: " + RuntimeContext.globalProperties);
-            // System.out.println("functions: "+RuntimeContext.functions);
-        } catch (Exception e) {
-            throw new ShenException(e);
-        } finally {
-            input.close();
+    public static void loadImage(File path) throws Exception {
+        try (FileInputStream in = new FileInputStream(path)) {
+            loadImage(in);
         }
+    }
+
+    public static void loadImage(InputStream in) throws Exception {
+        Input input = new Input(in);
+        classes = (Map<String, byte[]>) kryo.readClassAndObject(input);
+        DirectClassLoader loader = new DirectClassLoader(Thread.currentThread().getContextClassLoader(), classes);
+        kryo.setClassLoader(loader);
+        globalProperties = (Map<Symbol, Object>) kryo.readClassAndObject(input);
+        functions = (Map<Symbol, Lambda>) kryo.readClassAndObject(input);
+        installGlobalConstants();
     }
 
     private static Object runClass(Class c) {
