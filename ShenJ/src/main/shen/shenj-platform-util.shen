@@ -7,6 +7,7 @@
 
 
 
+
 (define stream->string
   Stream String -> (let Byte (trap-error (read-byte Stream) (/. E -1))
                       (if (= Byte -1) String
@@ -149,3 +150,70 @@
    _ [] Result -> Result 
    _ [String] Result -> (@s Result String)
    Delimiter [String | Tail] Result -> (string-join-iterator Delimiter Tail (@s Result String Delimiter)))
+
+(define write-source
+  Name Contents -> (let File (@s "gen/shen/gen/" Name) (do (write-string-to-file File Contents) File)))
+
+(define run-without-macros
+  F -> (do (set *save-macros* (value *macros*))
+           (set *macros* ())
+           (let Result (F)
+             (do (set *macros* (value *save-macros*)) Result))))
+
+(define numeric-type?
+  number -> true
+  integer -> true
+  float -> true
+  _ -> false)
+ 
+(define string-index
+   \* returns the 'index' of Str1 in Str2, or -1 if not a substring *\
+   { string --> string --> number }
+   Str1 Str2 -> (string-index-h Str1 Str2 0))
+
+(define string-index-h
+   { string --> string --> number --> number }
+    Str1 Str2 N -> N  where (string-prefix? Str1 Str2)
+    _ "" _ -> -1
+    Str1 (@s _ Str2) N -> (string-index-h Str1 Str2 (+ N 1))
+	_ _ _ -> -1)
+
+(define string-prefix?
+   \* returns true iff 1st string is a prefix of 2nd *\
+   { string --> string --> boolean }
+   "" _ -> true
+   (@s S Str1) (@s S Str2) -> (string-prefix? Str1 Str2)
+   _ _ -> false)
+
+(define string-length
+   \* returns the length of the string *\
+   { string --> number }
+   Str -> (string-length-h Str 0))
+ 
+(define string-length-h
+   { string --> number --> number }
+   "" Len -> Len
+   (@s _ Str) Len -> (string-length-h Str (+ Len 1)))
+
+(define logic-to-java
+  and -> "&&"
+  or -> "||")
+
+(define arithmetic-to-name
+  + -> "plus"
+  - -> "minus"
+  * -> "multiply"
+  / -> "divide")
+
+(define java-primitive? X -> (or (number? X) (boolean? X)))
+(define primitive-type? X -> (or (= X number) (= X boolean)))
+
+(define find-first?
+  Search [] -> false
+  Search [(@p Head _) | Rest] -> (if (= Search Head) true (find-first? Search Rest))
+  X Y -> (simple-error (make-string "find-first: X: ~A~%Y: ~A" X Y)))
+
+(define get-second
+  Search [] -> (simple-error (make-string "Element not found in get-second for ~A" Search))
+  Search [(@p Head Value) | Rest] -> (if (= Search Head) Value (get-second Search Rest))
+  X Y -> (simple-error (make-string "get-second: X: ~A~%Y: ~A" X Y)))

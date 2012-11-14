@@ -1,5 +1,3 @@
-\*(load "util.shen")*\
-
 \**
 NOTE: All side effects must be done in (fst @p) and not second to ensure proper handling
 of explicit throwing exceptions and such.
@@ -9,108 +7,29 @@ in fst@p in order to preserve the order of evaluation, since some things depend 
 evaluation of args.
  **\
 
-(define write-source
-  Name Contents -> (let File (@s "gen/shen/gen/" Name) (do (write-string-to-file File Contents) File)))
-
-(define parse-kl
-  String -> (run-without-macros (freeze (snd (shen-<st_input> (@p (to-intlist String) ()))))))
-
-(define parse-single-kl
-  String -> (hd (parse-kl String)))
-
-(define method-sig { (list string) --> string }
-  Params -> (string-join ", " (map (cn "final Object ") Params)))
-
-(define method-argstring { (list string) --> string }
-  Params -> (string-join ", " Params))
-
-(define java-class-file { string -> string -> string -> string }
-  Name Package Contents ->
-    (make-string "~A~%~%import com.mentics.shen.*;~%~%public class ~A {~%~A~%}~%"
-      (if (= Package "") "" (make-string "package ~A;~%~%" Package)) Name Contents))
-
-(define to-var-pair Param -> (@p Param (to-var Param)))
-(define to-var Param -> (name->method-name (str Param)))
-
+\*
+The first parameter is the expression.
+The second parameter is information for the current context: (@p symbol [(@p Head Value)])
+*\
 (define kl-to-java-traverse
-  [defun Name Params Body] Type Vars ->
-    (let Arity (length Params)
-         Signature (method-sig (map (to-var) Params))
-         Argstring (method-argstring (map (to-var) Params))
-      (do (put Name arity (length Params))
-          (@p (let Result (kl-to-java-traverse Body object (map (to-var-pair) Params))
-\* TODO: do perf compare between Name.LAMBDA.apply(...) and Name.defined(...) *\
-                   (make-string "
-public static final Symbol SYMBOL = RuntimeContext.symbol(c#34;~Ac#34;);
-public static final Lambda LAMBDA = new Lambda~A() {
-public Object apply(~A) throws Exception {
-return defined(~A);
-}};
-public static Object defined(~A) throws Exception {~%~A~%~A~%}"
-                      Name (length Params) Signature Argstring
-                      Signature
-                      (fst Result)
-                      (handle-unreachable-return Result)))
-		      (str Name)
-		      func)))
 
-  [let Var Value Body] Type Vars ->
-    (let Var' (to-var (gensym Var))
-      (let PValue (kl-to-java-traverse Value object Vars)
-           PBody (kl-to-java-traverse Body Type (cons (@p Var Var') Vars))
-        (@p (make-string "~A~%final Object ~A = ~A;~%~A~%" (fst PValue) Var' (second PValue) (fst PBody))
-            (second PBody)
-            (third PBody))))
+\* Special forms and macros *\
 
-  [if A0 A1 A2] Type Vars ->
-    (let PX0 (kl-to-java-traverse A0 boolean Vars)
-	     PX1 (kl-to-java-traverse A1 Type Vars)
-		 PX2 (kl-to-java-traverse A2 Type Vars)
-         Var (gensym i)
-      (let First
-          (if (= unreachable (third PX0))
-            (make-string "~A~%" (fst PX0))
-            (make-string "~A~%final Object ~A;~%if ((boolean)~A) {~%~A~%~A} else {~%~A~%~A~%}"
-                         (fst PX0) Var (second PX0)
-                         (fst PX1) (handle-unreachable-assignment Var PX1)
-	                     (fst PX2) (handle-unreachable-assignment Var PX2)))
-        (@p First
-	        (str Var)
-		    (if (= unreachable (third PX0)) unreachable
-              (combine-types (third PX1) (third PX2))))))
+  [defun Name Params Body] Type Vars -> (handle-defun Name Params Body Type Vars)
+
+  [let Var Value Body] Type Vars -> (handle-let Var Value Body Type Vars)
+
+  [if A0 A1 A2] Type Vars -> (handle-if A0 A1 A2 Type Vars)
 
   [cond | Cases] Type Vars -> (kl-to-java-traverse (handle-cases Cases) Type Vars)
 
-  [trap-error To-eval Handler] Type Vars ->
-    (let Evaled (kl-to-java-traverse To-eval object Vars)
-         Handler' (kl-to-java-traverse Handler lambda (cons (to-var-pair t) Vars))
-         Temp (gensym t)
-		 Result (gensym t)
-	  (@p (make-string "Object ~A;~%try {~%~A~%~A = ~A;~%} catch (Throwable t) {~%~A~%~A = ~A.apply(t);~%}~%final Object ~A = ~A;~%"
-                       Temp (fst Evaled) Temp (second Evaled) (fst Handler') Temp (second Handler') Result Temp)
-          (str Result)
-          object))
+  [trap-error To-eval Handler] Type Vars -> (handle-trap-error To-eval Handler Type Vars)
 
-  [lambda [] Body] Type Vars ->
-    (let Body' (kl-to-java-traverse Body object Vars)
-         Result (gensym l)
-      (@p (make-string "final Lambda ~A = new Lambda0() {~%  public Object apply() throws Exception {~%    ~A~%~A  }~%};"
-	                   Result (fst Body') (handle-unreachable-return Body'))
-	      (str Result)
-          lambda))
-  [lambda Var Body] Type Vars ->
-    (let Var' (to-var Var)
-      (let Body' (kl-to-java-traverse Body object (cons (to-var-pair Var) Vars))
-           Result (gensym l)
-        (@p (make-string "final Lambda ~A = new Lambda1() {~%  public Object apply(final Object ~A) throws Exception {~%    ~A~%~A  }~%};"
-	                     Result Var' (fst Body') (handle-unreachable-return Body'))
-	        (str Result)
-            lambda)))
+  [lambda Var Body] Type Vars -> (handle-lambda Var Body Type Vars)
 
   [simple-error Message] Type Vars ->
     (let Message' (kl-to-java-traverse Message string Vars)
       (@p (make-string "~A~%throw new SimpleError((String)~A);~%" (fst Message') (second Message'))
-	      \*(make-string "throw new SimpleError((String)~A)~%" (second Message'))*\
 		  ""
 		  unreachable))
 
@@ -128,16 +47,7 @@ public static Object defined(~A) throws Exception {~%~A~%~A~%}"
 
   [get-time Arg0] Type Vars -> (single-param Arg0 Type Vars "Lang.getTime(~A)" object)
 
-  [open Stream-type Location Direction] Type Vars ->
-    (let Stream-type' (kl-to-java-traverse Stream-type symbol Vars)
-         Location' (kl-to-java-traverse Location string Vars)
-         Direction' (kl-to-java-traverse Direction symbol Vars)
-		 Var (gensym o)
-      (@p (make-string "~A~%~A~%~A~%final Object ~A = Lang.open(~A, ~A, ~A);"
-	                   (fst Stream-type') (fst Location') (fst Direction')
-	                   Var (second Stream-type') (second Location') (second Direction'))
-          (str Var)
-          stream))
+  [open Stream-type Location Direction] Type Vars -> (handle-open Stream-type Location Direction Type Vars)
 
   [close Stream] Type Vars ->
     (let Stream' (kl-to-java-traverse Stream stream Vars)
@@ -157,7 +67,8 @@ public static Object defined(~A) throws Exception {~%~A~%~A~%}"
   [read-byte] Type Vars -> (single-param "" Type Vars "System.in.read()" number)
   [read-byte Stream] Type Vars -> (single-param Stream Type Vars "((java.io.InputStream)~A).read()" number)
 
-  \* End: Special forms and macros *\
+
+\** Logic and arithmetic **\
 
   [not] Type Vars ->
     (let Expression (gensym n)
@@ -234,7 +145,7 @@ public static Object defined(~A) throws Exception {~%~A~%~A~%}"
       (kl-to-java-traverse [lambda Expression [eval-kl Expression]] lambda Vars))
   [eval-kl Expression] Type Vars ->
     (single-param Expression Type Vars "RuntimeContext.evalKl(~A)" object)
-  
+
   [number?] Type Vars -> (let A0 (gensym s) (kl-to-java-traverse [lambda A0 [number? A0]] lambda Vars))
   [number? A0] Type Vars ->
     (let A0' (kl-to-java-traverse A0 object Vars)
@@ -356,39 +267,7 @@ public static Object defined(~A) throws Exception {~%~A~%~A~%}"
 
   [fail] Type Vars -> (@p "" "null" object)
 
-  [Func | Args] Type Vars ->
-    (let Direct? (not (cons? Func))
-         Func' (if (cons? Func) (kl-to-java-traverse Func lambda Vars) (@p "" (to-var Func) symbol))
-      (let EvaledArgs (map ((flip3 kl-to-java-traverse) Vars object) Args)
-        (let Args-prep-string (string-join "" (map (fst) EvaledArgs))
-	         Args-string (string-join ", " (map (second) EvaledArgs))
-		     Func-prep-string (fst Func')
-		     Func-string (second Func')
-			 Unreachable? (list-matches (/. X (= unreachable (third X))) EvaledArgs)
-             Result (gensym f)
-          (let Eval (cond (Unreachable? "")
-                          ((and (symbol? Func) (is-java-call (str Func)))
-                            (make-string "final Object ~A = RuntimeContext.javaDispatch(c#34;~Ac#34;).apply(~A);~%"
-                                         Result (str Func) Args-string))
-                          ((find-first? Func Vars)
-                            (make-string "final Object ~A = RuntimeContext.dispatch(~A).apply(~A);~%"
-                                         Result Func-string Args-string))
-                          (Direct? (make-string "final Object ~A = ~A.LAMBDA.apply(~A);~%"
-                          \*(Direct? (make-string "final Object ~A = ~A.defined(~A);~%"*\
-                                                Result (name->class-name (str Func)) Args-string))
-                          ((= lambda (third Func'))
-                            (make-string "final Object ~A = ((Lambda)~A).apply(~A);~%"
-                                         Result Func-string Args-string))
-                          ((= symbol (third Func'))
-\* TODO: can do direct (make-string "~A.lambda.apply(~A)" (to-var name) Args-string) *\
-                            (make-string "final Object ~A = RuntimeContext.symbolDispatch((Symbol)~A).apply(~A);~%"
-                                         Result Func-string Args-string))
-                          (true (make-string "final Object ~A = RuntimeContext.dispatch(~A).apply(~A);~%"
-                                             Result Func-string Args-string)))
-	        \*(@p (make-string "~A~A~A" (clean-whitespace Func-prep-string) (clean-whitespace Args-prep-string) Eval)*\
-	        (@p (make-string "~A~A~A" Func-prep-string Args-prep-string Eval)
-                (str Result)
-		        (if Unreachable? unreachable Type))))))
+  [Func | Args] Type Vars -> (handle-application Func Args Type Vars)
 
   [] Type Vars -> (@p "" "Nil.NIL" nil)
   X Type Vars ->
@@ -402,63 +281,6 @@ public static Object defined(~A) throws Exception {~%~A~%~A~%}"
 				((float? X) (make-string "~Ad" X))
                 (true Str)))
         (type-of X))))
-
-(define is-java-call
-  String -> (let Dot-index (string-index "." String)
-                 Dollar-index (string-index "$" String)
-              (and (or (not (= Dot-index -1)) (not (= Dollar-index -1))) (not (= (string-length String) 1)))))
-
-\*(define clean-whitespace
-  "" -> ""
-  String -> (make-string "~A~%" (string-trim (whitespace?) String)))*\
-
-(define find-first?
-  Search [] -> false
-  Search [(@p Head _) | Rest] -> (if (= Search Head) true (find-first? Search Rest))
-  X Y -> (simple-error (make-string "find-first: X: ~A~%Y: ~A" X Y)))
-
-(define get-second
-  Search [] -> (simple-error (make-string "Element not found in get-second for ~A" Search))
-  Search [(@p Head Value) | Rest] -> (if (= Search Head) Value (get-second Search Rest))
-  X Y -> (simple-error (make-string "get-second: X: ~A~%Y: ~A" X Y)))
-
-(define parsed-kl-to-java
-  Parsed ->
-    (do (output (make-string "~%~%~%Evaluating: ~A~%~%" Parsed))
-      (let Result (kl-to-java-traverse Parsed object ())
-        (if (and (cons? Parsed) (= defun (hd Parsed)))
-		  (assert-test Result traverse-result-type?
-		          (make-string "Expected string triple from defun, was: ~A~%" (fst Result)))
-	      (let Code (assert-test (fst Result) string?
-		                    (make-string "Expected string result body, but Result was: ~A~%" "TODO"))
-		       Expression (assert-test (second Result) string? "Expected string result expression.")
-            (@p (make-string "  public static Object run() throws Exception {~%~A;~%~A  }"
-			                 Code (handle-unreachable-return Result))
-                ""))))))
-
-(define to-java-unit { string -> string -> (@p string string) \* class-name, contents *\ }
-  Function-content Result-expression ->
-    (let Class-name (if (= Result-expression "") "ToEval" (name->class-name Result-expression))
-      (@p Class-name (java-class-file Class-name "shen.gen" Function-content))))
-
-(define java-compile-and-run Class-name File ->
-  (shell (@s "C:\dev\java\jdk1.7.0_06\bin\javaw -Xss32m -cp C:\dev\java\libraries\kryo-2.20\bin;C:\dev\java\libraries\kryo-2.20\jars\debug\onejar\kryo-debug-2.20-all.jar;C:\dev\git-local\shenj\ShenJ\target\classes com.mentics.shen.UpdateImage shen-test.image "
-             (@s "shen.gen." Class-name) " C:/dev/git-local/shenj/ShenJ/src/main/shen/" File " C:\dev\git-local\shenj\ShenJ\target\classes")))
-\*  (shell (@s "C:\dev\java\jdk1.7.0_06\bin\javac -cp C:\dev\workspace\ShenJ\target\classes -d C:\dev\workspace\ShenJ\target\classes " (@s (value *home-directory*) File)))) *\
-\*  (shell (@s "C:\dev\java\jdk1.7.0_06\bin\javaw -Xss32m -cp C:\dev\java\libraries\kryo-2.20\jars\debug\onejar\kryo-debug-2.20-all.jar;C:\dev\workspace\ShenJ\target\classes com.mentics.shen.UpdateImage shen-test.image " *\
-
-(define java-eval
-  Parsed ->
-    (let Result (parsed-kl-to-java Parsed)
-      (let Unit (to-java-unit (fst Result) (second Result))
-        (let Class-name (fst Unit) Class-unit-content (second Unit)
-          (let File
-            (write-source (@s Class-name ".java") Class-unit-content)
-            (java-compile-and-run Class-name File))))))
-
-
-(define java-primitive? X -> (or (number? X) (boolean? X)))
-(define primitive-type? X -> (or (= X number) (= X boolean)))
 
 (define single-param Arg Type Vars String Return ->
   (let Arg' (kl-to-java-traverse Arg Type Vars)
@@ -514,17 +336,6 @@ public static Object defined(~A) throws Exception {~%~A~%~A~%}"
             boolean)))
   Operation X Vars -> (simple-error "Bad args to logic"))
 
-(define logic-to-java
-  and -> "&&"
-  or -> "||")
-
-(define arithmetic-to-name
-  + -> "plus"
-  - -> "minus"
-  * -> "multiply"
-  / -> "divide")
-
-
 (define combine-types
   unreachable Type2 -> Type2
   Type1 unreachable -> Type1
@@ -551,53 +362,3 @@ public static Object defined(~A) throws Exception {~%~A~%~A~%}"
 (define handle-case
   [Condition Action] Else -> [if Condition Action Else])
 
-(define kl-to-java-string
-  String -> (parsed-kl-to-java (parse-single-kl String)))
-  
-(define kl-to-java String ->
-  (java-eval (parse-single-kl String)))
-
-(define kl-file-to-java
-  File -> (run-without-macros (freeze (map (/. Parsed (output (make-string "~A~%" (java-eval Parsed))))
-                                           (read-file File)))))
-
-(define run-without-macros
-  F -> (do (set *save-macros* (value *macros*))
-           (set *macros* ())
-           (let Result (F)
-             (do (set *macros* (value *save-macros*)) Result))))
-
-(define numeric-type?
-  number -> true
-  integer -> true
-  float -> true
-  _ -> false)
- 
-(define string-index
-   \* returns the 'index' of Str1 in Str2, or -1 if not a substring *\
-   { string --> string --> number }
-   Str1 Str2 -> (string-index-h Str1 Str2 0))
-
-(define string-index-h
-   { string --> string --> number --> number }
-    Str1 Str2 N -> N  where (string-prefix? Str1 Str2)
-    _ "" _ -> -1
-    Str1 (@s _ Str2) N -> (string-index-h Str1 Str2 (+ N 1))
-	_ _ _ -> -1)
-
-(define string-prefix?
-   \* returns true iff 1st string is a prefix of 2nd *\
-   { string --> string --> boolean }
-   "" _ -> true
-   (@s S Str1) (@s S Str2) -> (string-prefix? Str1 Str2)
-   _ _ -> false)
-
-(define string-length
-   \* returns the length of the string *\
-   { string --> number }
-   Str -> (string-length-h Str 0))
- 
-(define string-length-h
-   { string --> number --> number }
-   "" Len -> Len
-   (@s _ Str) Len -> (string-length-h Str (+ Len 1)))
