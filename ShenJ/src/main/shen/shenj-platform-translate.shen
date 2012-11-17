@@ -36,16 +36,16 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
   [error-to-string Exception] Type Vars -> 
     (let Exception' (kl-to-java-traverse Exception exception Vars)
 	  (@p (make-string "~A~%" (fst Exception'))
-	      (make-string "Lang.errorToString(~A)" (second Exception'))
+	      (make-string "errorToString(~A)" (second Exception'))
 		  string))
 
   [str Arg] Type Vars -> (single-param Arg Type Vars "String.valueOf(~A)" string)
 
-  [intern Arg] Type Vars -> (single-param Arg Type Vars "RuntimeContext.symbol((String)~A)" symbol)
+  [intern Arg] Type Vars -> (single-param Arg Type Vars "symbol((String)~A)" symbol)
 
   [absvector? A0] Type Vars -> (single-param A0 Type Vars "(~A instanceof Object[])" boolean)
 
-  [get-time Arg0] Type Vars -> (single-param Arg0 Type Vars "Lang.getTime(~A)" object)
+  [get-time Arg0] Type Vars -> (single-param Arg0 Type Vars "getTime(~A)" object)
 
   [open Stream-type Location Direction] Type Vars -> (handle-open Stream-type Location Direction Type Vars)
 
@@ -69,6 +69,9 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
 
 
 \** Logic and arithmetic **\
+
+
+\* TODO: Use [symbol | Params] and call a function, pass in arity, that will create lambda thing for anything under arity and error if too many *\
 
   [not] Type Vars ->
     (let Expression (gensym n)
@@ -107,13 +110,13 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
   [set Name Value] Type Vars ->
     (let Name' (kl-to-java-traverse Name Type Vars)
          Value' (kl-to-java-traverse Value Type Vars)
-	  (@p (make-string "~A~%~A~%RuntimeContext.globalProperties.put((Symbol)~A, ~A);"
+	  (@p (make-string "~A~%~A~%globalProperties.put((Symbol)~A, ~A);"
 	                  (fst Value') (fst Name') (second Name') (second Value'))
 		  (second Value')
 		  (third Value')))
 
   [value] Type Vars -> (let Name (gensym s) (kl-to-java-traverse [lambda Name [value Name]] lambda Vars))
-  [value Name] Type Vars -> (single-param Name Type Vars "RuntimeContext.globalProperties.get(~A)" object)
+  [value Name] Type Vars -> (single-param Name Type Vars "globalProperties.get(~A)" object)
 
   [cons?] Type Vars ->
     (let A0 (gensym s)
@@ -144,7 +147,7 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
     (let Expression (gensym s)
       (kl-to-java-traverse [lambda Expression [eval-kl Expression]] lambda Vars))
   [eval-kl Expression] Type Vars ->
-    (single-param Expression Type Vars "RuntimeContext.evalKl(~A)" object)
+    (single-param Expression Type Vars "evalKl(~A)" object)
 
   [number?] Type Vars -> (let A0 (gensym s) (kl-to-java-traverse [lambda A0 [number? A0]] lambda Vars))
   [number? A0] Type Vars ->
@@ -267,7 +270,9 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
 
   [fail] Type Vars -> (@p "" "null" object)
 
-  [Func | Args] Type Vars -> (handle-application Func Args Type Vars)
+  [Func | Args] Type Vars -> (handle-java-call Func Args Type Vars)
+    where (and (symbol? Func) (string-prefix? "shenj-dot-" (str Func)))
+  [Func | Args] Type Vars -> (handle-call Func Args Type Vars)
 
   [] Type Vars -> (@p "" "Nil.NIL" nil)
   X Type Vars ->
@@ -275,12 +280,13 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
       (@p ""
         (let Str (str X)
           (cond ((find-first? X Vars) (get-second X Vars))
-                ((symbol? X) (make-string "RuntimeContext.symbol(c#34;~Ac#34;)" Str))
+                ((symbol? X) (make-string "symbol(c#34;~Ac#34;)" Str))
 				((string? X) (@s "c#34;" (escape-java-string X) "c#34;"))
 				((integer? X) (make-string "~A" X))
 				((float? X) (make-string "~Ad" X))
                 (true Str)))
         (type-of X))))
+
 
 (define single-param Arg Type Vars String Return ->
   (let Arg' (kl-to-java-traverse Arg Type Vars)

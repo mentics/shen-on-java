@@ -6,8 +6,6 @@
          (shen-elim-define (shen-proc-input+ X))))
 
 
-
-
 (define stream->string
   Stream String -> (let Byte (trap-error (read-byte Stream) (/. E -1))
                       (if (= Byte -1) String
@@ -74,16 +72,6 @@
   "!" -> "Bang"
   "~" -> "Tilde"
   X -> (if (or (digit? X) (letter? X)) X "TOxDO"))
-
-(define escape-java-ustring
-  "c#34;" -> "c#92;c#34;"
-  "c#13;" -> "c#92;r"
-  "c#10;" -> "c#92;n"
-  "\" -> "\\"
-  X -> X)
-
-(define escape-java-string
-  String -> (list->string (map (escape-java-ustring) (explode String))))
 
 (define second
   (@p A (@p B C)) -> B
@@ -152,7 +140,7 @@
    Delimiter [String | Tail] Result -> (string-join-iterator Delimiter Tail (@s Result String Delimiter)))
 
 (define write-source
-  Name Contents -> (let File (@s "gen/shen/gen/" Name) (do (write-string-to-file File Contents) File)))
+  Path Contents -> (do (write-string-to-file Path Contents) Path))
 
 (define run-without-macros
   F -> (do (set *save-macros* (value *macros*))
@@ -217,3 +205,24 @@
   Search [] -> (simple-error (make-string "Element not found in get-second for ~A" Search))
   Search [(@p Head Value) | Rest] -> (if (= Search Head) Value (get-second Search Rest))
   X Y -> (simple-error (make-string "get-second: X: ~A~%Y: ~A" X Y)))
+
+(define to-string-list
+  [] -> []
+  X -> (map str X) where (cons? X)
+  X -> [(str X)])
+
+(define to-list
+  [] -> []
+  X -> X where (cons? X)
+  X -> [X])
+
+(define escape-java-string
+  String -> (list->string (map (function escape-java-ustring) (explode String))))
+
+(define escape-java-ustring
+  "c#34;" -> "c#92;c#34;"
+  "c#13;" -> "c#92;r"
+  "c#10;" -> "c#92;n"
+  "\" -> "\\"
+  X -> X)
+

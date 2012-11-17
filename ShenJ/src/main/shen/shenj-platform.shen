@@ -1,3 +1,4 @@
+(set *src-dir* "C:/dev/git-local/shenj/ShenJ/java/platform/shen/gen/")
 
 (define kl-to-java-string
   String -> (parsed-kl-to-java (parse-single-kl String)))
@@ -6,8 +7,9 @@
   (java-eval (parse-single-kl String)))
 
 (define kl-file-to-java
-  File -> (run-without-macros (freeze (map (/. Parsed (output (make-string "~A~%" (java-eval Parsed))))
-                                           (read-file File)))))
+  File -> (run-without-macros (freeze
+                                (map (/. Parsed (output (make-string "~A~%" (java-eval Parsed))))
+                                     (read-file File)))))
 
 (define java-eval
   Parsed ->
@@ -15,7 +17,7 @@
       (let Unit (to-java-unit (fst Result) (second Result))
         (let Class-name (fst Unit) Class-unit-content (second Unit)
           (let File
-            (write-source (@s Class-name ".java") Class-unit-content)
+            (write-source (@s (value *src-dir*) Class-name ".java") Class-unit-content)
             (java-compile-and-run Class-name File))))))
 
 (define parsed-kl-to-java
@@ -38,15 +40,24 @@
       (@p Class-name (java-class-file Class-name "shen.gen" Function-content))))
 
 (define java-compile-and-run Class-name File ->
-  (shell (@s "C:\dev\java\jdk1.7.0_06\bin\javaw -Xss32m -cp C:\dev\java\libraries\kryo-2.20\bin;C:\dev\java\libraries\kryo-2.20\jars\debug\onejar\kryo-debug-2.20-all.jar;C:\dev\git-local\shenj\ShenJ\target\classes com.mentics.shen.UpdateImage shen-test.image "
-             (@s "shen.gen." Class-name) " C:/dev/git-local/shenj/ShenJ/src/main/shen/" File " C:\dev\git-local\shenj\ShenJ\target\classes")))
-\*  (shell (@s "C:\dev\java\jdk1.7.0_06\bin\javac -cp C:\dev\workspace\ShenJ\target\classes -d C:\dev\workspace\ShenJ\target\classes " (@s (value *home-directory*) File)))) *\
-\*  (shell (@s "C:\dev\java\jdk1.7.0_06\bin\javaw -Xss32m -cp C:\dev\java\libraries\kryo-2.20\jars\debug\onejar\kryo-debug-2.20-all.jar;C:\dev\workspace\ShenJ\target\classes com.mentics.shen.UpdateImage shen-test.image " *\
+  (shell (@s "C:\dev\java\jdk1.7.0_06\bin\java -Xss32m -cp C:/dev/java/libraries/kryo-2.20/bin;C:\dev\java\libraries\kryo-2.20\jars\debug\onejar\kryo-debug-2.20-all.jar;C:\dev\git-local\shenj\ShenJ\target\classes "
+             "com.mentics.shenj.UpdateImage C:\dev\git-local\shenj\ShenJ\shen-test.image " "shen.gen." Class-name " " File " C:\dev\git-local\shenj\ShenJ\target\classes")))
 
 
 (define java-class-file { string -> string -> string -> string }
   Name Package Contents ->
-    (make-string "~A~%~%import com.mentics.shen.*;~%~%public class ~A {~%~A~%}~%"
+    (make-string "~A~%
+import static com.mentics.shenj.Lang.*;
+import static com.mentics.shenj.ShenjRuntime.*;
+import static com.mentics.shenj.inner.Context.*;
+import static com.mentics.shenj.inner.Primitives.*;
+
+import com.mentics.shenj.*;
+import com.mentics.shenj.inner.*;
+
+public class ~A {
+~A
+}"
       (if (= Package "") "" (make-string "package ~A;~%~%" Package)) Name Contents))
 
 

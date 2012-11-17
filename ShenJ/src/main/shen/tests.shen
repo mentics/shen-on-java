@@ -1281,3 +1281,42 @@ Case)))))
 (define f2 [X] (f1 X))
 (f2 1 2)
 
+
+\* Test this failed trying to compilekl stuff. It's in writer.kl *\
+(kl-to-java "
+(defun shen-ob->str (V1098 V1099)
+ (cond ((= V1099 (fail)) c#34;...c#34;)
+  ((= () V1099) (if (= V1098 c#34;Rc#34;) c#34;()c#34; c#34;[]c#34;))
+  ((= V1099 (vector 0)) c#34;<>c#34;)
+  ((cons? V1099)
+   (shen-cn-all
+    (append (if (= V1098 c#34;Rc#34;) (cons c#34;(c#34; ()) (cons c#34;[c#34; ()))
+     (append (cons (shen-ob->str V1098 (hd V1099)) ())
+      (append
+       (shen-xmapcan (value *maximum-print-sequence-size*)
+        (lambda Z (cons c#34; c#34; (cons (shen-ob->str V1098 Z) ()))) (tl V1099))
+       (if (= V1098 c#34;Rc#34;) (cons c#34;)c#34; ()) (cons c#34;]c#34; ())))))))
+  ((vector? V1099)
+   (let L (shen-vector->list V1099 1)
+    (let E
+     (tlstr
+      (shen-cn-all
+       (shen-xmapcan (- (value *maximum-print-sequence-size*) 1)
+        (lambda Z
+         (cons c#34; c#34; (cons (shen-ob->str V1098 Z) ())))
+        L)))
+     (let V (cn c#34;<c#34; (cn E c#34;>c#34;)) V))))
+  ((and (not (string? V1099)) (absvector? V1099))
+   (trap-error (shen-ob->str c#34;Ac#34; ((<-address V1099 0) V1099))
+    (lambda Ignore
+     (let L (shen-vector->list V1099 0)
+      (let E
+       (tlstr
+        (shen-cn-all
+         (shen-xmapcan (- (value *maximum-print-sequence-size*) 1)
+          (lambda Z (cons c#34; c#34; (cons (shen-ob->str V1098 Z) ()))) L)))
+       (let V (cn c#34;<c#34; (cn E c#34;>c#34;)) V))))))
+  (true (if (and (= V1098 c#34;Ac#34;) (string? V1099)) V1099 (str V1099)))))
+")
+
+(kl-to-java "(lambda () 2)")

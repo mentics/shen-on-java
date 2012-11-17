@@ -2,13 +2,13 @@
    and since it simplifies things, we'll go with Name.LAMBDA.apply *\
 (define handle-defun Name Params Body Type Vars ->
     (let Arity (length Params)
-         Signature (method-sig (map (to-var) Params))
-         Argstring (method-argstring (map (to-var) Params))
+         Signature (method-sig (map (function to-var) Params))
+         Argstring (method-argstring (map (function to-var) Params))
       (do (put Name arity (length Params))
-          (@p (let Result (kl-to-java-traverse Body object (map (to-var-pair) Params))
+          (@p (let Result (kl-to-java-traverse Body object (map (function to-var-pair) Params))
 \* TODO: do perf compare between Name.LAMBDA.apply(...) and Name.defined(...) *\
                    (make-string "
-public static final Symbol SYMBOL = RuntimeContext.symbol(c#34;~Ac#34;);
+public static final Symbol SYMBOL = symbol(c#34;~Ac#34;);
 public static final Lambda LAMBDA = new Lambda~A() {
 public Object apply(~A) throws Exception {
 return defined(~A);
@@ -59,10 +59,12 @@ public static Object defined(~A) throws Exception {~%~A~%~A~%}"
 
 (define handle-lambda
   Var Body Type Vars ->
-      (let Body' (kl-to-java-traverse Body object (cons (to-var-pair Var) Vars))
+      (let Vars' (if (= () Var) Vars (cons (to-var-pair Var) Vars)) 
+           Body' (kl-to-java-traverse Body object Vars')
+           Params (map (function to-var) (to-list Var))
            Result (gensym l)
-        (@p (make-string "final Lambda ~A = new Lambda1() {~%  public Object apply(~A) throws Exception {~%~A~%~A}~%};"
-	                     Result (method-sig Var) (fst Body') (handle-unreachable-return Body'))
+        (@p (make-string "final Lambda ~A = new Lambda~A() {~%  public Object apply(~A) throws Exception {~%~A~%~A}~%};"
+	                     Result (length Params) (method-sig Params) (fst Body') (handle-unreachable-return Body'))
 	        (str Result)
             lambda)))
 
@@ -71,7 +73,7 @@ public static Object defined(~A) throws Exception {~%~A~%~A~%}"
          Location' (kl-to-java-traverse Location string Vars)
          Direction' (kl-to-java-traverse Direction symbol Vars)
 		 Var (gensym o)
-      (@p (make-string "~A~%~A~%~A~%final Object ~A = Lang.open(~A, ~A, ~A);"
+      (@p (make-string "~A~%~A~%~A~%final Object ~A = open(~A, ~A, ~A);"
 	                   (fst Stream-type') (fst Location') (fst Direction')
 	                   Var (second Stream-type') (second Location') (second Direction'))
           (str Var)
@@ -79,22 +81,22 @@ public static Object defined(~A) throws Exception {~%~A~%~A~%}"
 
 
 \* TODO: can do direct (make-string "~A.lambda.apply(~A)" (to-var name) Args-string) *\
-(define handle-application Func Args Type Vars ->
+(define handle-call Func Args Type Vars ->
     (let Direct? (not (cons? Func))
          Func' (if (cons? Func) (kl-to-java-traverse Func lambda Vars) (@p "" (to-var Func) symbol))
       (let EvaledArgs (map ((flip3 kl-to-java-traverse) Vars object) Args)
-        (let Args-prep-string (string-join "" (map (fst) EvaledArgs))
-	         Args-string (string-join ", " (map (second) EvaledArgs))
-		     Func-prep-string (fst Func')
-		     Func-string (second Func')
-			 Unreachable? (list-matches (/. X (= unreachable (third X))) EvaledArgs)
+        (let Args-prep-string (string-join "" (map (function fst) EvaledArgs))
+             Args-string (string-join ", " (map (function second) EvaledArgs))
+             Func-prep-string (fst Func')
+             Func-string (second Func')
+             Unreachable? (list-matches (/. X (= unreachable (third X))) EvaledArgs)
              Result (gensym f)
           (let Eval (cond (Unreachable? "")
                           ((and (symbol? Func) (is-java-call (str Func)))
-                            (make-string "final Object ~A = RuntimeContext.javaDispatch(c#34;~Ac#34;).apply(~A);~%"
+                            (make-string "final Object ~A = javaDispatch(c#34;~Ac#34;).apply(~A);~%"
                                          Result (str Func) Args-string))
                           ((find-first? Func Vars)
-                            (make-string "final Object ~A = RuntimeContext.dispatch(~A).apply(~A);~%"
+                            (make-string "final Object ~A = dispatch(~A).apply(~A);~%"
                                          Result Func-string Args-string))
                           (Direct? (make-string "final Object ~A = ~A.LAMBDA.apply(~A);~%"
                                                 Result (name->class-name (str Func)) Args-string))
@@ -102,10 +104,21 @@ public static Object defined(~A) throws Exception {~%~A~%~A~%}"
                             (make-string "final Object ~A = ((Lambda)~A).apply(~A);~%"
                                          Result Func-string Args-string))
                           ((= symbol (third Func'))
-                            (make-string "final Object ~A = RuntimeContext.symbolDispatch((Symbol)~A).apply(~A);~%"
+                            (make-string "final Object ~A = symbolDispatch((Symbol)~A).apply(~A);~%"
                                          Result Func-string Args-string))
-                          (true (make-string "final Object ~A = RuntimeContext.dispatch(~A).apply(~A);~%"
+                          (true (make-string "final Object ~A = dispatch(~A).apply(~A);~%"
                                              Result Func-string Args-string)))
 	        (@p (make-string "~A~A~A" Func-prep-string Args-prep-string Eval)
                 (str Result)
 		        (if Unreachable? unreachable Type)))))))
+
+(define handle-java-call
+  [shenj-dot-new Class | Args] Type Vars ->
+    (let EvaledArgs (map ((flip3 kl-to-java-traverse) Vars object) Args)
+      (let Args-prep-string (string-join "" (map (function fst) EvaledArgs))
+           Args-string (string-join ", " (map (function second) EvaledArgs))
+           Result (gensym c)
+      (@p (make-string "~A~%Object ~A = new ~A(~A);~%" Args-prep-string Result Class Args-string)
+	      (str Result)
+		  object)))
+  Func _ _ -> (error "Unknown java call: ~A" Func))

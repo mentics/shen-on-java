@@ -1,17 +1,22 @@
 package com.mentics.util;
 
-import java.io.ByteArrayOutputStream;
+import static com.mentics.shenj.ShenException.*;
+
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Writer;
+import java.util.Arrays;
 
-import com.mentics.shen.ShenException;
+import com.mentics.shenj.ShenException;
 
 
 public class StringUtil {
+    public static final String TEMP_DIR = System.getProperty("java.io.tmpdir");
+
 
     public static String removeLastToken(final String delim, final String name) {
         final int index = name.lastIndexOf(delim);
@@ -46,13 +51,6 @@ public class StringUtil {
         }
     }
 
-    public static byte[] loadBytesForClass(ClassLoader loader, String fqn) throws IOException {
-        InputStream input = loader.getResourceAsStream(fqn.replace(".", "/") + ".class");
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        copy(input, output);
-        return output.toByteArray();
-    }
-
     public static long copy(InputStream from, OutputStream to) throws IOException {
         byte[] buf = new byte[0x1000];
         long total = 0;
@@ -83,5 +81,23 @@ public class StringUtil {
         }
     }
 
-    public static final String TEMP_DIR = System.getProperty("java.io.tmpdir");
+    public static String readFully(File file) {
+        try (FileReader reader = new FileReader(file)) {
+            char[] buffer = new char[(int) file.length()];
+            reader.read(buffer);
+            return new String(buffer);
+        } catch (Exception e) {
+            rethrow(e);
+            return null; // unreachable code
+        }
+    }
+
+    public static String toString(Object o) {
+        if (o.getClass().isArray()) {
+            // TODO: handle primitives
+            return Arrays.toString((Object[]) o);
+        } else {
+            return o.toString();
+        }
+    }
 }
