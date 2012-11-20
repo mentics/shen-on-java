@@ -2,10 +2,8 @@ package shen.gen;
 
 import static com.mentics.shenj.ShenjRuntime.*;
 
-import com.mentics.shenj.DirectClassLoader;
-import com.mentics.shenj.Lambda;
-import com.mentics.shenj.Lambda1;
-import com.mentics.shenj.Symbol;
+import com.mentics.shenj.*;
+import com.mentics.shenj.cl.*;
 
 
 public class SetEvalContext {
@@ -20,7 +18,8 @@ public class SetEvalContext {
 
 
     public static Object defined(final Object context) throws Exception {
-        evalContext = (DirectClassLoader) context;
+        //ShenjRuntime.evalContext.dispose();
+        ShenjRuntime.evalContext = (CLProvider) context;
         return context;
     }
 }

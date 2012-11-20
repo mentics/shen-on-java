@@ -17,7 +17,6 @@ import java.util.Map;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
-import com.mentics.shenj.DirectClassLoader;
 import com.mentics.shenj.Label;
 import com.mentics.shenj.Lambda;
 import com.mentics.shenj.ShenException;
@@ -29,8 +28,6 @@ import com.mentics.util.ReflectionUtil;
 
 
 public class Context {
-    // public static Kryo kryo = KryoUtil.newKryo();
-
     public static final String GLOBAL_PROPERTIES_NAME = "globalProperties";
     public static Map<Symbol, Object> globalProperties = new HashMap<>();
 
@@ -83,10 +80,10 @@ public class Context {
         globalProperties = (Map<Symbol, Object>) kryo.readClassAndObject(input);
         functions = (Map<Symbol, Lambda>) kryo.readClassAndObject(input);
         installGlobalConstants(globalProperties);
-        kryo.setClassLoader(DirectClassLoader.class.getClassLoader());
-        if (Context.class.getClassLoader() == DirectClassLoader.class.getClassLoader()) {
-            throw new Error("Context and DCL same classloader");
-        }
+        // kryo.setClassLoader(DirectClassLoader.class.getClassLoader());
+        // if (Context.class.getClassLoader() == DirectClassLoader.class.getClassLoader()) {
+        // throw new Error("Context and DCL same classloader");
+        // }
     }
 
     static void saveImage(Output out) {
@@ -96,7 +93,7 @@ public class Context {
         KryoUtil.writeObjects(kryo, out, globalProperties, functions);
         // System.out.println("saved globalProperties and functions to image");
         installGlobalConstants(globalProperties);
-        kryo.setClassLoader(DirectClassLoader.class.getClassLoader());
+        // kryo.setClassLoader(DirectClassLoader.class.getClassLoader());
     }
 
     public static Lambda symbolDispatch(Symbol symbol) {
@@ -163,25 +160,7 @@ public class Context {
             final String name = label.substring(0, label.length() - 1);
             return new VarLambda() {
                 public Object apply(Object[] args) throws Exception {
-                    Class<?> c = ShenjRuntime.evalContext.loadClass(name);
-                    Constructor<?>[] consts = c.getConstructors();
-                    for (Constructor<?> con : consts) {
-                        Class<?>[] params = con.getParameterTypes();
-                        if (params.length == args.length) {
-                            boolean compat = true;
-                            for (int i = 0; i < params.length; i++) {
-                                if (!params[i].isInstance(args[i])) {
-                                    compat = false;
-                                    break;
-                                }
-                            }
-                            if (compat) {
-                                return con.newInstance(args);
-                            }
-                        }
-                    }
-                    throw new ShenException("Could not find constructor for: " + name + "(" + Arrays.toString(args)
-                            + ")");
+                    return newInstance(name, args);
                 }
             };
         } else if (label.startsWith(".")) {
@@ -281,8 +260,33 @@ public class Context {
         } catch (Exception e) {
             rethrow(e);
         }
-        kryo.setClassLoader(DirectClassLoader.class.getClassLoader());
+        // kryo.setClassLoader(DirectClassLoader.class.getClassLoader());
         return globalProperties;
+    }
+
+    public static Object newInstance(final String name, Object[] args) {
+        try {
+            Class<?> c = Context.class.getClassLoader().loadClass(name);
+            Constructor<?>[] consts = c.getConstructors();
+            for (Constructor<?> con : consts) {
+                Class<?>[] params = con.getParameterTypes();
+                if (params.length == args.length) {
+                    boolean compat = true;
+                    for (int i = 0; i < params.length; i++) {
+                        if (!params[i].isInstance(args[i])) {
+                            compat = false;
+                            break;
+                        }
+                    }
+                    if (compat) {
+                        return con.newInstance(args);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            rethrow(e);
+        }
+        throw new ShenException("Could not find constructor for: " + name + "(" + Arrays.toString(args) + ")");
     }
 
     // static void registerAll(Map<String, byte[]> toReg) {

@@ -1,7 +1,5 @@
 package shen.gen;
 
-import static com.mentics.shenj.DirectClassLoader.*;
-
 import com.mentics.shenj.Lambda;
 import com.mentics.shenj.Lambda0;
 import com.mentics.shenj.ShenjRuntime;
@@ -20,6 +18,6 @@ public class NewEmptyContext {
 
 
     public static Object defined() throws Exception {
-        return ShenjRuntime.compileContext.createEmptyImage();
+        return ShenjRuntime.compileContext.newEmpty();
     }
 }

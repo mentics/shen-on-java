@@ -14,7 +14,7 @@ public class EvalKlTest {
     @Test
     public void testEvalKl() throws Exception {
         loadDefaultImage();
-        System.out.println(ShenjRuntime.compileContext.classes.size());
+//        System.out.println(ShenjRuntime.compileContext.classes.size());
         assertEquals(3, evalKl(3));
         assertEquals(17.8, evalKl(17.8));
         assertEquals("purple", evalKl("purple"));

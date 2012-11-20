@@ -1,3 +1,21 @@
+\* Nested redef *\
+
+(define test X -> 1)
+(test 1)
+(do (eval [define test X -> 2])
+    (test 1))
+(test 1)
+
+(test)
+
+
+(define test -> 1)
+(do (eval [define test -> 2])
+    (test))
+(test)
+
+
+
 \* Test making prolog vector stuff *\
 
 (defun shen-mk-pvar (V1359)
