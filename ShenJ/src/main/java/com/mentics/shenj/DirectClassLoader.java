@@ -1,8 +1,11 @@
 package com.mentics.shenj;
 
 import static com.mentics.shenj.ShenException.*;
+import static com.mentics.util.KryoUtil.*;
 import static com.mentics.util.ReflectionUtil.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,12 +20,11 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.mentics.shenj.inner.Context;
-import com.mentics.util.KryoUtil;
 import com.mentics.util.ReflectionUtil;
 
 
 public class DirectClassLoader extends ClassLoader implements JavaFileObjectSource {
-    private static Kryo kryo = KryoUtil.newKryo();
+    // private static Kryo kryo = KryoUtil.newKryo();
 
     static int count = 0;
 
@@ -38,6 +40,7 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
 
     @SuppressWarnings("unchecked")
     public static DirectClassLoader loadFromImage(Input in) {
+        Kryo kryo = newKryo();
         DirectClassLoader dcl = new DirectClassLoader(ReflectionUtil.threadClassLoader(),
                 (Map<String, byte[]>) kryo.readClassAndObject(in));
         // System.out.println(dcl.classes);
@@ -46,9 +49,7 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
     }
 
     public static DirectClassLoader createEmptyImage() {
-        DirectClassLoader dcl = new DirectClassLoader(ReflectionUtil.threadClassLoader(), new HashMap<String, byte[]>());
-        dcl.callContext("loadPrimitives", null, null);
-        return dcl;
+        return new DirectClassLoader(ReflectionUtil.threadClassLoader(), new HashMap<String, byte[]>());
     }
 
     public static DirectClassLoader fromPropFile(File file) {
@@ -61,10 +62,10 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
 
     // Instance Fields //
 
-    public final Map<String, byte[]> classes;
+    public Map<String, byte[]> classes;
 
-    private final Map<String, Class<?>> loaded;
-    private final List<JavaFileObject> files;
+    private Map<String, Class<?>> loaded;
+    private List<JavaFileObject> files;
 
     private int id = count++;
 
@@ -92,38 +93,75 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
     }
 
     public DirectClassLoader newWith(Map<String, byte[]> newClasses) {
+        boolean found = MapUtil.containsAny(classes, newClasses.keySet());
+        // putAll call must be after query and before copy
         classes.putAll(newClasses);
+        if (found) {
+            // A class has been redefined, so
+            System.out.println("Redefining class from: " + newClasses + " in DCL " + id);
+            return copy(true);
+        } else {
+            return this;
+        }
+    }
+
+    public DirectClassLoader copy(boolean replaceThis) {
         DirectClassLoader ret = null;
         try {
             ret = new DirectClassLoader(ReflectionUtil.threadClassLoader(), classes);
             Class<?> from = loadClass(Context.class.getName());
             Class<?> to = ret.loadClass(Context.class.getName());
-            ReflectionUtil.copyStaticFieldValue(from, to, "globalProperties");
-            ReflectionUtil.copyStaticFieldValue(from, to, "functions");
+
+            byte[] bytes = stateToBytes(from);
+
+            try (Input in = new Input(new ByteArrayInputStream(bytes))) {
+                Kryo k = newKryo();
+//                System.out.println("trying to read with DCL id: " + id + ":" + this.toString() + ", cl: "
+//                        + k.getClassLoader());
+                k.setClassLoader(ret);
+                @SuppressWarnings("unchecked")
+                HashMap<Symbol, Object> props = k.readObject(in, HashMap.class);
+                @SuppressWarnings("unchecked")
+                HashMap<Symbol, Lambda> functions = k.readObject(in, HashMap.class);
+                //k.setClassLoader(DirectClassLoader.class.getClassLoader());
+                Context.installGlobalConstants(props);
+                setStaticField(to, "globalProperties", props);
+                setStaticField(to, "functions", functions);
+            }
+
+            if (replaceThis) {
+                this.classes = null;
+                this.files = null;
+                this.loaded = null;
+            }
         } catch (Exception e) {
             rethrow(e);
         }
         return ret;
     }
 
-    public static DirectClassLoader copyCompileContext() {
-        DirectClassLoader ret = null;
-        try {
-            ret = new DirectClassLoader(ReflectionUtil.threadClassLoader(), new HashMap<>(
-                    ShenjRuntime.compileContext.classes));
-            Class<?> from = ShenjRuntime.compileContext.loadClass(Context.class.getName());
-            Class<?> to = ret.loadClass(Context.class.getName());
-            ReflectionUtil.cloneStaticFieldValue(from, to, "globalProperties");
-            ReflectionUtil.cloneStaticFieldValue(from, to, "functions");
-        } catch (Exception e) {
-            rethrow(e);
+    private byte[] stateToBytes(Class<?> from) throws Exception {
+        @SuppressWarnings("unchecked")
+        Map<Symbol, Object> props = (Map<Symbol, Object>) getStaticField(from, "globalProperties");
+        @SuppressWarnings("unchecked")
+        Map<Symbol, Lambda> functions = (Map<Symbol, Lambda>) getStaticField(from, "functions");
+        Context.clearGlobalConstants(props);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        Kryo k = newKryo();
+        try (Output out = new Output(baos)) {
+            k.setClassLoader(this);
+            k.writeObject(out, props);
+            k.writeObject(out, functions);
+            out.close();
         }
-        return ret;
+        //k.setClassLoader(DirectClassLoader.class.getClassLoader());
+        Context.installGlobalConstants(props);
+        return baos.toByteArray();
     }
 
     public void saveImage(Output out) {
         try {
-            KryoUtil.writeObjects(kryo, out, classes);
+            writeObjects(newKryo(), out, classes);
             // System.out.println("wrote classes to image");
             Class<?> cls = loadClass(Context.class.getName());
             invokeStatic(cls, "saveImage", new Class[] { Output.class }, new Object[] { out });
@@ -132,21 +170,10 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
         }
     }
 
-    public Object evalClass(String className) {
+    public Object runClass(String className) {
         try {
             Class<?> c = loadClass(Context.class.getName());
             return c.getMethod("runClass", new Class[] { String.class }).invoke(null, className);
-        } catch (Exception e) {
-            rethrow(e);
-            return null; // unreachable code
-        }
-    }
-
-    public Object run(String className) {
-        try {
-            Class<?> c = loadClass(className);
-            Lambda l = (Lambda) getStaticField(c, "LAMBDA");
-            return l.apply();
         } catch (Exception e) {
             rethrow(e);
             return null; // unreachable code
@@ -179,9 +206,10 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
 
     public DirectClassLoader registerAll(Map<String, byte[]> toReg) {
         DirectClassLoader dcl = newWith(toReg);
+        dcl.callContext("loadPrimitives", null, null);
         // callContext("registerAll", new Class[] { Map.class }, new Object[] { toReg });
         for (String fqn : toReg.keySet()) {
-            dcl.evalClass(fqn);
+            dcl.runClass(fqn);
         }
         return dcl;
     }
@@ -194,6 +222,9 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
         if (name.indexOf('$') != -1 && name.endsWith("ConstructorAccess")) {
             throw new ClassNotFoundException("ConstructorAccess thing is not supported.");
         }
+        if (loaded == null) {
+            System.out.println("DCL id " + id + " used after closed");
+        }
         Class<?> found = this.loaded.get(name);
         if (found != null) {
             return found;
@@ -202,10 +233,10 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
         // Anything in the same package as Context is intended to be handled by this context class loader.
         if (name.startsWith(Context.class.getPackage().getName())) {
             try {
-                byte[] bytes = ReflectionUtil.loadBytesForClass(getParent(), name);
+                byte[] bytes = loadBytesForClass(getParent(), name);
                 found = defineClass(name, bytes, 0, bytes.length);
                 loaded.put(name, found);
-                System.out.println("DCL " + id + " loading override: " + name);
+                // System.out.println("DCL " + id + " loading override: " + name);
             } catch (Exception e) {
                 e.printStackTrace(System.out);
                 rethrow(e);
@@ -215,7 +246,7 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
             byte[] cls = this.classes.get(name);
 
             if (cls != null) {
-                System.out.println("Loading directly by "+id+": " + name);
+                // System.out.println("Loading directly by "+id+": " + name);
                 found = defineClass(name, cls, 0, cls.length);
                 loaded.put(name, found);
             } else {
@@ -235,4 +266,27 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
             return null; // unreachable code
         }
     }
+
+    public Object apply(String className, Object arg0) {
+        try {
+            Class<?> c = loadClass(className);
+            Lambda l = (Lambda) getStaticField(c, "LAMBDA");
+            return l.apply(arg0);
+        } catch (Exception e) {
+            rethrow(e);
+            return null; // unreachable code
+        }
+    }
+
+    public Object apply(String className) {
+        try {
+            Class<?> c = loadClass(className);
+            Lambda l = (Lambda) getStaticField(c, "LAMBDA");
+            return l.apply();
+        } catch (Exception e) {
+            rethrow(e);
+            return null; // unreachable code
+        }
+    }
+
 }

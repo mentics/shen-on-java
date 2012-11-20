@@ -1,0 +1,40 @@
+Shen REPL doesn't do anything for calling functions
+Switching back to 6.1 did it, but...
+declarations.kl wasn't loaded right maybe?
+
+---------------------------------------------
+
+*** - No more room for LISP objects
+
+Huge list is created by systemf in the map... systemf call in declarations.kl. Just change the map so the lambda returns only the single item instead of the result of the systemf call.
+
+---------------------------------------------
+
+fail in yacc.kl doesn't compile. I just remove it and handle it explicitly in the compiler. It's handled in kl-to-java-traverse.
+
+---------------------------------------------
+
+java.lang.IllegalAccessException: Class com.mentics.shenj.inner.Context can not access a member of class shen.gen.EvalKl$1 with modifiers "public"
+	at sun.reflect.Reflection.ensureMemberAccess(Reflection.java:95)
+	at java.lang.reflect.AccessibleObject.slowCheckMemberAccess(AccessibleObject.java:261)
+	at java.lang.reflect.AccessibleObject.checkAccess(AccessibleObject.java:253)
+	at java.lang.reflect.Method.invoke(Method.java:594)
+	at com.mentics.shenj.inner.Context.callClass(Context.java:125)
+
+called setAccessible(true) on the method. Shouldn't have needed to, but oh well.
+
+---------------------------------------------
+
+Exception in thread "main" java.lang.NullPointerException
+	at shen.gen.Intoutput.defined(Intoutput.java:34)
+	at shen.gen.Intoutput$1.apply(Intoutput.java:24)
+	at shen.gen.ShenCredits.defined(ShenCredits.java:29)
+	at shen.gen.ShenCredits$1.apply(ShenCredits.java:24)
+	at shen.gen.ShenShen.defined(ShenShen.java:29)
+	at shen.gen.ShenShen$1.apply(ShenShen.java:24)
+	at com.mentics.shenj.DirectClassLoader.apply(DirectClassLoader.java:286)
+	at com.mentics.shenj.REPL.main(REPL.java:22)
+
+This usually means something is missing in globalProperties. System.out isn't set?
+
+---------------------------------------------

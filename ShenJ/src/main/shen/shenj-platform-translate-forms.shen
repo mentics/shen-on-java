@@ -30,28 +30,27 @@ public static Object defined(~A) throws Exception {~%~A~%~A~%}"
             (third PBody)))))
 
 (define handle-if A0 A1 A2 Type Vars ->
-    (let PX0 (kl-to-java-traverse A0 boolean Vars)
-	     PX1 (kl-to-java-traverse A1 Type Vars)
-		 PX2 (kl-to-java-traverse A2 Type Vars)
-         Var (gensym i)
-      (let First
-          (if (= unreachable (third PX0))
-            (make-string "~A~%" (fst PX0))
-            (make-string "~A~%final Object ~A;~%if ((boolean)~A) {~%~A~%~A} else {~%~A~%~A~%}"
-                         (fst PX0) Var (second PX0)
-                         (fst PX1) (handle-unreachable-assignment Var PX1)
-	                     (fst PX2) (handle-unreachable-assignment Var PX2)))
+    (let Result (gensym i)
+         PX0 (kl-to-java-traverse A0 boolean Vars)
+         PX1 (kl-to-java-traverse A1 Type Vars)
+         PX2 (kl-to-java-traverse A2 Type Vars)
+      (let First (if (= unreachable (third PX0))
+                   (make-string "~A~%" (fst PX0))
+                   (make-string "~A~%final Object ~A;~%if ((boolean)~A) {~%~A~%~A} else {~%~A~%~A~%}"
+                                (fst PX0) Result (second PX0)
+                                (fst PX1) (handle-unreachable-assignment Result PX1)
+                                (fst PX2) (handle-unreachable-assignment Result PX2)))
         (@p First
-	        (str Var)
-		    (if (= unreachable (third PX0)) unreachable
+            (str Result)
+            (if (= unreachable (third PX0)) unreachable
               (combine-types (third PX1) (third PX2)))))))
 
 
 (define handle-trap-error To-eval Handler Type Vars ->
-    (let Evaled (kl-to-java-traverse To-eval object Vars)
-         Handler' (kl-to-java-traverse Handler lambda (cons (to-var-pair t) Vars))
+    (let Result (gensym t)
          Temp (gensym t)
-		 Result (gensym t)
+         Evaled (kl-to-java-traverse To-eval object Vars)
+         Handler' (kl-to-java-traverse Handler lambda (cons (to-var-pair t) Vars))
 	  (@p (make-string "Object ~A;~%try {~%~A~%~A = ~A;~%} catch (Throwable t) {~%~A~%~A = ~A.apply(t);~%}~%final Object ~A = ~A;~%"
                        Temp (fst Evaled) Temp (second Evaled) (fst Handler') Temp (second Handler') Result Temp)
           (str Result)
@@ -59,30 +58,31 @@ public static Object defined(~A) throws Exception {~%~A~%~A~%}"
 
 (define handle-lambda
   Var Body Type Vars ->
-      (let Vars' (if (= () Var) Vars (cons (to-var-pair Var) Vars)) 
+      (let Result (gensym l)
+           Vars' (if (= () Var) Vars (cons (to-var-pair Var) Vars)) 
            Body' (kl-to-java-traverse Body object Vars')
            Params (map (function to-var) (to-list Var))
-           Result (gensym l)
         (@p (make-string "final Lambda ~A = new Lambda~A() {~%  public Object apply(~A) throws Exception {~%~A~%~A}~%};"
 	                     Result (length Params) (method-sig Params) (fst Body') (handle-unreachable-return Body'))
 	        (str Result)
             lambda)))
 
 (define handle-open Stream-type Location Direction Type Vars ->
-    (let Stream-type' (kl-to-java-traverse Stream-type symbol Vars)
+    (let Result (gensym o)
+         Stream-type' (kl-to-java-traverse Stream-type symbol Vars)
          Location' (kl-to-java-traverse Location string Vars)
          Direction' (kl-to-java-traverse Direction symbol Vars)
-		 Var (gensym o)
       (@p (make-string "~A~%~A~%~A~%final Object ~A = open(~A, ~A, ~A);"
 	                   (fst Stream-type') (fst Location') (fst Direction')
-	                   Var (second Stream-type') (second Location') (second Direction'))
-          (str Var)
+	                   Result (second Stream-type') (second Location') (second Direction'))
+          (str Result)
           stream)))
 
 
 \* TODO: can do direct (make-string "~A.lambda.apply(~A)" (to-var name) Args-string) *\
 (define handle-call Func Args Type Vars ->
-    (let Direct? (not (cons? Func))
+    (let Result (gensym f)
+         Direct? (not (cons? Func))
          Func' (if (cons? Func) (kl-to-java-traverse Func lambda Vars) (@p "" (to-var Func) symbol))
       (let EvaledArgs (map ((flip3 kl-to-java-traverse) Vars object) Args)
         (let Args-prep-string (string-join "" (map (function fst) EvaledArgs))
@@ -90,7 +90,6 @@ public static Object defined(~A) throws Exception {~%~A~%~A~%}"
              Func-prep-string (fst Func')
              Func-string (second Func')
              Unreachable? (list-matches (/. X (= unreachable (third X))) EvaledArgs)
-             Result (gensym f)
           (let Eval (cond (Unreachable? "")
                           ((and (symbol? Func) (is-java-call (str Func)))
                             (make-string "final Object ~A = javaDispatch(c#34;~Ac#34;).apply(~A);~%"
@@ -114,10 +113,10 @@ public static Object defined(~A) throws Exception {~%~A~%~A~%}"
 
 (define handle-java-call
   [shenj-dot-new Class | Args] Type Vars ->
-    (let EvaledArgs (map ((flip3 kl-to-java-traverse) Vars object) Args)
+    (let Result (gensym c)
+         EvaledArgs (map ((flip3 kl-to-java-traverse) Vars object) Args)
       (let Args-prep-string (string-join "" (map (function fst) EvaledArgs))
            Args-string (string-join ", " (map (function second) EvaledArgs))
-           Result (gensym c)
       (@p (make-string "~A~%Object ~A = new ~A(~A);~%" Args-prep-string Result Class Args-string)
 	      (str Result)
 		  object)))

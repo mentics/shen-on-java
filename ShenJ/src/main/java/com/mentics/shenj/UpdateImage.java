@@ -1,5 +1,7 @@
 package com.mentics.shenj;
 
+import static com.mentics.shenj.ShenjRuntime.*;
+
 import java.io.File;
 import java.io.FileOutputStream;
 
@@ -15,17 +17,17 @@ public class UpdateImage {
 
         if (imageFile.exists()) {
             ShenjRuntime.loadImage(imageFile);
-//            System.out.println("loaded image: " + imageFile);
+            // System.out.println("loaded image: " + imageFile);
         } else {
-            ShenjRuntime.emptyImage();
-//            System.out.println("create empty image");
+            compileContext = evalContext = DirectClassLoader.createEmptyImage(); 
+            // System.out.println("create empty image");
         }
 
         String classContent = StringUtil.readFully(file);
         Object result = ShenjRuntime.doEval(className, classContent);
         try (Output out = new Output(new FileOutputStream(imageFile))) {
             ShenjRuntime.evalContext.saveImage(out);
-//            System.out.println("saved image: " + imageFile);
+            // System.out.println("saved image: " + imageFile);
         }
 
         System.out.print(result);

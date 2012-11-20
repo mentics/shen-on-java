@@ -1,15 +1,16 @@
 package shen.gen;
 
-import static com.mentics.shenj.ShenjRuntime.*;
+import static com.mentics.shenj.DirectClassLoader.*;
 
 import com.mentics.shenj.Lambda;
 import com.mentics.shenj.Lambda0;
+import com.mentics.shenj.ShenjRuntime;
 import com.mentics.shenj.Symbol;
 
 
-public class UseCompileContext {
+public class NewEmptyContext {
 
-    public static final Symbol SYMBOL = symbol("use-compile-context");
+    public static final Symbol SYMBOL = ShenjRuntime.symbol("new-empty-context");
 
     public static final Lambda LAMBDA = new Lambda0() {
         public Object apply() throws Exception {
@@ -19,7 +20,6 @@ public class UseCompileContext {
 
 
     public static Object defined() throws Exception {
-        evalContext = compileContext;
-        return true;
+        return ShenjRuntime.compileContext.createEmptyImage();
     }
 }

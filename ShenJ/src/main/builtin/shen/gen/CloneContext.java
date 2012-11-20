@@ -20,6 +20,6 @@ public class CloneContext {
 
 
     public static Object defined() throws Exception {
-        return copyCompileContext();
+        return ShenjRuntime.evalContext.copy(false);
     }
 }

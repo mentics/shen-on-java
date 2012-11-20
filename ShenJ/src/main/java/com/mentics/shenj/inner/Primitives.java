@@ -281,10 +281,10 @@ public class Primitives {
 
     @Label("eval-kl")
     public static Object evalKl(final Object kl) throws Exception {
+        System.out.println("Evalkl: " + kl);
         if (kl instanceof Cons) {
-            System.out.println("primitives evalKl called");
             // TODO: make more efficient. Did reflection to avoid dependency
-            return Context.callClass("shen.gen.EvalKl", kl);
+            return ShenjRuntime.compileContext.apply("shen.gen.EvalKl", kl);
         } else {
             return kl;
         }

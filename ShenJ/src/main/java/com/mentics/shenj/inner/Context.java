@@ -17,6 +17,7 @@ import java.util.Map;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
+import com.mentics.shenj.DirectClassLoader;
 import com.mentics.shenj.Label;
 import com.mentics.shenj.Lambda;
 import com.mentics.shenj.ShenException;
@@ -28,7 +29,7 @@ import com.mentics.util.ReflectionUtil;
 
 
 public class Context {
-    public static Kryo kryo = KryoUtil.newKryo();
+    // public static Kryo kryo = KryoUtil.newKryo();
 
     public static final String GLOBAL_PROPERTIES_NAME = "globalProperties";
     public static Map<Symbol, Object> globalProperties = new HashMap<>();
@@ -37,12 +38,14 @@ public class Context {
     public static Map<Symbol, Lambda> functions = new HashMap<>();
 
 
-    public static void installGlobalConstants() {
-        globalProperties.put(ShenjRuntime.symbol("*stoutput*"), System.out);
-        globalProperties.put(ShenjRuntime.symbol("*stinput*"), System.in);
-        globalProperties.put(ShenjRuntime.symbol("*language*"), "Java");
-        globalProperties.put(ShenjRuntime.symbol("*port*"), "0.3-SNAPSHOT");
-        globalProperties.put(ShenjRuntime.symbol("*porters*"), "Joel Shellman");
+    public static void installGlobalConstants(Map<Symbol, Object> props) {
+        props.put(ShenjRuntime.symbol("*stoutput*"), System.out);
+        props.put(ShenjRuntime.symbol("*stinput*"), System.in);
+        props.put(ShenjRuntime.symbol("*language*"), "Java");
+        props.put(ShenjRuntime.symbol("*implementation*"), "ShenJ");
+        props.put(ShenjRuntime.symbol("*release*"), System.getProperty("java.version"));
+        props.put(ShenjRuntime.symbol("*port*"), "0.3-SNAPSHOT");
+        props.put(ShenjRuntime.symbol("*porters*"), "Joel Shellman");
         // if (globalProperties.get(ShenjRuntime.SRC_DIR_SYM) == null) {
         // globalProperties.put(ShenjRuntime.SRC_DIR_SYM, "java/shen/gen/");
         // }
@@ -75,17 +78,25 @@ public class Context {
 
     @SuppressWarnings("unchecked")
     static void loadImage(Input input) throws Exception {
+        Kryo kryo = newKryo();
         kryo.setClassLoader(Context.class.getClassLoader());
         globalProperties = (Map<Symbol, Object>) kryo.readClassAndObject(input);
         functions = (Map<Symbol, Lambda>) kryo.readClassAndObject(input);
-        installGlobalConstants();
+        installGlobalConstants(globalProperties);
+        kryo.setClassLoader(DirectClassLoader.class.getClassLoader());
+        if (Context.class.getClassLoader() == DirectClassLoader.class.getClassLoader()) {
+            throw new Error("Context and DCL same classloader");
+        }
     }
 
     static void saveImage(Output out) {
+        Kryo kryo = newKryo();
+        kryo.setClassLoader(Context.class.getClassLoader());
         clearGlobalConstants(globalProperties);
         KryoUtil.writeObjects(kryo, out, globalProperties, functions);
         // System.out.println("saved globalProperties and functions to image");
-        installGlobalConstants();
+        installGlobalConstants(globalProperties);
+        kryo.setClassLoader(DirectClassLoader.class.getClassLoader());
     }
 
     public static Lambda symbolDispatch(Symbol symbol) {
@@ -221,10 +232,14 @@ public class Context {
         return null;
     }
 
-    public static Object open(Object type, Object location, Object direction) {
+    public static Object open(Object type, Object loc, Object direction) {
         if ("file".equals(type.toString())) {
             String dir = direction.toString();
-            File f = new File((String) globalProperties.get(symbol("*home-directory*")), (String) location);
+            String location = (String) loc;
+            File f = new File(location);
+            if (!f.isAbsolute()) {
+                f = new File((String) globalProperties.get(symbol("*home-directory*")), (String) location);
+            }
             try {
                 if ("in".equals(dir)) {
                     return new FileInputStream(f);
@@ -259,18 +274,21 @@ public class Context {
 
     @SuppressWarnings("unchecked")
     static Map<Symbol, Object> loadProps(File file) {
+        Kryo kryo = newKryo();
+        kryo.setClassLoader(Context.class.getClassLoader());
         try (Input in = new Input(new FileInputStream(file))) {
             globalProperties = (Map<Symbol, Object>) readObjects(kryo, in, HashMap.class).get(0);
         } catch (Exception e) {
             rethrow(e);
         }
+        kryo.setClassLoader(DirectClassLoader.class.getClassLoader());
         return globalProperties;
     }
 
-//    static void registerAll(Map<String, byte[]> toReg) {
-//        for (byte[] bytes : toReg.values()) {
-//            Class<?> cls = Context.class.getClassLoader().loadClass();
-//            registerLambda(cls.getFields());
-//        }
-//    }
+    // static void registerAll(Map<String, byte[]> toReg) {
+    // for (byte[] bytes : toReg.values()) {
+    // Class<?> cls = Context.class.getClassLoader().loadClass();
+    // registerLambda(cls.getFields());
+    // }
+    // }
 }

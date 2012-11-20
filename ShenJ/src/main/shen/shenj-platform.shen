@@ -25,11 +25,11 @@
     (do (output (make-string "~%~%~%Evaluating: ~A~%~%" Parsed))
       (let Result (kl-to-java-traverse Parsed object ())
         (if (and (cons? Parsed) (= defun (hd Parsed)))
-		  (assert-test Result traverse-result-type?
-		          (make-string "Expected string triple from defun, was: ~A~%" (fst Result)))
-	      (let Code (assert-test (fst Result) string?
-		                    (make-string "Expected string result body, but Result was: ~A~%" "TODO"))
-		       Expression (assert-test (second Result) string? "Expected string result expression.")
+          (assert-test Result traverse-result-type?
+                       (make-string "Expected string triple from defun, was: ~A~%" (fst Result)))
+          (let Code (assert-test (fst Result) string?
+                                 (make-string "Expected string result body, but Result was: ~A~%" "TODO"))
+               Expression (assert-test (second Result) string? "Expected string result expression.")
             (@p (make-string "  public static Object run() throws Exception {~%~A;~%~A  }"
 			                 Code (handle-unreachable-return Result))
                 ""))))))

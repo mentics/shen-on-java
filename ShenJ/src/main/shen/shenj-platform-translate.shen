@@ -242,8 +242,8 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
 
   [absvector] Type Vars -> (let Arg (gensym s) (kl-to-java-traverse [lambda Arg [absvector Arg]] lambda Vars))
   [absvector Size] Type Vars ->
-    (let Size' (kl-to-java-traverse Size integer Vars)
-         Result (gensym a)
+    (let Result (gensym a)
+         Size' (kl-to-java-traverse Size integer Vars)
       (@p (make-string "~A~%final Object[] ~A = new Object[((Number)~A).intValue()];~%"
                        (fst Size') Result (second Size'))
           (str Result)
@@ -306,12 +306,13 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
     (let Var (gensym a)
       (kl-to-java-traverse [lambda Var [Operation A0 Var]] lambda Vars))
   Operation [A0 A1] Vars ->
-    (let A0-eval (kl-to-java-traverse A0 number Vars)
-	     A1-eval (kl-to-java-traverse A1 number Vars)
+    (let Result (gensym a)
+         A0-eval (kl-to-java-traverse A0 number Vars)
+         A1-eval (kl-to-java-traverse A1 number Vars)
       (let A0-content (fst A0-eval) A0-expression (second A0-eval) A1-content (fst A1-eval) A1-expression (second A1-eval)
-        (@p (make-string "~A~%~A~%" A0-content A1-content)
-            (make-string "Primitives.~A.apply(~A, ~A)"
-			             (arithmetic-to-name Operation) A0-expression A1-expression)
+        (@p (make-string "~A~%~A~%Object ~A = Primitives.~A.apply(~A, ~A);~%"
+                         A0-content A1-content Result (arithmetic-to-name Operation) A0-expression A1-expression)
+            (str Result)
             number)))
   Operation X Vars -> (simple-error "Bad args to arithmetic"))
 

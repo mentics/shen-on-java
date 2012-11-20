@@ -17,19 +17,20 @@ import com.mentics.util.StringUtil;
 
 
 public class EvalStuff {
-    public static Map<String, byte[]> compileTask(String srcDir, final String className, final String classContent,
+    public static DirectClassLoader compileTask(String srcDir, final String className, final String classContent,
             DirectClassLoader loader) throws CharSequenceCompilerException {
         if (srcDir != null) {
             // System.out.println("wrote out "+className);
             StringUtil.writeToFile(classContent, new File(srcDir, StringUtil.lastToken(".", className) + ".java"));
         }
 
-        // System.out.println("Compiling " + className);
+         System.out.println("Compiling " + className);
         CharSequenceCompiler compiler = new CharSequenceCompiler(loader, asList("-g"));
 
         DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
         Map<String, byte[]> newClasses = compiler.compileToBytes(Lang.mapOf(className, (CharSequence) classContent),
                 diagnostics);
+        loader = loader.newWith(newClasses);
 
         boolean retry = false;
         List<String> errors = new ArrayList<>();
@@ -63,7 +64,8 @@ public class EvalStuff {
                         int numParams = Lang.methodParamCount(classContent, StringUtil.lastToken(".", missingClassFQN)
                                 + ".LAMBDA.apply");
                         if (numParams != -1) {
-                            newClasses.putAll(createStubFunction(srcDir, missingClassFQN, numParams, loader));
+                            // newClasses.putAll();
+                            loader = createStubFunction(srcDir, missingClassFQN, numParams, loader);
                             retry = true;
                         } else {
                             errors.add(d.toString());
@@ -76,11 +78,13 @@ public class EvalStuff {
             }
         }
         if (retry) {
-            newClasses.putAll(compileTask(srcDir, className, classContent, loader.newWith(newClasses)));
+            loader = compileTask(srcDir, className, classContent, loader);
+            // newClasses.putAll();
         } else if (errors.size() > 0) {
             throw new ShenException(errors.toString());
         }
-        return newClasses;
+        return loader;
+        // return newClasses;
     }
 
     /**
@@ -108,7 +112,7 @@ public class EvalStuff {
         return ret;
     }
 
-    private static Map<String, byte[]> createStubFunction(String srcDir, String missingClassFQN, int numParams,
+    private static DirectClassLoader createStubFunction(String srcDir, String missingClassFQN, int numParams,
             DirectClassLoader loader) throws CharSequenceCompilerException {
         // System.out.println("stub compile: " + missingClassFQN);
         StringBuilder classContent = new StringBuilder();

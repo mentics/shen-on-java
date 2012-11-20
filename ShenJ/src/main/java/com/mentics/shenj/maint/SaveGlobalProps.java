@@ -17,7 +17,7 @@ import com.mentics.util.KryoUtil;
 public class SaveGlobalProps {
     public static void main2(String[] args) throws Exception {
         Input in = new Input(new FileInputStream("shenj-base.image"));
-        new Kryo().readClassAndObject(in);
+        KryoUtil.newKryo().readClassAndObject(in);
         Map<Symbol, Object> props = (Map<Symbol, Object>) new Kryo().readClassAndObject(in);
         // RuntimeContext.clearGlobalConstants();
         // UpdateImage.readObjects(new FileInputStream("global-props.kryo"), HashMap.class);

@@ -55,7 +55,7 @@ public class Cons {
         if (Nil.NIL.equals(tail)) {
             return "[" + head + "]";
         } else if (tail instanceof Cons) {
-            return "[" + head + " " + ((Cons) tail).continueString() + "]";
+            return "[" + head + " " + ((Cons) tail).continueString();
         } else {
             return "[" + head + " | " + tail.toString() + "]";
         }
@@ -65,7 +65,7 @@ public class Cons {
         if (Nil.NIL.equals(tail)) {
             return head + "]";
         } else if (tail instanceof Cons) {
-            return head + " " + ((Cons) tail).continueString() + "]";
+            return head + " " + ((Cons) tail).continueString();
         } else {
             return head + " | " + tail.toString() + "]";
         }
