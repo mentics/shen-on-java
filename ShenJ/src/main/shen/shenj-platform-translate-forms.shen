@@ -9,7 +9,7 @@
 \* TODO: do perf compare between Name.LAMBDA.apply(...) and Name.defined(...) *\
                    (make-string "
 public static final Symbol SYMBOL = symbol(c#34;~Ac#34;);
-public static final Lambda LAMBDA = new Lambda~A() {
+public static Lambda LAMBDA = new Lambda~A() {
 public Object apply(~A) throws Exception {
 return defined(~A);
 }};

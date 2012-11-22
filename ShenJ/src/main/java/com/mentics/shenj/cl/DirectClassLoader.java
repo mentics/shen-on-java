@@ -7,6 +7,7 @@ import static com.mentics.util.ReflectionUtil.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -100,11 +101,43 @@ class DirectClassLoader extends ClassLoader implements JavaFileObjectSource {
     }
 
     public DirectClassLoader newWith(Map<String, byte[]> newClasses) {
-        boolean found = MapUtil.containsAny(classes, newClasses.keySet());
+        boolean found = MapUtil.containsAny(loaded, newClasses.keySet());
         if (found) {
             // A class has been redefined, so
-            // System.out.println("Redefining class from: " + newClasses + " in DCL " + id);
-            return copy(newClasses, true);
+            classes.putAll(newClasses);
+            System.out.println("Redefining class from: " + newClasses + " in DCL " + id);
+
+            if (newClasses.size() > 2) {
+                System.out.println("too many classes");
+            }
+            for (String s : newClasses.keySet()) {
+                // Get the anon inner class lambda
+                if (!s.contains("$")) {
+                    try {
+                        // String name = s.substring(0, s.lastIndexOf('$'));
+                        String name = s;
+                        DirectClassLoader dcl = new DirectClassLoader(this, newClasses);
+                        Class<?> c = dcl.loadClass(name);
+                        try {
+                            Lambda newLambda = (Lambda) getStaticField(c, "LAMBDA");
+                            Field field = loaded.get(name).getDeclaredField("LAMBDA");
+                            field.setAccessible(true);
+                            field.set(null, newLambda);
+                        } catch (Exception e) {
+                            Lambda newLambda = (Lambda) getStaticField(c, "run");
+                            Field field = loaded.get(name).getDeclaredField("run");
+                            field.setAccessible(true);
+                            field.set(null, newLambda);
+                        }
+                    } catch (Exception e) {
+                        rethrow(e);
+                        return null; // unreachable code
+                    }
+                }
+            }
+            return this;
+
+            // return copy(newClasses, true);
         } else {
             // putAll call must be after query and before copy
             classes.putAll(newClasses);

@@ -27,7 +27,9 @@ public class ShenjRuntime {
     public static int gensymCounter = 0;
 
 
-    public static Object doEval(final Object className, final Object classContent) throws Exception {
+    public static Object doEval(final Object className, Object classContent) throws Exception {
+        // classContent = ((String)classContent).replace("new Lambda() { public Object",
+        // "new Lambda0() { public Object");
         return evalContext.eval((String) className, (String) classContent);
     }
 

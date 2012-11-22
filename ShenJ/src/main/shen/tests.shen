@@ -6,8 +6,6 @@
     (test 1))
 (test 1)
 
-(test)
-
 
 (define test -> 1)
 (do (eval [define test -> 2])

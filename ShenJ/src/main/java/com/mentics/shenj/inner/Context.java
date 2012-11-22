@@ -3,6 +3,7 @@ package com.mentics.shenj.inner;
 import static com.mentics.shenj.ShenException.*;
 import static com.mentics.shenj.ShenjRuntime.*;
 import static com.mentics.util.KryoUtil.*;
+import static com.mentics.util.ReflectionUtil.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -109,15 +110,20 @@ public class Context {
         try {
             Class<?> c = Context.class.getClassLoader().loadClass(className);
             result = registerLambda(c.getDeclaredFields());
-            Method[] methods = c.getDeclaredMethods();
-            for (Method method : methods) {
-                String name = method.getName();
-                if ("run".equals(name)) {
-                    // System.out.println("Running class: " + c.getName());
-                    result = method.invoke(null);
-                    break;
-                }
+            try {
+                Lambda lam = (Lambda) getStaticField(c, "run");
+                result = lam.apply();
+            } catch (Exception e) {
+                // ignore
             }
+            // Method[] methods = c.getDeclaredMethods();
+            // for (Method method : methods) {
+            // String name = method.getName();
+            // if ("run".equals(name)) {
+            // result = method.invoke(null);
+            // break;
+            // }
+            // }
         } catch (Exception e) {
             rethrow(e);
         }
