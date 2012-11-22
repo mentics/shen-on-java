@@ -83,6 +83,10 @@ public class CLProvider implements JavaFileObjectSource {
         return dcl.apply(className, arg);
     }
 
+    public Object apply(String className, Object arg, Object arg2) {
+        return dcl.apply(className, arg, arg2);
+    }
+
     public Object apply(String className) {
         return dcl.apply(className);
     }

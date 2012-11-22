@@ -17,15 +17,16 @@ public class EvalKl {
 
 
     public static Object defined(Object ast) throws Exception {
-        final Object javaInfo = ParsedKlToJava.LAMBDA.apply(ast);
+        final Object javaInfo = ShenjRuntime.compileContext.apply("shen.gen.ParsedKlToJava", ast);
 
-        final Object f4045 = Fst.LAMBDA.apply(javaInfo);
-        final Object f4046 = Second.LAMBDA.apply(javaInfo);
-        final Object unit4044 = ToJavaUnit.LAMBDA.apply(f4045, f4046);
-        final Object className = Fst.LAMBDA.apply(unit4044);
-        final Object classContent = Second.LAMBDA.apply(unit4044);
+        final Object f4045 = ((Object[])javaInfo)[1];//   Fst.LAMBDA.apply(javaInfo);
+        final Object f4046 = ((Object[])javaInfo)[2];//Second.LAMBDA.apply(javaInfo);
+        final Object unit4044 = ShenjRuntime.compileContext.apply("shen.gen.ToJavaUnit", f4045, f4046);
+        final Object className = ((Object[])unit4044)[1];//Fst.LAMBDA.apply(unit4044);
+        final Object classContent = ((Object[])unit4044)[2];//Second.LAMBDA.apply(unit4044);
 
         return ShenjRuntime.doEval(className, classContent);
     }
 
 }
+    

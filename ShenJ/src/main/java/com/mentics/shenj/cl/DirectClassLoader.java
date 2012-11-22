@@ -54,7 +54,9 @@ class DirectClassLoader extends ClassLoader implements JavaFileObjectSource {
     }
 
     static DirectClassLoader createEmptyImage() {
-        return new DirectClassLoader(ReflectionUtil.threadClassLoader(), new HashMap<String, byte[]>());
+        DirectClassLoader dcl = new DirectClassLoader(ReflectionUtil.threadClassLoader(), new HashMap<String, byte[]>());
+        // dcl.runClass("shen.gen.InstallBuiltins");
+        return dcl;
     }
 
     static DirectClassLoader fromPropFile(File file) {
@@ -110,7 +112,7 @@ class DirectClassLoader extends ClassLoader implements JavaFileObjectSource {
             return this;
         }
     }
-    
+
     public void saveImage(Output out) {
         try {
             writeObjects(newKryo(), out, classes);
@@ -180,6 +182,17 @@ class DirectClassLoader extends ClassLoader implements JavaFileObjectSource {
             Class<?> c = loadClass(className);
             Lambda l = (Lambda) getStaticField(c, "LAMBDA");
             return l.apply(arg0);
+        } catch (Exception e) {
+            rethrow(e);
+            return null; // unreachable code
+        }
+    }
+
+    public Object apply(String className, Object arg0, Object arg1) {
+        try {
+            Class<?> c = loadClass(className);
+            Lambda l = (Lambda) getStaticField(c, "LAMBDA");
+            return l.apply(arg0, arg1);
         } catch (Exception e) {
             rethrow(e);
             return null; // unreachable code
