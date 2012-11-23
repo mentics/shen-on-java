@@ -10,7 +10,7 @@ import com.mentics.shenj.Symbol;
 public class StringLength {
     public static final Symbol SYMBOL = symbol("string-length");
 
-    public static final Lambda LAMBDA = new Lambda1() {
+    public static Lambda LAMBDA = new Lambda1() {
         public Object apply(final Object v6940) throws Exception {
             return defined(v6940);
         }

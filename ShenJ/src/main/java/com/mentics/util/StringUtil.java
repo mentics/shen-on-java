@@ -93,11 +93,11 @@ public class StringUtil {
     }
 
     public static String toString(Object o) {
-        if (o.getClass().isArray()) {
+        if (o != null && o.getClass().isArray()) {
             // TODO: handle primitives
             return Arrays.toString((Object[]) o);
         } else {
-            return o.toString();
+            return o == null ? "null" : o.toString();
         }
     }
 }

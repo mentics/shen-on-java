@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -36,6 +37,9 @@ public class Lang {
         if (x0 instanceof Number && x1 instanceof Number) {
             return ((Number) x0).doubleValue() == ((Number) x1).doubleValue();
         } else {
+            if (x0 != null && x0.getClass().isArray()) {
+                return Arrays.equals((Object[])x0, (Object[])x1);
+            }
             boolean test = x0 != null ? x0.equals(x1) : x1 == null;
             if (test) {
                 return true;

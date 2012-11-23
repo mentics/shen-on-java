@@ -10,7 +10,7 @@ import com.mentics.shenj.Symbol;
 
 public class Gensym {
     public static final Symbol SYMBOL = symbol("gensym");
-    public static final Lambda LAMBDA = new Lambda1() {
+    public static Lambda LAMBDA = new Lambda1() {
         public Object apply(final Object v735) throws Exception {
             return defined(v735);
         }

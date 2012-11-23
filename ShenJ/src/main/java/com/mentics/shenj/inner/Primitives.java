@@ -1,5 +1,6 @@
 package com.mentics.shenj.inner;
 
+import static com.mentics.shenj.ShenjRuntime.*;
 import static java.util.Calendar.*;
 
 import java.io.Closeable;
@@ -284,7 +285,7 @@ public class Primitives {
 //        System.out.println("Evalkl: " + kl);
         if (kl instanceof Cons) {
             // TODO: make more efficient. Did reflection to avoid dependency
-            return ShenjRuntime.evalContext.apply("shen.gen.EvalKl", kl);
+            return getCurrentContext().apply("shen.gen.EvalKl", kl);
         } else {
             return kl;
         }

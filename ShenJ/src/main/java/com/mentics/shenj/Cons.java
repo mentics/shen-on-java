@@ -1,8 +1,5 @@
 package com.mentics.shenj;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class Cons {
     public static Object makeCons(Object... os) {
@@ -60,7 +57,7 @@ public class Cons {
             return "[" + head + " | " + tail.toString() + "]";
         }
     }
-    
+
     public String continueString() {
         if (Nil.NIL.equals(tail)) {
             return head + "]";
@@ -71,21 +68,32 @@ public class Cons {
         }
     }
 
-    public List<Object> forEach(Lambda1 f) throws Exception {
-        List<Object> result = new ArrayList<>();
+    public Object forEach(Lambda1 f) throws Exception {
         if (head == null) {
-            return result;
+            return Nil.NIL;
         }
+        Object result = Nil.NIL;
         Object iterate = this;
         do {
             Object o = iterate instanceof Cons ? ((Cons) iterate).head : iterate;
-            result.add(f.apply(o));
+            result = new Cons(f.apply(o), result);
+            // result.add(f.apply(o));
             if (iterate instanceof Cons) {
                 iterate = ((Cons) iterate).tail;
             } else {
                 break;
             }
         } while (iterate != Nil.NIL);
+        return reverse(result);
+    }
+
+    private Object reverse(Object o) {
+        Object result = Nil.NIL;
+        while (o instanceof Cons) {
+            Cons oc = (Cons) o;
+            result = new Cons(oc.head, result);
+            o = oc.tail;
+        }
         return result;
     }
 

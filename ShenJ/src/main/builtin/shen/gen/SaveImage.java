@@ -14,7 +14,7 @@ public class SaveImage {
 
     public static final Symbol SYMBOL = symbol("save-image");
 
-    public static final Lambda LAMBDA = new Lambda1() {
+    public static Lambda LAMBDA = new Lambda1() {
         public Object apply(final Object v6932) throws Exception {
             return defined(v6932);
         }
@@ -23,7 +23,7 @@ public class SaveImage {
 
     public static Object defined(final Object v6932) throws Exception {
         try (Output out = new Output(new FileOutputStream((String) v6932))) {
-            evalContext.saveImage(out);
+            getCurrentContext().saveImage(out);
         }
         return true;
     }

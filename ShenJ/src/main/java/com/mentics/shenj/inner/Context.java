@@ -31,6 +31,9 @@ import com.mentics.util.ReflectionUtil;
 public class Context {
     public static final String GLOBAL_PROPERTIES_NAME = "globalProperties";
     public static Map<Symbol, Object> globalProperties = new HashMap<>();
+    static {
+        installGlobalConstants(globalProperties);
+    }
 
     public static final String FUNCTIONS_NAME = "functions";
     public static Map<Symbol, Lambda> functions = new HashMap<>();
@@ -44,9 +47,9 @@ public class Context {
         props.put(ShenjRuntime.symbol("*release*"), System.getProperty("java.version"));
         props.put(ShenjRuntime.symbol("*port*"), "0.3-SNAPSHOT");
         props.put(ShenjRuntime.symbol("*porters*"), "Joel Shellman");
-        // if (globalProperties.get(ShenjRuntime.SRC_DIR_SYM) == null) {
-        // globalProperties.put(ShenjRuntime.SRC_DIR_SYM, "java/shen/gen/");
-        // }
+        if (globalProperties.get(ShenjRuntime.SRC_DIR_SYM) == null) {
+            globalProperties.put(ShenjRuntime.SRC_DIR_SYM, "java/generated/");
+        }
     }
 
     public static void clearGlobalConstants(Map<Symbol, Object> props) {
@@ -110,11 +113,14 @@ public class Context {
         try {
             Class<?> c = Context.class.getClassLoader().loadClass(className);
             result = registerLambda(c.getDeclaredFields());
+            Lambda lam = null;
             try {
-                Lambda lam = (Lambda) getStaticField(c, "run");
+                lam = (Lambda) getStaticField(c, "run");
+            } catch (NoSuchFieldException e) {
+                // ignore no field, but anything else pass through
+            }
+            if (lam != null) {
                 result = lam.apply();
-            } catch (Exception e) {
-                // ignore
             }
             // Method[] methods = c.getDeclaredMethods();
             // for (Method method : methods) {

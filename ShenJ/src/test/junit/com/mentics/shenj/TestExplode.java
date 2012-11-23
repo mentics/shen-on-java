@@ -1,5 +1,6 @@
 package com.mentics.shenj;
 
+import static com.mentics.shenj.ShenjRuntime.*;
 import static org.junit.Assert.*;
 
 import java.io.File;
@@ -35,7 +36,7 @@ public class TestExplode {
         System.out.println(code);
         ShenjRuntime.doEval("shen.gen.ToEval", code);
         try (Output out = new Output(new FileOutputStream("test.image"))) {
-            ShenjRuntime.evalContext.saveImage(out);
+            getCurrentContext().saveImage(out);
         }
 
         ShenjRuntime.loadImage(new File("test.image"));

@@ -1,5 +1,7 @@
 package com.mentics.shenj;
 
+import static com.mentics.shenj.ShenjRuntime.*;
+
 import java.io.File;
 import java.io.FileOutputStream;
 
@@ -22,10 +24,10 @@ public class UpdateImage {
         String classContent = StringUtil.readFully(file);
         Object result = ShenjRuntime.doEval(className, classContent);
         try (Output out = new Output(new FileOutputStream(imageFile))) {
-            ShenjRuntime.evalContext.saveImage(out);
+            getCurrentContext().saveImage(out);
             // System.out.println("saved image: " + imageFile);
         }
 
-        System.out.print(result);
+        System.out.print(StringUtil.toString(result));
     }
 }

@@ -2,6 +2,7 @@ package com.mentics.shenj.cl;
 
 import static com.mentics.shenj.ShenException.*;
 import static com.mentics.shenj.ShenjRuntime.*;
+import static com.mentics.shenj.cl.DirectClassLoader.*;
 import static java.util.Arrays.*;
 
 import java.io.File;
@@ -30,16 +31,12 @@ import com.mentics.util.StringUtil;
 public class CLProvider implements JavaFileObjectSource {
     // Static Methods //
 
-    public static CLProvider newEmpty() {
-        return new CLProvider(DirectClassLoader.createEmptyImage());
+    public static CLProvider newDefault(ClassLoader parent) {
+        return new CLProvider(loadDefaultImage(parent));
     }
 
-    public static CLProvider newDefault() {
-        return new CLProvider(DirectClassLoader.loadDefaultImage());
-    }
-
-    public static CLProvider newFromImage(Input in) {
-        return new CLProvider(DirectClassLoader.loadFromImage(in));
+    public static CLProvider newFromImage(ClassLoader parent, Input in) {
+        return new CLProvider(loadFromImage(parent, in));
     }
 
 
@@ -54,20 +51,23 @@ public class CLProvider implements JavaFileObjectSource {
     // Constructors //
 
     public CLProvider(DirectClassLoader dcl) {
-        System.out.println("Creating new CLProvider: " + (++id));
         this.dcl = dcl;
     }
 
 
     // Public Methods //
 
+    public CLProvider newEmpty() {
+        return new CLProvider(createEmptyImage(dcl));
+    }
+
     public Object eval(String className, String classContent) {
         try {
-            compileTask((String) dcl.getGlobalProps().get(SRC_DIR_SYM), (String) className, (String) classContent);
             // TODO: fix this when work with packages
             if (!className.startsWith("shen.gen.")) {
                 className = "shen.gen." + className;
             }
+            compileTask((String) dcl.getGlobalProps().get(SRC_DIR_SYM), (String) className, (String) classContent);
             return dcl.runClass((String) className);
         } catch (Exception e) {
             rethrow(e);
@@ -95,8 +95,8 @@ public class CLProvider implements JavaFileObjectSource {
         return new CLProvider(dcl.copy(new HashMap<String, byte[]>(), false));
     }
 
-    public void registerAll(Map<String, byte[]> toReg) {
-        dcl.registerAll(toReg);
+    public void register(String fqn, Map<String, byte[]> toReg) {
+        dcl.register(fqn, toReg);
     }
 
 
@@ -111,7 +111,7 @@ public class CLProvider implements JavaFileObjectSource {
         DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
         Map<String, byte[]> newClasses = compiler.compileToBytes(Lang.mapOf(className, (CharSequence) classContent),
                 diagnostics);
-        dcl = dcl.newWith(newClasses);
+        dcl = dcl.newWith(className, newClasses);
         boolean retry = false;
         List<String> errors = new ArrayList<>();
         if (!diagnostics.getDiagnostics().isEmpty()) {
@@ -218,5 +218,9 @@ public class CLProvider implements JavaFileObjectSource {
         classContent.append("  throw new ShenException(\"Function " + missingClassFQN + " is not defined.\");");
         classContent.append("} }; }");
         compileTask(srcDir, missingClassFQN, classContent.toString());
+    }
+
+    public void loadPrimitives() {
+        dcl.callContext("loadPrimitives", null, null);
     }
 }

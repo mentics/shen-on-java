@@ -1,6 +1,7 @@
 package com.mentics.shenj;
 
 import static com.mentics.shenj.ShenException.*;
+import static com.mentics.util.ReflectionUtil.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,6 +10,7 @@ import java.util.Map;
 
 import com.esotericsoftware.kryo.io.Input;
 import com.mentics.shenj.cl.CLProvider;
+import com.mentics.shenj.cl.DirectClassLoader;
 
 
 public class ShenjRuntime {
@@ -18,8 +20,10 @@ public class ShenjRuntime {
     // }
 
     public static Map<String, Symbol> symbols = new HashMap<>();
-    public static CLProvider compileContext;
-    public static CLProvider evalContext;
+    public static CLProvider topLevel;
+    public static ThreadLocal<CLProvider> currentContext = new ThreadLocal<>();
+    // public static CLProvider compileContext;
+    // public static CLProvider evalContext;
 
     public static final String GEN_SOURCE_DIRECTORY = "*gen-source-directory*";
     public static final Symbol SRC_DIR_SYM = symbol(GEN_SOURCE_DIRECTORY);
@@ -30,7 +34,7 @@ public class ShenjRuntime {
     public static Object doEval(final Object className, Object classContent) throws Exception {
         // classContent = ((String)classContent).replace("new Lambda() { public Object",
         // "new Lambda0() { public Object");
-        return evalContext.eval((String) className, (String) classContent);
+        return currentContext.get().eval((String) className, (String) classContent);
     }
 
 
@@ -46,18 +50,26 @@ public class ShenjRuntime {
     }
 
     public static void loadImage(File file) {
-        compileContext = newProviderFromFile(file);
-        evalContext = newProviderFromFile(file);
+        topLevel = newProviderFromFile(file);
+        currentContext.set(topLevel);
     }
 
     public static void loadDefaultImage() {
-        compileContext = CLProvider.newDefault();
-        evalContext = CLProvider.newDefault();
+        topLevel = CLProvider.newDefault(threadClassLoader());
+        currentContext.set(topLevel);
     }
 
     public static void newEmpty() {
-        compileContext = CLProvider.newEmpty();
-        evalContext = CLProvider.newEmpty();
+        topLevel = new CLProvider(DirectClassLoader.createEmptyImage(threadClassLoader()));
+        currentContext.set(topLevel);
+    }
+
+    public static CLProvider getCurrentContext() {
+        return currentContext.get();
+    }
+
+    public static void setCurrentContext(CLProvider context) {
+        currentContext.set(context);
     }
 
 
@@ -65,7 +77,7 @@ public class ShenjRuntime {
 
     private static CLProvider newProviderFromFile(File file) {
         try (Input in = new Input(new FileInputStream(file))) {
-            return CLProvider.newFromImage(in);
+            return CLProvider.newFromImage(threadClassLoader(), in);
         } catch (Exception e) {
             rethrow(e);
             return null; // unreachable code

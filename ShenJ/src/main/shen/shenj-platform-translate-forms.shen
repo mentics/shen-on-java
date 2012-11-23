@@ -6,7 +6,6 @@
          Argstring (method-argstring (map (function to-var) Params))
       (do (put Name arity (length Params))
           (@p (let Result (kl-to-java-traverse Body object (map (function to-var-pair) Params))
-\* TODO: do perf compare between Name.LAMBDA.apply(...) and Name.defined(...) *\
                    (make-string "
 public static final Symbol SYMBOL = symbol(c#34;~Ac#34;);
 public static Lambda LAMBDA = new Lambda~A() {
@@ -18,8 +17,8 @@ public static Object defined(~A) throws Exception {~%~A~%~A~%}"
                       Signature
                       (fst Result)
                       (handle-unreachable-return Result)))
-		      (str Name)
-		      func))))
+              (str Name)
+              func))))
 
 (define handle-let Var Value Body Type Vars ->
     (let Var' (to-var (gensym Var))

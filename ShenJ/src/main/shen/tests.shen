@@ -1,3 +1,34 @@
+\* Sub context basic test *\
+
+(set-context (new-sub-context))
+(value *stoutput*)
+
+(set-context (new-sub-context))
+(value blue)
+(set blue "green")
+(value blue)
+(set-context (new-sub-context))
+(value blue)
+
+
+\* Possible problem with anon inner classes for new redefine mechanism (setting lambda field) *\
+
+(define test X -> (lambda Y (+ X Y)))
+((test 1) 1)
+
+(define test X -> (lambda Y (* X Y)))
+((test 2) 2)
+
+
+\* Simple redef *\
+
+(define test -> 0)
+(test)
+(define test -> 1)
+(test)
+
+
+
 \* Nested redef *\
 
 (define test X -> 1)
@@ -11,7 +42,6 @@
 (do (eval [define test -> 2])
     (test))
 (test)
-
 
 
 \* Test making prolog vector stuff *\

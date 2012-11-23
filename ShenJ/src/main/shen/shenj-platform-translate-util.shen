@@ -4,10 +4,12 @@
 (define to-var Param -> (name->method-name (str Param)))
 
 
-(define is-java-call
+(define is-java-call String -> false)
+\*
   String -> (let Dot-index (string-index "." String)
                  Dollar-index (string-index "$" String)
               (and (or (not (= Dot-index -1)) (not (= Dollar-index -1))) (not (= (string-length String) 1)))))
+*\
 
 
 (define method-sig { (list string) --> string }

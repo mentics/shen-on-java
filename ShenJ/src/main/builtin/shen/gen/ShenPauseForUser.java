@@ -14,7 +14,8 @@ import com.mentics.shenj.Symbol;
 
 public class ShenPauseForUser {
     public static final Symbol SYMBOL = symbol("shen-pause-for-user");
-    public static final Lambda LAMBDA = new Lambda1() {
+
+    public static Lambda LAMBDA = new Lambda1() {
         public Object apply(final Object v812) throws Exception {
             return defined(v812);
         }

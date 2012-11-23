@@ -13,7 +13,7 @@ import com.mentics.shenj.Symbol;
 public class ShenExplodeString {
     public static final Symbol SYMBOL = symbol("shen-explode-string");
 
-    public static final Lambda LAMBDA = new Lambda1() {
+    public static Lambda LAMBDA = new Lambda1() {
         public Object apply(final Object v705) throws Exception {
             return defined(v705);
         }

@@ -23,21 +23,20 @@ import com.esotericsoftware.kryo.io.Output;
 import com.mentics.shenj.JavaFileObjectImpl;
 import com.mentics.shenj.JavaFileObjectSource;
 import com.mentics.shenj.Lambda;
-import com.mentics.shenj.MapUtil;
 import com.mentics.shenj.Symbol;
 import com.mentics.shenj.inner.Context;
 import com.mentics.util.ReflectionUtil;
 
 
-class DirectClassLoader extends ClassLoader implements JavaFileObjectSource {
+public class DirectClassLoader extends ClassLoader implements JavaFileObjectSource {
     // private static Kryo kryo = KryoUtil.newKryo();
 
     static int count = 0;
 
 
-    static DirectClassLoader loadDefaultImage() {
+    static DirectClassLoader loadDefaultImage(ClassLoader parent) {
         try (Input in = new Input(ReflectionUtil.openResource("com/mentics/shenj/image/shenj-base.image"))) {
-            return loadFromImage(in);
+            return loadFromImage(parent, in);
         } catch (Exception e) {
             rethrow(e);
             return null; // unreachable code
@@ -45,7 +44,7 @@ class DirectClassLoader extends ClassLoader implements JavaFileObjectSource {
     }
 
     @SuppressWarnings("unchecked")
-    static DirectClassLoader loadFromImage(Input in) {
+    static DirectClassLoader loadFromImage(ClassLoader parent, Input in) {
         Kryo kryo = newKryo();
         DirectClassLoader dcl = new DirectClassLoader(ReflectionUtil.threadClassLoader(),
                 (Map<String, byte[]>) kryo.readClassAndObject(in));
@@ -54,10 +53,8 @@ class DirectClassLoader extends ClassLoader implements JavaFileObjectSource {
         return dcl;
     }
 
-    static DirectClassLoader createEmptyImage() {
-        DirectClassLoader dcl = new DirectClassLoader(ReflectionUtil.threadClassLoader(), new HashMap<String, byte[]>());
-        // dcl.runClass("shen.gen.InstallBuiltins");
-        return dcl;
+    public static DirectClassLoader createEmptyImage(ClassLoader parent) {
+        return new DirectClassLoader(parent, new HashMap<String, byte[]>());
     }
 
     static DirectClassLoader fromPropFile(File file) {
@@ -97,53 +94,53 @@ class DirectClassLoader extends ClassLoader implements JavaFileObjectSource {
     @Override
     public Collection<JavaFileObject> files(String packageName) {
         // TODO: only for packageName
+        if (getParent() instanceof DirectClassLoader) {
+            List<JavaFileObject> result = new ArrayList<>();
+            result.addAll(((DirectClassLoader) getParent()).files(packageName));
+            result.addAll(files);
+            return result;
+        }
         return files;
     }
 
-    public DirectClassLoader newWith(Map<String, byte[]> newClasses) {
-        boolean found = MapUtil.containsAny(loaded, newClasses.keySet());
-        if (found) {
+    public DirectClassLoader newWith(String className, Map<String, byte[]> newClasses) {
+        classes.putAll(newClasses);
+        // boolean found = MapUtil.containsAny(loaded, newClasses.keySet());
+        Class<?> alreadyLoadedClass = findLoadedClass(className);
+        if (alreadyLoadedClass != null) {
             // A class has been redefined, so
-            classes.putAll(newClasses);
-            System.out.println("Redefining class from: " + newClasses + " in DCL " + id);
-
-            if (newClasses.size() > 2) {
-                System.out.println("too many classes");
-            }
-            for (String s : newClasses.keySet()) {
-                // Get the anon inner class lambda
-                if (!s.contains("$")) {
+            // System.out.println("Redefining class from: " + newClasses + " in DCL " + id);
+            try {
+                // String name = s.substring(0, s.lastIndexOf('$'));
+                SimpleClassLoader cl = new SimpleClassLoader(this, newClasses);
+                Class<?> c = cl.loadClass(className);
+                try {
+                    Lambda newLambda = (Lambda) getStaticField(c, "LAMBDA");
+                    Field field = alreadyLoadedClass.getDeclaredField("LAMBDA");
+                    field.setAccessible(true);
+                    field.set(null, newLambda);
+                } catch (Exception e) {
+                    // TODO: combine the run/LAMBDA thing?
                     try {
-                        // String name = s.substring(0, s.lastIndexOf('$'));
-                        String name = s;
-                        DirectClassLoader dcl = new DirectClassLoader(this, newClasses);
-                        Class<?> c = dcl.loadClass(name);
-                        try {
-                            Lambda newLambda = (Lambda) getStaticField(c, "LAMBDA");
-                            Field field = loaded.get(name).getDeclaredField("LAMBDA");
-                            field.setAccessible(true);
-                            field.set(null, newLambda);
-                        } catch (Exception e) {
-                            Lambda newLambda = (Lambda) getStaticField(c, "run");
-                            Field field = loaded.get(name).getDeclaredField("run");
-                            field.setAccessible(true);
-                            field.set(null, newLambda);
-                        }
-                    } catch (Exception e) {
-                        rethrow(e);
-                        return null; // unreachable code
+                        Lambda newLambda = (Lambda) getStaticField(c, "run");
+                        Field field = alreadyLoadedClass.getDeclaredField("run");
+                        field.setAccessible(true);
+                        field.set(null, newLambda);
+                    } catch (Exception e2) {
+                        e.printStackTrace();
                     }
                 }
+            } catch (Exception e) {
+                rethrow(e);
+                return null; // unreachable code
             }
-            return this;
-
             // return copy(newClasses, true);
         } else {
             // putAll call must be after query and before copy
-            classes.putAll(newClasses);
+            // TODO: Need to do this for other cases?
             addToFiles(newClasses);
-            return this;
         }
+        return this;
     }
 
     public void saveImage(Output out) {
@@ -200,13 +197,10 @@ class DirectClassLoader extends ClassLoader implements JavaFileObjectSource {
         return ret;
     }
 
-    public DirectClassLoader registerAll(Map<String, byte[]> toReg) {
-        DirectClassLoader dcl = newWith(toReg);
-        dcl.callContext("loadPrimitives", null, null);
+    public DirectClassLoader register(String fqn, Map<String, byte[]> toReg) {
+        DirectClassLoader dcl = newWith(fqn, toReg);
+        dcl.runClass(fqn);
         // callContext("registerAll", new Class[] { Map.class }, new Object[] { toReg });
-        for (String fqn : toReg.keySet()) {
-            dcl.runClass(fqn);
-        }
         return dcl;
     }
 
@@ -308,10 +302,20 @@ class DirectClassLoader extends ClassLoader implements JavaFileObjectSource {
 
     @Override
     protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
+        if ("shen.gen.Cd".equals(name)) {
+            System.out.println("Attempting to load cd in: " + this.id + "  :" + this.toString());
+        }
+        Class<?> findLoadedClass = findLoadedClass(name);
+        if (findLoadedClass != null) {
+            if ("shen.gen.Cd".equals(name)) {
+                System.out.println("cd was already loaded: " + this.id + "  :" + this.toString());
+            }
+            return findLoadedClass;
+        }
         if (name.indexOf('$') != -1 && name.endsWith("ConstructorAccess")) {
             throw new ClassNotFoundException("ConstructorAccess thing is not supported.");
         }
-        if (loaded == null) {
+        if (classes == null) {
             System.out.println("DCL id " + id + " used after closed");
         }
         Class<?> found = this.loaded.get(name);
@@ -336,7 +340,11 @@ class DirectClassLoader extends ClassLoader implements JavaFileObjectSource {
 
             if (cls != null) {
                 // System.out.println("Loading directly by "+id+": " + name);
-                found = defineClass(name, cls, 0, cls.length);
+                try {
+                    found = defineClass(name, cls, 0, cls.length);
+                } catch (Error re) {
+                    throw re;
+                }
                 loaded.put(name, found);
             } else {
                 // System.out.println("Parent is loading it");
@@ -346,7 +354,7 @@ class DirectClassLoader extends ClassLoader implements JavaFileObjectSource {
         return found;
     }
 
-    private Object callContext(String methodName, Class<?>[] params, Object[] args) {
+    Object callContext(String methodName, Class<?>[] params, Object[] args) {
         try {
             Class<?> cls = loadClass(Context.class.getName());
             return invokeStatic(cls, methodName, params, args);

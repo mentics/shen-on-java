@@ -1,3 +1,50 @@
+---------------------------------------------
+
+Trying to run benchmarks:
+Caused by: java.lang.ClassCastException: com.mentics.shenj.Symbol cannot be cast to [Ljava.lang.Object;
+	at shen.gen.Limit.defined(Limit.java:24)
+	at shen.gen.Limit$1.apply(Limit.java:18)
+	at shen.gen.Atv.defined(Atv.java:21)
+	at shen.gen.Atv$1.apply(Atv.java:18)
+	at shen.gen.Vectorn.defined(Vectorn.java:34)
+	at shen.gen.Vectorn$1.apply(Vectorn.java:18)
+
+It means this doesn't work: (@v 1 <>)
+It's because I read in the *.kl files with read-file while macros were active. Need to disable macros when evaluating kl.
+
+---------------------------------------------
+
+(26-) (tc +)
+true
+
+(27-)
+
+tc + doesn't do anything, it still shows the minus. This is right after trying to bootstrap.
+
+If this happens in a subcontext it's working fine. setting the global props is doing it in the subcontext, not the top level. And the REPL is running in the top level.
+If you really want to typecheck subcontext, you should probably move it to top level.
+
+---------------------------------------------
+
+(17-) (map (eval-kl) (read-file "kl/t-star.kl"))
+com.mentics.shenj.ShenException: Could not find function: string?
+	at com.mentics.shenj.inner.Context.dispatch(Context.java:157)
+	at shen.gen.AssertTest.defined(AssertTest.java:21)
+	at shen.gen.AssertTest$1.apply(AssertTest.java:18)
+	at shen.gen.ParsedKlToJava.defined(ParsedKlToJava.java:57)
+
+primitives have not been installed into the functions field of the Context
+
+---------------------------------------------
+
+Caused by: java.lang.NullPointerException
+	at shen.gen.Intoutput.defined(Intoutput.java:26)
+	at shen.gen.Intoutput$1.apply(Intoutput.java:18)
+
+*stoutput* global is not set
+
+---------------------------------------------
+
 Shen REPL doesn't do anything for calling functions
 Switching back to 6.1 did it, but...
 declarations.kl wasn't loaded right maybe?
