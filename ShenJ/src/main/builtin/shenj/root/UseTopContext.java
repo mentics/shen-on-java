@@ -1,5 +1,6 @@
-package shen.gen;
+package shenj.root;
 
+import static com.mentics.shenj.ShenjRuntime.*;
 
 import com.mentics.shenj.Lambda;
 import com.mentics.shenj.Lambda0;
@@ -7,9 +8,8 @@ import com.mentics.shenj.ShenjRuntime;
 import com.mentics.shenj.Symbol;
 
 
-public class InstallPrimitives {
-
-    public static final Symbol SYMBOL = ShenjRuntime.symbol("install-primitives");
+public class UseTopContext {
+    public static final Symbol SYMBOL = ShenjRuntime.symbol("use-top-context");
 
     public static Lambda LAMBDA = new Lambda0() {
         public Object apply() throws Exception {
@@ -19,7 +19,7 @@ public class InstallPrimitives {
 
 
     public static Object defined() throws Exception {
-        ShenjRuntime.getCurrentContext().loadPrimitives();
+        setCurrentContext(topLevel);
         return true;
     }
 }

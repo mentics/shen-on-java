@@ -39,7 +39,8 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
 	      (make-string "errorToString(~A)" (second Exception'))
 		  string))
 
-  [str Arg] Type Vars -> (single-param Arg Type Vars "String.valueOf(~A)" string)
+  [str] Type Vars -> (@p "" "str" lambda)
+  [str Arg] Type Vars -> (single-param Arg Type Vars "str.apply(~A)" string)
 
   [intern Arg] Type Vars -> (single-param Arg Type Vars "symbol((String)~A)" symbol)
 
@@ -271,7 +272,7 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
   [fail] Type Vars -> (@p "" "null" object)
 
   [Func | Args] Type Vars -> (handle-java-call Func Args Type Vars)
-    where (and (symbol? Func) (string-prefix? "shenj-dot-" (str Func)))
+    where (and (symbol? Func) (is-java-call Func))
   [Func | Args] Type Vars -> (handle-call Func Args Type Vars)
 
   [] Type Vars -> (@p "" "Nil.NIL" nil)

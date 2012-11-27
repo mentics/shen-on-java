@@ -21,7 +21,7 @@ For an explication of this license see http://www.lambdassociates.org/News/june1
 
 (set shen-*tc* false)
 
-(set shen-*property-vector* (vector 20000))
+(do (set shen-*property-vector* (vector 20000)) "set prop vect")
 
 (set shen-*process-counter* 0)
 

@@ -101,7 +101,8 @@ public class Primitives {
     public static Lambda str = new Lambda1() {
         @Override
         public Object apply(final Object atom) {
-            return atom.toString();
+            String str = atom.toString();
+            return atom instanceof String ? '"' + str + '"' : str;
         }
     };
 
@@ -282,10 +283,10 @@ public class Primitives {
 
     @Label("eval-kl")
     public static Object evalKl(final Object kl) throws Exception {
-//        System.out.println("Evalkl: " + kl);
+        // System.out.println("Evalkl: " + kl);
         if (kl instanceof Cons) {
             // TODO: make more efficient. Did reflection to avoid dependency
-            return getCurrentContext().apply("shen.gen.EvalKl", kl);
+            return getCurrentContext().apply("shenj.root.EvalKl", kl);
         } else {
             return kl;
         }

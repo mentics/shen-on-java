@@ -71,6 +71,7 @@
   "=" -> "Equal"
   "!" -> "Bang"
   "~" -> "Tilde"
+  "." -> "Dot"
   X -> (if (or (digit? X) (letter? X)) X "TOxDO"))
 
 (define second
@@ -140,7 +141,7 @@
    Delimiter [String | Tail] Result -> (string-join-iterator Delimiter Tail (@s Result String Delimiter)))
 
 (define write-source
-  Path Contents -> (do (write-string-to-file Path Contents) Path))
+  Path Contents -> (do (make-directories Path) (write-string-to-file Path Contents) Path))
 
 (define run-without-macros
   F -> (do (set *save-macros* (value *macros*))

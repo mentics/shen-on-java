@@ -1,4 +1,4 @@
-(set *src-dir* "C:/dev/git-local/shenj/ShenJ/java/platform/shen/gen/")
+(set *src-dir* "C:/dev/git-local/shenj/ShenJ/java/platform/")
 
 (define kl-to-java-string
   String -> (parsed-kl-to-java (parse-single-kl String)))
@@ -11,14 +11,17 @@
                                 (map (/. Parsed (output (make-string "~A~%" (java-eval Parsed))))
                                      (read-file File)))))
 
+(define string-replace
+  From To String -> (list->string (map (/. Value (if (= From Value) To Value)) (explode String))))
+
 (define java-eval
   Parsed ->
     (let Result (parsed-kl-to-java Parsed)
       (let Unit (to-java-unit (fst Result) (second Result))
-        (let Class-name (fst Unit) Class-unit-content (second Unit)
-          (let File
-            (write-source (@s (value *src-dir*) Class-name ".java") Class-unit-content)
-            (java-compile-and-run Class-name File))))))
+        (let Classname (fst Unit)
+             Class-unit-content (second Unit)
+             File (write-source (@s (value *src-dir*) (string-replace "." "/" Classname) ".java") Class-unit-content)
+          (java-compile-and-run Classname File)))))
 
 (define parsed-kl-to-java
   Parsed ->
@@ -34,16 +37,20 @@
 
 (define to-java-unit { string -> string -> (@p string string) \* class-name, contents *\ }
   Function-content Result-expression ->
-    (let Class-name (if (= Result-expression "") "ToEval" (name->class-name Result-expression))
-      (@p Class-name (java-class-file Class-name "shen.gen" Function-content))))
+    (let Info (if (= Result-expression "")
+                  (@p "shenj.generated" "ToEval" "run")
+                  \* We shouldn't need to convert to symbol here, I think *\
+                  (shenj.platform/call-info-symbol->java-call-info (intern Result-expression)))
+         Classsimplename (second Info)
+         Packagename (fst Info)
+      (@p (@s Packagename "." Classsimplename) (java-class-file Classsimplename Packagename Function-content))))
 
-(define java-compile-and-run Class-name File ->
+(define java-compile-and-run Classname File ->
   (shell (@s "C:\dev\java\jdk1.7.0_06\bin\java -Xss32m -cp C:/dev/java/libraries/kryo-2.20/bin;C:\dev\java\libraries\kryo-2.20\jars\debug\onejar\kryo-debug-2.20-all.jar;C:\dev\git-local\shenj\ShenJ\target\classes "
-             "com.mentics.shenj.UpdateImage C:\dev\git-local\shenj\ShenJ\shen-test.image " "shen.gen." Class-name " " File " C:\dev\git-local\shenj\ShenJ\target\classes")))
-
+             "com.mentics.shenj.UpdateImage C:\dev\git-local\shenj\ShenJ\shen-test.image " Classname " " File " C:\dev\git-local\shenj\ShenJ\target\classes")))
 
 (define java-class-file { string -> string -> string -> string }
-  Name Package Contents ->
+  Classsimplename Package Contents ->
     (make-string "~A~%
 import static com.mentics.shenj.Lang.*;
 import static com.mentics.shenj.ShenjRuntime.*;
@@ -53,10 +60,12 @@ import static com.mentics.shenj.inner.Primitives.*;
 import com.mentics.shenj.*;
 import com.mentics.shenj.inner.*;
 
+import shenj.root.*;
+
 public class ~A {
 ~A
 }"
-      (if (= Package "") "" (make-string "package ~A;~%~%" Package)) Name Contents))
+      (if (= Package "") "" (make-string "package ~A;~%~%" Package)) Classsimplename Contents))
 
 
 (define parse-kl

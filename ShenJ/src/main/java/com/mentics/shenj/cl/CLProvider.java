@@ -63,9 +63,8 @@ public class CLProvider implements JavaFileObjectSource {
 
     public Object eval(String className, String classContent) {
         try {
-            // TODO: fix this when work with packages
-            if (!className.startsWith("shen.gen.")) {
-                className = "shen.gen." + className;
+            if (!className.contains(".")) {
+                throw new ShenException("No package for class: " + className);
             }
             compileTask((String) dcl.getGlobalProps().get(SRC_DIR_SYM), (String) className, (String) classContent);
             return dcl.runClass((String) className);
@@ -103,10 +102,12 @@ public class CLProvider implements JavaFileObjectSource {
     public Map<String, byte[]> compileTask(String srcDir, final String className, final String classContent)
             throws CharSequenceCompilerException {
         if (srcDir != null) {
-            StringUtil.writeToFile(classContent, new File(srcDir, StringUtil.lastToken(".", className) + ".java"));
+            StringUtil.writeToFile(classContent, new File(srcDir, className.replace('.', '/') + ".java"));
         }
 
         CharSequenceCompiler compiler = new CharSequenceCompiler(this, asList("-g"));
+
+//        System.out.println("Compiling classname: " + className);
 
         DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
         Map<String, byte[]> newClasses = compiler.compileToBytes(Lang.mapOf(className, (CharSequence) classContent),
@@ -120,9 +121,11 @@ public class CLProvider implements JavaFileObjectSource {
                     // System.out.println("Found error: " + d.getCode()); // compiler.err.cant.resolve.location
                     String msg = d.getMessage(null);
 
-                    String missingClassFQN = tryPackage1(msg);
+                    String pkg = StringUtil.removeLastToken(".", className);
+
+                    String missingClassFQN = tryPackage1(pkg, msg);
                     if (missingClassFQN == null) {
-                        missingClassFQN = tryPackage2(msg);
+                        missingClassFQN = tryPackage2(pkg, msg);
                     }
 
                     if (missingClassFQN == null && msg.contains("cannot find symbol")
@@ -163,7 +166,7 @@ public class CLProvider implements JavaFileObjectSource {
         } else if (errors.size() > 0) {
             throw new ShenException(errors.toString());
         }
-        return null;
+        return newClasses;
     }
 
     @Override
@@ -178,23 +181,23 @@ public class CLProvider implements JavaFileObjectSource {
      * symbol: class LAMBDA
      * location: package Map
      */
-    private String tryPackage2(String msg) {
+    private String tryPackage2(String pkg, String msg) {
         String ret = null;
         Pattern packageErrorPattern = Pattern.compile("location\\: package\\s(.+?)$");
         Matcher packageErrorMatcher = packageErrorPattern.matcher(msg);
         if (packageErrorMatcher.find()) {
-            ret = "shen.gen." + packageErrorMatcher.group(1);
+            ret = pkg + "." + packageErrorMatcher.group(1);
             // System.out.println("found package 2: " + ret + " in message: " + msg);
         }
         return ret;
     }
 
-    private String tryPackage1(String msg) {
+    private String tryPackage1(String pkg, String msg) {
         String ret = null;
         Pattern packageErrorPattern = Pattern.compile("package\\s(.+?)\\sdoes not exist");
         Matcher packageErrorMatcher = packageErrorPattern.matcher(msg);
         if (packageErrorMatcher.find()) {
-            ret = "shen.gen." + packageErrorMatcher.group(1);
+            ret = packageErrorMatcher.group(1);
         }
         return ret;
     }

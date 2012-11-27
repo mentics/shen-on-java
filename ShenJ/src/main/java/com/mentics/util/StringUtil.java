@@ -68,6 +68,7 @@ public class StringUtil {
     public static void writeToFile(String content, File file) {
         Writer out = null;
         try {
+            file.getParentFile().mkdirs();
             out = new FileWriter(file);
             out.write(content);
         } catch (IOException e) {

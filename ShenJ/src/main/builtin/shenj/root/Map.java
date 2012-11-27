@@ -1,4 +1,4 @@
-package shen.gen;
+package shenj.root;
 
 import com.mentics.shenj.Cons;
 import com.mentics.shenj.Lambda;

@@ -1,3 +1,4 @@
+
 \* Sub context basic test *\
 
 (set-context (new-sub-context))
@@ -1366,3 +1367,16 @@ Case)))))
 ")
 
 (kl-to-java "(lambda () 2)")
+
+
+\* This hung once from shen-clisp *\
+(let Res (kl-to-java-string
+(kl-to-java
+						"(defun eval (V651)
+						 (let Macroexpand (shen-walk (lambda V652 (macroexpand V652)) V651)
+						  (if (shen-packaged? Macroexpand)
+						   (map (lambda V653 (shen-eval-without-macros V653))
+						    (shen-package-contents Macroexpand))
+						   (shen-eval-without-macros Macroexpand))))")
+  (to-java-unit (fst Res) (second Res)))
+

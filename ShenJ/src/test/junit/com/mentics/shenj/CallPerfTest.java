@@ -3,7 +3,7 @@ package com.mentics.shenj;
 import org.junit.Before;
 import org.junit.Test;
 
-import shen.gen.ShenjTest;
+import shenj.root.ShenjTest;
 
 
 public class CallPerfTest {

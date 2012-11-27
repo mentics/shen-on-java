@@ -1,0 +1,18 @@
+Fix handle-java-call to call parse java call
+
+Optimization: Instead of ToEval stuff, use anon classloader
+
+[do | Args] -> Args @p first evaled then second of last arg for expression
+
+
+I think the error matching won't work when it supports class name from .../module/func
+
+For partial application, don't create a new lambda, use the one that already exists that the function field is assigned to
+so... shenj.root.Str.LAMBDA kind of thing or Primitives.str kind of thing
+
+store original shen code and java code for each function in globalprops to allow access to them at runtime?
+
+
+--------  Done  ----------------
+
+fix str so it matches spec as clarified

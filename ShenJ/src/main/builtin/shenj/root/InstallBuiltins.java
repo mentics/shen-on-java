@@ -1,4 +1,4 @@
-package shen.gen;
+package shenj.root;
 
 
 import static com.mentics.shenj.ShenjRuntime.*;
@@ -38,13 +38,13 @@ public class InstallBuiltins {
             }
         }
         return i;
-//        if (!Lang.equals(2, compileContext.apply("shen.gen.EvalKl", 2))) {
+//        if (!Lang.equals(2, compileContext.apply("shenj.root.EvalKl", 2))) {
 //            throw new ShenException("Could not find evalkl class after installing builtins.");
 //        }
-//        if (null == compileContext.apply("shen.gen.NewEmptyContext")) {
+//        if (null == compileContext.apply("shenj.root.NewEmptyContext")) {
 //            throw new ShenException("Could not find newemptycontext class after installing builtins.");
 //        }
-//        // compileContext.runClass("shen.gen.StringLength");
+//        // compileContext.runClass("shenj.root.StringLength");
 //        try {
 //            compileContext.apply("class.doesnt.Exist");
 //            throw new ShenException("Exception expected for non-existent class.");

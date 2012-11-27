@@ -45,7 +45,7 @@ public class Context {
         props.put(ShenjRuntime.symbol("*language*"), "Java");
         props.put(ShenjRuntime.symbol("*implementation*"), "ShenJ");
         props.put(ShenjRuntime.symbol("*release*"), System.getProperty("java.version"));
-        props.put(ShenjRuntime.symbol("*port*"), "0.3-SNAPSHOT");
+        props.put(ShenjRuntime.symbol("*port*"), "0.4-SNAPSHOT");
         props.put(ShenjRuntime.symbol("*porters*"), "Joel Shellman");
         if (globalProperties.get(ShenjRuntime.SRC_DIR_SYM) == null) {
             globalProperties.put(ShenjRuntime.SRC_DIR_SYM, "java/generated/");
@@ -71,6 +71,7 @@ public class Context {
         }
         if (symbol != null) {
             Symbol sym = (Symbol) symbol.get(null);
+//            System.out.println("Registering: "+sym+" in "+System.identityHashCode(functions));
             functions.put(sym, (Lambda) lambda.get(null));
             return sym;
         }

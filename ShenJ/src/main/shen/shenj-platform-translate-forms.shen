@@ -1,23 +1,24 @@
 \* I did performance tests on JDK 1.7 and Name.LAMBDA.apply was within 0.35% as fast as Name.function
    and since it simplifies things, we'll go with Name.LAMBDA.apply *\
-(define handle-defun Name Params Body Type Vars ->
+(define handle-defun Symbol Params Body Type Vars ->
     (let Arity (length Params)
          Signature (method-sig (map (function to-var) Params))
          Argstring (method-argstring (map (function to-var) Params))
-      (do (put Name arity (length Params))
+      (do (put Symbol arity (length Params))
           (@p (let Result (kl-to-java-traverse Body object (map (function to-var-pair) Params))
                    (make-string "
 public static final Symbol SYMBOL = symbol(c#34;~Ac#34;);
-public static Lambda LAMBDA = new Lambda~A() {
+public static Lambda ~A = new Lambda~A() {
 public Object apply(~A) throws Exception {
-return defined(~A);
-}};
-public static Object defined(~A) throws Exception {~%~A~%~A~%}"
-                      Name (length Params) Signature Argstring
+~A
+~A
+}};"
+                      Symbol
+                      (third (shenj.platform/call-info-symbol->java-call-info Symbol)) (length Params)
                       Signature
                       (fst Result)
                       (handle-unreachable-return Result)))
-              (str Name)
+              (str Symbol)
               func))))
 
 (define handle-let Var Value Body Type Vars ->
@@ -90,14 +91,11 @@ public static Object defined(~A) throws Exception {~%~A~%~A~%}"
              Func-string (second Func')
              Unreachable? (list-matches (/. X (= unreachable (third X))) EvaledArgs)
           (let Eval (cond (Unreachable? "")
-                          ((and (symbol? Func) (is-java-call (str Func)))
-                            (make-string "final Object ~A = javaDispatch(c#34;~Ac#34;).apply(~A);~%"
-                                         Result (str Func) Args-string))
                           ((find-first? Func Vars)
                             (make-string "final Object ~A = dispatch(~A).apply(~A);~%"
                                          Result Func-string Args-string))
-                          (Direct? (make-string "final Object ~A = ~A.LAMBDA.apply(~A);~%"
-                                                Result (name->class-name (str Func)) Args-string))
+                          (Direct? (make-string "final Object ~A = ~A.apply(~A);~%"
+                                                Result (shenj.platform/call-info-symbol->java-call-string Func) Args-string))
                           ((= lambda (third Func'))
                             (make-string "final Object ~A = ((Lambda)~A).apply(~A);~%"
                                          Result Func-string Args-string))

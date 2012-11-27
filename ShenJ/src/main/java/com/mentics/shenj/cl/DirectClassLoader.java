@@ -3,6 +3,7 @@ package com.mentics.shenj.cl;
 import static com.mentics.shenj.ShenException.*;
 import static com.mentics.util.KryoUtil.*;
 import static com.mentics.util.ReflectionUtil.*;
+import static com.mentics.util.StringUtil.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -10,6 +11,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +37,7 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
 
 
     static DirectClassLoader loadDefaultImage(ClassLoader parent) {
-        try (Input in = new Input(ReflectionUtil.openResource("com/mentics/shenj/image/shenj-base.image"))) {
+        try (Input in = new Input(ReflectionUtil.openResource("com/mentics/shenj/image/default.image"))) {
             return loadFromImage(parent, in);
         } catch (Exception e) {
             rethrow(e);
@@ -69,7 +71,7 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
 
     private Map<String, byte[]> classes;
     private Map<String, Class<?>> loaded;
-    private List<JavaFileObject> files;
+    private Map<String, List<JavaFileObject>> files;
     private boolean running = false;
     private boolean obselete = false;
 
@@ -84,26 +86,33 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
         this.loaded = new HashMap<>();
         this.classes = classes;
 
-        files = new ArrayList<>(classes.size());
+        files = new HashMap<>();
         addToFiles(classes);
     }
 
 
     // Public Methods //
 
+    @SuppressWarnings("unchecked")
     @Override
-    public Collection<JavaFileObject> files(String packageName) {
-        // TODO: only for packageName
+    public Collection<JavaFileObject> files(String pkg) {
+        List<JavaFileObject> f1 = files.get(pkg);
         if (getParent() instanceof DirectClassLoader) {
             List<JavaFileObject> result = new ArrayList<>();
-            result.addAll(((DirectClassLoader) getParent()).files(packageName));
-            result.addAll(files);
+            if (f1 != null) {
+                result.addAll(f1);
+            }
+            Collection<JavaFileObject> f2 = ((DirectClassLoader) getParent()).files(pkg);
+            if (f2 != null) {
+                result.addAll(f2);
+            }
             return result;
         }
-        return files;
+        return f1 != null ? f1 : Collections.EMPTY_LIST;
     }
 
     public DirectClassLoader newWith(String className, Map<String, byte[]> newClasses) {
+        // System.out.println("Adding classes to dcl: " + newClasses);
         classes.putAll(newClasses);
         // boolean found = MapUtil.containsAny(loaded, newClasses.keySet());
         Class<?> alreadyLoadedClass = findLoadedClass(className);
@@ -135,11 +144,8 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
                 return null; // unreachable code
             }
             // return copy(newClasses, true);
-        } else {
-            // putAll call must be after query and before copy
-            // TODO: Need to do this for other cases?
-            addToFiles(newClasses);
         }
+        addToFiles(newClasses);
         return this;
     }
 
@@ -302,14 +308,8 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
 
     @Override
     protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
-        if ("shen.gen.Cd".equals(name)) {
-            System.out.println("Attempting to load cd in: " + this.id + "  :" + this.toString());
-        }
         Class<?> findLoadedClass = findLoadedClass(name);
         if (findLoadedClass != null) {
-            if ("shen.gen.Cd".equals(name)) {
-                System.out.println("cd was already loaded: " + this.id + "  :" + this.toString());
-            }
             return findLoadedClass;
         }
         if (name.indexOf('$') != -1 && name.endsWith("ConstructorAccess")) {
@@ -366,7 +366,14 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
 
     private void addToFiles(Map<String, byte[]> classes) {
         for (Entry<String, byte[]> entry : classes.entrySet()) {
-            files.add(new JavaFileObjectImpl(entry.getKey(), JavaFileObject.Kind.CLASS, entry.getValue()));
+            String className = entry.getKey();
+            String pkg = removeLastToken(".", className);
+            List<JavaFileObject> list = files.get(pkg);
+            if (list == null) {
+                list = new ArrayList<JavaFileObject>();
+                files.put(pkg, list);
+            }
+            list.add(new JavaFileObjectImpl(className, JavaFileObject.Kind.CLASS, entry.getValue()));
         }
     }
 }

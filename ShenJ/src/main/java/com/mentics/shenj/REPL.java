@@ -10,12 +10,11 @@ public class REPL {
             if (f.exists()) {
                 ShenjRuntime.loadImage(new File(args[0]));
             } else {
-//                ShenjRuntime.newEmpty();
-                System.out.println("need image");
+                ShenjRuntime.loadDefaultImage();
             }
         } else {
             ShenjRuntime.loadDefaultImage();
         }
-        ShenjRuntime.topLevel.apply("shen.gen.ShenShen");
+        ShenjRuntime.topLevel.apply("shenj.root.ShenShen");
     }
 }
