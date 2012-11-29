@@ -25,7 +25,8 @@ The contents of this repository that are not explicitly under the Shen license a
    limitations under the License.
 
 However, if you take this code and create a competing commercial version (aka. a for-pay shen on java product based on this code), I will stand up, sit down, fidget, frown in your general direction, and contact you asking why you would do such a horrible thing--so please don't.
-Use of any of this code in non-competing commercial situations are fine (subject to apache license mentioned above), especially if you send me a thank you email and hire my company (we provide support, development, etc. email info@mentics.com). 
+Use of any of this code in non-competing commercial situations are fine (subject to apache license mentioned above), especially if you send me a thank you email and hire my company (we provide support, development, etc. email info@mentics.com).
+Also, it would be greatly appreciated and grant you positive karma if you would attribute http://www.mentics.com/ in any redistribution in source or binary form. 
 
 The Java source and bytecode that is generated from compiling your Shen code is considered to be your code.
 
