@@ -1,0 +1,45 @@
+All files except those in the kl directory with file extension .kl are Copyright (c) 2012 All Rights Reserved, Joel Shellman <joel@mentics.com>
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+If it rots your star fruit or causes you to lose your girlfriend, it's not our fault.
+
+The contents of this repository that are not explicitly under the Shen license are released under the Apache License:
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+However, if you take this code and create a competing commercial version (aka. a for-pay shen on java product based on this code), I will stand up, sit down, fidget, frown in your general direction, and contact you asking why you would do such a horrible thing--so please don't.
+Use of any of this code in non-competing commercial situations are fine (subject to apache license mentioned above), especially if you send me a thank you email and hire my company (we provide support, development, etc. email info@mentics.com). 
+
+The Java source and bytecode that is generated from compiling your Shen code is considered to be your code.
+
+
+Also, some of the contents of this repository are also explicitly and some contents may be implicitly under the following Shen license which can be reviewed at http://www.shenlanguage.org/license.html
+
+The Shen License
+
+The user is free to produce commercial applications with the software, to distribute these applications in source or binary form, and to charge monies for them as he sees fit and in concordance with the laws of the land subject to the following license.
+
+The license applies to all the software and all derived software and must appear on such.
+It is illegal to distribute the software without this license attached to it and use of the software implies agreement with the license as such. It is illegal for anyone who is not the copyright holder to tamper with or change the license.
+Neither the names of the copyright holder or of any of the web sites administered by him may be used to endorse or promote products built using the software without specific prior written permission from the copyright holder.
+That possession of this license does not confer on the copyright holder any special contractual obligation towards the user. That in no event shall the copyright holder be liable for any direct, indirect, incidental, special, exemplary or consequential damages (including but not limited to procurement of substitute goods or services, loss of use, data, or profits; or business interruption), however caused and on any theory of liability, whether in contract, strict liability or tort (including negligence) arising in any way out of the use of the software, even if advised of the possibility of such damage.
+It is permitted for the user to change the software, for the purpose of improving performance, correcting an error, or porting to a new platform, and distribute the modified version of Shen (hereafter the modified version) provided the resulting program conforms in all respects to the Shen standard and is issued under that title. The user must make it clear with his distribution that he/she is the author of the changes and what these changes are and why.
+Derived versions of this software in whatever form are subject to the same restrictions. In particular it is not permitted to make derived copies of this software which do not conform to the Shen standard or appear under a different title.
+It is permitted to distribute versions of Shen which incorporate libraries, graphics or other facilities which are not part of the Shen standard.

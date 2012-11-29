@@ -1,0 +1,3 @@
+All files except those in the kl directory with file extension .kl are Copyright (c) 2012 All Rights Reserved, Joel Shellman
+
+See the LICENSE.txt file for allowed use of this software. 
