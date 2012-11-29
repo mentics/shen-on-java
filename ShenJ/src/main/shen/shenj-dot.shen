@@ -22,9 +22,11 @@
                     (true ())
                     )))
 
+\*
 (assert-equals (@p constructor "Font") (parse-java-call-symbol shenj.dot/Font.))
 (assert-equals (@p instance-method "setFont") (parse-java-call-symbol shenj.dot/.setFont))
 (assert-equals (@p instance-field "first") (parse-java-call-symbol shenj.dot/.first$))
 (assert-equals (@p class "Font.class") (parse-java-call-symbol shenj.dot/Font.class))
 (assert-equals (@p static-field "Font.BOLD") (parse-java-call-symbol shenj.dot/Font.BOLD$))
 (assert-equals (@p static-method "Math.round") (parse-java-call-symbol shenj.dot/Math.round))
+*\

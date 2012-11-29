@@ -20,6 +20,7 @@ import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.mentics.shenj.Label;
 import com.mentics.shenj.Lambda;
+import com.mentics.shenj.Nil;
 import com.mentics.shenj.ShenException;
 import com.mentics.shenj.ShenjRuntime;
 import com.mentics.shenj.Symbol;
@@ -45,11 +46,11 @@ public class Context {
         props.put(ShenjRuntime.symbol("*language*"), "Java");
         props.put(ShenjRuntime.symbol("*implementation*"), "ShenJ");
         props.put(ShenjRuntime.symbol("*release*"), System.getProperty("java.version"));
-        props.put(ShenjRuntime.symbol("*port*"), "0.4-SNAPSHOT");
+        props.put(ShenjRuntime.symbol("*port*"), "0.5");
         props.put(ShenjRuntime.symbol("*porters*"), "Joel Shellman");
-        if (globalProperties.get(ShenjRuntime.SRC_DIR_SYM) == null) {
-            globalProperties.put(ShenjRuntime.SRC_DIR_SYM, "java/generated/");
-        }
+        // if (globalProperties.get(ShenjRuntime.SRC_DIR_SYM) == null) {
+        // globalProperties.put(ShenjRuntime.SRC_DIR_SYM, "java/generated/");
+        // }
     }
 
     public static void clearGlobalConstants(Map<Symbol, Object> props) {
@@ -71,7 +72,7 @@ public class Context {
         }
         if (symbol != null) {
             Symbol sym = (Symbol) symbol.get(null);
-//            System.out.println("Registering: "+sym+" in "+System.identityHashCode(functions));
+            // System.out.println("Registering: "+sym+" in "+System.identityHashCode(functions));
             functions.put(sym, (Lambda) lambda.get(null));
             return sym;
         }
@@ -85,6 +86,8 @@ public class Context {
         globalProperties = (Map<Symbol, Object>) kryo.readClassAndObject(input);
         functions = (Map<Symbol, Lambda>) kryo.readClassAndObject(input);
         installGlobalConstants(globalProperties);
+        globalProperties.put(symbol("shen-*history*"), Nil.NIL);
+//        globalProperties.put(symbol("*home-directory*"), Nil.NIL);
         // kryo.setClassLoader(DirectClassLoader.class.getClassLoader());
         // if (Context.class.getClassLoader() == DirectClassLoader.class.getClassLoader()) {
         // throw new Error("Context and DCL same classloader");
@@ -99,14 +102,6 @@ public class Context {
         // System.out.println("saved globalProperties and functions to image");
         installGlobalConstants(globalProperties);
         // kryo.setClassLoader(DirectClassLoader.class.getClassLoader());
-    }
-
-    public static Lambda symbolDispatch(Symbol symbol) {
-        Lambda ret = functions.get(symbol);
-        if (ret != null) {
-            throw new ShenException("Could not find function for symbol: " + symbol);
-        }
-        return ret;
     }
 
     public static Object runClass(String className) {
@@ -147,6 +142,13 @@ public class Context {
         return m.invoke(l, args);
     }
 
+    public static Lambda symbolDispatch(Symbol symbol) {
+        Lambda ret = functions.get(symbol);
+        if (ret != null) {
+            throw new ShenException("Could not find function for symbol: " + symbol);
+        }
+        return ret;
+    }
 
     public static Lambda dispatch(Object obj) {
         Lambda ret;

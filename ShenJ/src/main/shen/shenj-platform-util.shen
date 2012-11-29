@@ -200,7 +200,7 @@
 (define find-first?
   Search [] -> false
   Search [(@p Head _) | Rest] -> (if (= Search Head) true (find-first? Search Rest))
-  X Y -> (simple-error (make-string "find-first: X: ~A~%Y: ~A" X Y)))
+  X Y -> (simple-error (make-string "find-first: X: ~A   Y: ~A" X Y)))
 
 (define get-second
   Search [] -> (simple-error (make-string "Element not found in get-second for ~A" Search))
@@ -219,6 +219,12 @@
 
 (define escape-java-string
   String -> (list->string (map (function escape-java-ustring) (explode String))))
+
+(define newline-if-not-empty
+  "" -> ""
+  String -> (cn String (n->string 10)))
+(assert-equals "" (newline-if-not-empty ""))
+(assert-equals (make-string "~A~%" blue) (newline-if-not-empty (str blue)))
 
 (define escape-java-ustring
   "c#34;" -> "c#92;c#34;"

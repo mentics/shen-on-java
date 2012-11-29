@@ -25,7 +25,7 @@ public Object apply(~A) throws Exception {
     (let Var' (to-var (gensym Var))
       (let PValue (kl-to-java-traverse Value object Vars)
            PBody (kl-to-java-traverse Body Type (cons (@p Var Var') Vars))
-        (@p (make-string "~A~%final Object ~A = ~A;~%~A~%" (fst PValue) Var' (second PValue) (fst PBody))
+        (@p (make-string "~A~%final Object ~A = ~A;~%~A" (fst PValue) Var' (second PValue) (newline-if-not-empty (fst PBody)))
             (second PBody)
             (third PBody)))))
 
@@ -109,12 +109,40 @@ public Object apply(~A) throws Exception {
 		        (if Unreachable? unreachable Type)))))))
 
 (define handle-java-call
-  [shenj-dot-new Class | Args] Type Vars ->
+  Call Args Type Vars ->
     (let Result (gensym c)
          EvaledArgs (map ((flip3 kl-to-java-traverse) Vars object) Args)
-      (let Args-prep-string (string-join "" (map (function fst) EvaledArgs))
-           Args-string (string-join ", " (map (function second) EvaledArgs))
-      (@p (make-string "~A~%Object ~A = new ~A(~A);~%" Args-prep-string Result Class Args-string)
-	      (str Result)
-		  object)))
-  Func _ _ -> (error "Unknown java call: ~A" Func))
+         CallInfo (parse-java-call-symbol Call)
+         Args-prep-string (newline-if-not-empty (string-join "" (map (function fst) EvaledArgs)))
+      (handle-java CallInfo Result Args-prep-string EvaledArgs)))
+
+(define handle-java
+  (@p constructor Callpart) Result Args-prep-string EvaledArgs ->
+    (let Args-string (shenj.platform/constructor-arg-string Callpart (map (function second) EvaledArgs))
+      (@p (make-string "~A~A ~A = new ~A(~A);~%" Args-prep-string Callpart Result Callpart Args-string)
+	        (str Result)
+		      object))
+  (@p instance-field Callpart) Result Args-prep-string EvaledArgs ->
+      (@p Args-prep-string
+          (make-string "~A.~A" (second (hd EvaledArgs)) Callpart)
+          object)
+  (@p static-field Callpart) Result Args-prep-string EvaledArgs ->
+      (@p "" Callpart object)
+  (@p instance-method Callpart) Result Args-prep-string EvaledArgs ->
+    (let ArgInfo (shenj.platform/instance-method-arg-info Callpart (map (function second) (tl EvaledArgs)))
+         Args-string (second ArgInfo)
+         Void? (= "void" (fst ArgInfo))
+         Assignment (if Void? "" (make-string "Object ~A =" Result))
+      (@p (make-string "~A~A~A.~A(~A);~%" Args-prep-string Assignment (second (hd EvaledArgs)) Callpart Args-string)
+          (if Void? "null" (str Result))
+          (if Void? void object)))
+  (@p static-method Callpart) Result Args-prep-string EvaledArgs ->
+    (let ArgInfo (shenj.platform/static-method-arg-info Callpart (map (function second) EvaledArgs))
+         Args-string (second ArgInfo)
+         Void? (= void (fst ArgInfo))
+         Assignment (if Void? "" (make-string "Object ~A =" Result))
+      (@p (make-string "~A~A~A(~A);~%" Args-prep-string Assignment Callpart Args-string)
+          (if Void? "null" (str Result))
+          (if Void? void object)))
+  _ _ _ _ -> (error "Unknown java call"))
+

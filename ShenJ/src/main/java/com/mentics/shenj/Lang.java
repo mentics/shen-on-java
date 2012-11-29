@@ -15,6 +15,9 @@ import java.util.Map;
 
 
 public class Lang {
+    public static final Object[] EMPTY_OBJECT_ARRAY = new Object[0];
+
+
     public static String errorToString(Object error) {
         if (error instanceof Throwable) {
             StringWriter s = new StringWriter();

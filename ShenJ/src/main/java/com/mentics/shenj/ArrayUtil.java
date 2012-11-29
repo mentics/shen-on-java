@@ -10,4 +10,12 @@ public class ArrayUtil {
         newUrls[newUrls.length - 1] = url;
         return newUrls;
     }
+
+    public static Object[] removeFirst(int num, Object[] args) {
+        Object[] ret = new Object[args.length - num];
+        for (int i = ret.length - 1; i >= 0; i--) {
+            ret[i] = args[i + num];
+        }
+        return ret;
+    }
 }

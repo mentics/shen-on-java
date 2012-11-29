@@ -107,7 +107,7 @@ public class CLProvider implements JavaFileObjectSource {
 
         CharSequenceCompiler compiler = new CharSequenceCompiler(this, asList("-g"));
 
-//        System.out.println("Compiling classname: " + className);
+        // System.out.println("Compiling classname: " + className);
 
         DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
         Map<String, byte[]> newClasses = compiler.compileToBytes(Lang.mapOf(className, (CharSequence) classContent),
@@ -225,5 +225,14 @@ public class CLProvider implements JavaFileObjectSource {
 
     public void loadPrimitives() {
         dcl.callContext("loadPrimitives", null, null);
+    }
+
+    public Class<?> getClass(String className) {
+        try {
+            return this.dcl.loadClass(className);
+        } catch (ClassNotFoundException e) {
+            rethrow(e);
+            return null; // unreachable code
+        }
     }
 }

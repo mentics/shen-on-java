@@ -11,7 +11,7 @@ import com.esotericsoftware.kryo.io.Output;
 import com.mentics.shenj.CharSequenceCompilerException;
 
 
-public class InstallBuiltinsInImage {
+public class RemoveFunctionFromImage {
     public static void main(String[] args) throws Exception {
 //        String path = "shen-test.image";
         String path = "bootstrapped.image";

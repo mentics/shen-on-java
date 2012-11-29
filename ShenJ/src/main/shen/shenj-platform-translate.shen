@@ -276,17 +276,19 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
   [Func | Args] Type Vars -> (handle-call Func Args Type Vars)
 
   [] Type Vars -> (@p "" "Nil.NIL" nil)
+  X Type Vars -> (handle-java-call X () Type Vars)
+    where (and (symbol? X) (is-java-call X))
   X Type Vars ->
     (assert (not (cons? X)) "Invalid input to kl-to-java-traverse. List found where atom expected."
       (@p ""
-        (let Str (str X)
           (cond ((find-first? X Vars) (get-second X Vars))
-                ((symbol? X) (make-string "symbol(c#34;~Ac#34;)" Str))
-				((string? X) (@s "c#34;" (escape-java-string X) "c#34;"))
-				((integer? X) (make-string "~A" X))
-				((float? X) (make-string "~Ad" X))
-                (true Str)))
-        (type-of X))))
+                ((symbol? X) (make-string "symbol(c#34;~Ac#34;)" X))
+                ((string? X) (@s "c#34;" (escape-java-string X) "c#34;"))
+				        ((integer? X) (make-string "~A" X))
+				        ((float? X) (make-string "~Ad" X))
+                ((boolean? X) (str X))
+                (true (error "Unsupported type in kl-to-java-traverse: ~A" X)))
+          (type-of X))))
 
 
 (define single-param Arg Type Vars String Return ->

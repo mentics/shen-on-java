@@ -1,18 +1,32 @@
-Fix handle-java-call to call parse java call
+Need to support runtime dynamic java call dispatch
+
+Could support leaving off type in instance method call by generating runtime javaDispatch instead of static
+
+partial application of java calls? Could support if we use the *: thing
+
+Support defun in let so test programs can run?
 
 Optimization: Instead of ToEval stuff, use anon classloader
 
 [do | Args] -> Args @p first evaled then second of last arg for expression
 
-
-I think the error matching won't work when it supports class name from .../module/func
+I think the compiler error regex matching won't work when it supports class name from .../module/func
 
 For partial application, don't create a new lambda, use the one that already exists that the function field is assigned to
 so... shenj.root.Str.LAMBDA kind of thing or Primitives.str kind of thing
 
 store original shen code and java code for each function in globalprops to allow access to them at runtime?
 
+Can we do symbols as constants to speed them up?
+
+Fix the true finding for cond code gen
 
 --------  Done  ----------------
 
+We need to handle casting in the method signatures--we'll need to do that with reflection, so we'll have to call into java to get the argstring
+
+Argument evaluation needs to handle java static fields--so that would be in the top level of kl-to-java-traverse a new pattern match with guard
+
 fix str so it matches spec as clarified
+
+Fix handle-java-call to call parse java call

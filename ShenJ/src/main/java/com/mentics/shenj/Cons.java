@@ -1,11 +1,14 @@
 package com.mentics.shenj;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Cons {
     public static Object makeCons(Object... os) {
         // TODO: fix this casting stuff
         Object c = Nil.NIL;
-        for (int i = 0; i < os.length; i++) {
+        for (int i = os.length - 1; i >= 0; i--) {
             c = new Cons(os[i], c);
         }
         return c;
@@ -103,5 +106,20 @@ public class Cons {
             cons = new Cons(objs[i], cons);
         }
         return cons;
+    }
+
+    public int length() {
+        return tail instanceof Cons ? 1 + ((Cons) tail).length() : 1;
+    }
+
+    public Object[] toArray() throws Exception {
+        final List<Object> ret = new ArrayList<>();
+        forEach(new Lambda1() {
+            @Override
+            public Object apply(Object o) throws Exception {
+                return ret.add(o);
+            }
+        });
+        return ret.toArray(new Object[ret.size()]);
     }
 }

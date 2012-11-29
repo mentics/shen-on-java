@@ -331,8 +331,12 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
                 loaded.put(name, found);
                 // System.out.println("DCL " + id + " loading override: " + name);
             } catch (Exception e) {
-                e.printStackTrace(System.out);
-                rethrow(e);
+                if (name.startsWith("com.mentics.shenj.inner.Primitives$")) {
+                    return null;
+                } else {
+                    e.printStackTrace(System.out);
+                    rethrow(e);
+                }
             }
         } else {
             // System.out.println("DCL " + id + " loading: " + name + " num clases: " + classes.size());

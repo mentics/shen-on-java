@@ -19,6 +19,6 @@ public class Gensym {
     public static Object defined(final Object v735) throws Exception {
         String v = v735.toString() + (++gensymCounter);
 //        System.out.println("Using gensym: " + v + "  loader: " + Gensym.class.getClassLoader().toString());
-        return v;
+        return symbol(v);
     }
 }

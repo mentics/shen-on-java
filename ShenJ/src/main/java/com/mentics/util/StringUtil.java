@@ -101,4 +101,18 @@ public class StringUtil {
             return o == null ? "null" : o.toString();
         }
     }
+    
+    public static String join(String delim, Object[] arr) {
+        if (arr.length > 0) {
+            StringBuilder builder = new StringBuilder();
+            builder.append(arr[0]);
+            for (int i = 1; i < arr.length; i++) {
+                builder.append(' ');
+                builder.append(arr[i]);
+            }
+            return builder.toString();
+        } else {
+            return "";
+        }
+    }
 }

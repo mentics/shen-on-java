@@ -32,21 +32,6 @@ import com.mentics.shenj.Symbol;
  * indexes.
  */
 public class Primitives {
-    public static final String PRIMITIVES_PATH = "com/stralos/shen/Primitives";
-
-    public static final String LAMBDA_METHOD_NAME = "apply";
-    public static final String LAMBDA_PATH = "com/stralos/lang/Lambda";
-    public static final String LAMBDA_BASE_PATH = LAMBDA_PATH + "0";
-    public static final String LAMBDA_INTERFACE_PATH = LAMBDA_PATH;
-    public static final String NEW_LAMBDA_PATH_BASE = "shen/lambda/ToRun";
-
-    public static final String SYMBOL_PATH = "com/stralos/shen/model/Symbol";
-    public static final String MODEL_PATH = "com/stralos/shen/model/Model";
-
-    public static final String COMPILER_PATH = "com/stralos/shen/ShenCompiler";
-    public static final String COMPILER_METHOD_NAME = "compile";
-
-
     // Other //
 
     public static Lambda intern = new Lambda1() {
@@ -283,7 +268,7 @@ public class Primitives {
 
     @Label("eval-kl")
     public static Object evalKl(final Object kl) throws Exception {
-        // System.out.println("Evalkl: " + kl);
+//         System.out.println("Evalkl: " + kl);
         if (kl instanceof Cons) {
             // TODO: make more efficient. Did reflection to avoid dependency
             return getCurrentContext().apply("shenj.root.EvalKl", kl);
@@ -590,7 +575,7 @@ public class Primitives {
         }
     };
 
-    public static Lambda stralos_debug = new Lambda2() {
+    public static Lambda _debug = new Lambda2() {
         @Override
         public Object apply(final Object prefix, final Object x) {
             System.out.print("DEBUG: " + prefix);
