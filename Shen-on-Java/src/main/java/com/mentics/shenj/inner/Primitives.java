@@ -268,7 +268,7 @@ public class Primitives {
 
     @Label("eval-kl")
     public static Object evalKl(final Object kl) throws Exception {
-//         System.out.println("Evalkl: " + kl);
+         System.out.println("Evalkl: " + kl);
         if (kl instanceof Cons) {
             // TODO: make more efficient. Did reflection to avoid dependency
             return getCurrentContext().apply("shenj.root.EvalKl", kl);
