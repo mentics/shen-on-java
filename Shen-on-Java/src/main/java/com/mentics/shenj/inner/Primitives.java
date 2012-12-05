@@ -29,6 +29,9 @@ import com.mentics.shenj.Symbol;
  * indexes.
  */
 public class Primitives {
+    public static final Symbol SHOW_EVAL = ShenjRuntime.symbol("shenj.platform/*show-eval*");
+
+
     // Other //
 
     public static Lambda intern = new Lambda1() {
@@ -265,7 +268,7 @@ public class Primitives {
 
     @Label("eval-kl")
     public static Object evalKl(final Object kl) throws Exception {
-        Object o = getCurrentContext().getGlobalProperties().get(symbol("shenj.platform/*show-eval*"));
+        Object o = getCurrentContext().getGlobalProperties().get(SHOW_EVAL);
         if (o != null && o instanceof Boolean && (Boolean) o) {
             System.out.println("Evalkl: " + kl);
         }

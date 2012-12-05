@@ -1,5 +1,33 @@
 ---------------------------------------------
 
+Evalkl: [defun digit? [V322] [ustring-inrange? [string->n V322] 48 57]]
+Caused by: java.lang.ClassCastException: java.lang.Boolean cannot be cast to java.lang.String
+	at shenj.root.ShenExplodeString$1.apply(ShenExplodeString.java:29)
+	at shenj.root.IntmakeString$1.apply(IntmakeString.java:20)
+	at shenj.root.SingleParam$1.apply(SingleParam.java:28)
+	at com.mentics.shenj.Lambda0.apply(Lambda0.java:97)
+	at shenj.root.KlToJavaTraverse$1.apply(KlToJavaTraverse.java:5123)
+	at shenj.root.Flip4$1$1$1$1$1.apply(Flip4.java:28)
+	at shenj.root.ShenMapH$1.apply(ShenMapH.java:33)
+	at shenj.root.Map$1.apply(Map.java:20)
+	at shenj.root.HandleCall$1.apply(HandleCall.java:45)
+	at shenj.root.KlToJavaTraverse$1.apply(KlToJavaTraverse.java:5764)
+	at shenj.root.HandleDefun$1.apply(HandleDefun.java:50)
+	at shenj.root.KlToJavaTraverse$1.apply(KlToJavaTraverse.java:137)
+	at shenj.root.ParsedKlToJava$1.apply(ParsedKlToJava.java:20)
+	at com.mentics.shenj.cl.DirectClassLoader.apply(DirectClassLoader.java:217)
+	at com.mentics.shenj.cl.CLProvider.apply(CLProvider.java:88)
+	at shenj.root.EvalKl.defined(EvalKl.java:22)
+	at shenj.root.EvalKl$1.apply(EvalKl.java:16)
+	at com.mentics.shenj.cl.DirectClassLoader.apply(DirectClassLoader.java:217)
+	at com.mentics.shenj.cl.CLProvider.apply(CLProvider.java:88)
+	at com.mentics.shenj.inner.Primitives.evalKl(Primitives.java:277)
+	at shenj.root.ShenEvalWithoutMacros$1.apply(ShenEvalWithoutMacros.java:24)
+	
+
+
+---------------------------------------------
+
 Trying to run benchmarks:
 Caused by: java.lang.ClassCastException: com.mentics.shenj.Symbol cannot be cast to [Ljava.lang.Object;
 	at shen.gen.Limit.defined(Limit.java:24)

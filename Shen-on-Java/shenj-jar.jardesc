@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
 <jardesc>
-    <jar path="Shen-on-Java/dist/shen-on-java-0.5.1.jar"/>
+    <jar path="Shen-on-Java/dist/shen-on-java-0.5.3.jar"/>
     <options buildIfNeeded="true" compress="true" descriptionLocation="/Shen-on-Java/shenj-jar.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
     <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
     <selectedProjects/>
