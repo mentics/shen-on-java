@@ -373,8 +373,8 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
         (make-string "~A = ~A;~%" Var Second))))
 
 (define handle-cases
-  [true | Expression] -> Expression
-  [Case] -> (handle-case Case [simple-error "True condition not found."])
+  [[true Expression]] -> Expression
+  [Case] -> (handle-case Case [simple-error (make-string "True condition not found: ~A" Case)])
   [Case | Rest] -> (handle-case Case (handle-cases Rest)))
 
 (define handle-case
