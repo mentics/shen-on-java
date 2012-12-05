@@ -1,3 +1,10 @@
+(define shenj.platform/parse-shen X ->  (snd (shen-<st_input> (@p (to-intlist X) ()))))
+(define shenj.platform/eval-shens X -> (map (function eval) (parse-shen X)))
+(define shenj.platform/eval-shen X -> (eval (hd (parse-shen X))))
+(define shenj.platform/shen-to-java
+  X -> (let Java (parsed-kl-to-java (hd (kl-from-shen (parse-shen X))))
+    (to-java-unit (fst Java) (second Java))))
+
 (define kl-from-shen
   X -> (let X (shen-walk (function macroexpand) X)
             X (if (shen-packaged? X)
