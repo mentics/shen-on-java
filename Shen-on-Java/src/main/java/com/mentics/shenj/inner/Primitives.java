@@ -4,9 +4,6 @@ import static com.mentics.shenj.ShenjRuntime.*;
 import static java.util.Calendar.*;
 
 import java.io.Closeable;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -268,7 +265,10 @@ public class Primitives {
 
     @Label("eval-kl")
     public static Object evalKl(final Object kl) throws Exception {
-         System.out.println("Evalkl: " + kl);
+        Object o = getCurrentContext().getGlobalProperties().get(symbol("shenj.platform/*show-eval*"));
+        if (o != null && o instanceof Boolean && (Boolean) o) {
+            System.out.println("Evalkl: " + kl);
+        }
         if (kl instanceof Cons) {
             // TODO: make more efficient. Did reflection to avoid dependency
             return getCurrentContext().apply("shenj.root.EvalKl", kl);
@@ -372,26 +372,29 @@ public class Primitives {
     public static Lambda open = new Lambda3() {
         @Override
         public Object apply(final Object type, final Object location, final Object direction) {
-            if ("file".equals(type.toString())) {
-                final String dir = direction.toString();
-                if ("in".equals(dir)) {
-                    try {
-                        return new FileInputStream((String) location);
-                    } catch (final FileNotFoundException e) {
-                        throw new RuntimeException(e);
-                    }
-                } else if ("out".equals(dir)) {
-                    try {
-                        return new FileOutputStream((String) location);
-                    } catch (final FileNotFoundException e) {
-                        throw new RuntimeException(e);
-                    }
-                } else {
-                    throw new RuntimeException("Invalid stream direction passed to first parameter of open: " + dir);
-                }
-            } else {
-                throw new RuntimeException("Invalid stream type passed to first parameter of open: " + type);
-            }
+            // TODO: this might need to use reflection to load from the correct classloader--or should we load
+            // Primtiives in the DCL?
+            return Context.open(type, location, direction);
+            // if ("file".equals(type.toString())) {
+            // final String dir = direction.toString();
+            // if ("in".equals(dir)) {
+            // try {
+            // return new FileInputStream((String) location);
+            // } catch (final FileNotFoundException e) {
+            // throw new RuntimeException(e);
+            // }
+            // } else if ("out".equals(dir)) {
+            // try {
+            // return new FileOutputStream((String) location);
+            // } catch (final FileNotFoundException e) {
+            // throw new RuntimeException(e);
+            // }
+            // } else {
+            // throw new RuntimeException("Invalid stream direction passed to first parameter of open: " + dir);
+            // }
+            // } else {
+            // throw new RuntimeException("Invalid stream type passed to first parameter of open: " + type);
+            // }
         }
     };
 

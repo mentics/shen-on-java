@@ -25,7 +25,7 @@ public class ShenjRuntime {
     // public static CLProvider compileContext;
     // public static CLProvider evalContext;
 
-    public static final String GEN_SOURCE_DIRECTORY = "*gen-source-directory*";
+    public static final String GEN_SOURCE_DIRECTORY = "shenj.platform/*java-source-directory*";
     public static final Symbol SRC_DIR_SYM = symbol(GEN_SOURCE_DIRECTORY);
 
     public static int gensymCounter = 0;

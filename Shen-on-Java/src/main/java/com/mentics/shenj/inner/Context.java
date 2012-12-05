@@ -44,9 +44,9 @@ public class Context {
         props.put(ShenjRuntime.symbol("*stoutput*"), System.out);
         props.put(ShenjRuntime.symbol("*stinput*"), System.in);
         props.put(ShenjRuntime.symbol("*language*"), "Java");
-        props.put(ShenjRuntime.symbol("*implementation*"), "ShenJ");
+        props.put(ShenjRuntime.symbol("*implementation*"), "Shen on Java");
         props.put(ShenjRuntime.symbol("*release*"), System.getProperty("java.version"));
-        props.put(ShenjRuntime.symbol("*port*"), "0.5");
+        props.put(ShenjRuntime.symbol("*port*"), "0.5.3");
         props.put(ShenjRuntime.symbol("*porters*"), "Joel Shellman");
         // if (globalProperties.get(ShenjRuntime.SRC_DIR_SYM) == null) {
         // globalProperties.put(ShenjRuntime.SRC_DIR_SYM, "java/generated/");
@@ -87,7 +87,7 @@ public class Context {
         functions = (Map<Symbol, Lambda>) kryo.readClassAndObject(input);
         installGlobalConstants(globalProperties);
         globalProperties.put(symbol("shen-*history*"), Nil.NIL);
-//        globalProperties.put(symbol("*home-directory*"), Nil.NIL);
+        // globalProperties.put(symbol("*home-directory*"), Nil.NIL);
         // kryo.setClassLoader(DirectClassLoader.class.getClassLoader());
         // if (Context.class.getClassLoader() == DirectClassLoader.class.getClassLoader()) {
         // throw new Error("Context and DCL same classloader");
@@ -232,7 +232,10 @@ public class Context {
             String location = (String) loc;
             File f = new File(location);
             if (!f.isAbsolute()) {
-                f = new File((String) globalProperties.get(symbol("*home-directory*")), (String) location);
+                String parent = (String) globalProperties.get(symbol("*home-directory*"));
+                if (parent.length() != 0) {
+                    f = new File(parent, (String) location);
+                }
             }
             try {
                 if ("in".equals(dir)) {

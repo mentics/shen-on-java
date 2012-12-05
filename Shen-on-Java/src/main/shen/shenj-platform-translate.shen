@@ -160,6 +160,14 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
 				(true (make-string "(~A instanceof Number)" (second A0'))))
 		  boolean))
 
+\*
+  [- Var 1] Type Vars ->
+    (let V (get-second Var Vars)
+         V' (gensym dec)
+      (@p (make-string "final Object ~A = (Integer)~A - 1;~%" V' V) (str V') number))
+    where (find-first? Var Vars)
+ *\
+    
   [Operation | Args] Type Vars -> (arithmetic Operation Args Vars)
     where (element? Operation [+ - * /])
 

@@ -25,6 +25,7 @@ import com.mentics.shenj.CharSequenceCompilerException;
 import com.mentics.shenj.JavaFileObjectSource;
 import com.mentics.shenj.Lang;
 import com.mentics.shenj.ShenException;
+import com.mentics.shenj.Symbol;
 import com.mentics.util.StringUtil;
 
 
@@ -66,12 +67,17 @@ public class CLProvider implements JavaFileObjectSource {
             if (!className.contains(".")) {
                 throw new ShenException("No package for class: " + className);
             }
-            compileTask((String) dcl.getGlobalProps().get(SRC_DIR_SYM), (String) className, (String) classContent);
+            compileTask(getJavaSourceDir(), (String) className, (String) classContent);
             return dcl.runClass((String) className);
         } catch (Exception e) {
             rethrow(e);
             return null; // unreachable code
         }
+    }
+
+    public String getJavaSourceDir() {
+        Object o = dcl.getGlobalProps().get(SRC_DIR_SYM);
+        return o != null && o instanceof String ? (String) o : null;
     }
 
     public void saveImage(Output out) {
@@ -234,5 +240,9 @@ public class CLProvider implements JavaFileObjectSource {
             rethrow(e);
             return null; // unreachable code
         }
+    }
+
+    public Map<Symbol, Object> getGlobalProperties() {
+        return this.dcl.getGlobalProps();
     }
 }

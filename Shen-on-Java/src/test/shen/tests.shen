@@ -2,7 +2,11 @@
 
 (shenj.dot/.setVisible (shenj.dot/javax.swing.JFrame. shenj.dot/com.mentics.shenj.inner.Context.GLOBAL_PROPERTIES_NAME$:String):javax.swing.JFrame true)
 
-((intern (cn "shenj.dot/" ".setVisible")) (shenj.dot/javax.swing.JFrame. "test") true)
+((intern (cn "shenj.dot/" ".setVisible")) (shenj.dot/javax.swing.JFrame. "test":String) true)
+
+(shenj.dot/.setVisible
+  (shenj.dot/javax.swing.JFrame. "The Title":String):javax.swing.JFrame
+  true)
 
 
 \* Sub context basic test *\
