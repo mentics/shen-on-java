@@ -16,11 +16,11 @@ import com.mentics.util.StringUtil;
 public class TestExplode {
     @Before
     public void setUp() {
+        ShenjRuntime.loadDefaultImage();
     }
 
     @Test
     public void testKlToJava() throws Exception {
-        ShenjRuntime.loadImage(new File("shen-test.image"));
         // ShenjRuntime.evalContext.evalClass("shenj.root.ToEval");
         String content = StringUtil.readFully(new File("java/platform/shenj/root/ToEval.java"));
         Object result = ShenjRuntime.doEval("shenj.root.ToEval", content);
@@ -78,7 +78,6 @@ public class TestExplode {
 
     @Test
     public void testShenCredits() throws Exception {
-        ShenjRuntime.loadImage(new File("shen-test.image"));
         String code = "package shenj.root;\r\n"
                 + "\r\n"
                 + "\r\n"
@@ -130,7 +129,6 @@ public class TestExplode {
 
     @Test
     public void testShenWalk() throws Exception {
-        ShenjRuntime.loadImage(new File("shen-test.image"));
         String code = "package shenj.root;\r\n" + "\r\n" + "\r\n" + "\r\n"
                 + "import static com.mentics.shenj.Lang.*;\r\n" + "import static com.mentics.shenj.ShenjRuntime.*;\r\n"
                 + "import static com.mentics.shenj.inner.Context.*;\r\n" + "\r\n"
@@ -158,7 +156,7 @@ public class TestExplode {
 
     @Test
     public void testEval() throws Exception {
-        ShenjRuntime.loadImage(new File("shen-test.image"));
+        ShenjRuntime.loadDefaultImage();
         String code = "package shenj.root;\r\n" + 
         		"\r\n" + 
         		"\r\n" + 

@@ -21,6 +21,9 @@ Can we do symbols as constants to speed them up?
 
 Fix the true finding for cond code gen
 
+How to remove properties from an image
+How to remove functions from an image
+
 --------  Done  ----------------
 
 We need to handle casting in the method signatures--we'll need to do that with reflection, so we'll have to call into java to get the argstring

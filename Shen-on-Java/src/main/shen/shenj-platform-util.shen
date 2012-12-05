@@ -103,6 +103,7 @@
 
 (define flip F -> (/. X (/. Y (F Y X))))
 (define flip3 F -> (/. X (/. Y (/. Z (F Z Y X)))))
+(define flip4 F -> (/. W (/. X (/. Y (/. Z (F Z Y X W))))))
 
 (define assert Test Message Expression -> (if Test Expression (simple-error Message)))
 

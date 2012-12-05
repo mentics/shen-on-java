@@ -12,13 +12,9 @@ public class Gensym {
     public static final Symbol SYMBOL = symbol("gensym");
     public static Lambda LAMBDA = new Lambda1() {
         public Object apply(final Object v735) throws Exception {
-            return defined(v735);
+            String v = v735.toString() + (++gensymCounter);
+            // System.out.println("Using gensym: " + v + "  loader: " + Gensym.class.getClassLoader().toString());
+            return symbol(v);
         }
     };
-
-    public static Object defined(final Object v735) throws Exception {
-        String v = v735.toString() + (++gensymCounter);
-//        System.out.println("Using gensym: " + v + "  loader: " + Gensym.class.getClassLoader().toString());
-        return symbol(v);
-    }
 }

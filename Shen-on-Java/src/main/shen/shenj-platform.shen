@@ -1,5 +1,3 @@
-(set *src-dir* "C:/dev/git-local/shenj/ShenJ/java/platform/")
-
 (define kl-to-java-string
   String -> (parsed-kl-to-java (parse-single-kl String)))
   
@@ -22,18 +20,6 @@
              Class-unit-content (second Unit)
              File (write-source (@s (value *src-dir*) (string-replace "." "/" Classname) ".java") Class-unit-content)
           (java-compile-and-run Classname File)))))
-
-(define parsed-kl-to-java
-  Parsed ->
-      (let Result (kl-to-java-traverse Parsed object ())
-        (if (and (cons? Parsed) (= defun (hd Parsed)))
-            (assert-test Result traverse-result-type? (make-string "Expected string triple from defun, was: ~A~%" (fst Result)))
-            (let Code (assert-test (fst Result) string? (make-string "Expected string result body, but Result was: ~A~%" "TODO"))
-                 Expression (assert-test (second Result) string? "Expected string result expression.")
-              (@p (make-string "  public static Object run = new Lambda0() { public Object apply() throws Exception {~%~A;~%~A  } };"
-			                         Code (handle-unreachable-return Result))
-                  ""
-                  runnable)))))
 
 (define to-java-unit { string -> string -> (@p string string) \* class-name, contents *\ }
   Function-content Result-expression ->
@@ -73,3 +59,15 @@ public class ~A {
 
 (define parse-single-kl
   String -> (hd (parse-kl String)))
+
+(define parsed-kl-to-java
+  Parsed ->
+      (let Result (kl-to-java-traverse Parsed object () true)
+        (if (and (cons? Parsed) (= defun (hd Parsed)))
+            (assert-test Result traverse-result-type? (make-string "Expected string triple from defun, was: ~A~%" (fst Result)))
+            (let Code (assert-test (fst Result) string? (make-string "Expected string result body, but Result was: ~A~%" "TODO"))
+                 Expression (assert-test (second Result) string? "Expected string result expression.")
+              (@p (make-string "  public static Object run = new Lambda0() { public Object apply() throws Exception {~%~A;~%~A  } };"
+			                         Code (handle-unreachable-return Result))
+                  ""
+                  runnable)))))

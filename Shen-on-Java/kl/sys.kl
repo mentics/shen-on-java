@@ -290,8 +290,10 @@ For an explication of this license see http://www.lambdassociates.org/News/june1
                          (cons "X"
                           (cons "Y" (cons "Z" ()))))))))))))))))))))))))))))
 
+\* Removed gensym because I made it a built in for efficiency
 (defun gensym (V735)
  (concat V735 (set shen-*gensym* (+ 1 (value shen-*gensym*)))))
+ *\
 
 (defun concat (V736 V737) (intern (cn (str V736) (str V737))))
 
