@@ -1,12 +1,11 @@
-(define assert-equals Expected Actual -> (if (= Expected Actual) true (error "Assertion failed, expected=~A, actual=~A" Expected Actual)))
-
 (define to-var-pair Param -> (@p Param (to-var Param)))
 (define to-var Param -> (name->method-name (str Param)))
 
 (define is-java-call Symbol -> (string-prefix? "shenj.dot/" (str Symbol)))
 
-(define method-sig { (list string) --> string }
-  Params -> (string-join ", " (map (cn "final Object ") Params)))
+(define method-sig { boolean --> (list string) --> string }
+  TailCall? Params -> (let Join (if TailCall? "Object " "final Object ")
+                        (string-join ", " (map (cn Join) Params))))
 
 (define method-argstring { (list string) --> string }
   Params -> (string-join ", " Params))

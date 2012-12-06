@@ -13,7 +13,6 @@ import com.mentics.shenj.CharSequenceCompilerException;
 
 public class InstallBuiltinsInImage {
     public static void main(String[] args) throws Exception {
-//        String path = "shen-test.image";
         String path = "default.image";
         loadImage(new File(path));
         getCurrentContext().loadPrimitives();

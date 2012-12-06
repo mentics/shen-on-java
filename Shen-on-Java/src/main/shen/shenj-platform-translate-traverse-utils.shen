@@ -9,8 +9,8 @@
   (let Arg0' (kl-to-java-traverse Arg0 object Vars false)
        Arg1' (kl-to-java-traverse Arg1 object Vars false)
       (@p (make-string "~A~A" (fst Arg0') (fst Arg1'))
-	      (make-string String (second Arg0') (second Arg1'))
-	      Return)))
+          (make-string String (second Arg0') (second Arg1'))
+          Return)))
 
 (define arithmetic
   Operation [A0] Vars ->
@@ -21,7 +21,7 @@
          A0-eval (kl-to-java-traverse A0 number Vars false)
          A1-eval (kl-to-java-traverse A1 number Vars false)
       (let A0-content (fst A0-eval) A0-expression (second A0-eval) A1-content (fst A1-eval) A1-expression (second A1-eval)
-        (@p (make-string "~A~%~A~%Object ~A = Primitives.~A.apply(~A, ~A);~%"
+        (@p (make-string "~A~AObject ~A = Primitives.~A.apply(~A, ~A);~%"
                          A0-content A1-content Result (arithmetic-to-name Operation) A0-expression A1-expression)
             (str Result)
             number)))
@@ -35,7 +35,7 @@
     (let A0-eval (kl-to-java-traverse A0 number Vars false)
 	     A1-eval (kl-to-java-traverse A1 number Vars false)
       (let A0-content (fst A0-eval) A0-expression (second A0-eval) A1-content (fst A1-eval) A1-expression (second A1-eval)
-        (@p (make-string "~A~%~A~%" A0-content A1-content)
+        (@p (make-string "~A~A" A0-content A1-content)
             (make-string "(((Number)(~A)).doubleValue() ~A ((Number)(~A)).doubleValue())"
 			             A0-expression (str Operation) A1-expression)
             boolean)))
@@ -49,7 +49,7 @@
     (let A0-eval (kl-to-java-traverse A0 boolean Vars false)
 	     A1-eval (kl-to-java-traverse A1 boolean Vars false)
       (let A0-content (fst A0-eval) A0-expression (second A0-eval) A1-content (fst A1-eval) A1-expression (second A1-eval)
-        (@p (make-string "~A~%~A~%" A0-content A1-content)
+        (@p (make-string "~A~A" A0-content A1-content)
             (make-string "((boolean)~A ~A (boolean)~A)" A0-expression (logic-to-java Operation) A1-expression)
             boolean)))
   Operation X Vars -> (simple-error "Bad args to logic"))
@@ -60,17 +60,31 @@
   Type1 Type2 -> (if (not (= object Type1)) Type1 Type2))
 
 (define handle-unreachable-return Result ->
-  (if (= unreachable (third Result))
-      ""
-      \*(make-string "~A;" (second Result))*\
-      (make-string "    return ~A;~%" (second Result))))
+  (cond ((= unreachable (third Result)) "")
+        ((= "" (second Result)) "")
+        (true (make-string "return ~A;~%" (second Result)))))
 
 (define handle-unreachable-assignment Var Result ->
   (let Second (second Result)
     (if (= unreachable (third Result))
         ""
-        \*(if (string-empty? Second) "" (make-string "~A;~%" Second))*\
         (make-string "~A = ~A;~%" Var Second))))
+
+(define special-return Var EvaledArg Tail? ->
+  (let Expression (second EvaledArg)
+       Type (third EvaledArg)
+       TailCall? (to-boolean (fourth EvaledArg))
+    (cond ((= unreachable Type) "")
+          ((= "" Expression) "")
+          (TailCall? "")
+          (Tail? (make-string "return ~A;~%" Expression))
+          (true (make-string "~A = ~A;~%" Var Expression)))))
+
+(assert-equals (make-string "V = 2;~%") (special-return V (@p "" "2" number) false)) 
+(assert-equals (make-string "") (special-return V (@p "" "2" unreachable) false)) 
+(assert-equals (make-string "") (special-return V (@p "" "2" unreachable true) false)) 
+(assert-equals (make-string "return 2;~%") (special-return V (@p "" "2" number) true)) 
+(assert-equals (make-string "") (special-return V (@p "" "2" number true) true)) 
 
 (define handle-cases
   [[true Expression]] -> Expression
@@ -79,4 +93,12 @@
 
 (define handle-case
   [Condition Action] Else -> [if Condition Action Else])
+
+\* TODO: bad hacks here *\
+\* (@p FuncSymbol FuncParams) where FuncParams are param pairs *\
+(define set-compile-context Context -> (set shenj.platform/*compile-context* Context))
+(define get-compile-context -> (let X (value shenj.platform/*compile-context*)
+                                 (if (tuple? X) X (@p () ()))))
+(define compile-context-symbol -> (fst (get-compile-context)))
+(define compile-context-params -> (second (get-compile-context)))
 

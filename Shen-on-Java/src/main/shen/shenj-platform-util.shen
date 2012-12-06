@@ -1,3 +1,6 @@
+(define assert-equals Expected Actual -> (if (= Expected Actual) true (error "Assertion failed, expected=~A, actual=~A" Expected Actual)))
+
+
 (define shenj.platform/parse-shen X ->  (snd (shen-<st_input> (@p (to-intlist X) ()))))
 (define shenj.platform/eval-shens X -> (map (function eval) (parse-shen X)))
 (define shenj.platform/eval-shen X -> (eval (hd (parse-shen X))))
@@ -89,6 +92,12 @@
   (@p A (@p B (@p C D))) -> C
   (@p A (@p B C)) -> C)
 
+(define fourth
+  (@p A B C D E) -> D
+  (@p A B C D) -> D
+  (@p _ _ _) -> ()
+  (@p _ _) -> ())
+
 (define type-of X -> (cond
   ((integer? X) integer)
   ((float? X) float)
@@ -106,10 +115,6 @@
 (define flip4 F -> (/. W (/. X (/. Y (/. Z (F Z Y X W))))))
 
 (define assert Test Message Expression -> (if Test Expression (simple-error Message)))
-
-(define assertEquals
-  Actual Expected Message ->
-    (if (= Actual Expected) Actual (simple-error Message)))
 
 (define assert-test
   Actual Test Message ->
@@ -233,6 +238,18 @@
   String -> (cn String (n->string 10)))
 (assert-equals "" (newline-if-not-empty ""))
 (assert-equals (make-string "~A~%" blue) (newline-if-not-empty (str blue)))
+
+(define zip
+  [] [] -> []
+  [X] [Y] -> [(@p X Y)]
+  [X | RestX] [Y | RestY] -> (cons (@p X Y) (zip RestX RestY)))
+
+(assert-equals [(@p 1 a) (@p 2 b) (@p 3 c)] (zip [1 2 3] [a b c]))
+
+
+(define to-boolean
+  X -> X where (boolean? X)
+  _ -> false)
 
 (define escape-java-ustring
   "c#34;" -> "c#92;c#34;"

@@ -1,3 +1,7 @@
+
+(assert-equals true (vector? <>))
+
+
 \* Test java integration *\
 
 (shenj.dot/.setVisible (shenj.dot/javax.swing.JFrame. shenj.dot/com.mentics.shenj.inner.Context.GLOBAL_PROPERTIES_NAME$:String):javax.swing.JFrame true)

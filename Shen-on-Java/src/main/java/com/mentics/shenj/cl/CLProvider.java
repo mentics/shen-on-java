@@ -222,7 +222,7 @@ public class CLProvider implements JavaFileObjectSource {
         classContent.append("package " + StringUtil.removeLastToken(".", missingClassFQN) + ";");
         classContent.append("import com.mentics.shenj.*;");
         classContent.append("public class " + StringUtil.lastToken(".", missingClassFQN) + " {");
-        classContent.append("public static final Lambda LAMBDA = new Lambda" + numParams + "() {");
+        classContent.append("public static Lambda LAMBDA = new Lambda" + numParams + "() {");
         classContent.append("public Object apply(" + sig + ") {");
         classContent.append("  throw new ShenException(\"Function " + missingClassFQN + " is not defined.\");");
         classContent.append("} }; }");

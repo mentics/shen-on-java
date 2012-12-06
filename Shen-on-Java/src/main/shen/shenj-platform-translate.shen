@@ -30,14 +30,14 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
   [simple-error Message] Type Vars Tail? ->
     (let Message' (kl-to-java-traverse Message string Vars false)
       (@p (make-string "~A~%throw new SimpleError((String)~A);~%" (fst Message') (second Message'))
-		  ""
-		  unreachable))
+          ""
+          unreachable))
 
   [error-to-string Exception] Type Vars Tail? -> 
     (let Exception' (kl-to-java-traverse Exception exception Vars false)
 	  (@p (make-string "~A~%" (fst Exception'))
 	      (make-string "errorToString(~A)" (second Exception'))
-		  string))
+        string))
 
   [str] Type Vars Tail? -> (@p "" "str" lambda)
   [str Arg] Type Vars Tail? -> (single-param Arg Type Vars "str.apply(~A)" string)
@@ -63,7 +63,7 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
       (@p (make-string "~A~%~A~%((java.io.OutputStream)~A).write(((String)~A).getBytes());"
 	                   (fst String') (fst Stream') (second Stream') (second String'))
           (second String')
-		  string))
+          string))
 
   [read-byte] Type Vars Tail? -> (single-param "" Type Vars "System.in.read()" number)
   [read-byte Stream] Type Vars Tail? -> (single-param Stream Type Vars "((java.io.InputStream)~A).read()" number)
@@ -113,8 +113,8 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
          Value' (kl-to-java-traverse Value Type Vars false)
 	  (@p (make-string "~A~%~A~%globalProperties.put((Symbol)~A, ~A);"
 	                  (fst Value') (fst Name') (second Name') (second Value'))
-		  (second Value')
-		  (third Value')))
+        (second Value')
+        (third Value')))
 
   [value] Type Vars Tail? -> (let Name (gensym s) (kl-to-java-traverse [lambda Name [value Name]] lambda Vars Tail?))
   [value Name] Type Vars Tail? -> (single-param Name Type Vars "globalProperties.get(~A)" object)
@@ -130,7 +130,14 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
   [cons A0] Type Vars Tail? ->
     (let A1 (gensym s)
       (kl-to-java-traverse [lambda A1 [cons A0 A1]] lambda Vars Tail?))
-  [cons Arg0 Arg1] Type Vars Tail? -> (two-params Arg0 Arg1 Type Vars "new Cons(~A, ~A)" cons)
+  [cons Arg0 Arg1] Type Vars Tail? ->
+    (let Arg0' (kl-to-java-traverse Arg0 object Vars false)
+         Arg1' (kl-to-java-traverse Arg1 object Vars false)
+         Sym (gensym cons)
+      (@p (make-string "~A~Afinal Object ~A = new Cons(~A, ~A);~%" (fst Arg0') (fst Arg1') Sym (second Arg0') (second Arg1'))
+	        (str Sym)
+	        cons))
+\*  (two-params Arg0 Arg1 Type Vars "new Cons(~A, ~A)" cons)*\
 
   [hd] Type Vars Tail? -> (let A0 (gensym s) (kl-to-java-traverse [lambda A0 [hd A0]] lambda Vars Tail?))
   [hd A0] Type Vars Tail? -> (single-param A0 Type Vars "((Cons)~A).head" object)
@@ -154,11 +161,11 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
   [number? A0] Type Vars Tail? ->
     (let A0' (kl-to-java-traverse A0 object Vars false)
       (@p (make-string "~A~%" (fst A0'))
-	      (cond ((and (= symbol (third A0')) (not (find-first? A0 Vars))) "false")
+          (cond ((and (= symbol (third A0')) (not (find-first? A0 Vars))) "false")
                 ((= string (third A0')) "false")
-		        ((numeric-type? (third A0')) "true")
-				(true (make-string "(~A instanceof Number)" (second A0'))))
-		  boolean))
+                ((numeric-type? (third A0')) "true")
+                (true (make-string "(~A instanceof Number)" (second A0'))))
+          boolean))
 
 \*
   [- Var 1] Type Vars Tail? ->
@@ -183,9 +190,9 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
   [= A0 A1] Type Vars Tail? ->
     (if (or (= Type boolean) (= Type object))
       (let PX0 (kl-to-java-traverse A0 object Vars false)
-	       PX1 (kl-to-java-traverse A1 object Vars false)
+           PX1 (kl-to-java-traverse A1 object Vars false)
         (@p (@s (fst PX0) (fst PX1))
-		    (if (primitive-type? (third PX0))
+            (if (primitive-type? (third PX0))
                 \*(make-string "(~A == ~A)" (second PX0) (second PX1))*\
                 (make-string "Lang.equals(~A, ~A)" (second PX0) (second PX1))
                 (make-string "Lang.equals(~A, ~A)" (second PX0) (second PX1)))
@@ -198,8 +205,8 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
   [string? A0] Type Vars Tail? ->
     (let A0' (kl-to-java-traverse A0 string Vars false)
       (@p (make-string "~A~%" (fst A0'))
-	      (make-string "(~A instanceof String)" (second A0'))
-		  boolean))
+          (make-string "(~A instanceof String)" (second A0'))
+          boolean))
 
   [tlstr] Type Vars Tail? ->
     (let String (gensym s)
@@ -207,8 +214,8 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
   [tlstr String] Type Vars Tail? ->
     (let String' (kl-to-java-traverse String string Vars false)
       (@p (make-string "~A~%" (fst String'))
-	      (make-string "((String)~A).substring(1)" (second String'))
-		  string))
+          (make-string "((String)~A).substring(1)" (second String'))
+          string))
 
   [pos] Type Vars Tail? ->
     (let String (gensym s) Position (gensym s)
@@ -220,9 +227,9 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
     (let String' (kl-to-java-traverse String string Vars false)
          Position' (kl-to-java-traverse Position number Vars false)
       (@p (make-string "~A~%~A~%" (fst String') (fst Position'))
-	      (make-string "((String)~A).substring(((Number)~A).intValue(), ((Number)~A).intValue()+1)"
+          (make-string "((String)~A).substring(((Number)~A).intValue(), ((Number)~A).intValue()+1)"
                        (second String') (second Position') (second Position'))
-		  string))
+          string))
 
   [cn] Type Vars Tail? ->
     (let String0 (gensym s) String1 (gensym s)
@@ -256,17 +263,17 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
       (@p (make-string "~A~%final Object[] ~A = new Object[((Number)~A).intValue()];~%"
                        (fst Size') Result (second Size'))
           (str Result)
-		  vector))
+          vector))
 
   [address-> Vector Index Value] Type Vars Tail? ->
     (let Vector' (kl-to-java-traverse Vector vector Vars false)
          Index' (kl-to-java-traverse Index number Vars false)
          Value' (kl-to-java-traverse Value object Vars false)
-      (@p (make-string "~A~%~A~%~A~%((Object[])~A)[((Number)~A).intValue()] = ~A;"
+      (@p (make-string "~A~%~A~%~A~%((Object[])~A)[((Number)~A).intValue()] = ~A;~%"
                        (fst Vector') (fst Index') (fst Value')
                        (second Vector') (second Index') (second Value'))
           (second Vector')
-		  vector))
+          vector))
   
   [<-address] Type Vars Tail? ->
     (let Vector (gensym s) Index (gensym s)
