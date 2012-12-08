@@ -1,5 +1,9 @@
-Check read primitive kl-jav-ato-traverse, side effects in expression?
+TODO next:
+subclassing/interfaces/protocols
+namespacing
+thread contexts?
 
+Check read primitive kl-jav-ato-traverse, side effects in expression?
 
 Need to support runtime dynamic java call dispatch
 
