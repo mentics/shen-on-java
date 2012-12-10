@@ -21,8 +21,8 @@
          A0-eval (kl-to-java-traverse A0 number Vars false)
          A1-eval (kl-to-java-traverse A1 number Vars false)
       (let A0-content (fst A0-eval) A0-expression (second A0-eval) A1-content (fst A1-eval) A1-expression (second A1-eval)
-        (@p (make-string "~A~AObject ~A = Primitives.~A.apply(~A, ~A);~%"
-                         A0-content A1-content Result (arithmetic-to-name Operation) A0-expression A1-expression)
+        (@p (make-string "~A~AObject ~A = (Double)(~A) ~A (Double)(~A);~%"
+                         A0-content A1-content Result A0-expression Operation A1-expression)
             (str Result)
             number)))
   Operation X Vars -> (simple-error "Bad args to arithmetic"))
@@ -36,8 +36,8 @@
 	     A1-eval (kl-to-java-traverse A1 number Vars false)
       (let A0-content (fst A0-eval) A0-expression (second A0-eval) A1-content (fst A1-eval) A1-expression (second A1-eval)
         (@p (make-string "~A~A" A0-content A1-content)
-            (make-string "(((Number)(~A)).doubleValue() ~A ((Number)(~A)).doubleValue())"
-			             A0-expression (str Operation) A1-expression)
+            (make-string "(Double)(~A) ~A (Double)(~A)"
+			             A0-expression Operation A1-expression)
             boolean)))
   Operation X Vars -> (simple-error "Bad args to comparison"))
 

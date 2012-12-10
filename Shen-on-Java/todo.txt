@@ -1,7 +1,13 @@
+Create executable jar
+
+Add kryo license notice
+
 TODO next:
 subclassing/interfaces/protocols
 namespacing
 thread contexts?
+
+Change dot notation: ending with . should represent a package. So do something else for constructor.
 
 Check read primitive kl-jav-ato-traverse, side effects in expression?
 

@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Main-Class: com.mentics.shenj.REPL
+Class-Path: lib/kryo-debug-2.20-all.jar

@@ -12,12 +12,7 @@ public class StringLength {
 
     public static Lambda LAMBDA = new Lambda1() {
         public Object apply(final Object v6940) throws Exception {
-            return defined(v6940);
+            return (double) ((String) v6940).length();
         }
     };
-
-
-    public static Object defined(final Object v6940) throws Exception {
-        return ((String) v6940).length();
-    }
 }

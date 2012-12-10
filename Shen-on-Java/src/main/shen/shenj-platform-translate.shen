@@ -14,6 +14,19 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
 (define kl-to-java-traverse
 
 \* Special forms and macros *\
+  [number-equal A0 A1] Type Vars Tail? ->
+    (let A0' (kl-to-java-traverse A0 number Vars false)
+         A1' (kl-to-java-traverse A1 number Vars false)
+      (@p (make-string "~A~A" (fst A0') (fst A1'))
+          (make-string "(double)~A == (double)~A" (second A0') (second A1'))
+          number))
+
+  [int-modulus A0 A1] Type Vars Tail? ->
+    (let A0' (kl-to-java-traverse A0 number Vars false)
+         A1' (kl-to-java-traverse A1 number Vars false)
+      (@p (make-string "~A~A" (fst A0') (fst A1'))
+          (make-string " (double) ((int) (double) ~A % (int) (double) ~A)" (second A0') (second A1'))
+          number))
 
   [defun Name Params Body] Type Vars Tail? -> (handle-defun Name Params Body Type Vars)
 
@@ -66,7 +79,7 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
           string))
 
   [read-byte] Type Vars Tail? -> (single-param "" Type Vars "System.in.read()" number)
-  [read-byte Stream] Type Vars Tail? -> (single-param Stream Type Vars "((java.io.InputStream)~A).read()" number)
+  [read-byte Stream] Type Vars Tail? -> (single-param Stream Type Vars "(double)((java.io.InputStream)~A).read()" number)
 
 
 \** Logic and arithmetic **\
@@ -81,7 +94,7 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
     (assert (or (= boolean Type) (= object Type)) "Expected boolean or object for not operation."
       (let Expression' (kl-to-java-traverse Expression boolean Vars false)
         (@p (make-string "~A~%" (fst Expression'))
-            (make-string "!((boolean)~A)" (second Expression'))
+            (make-string "!((boolean)(~A))" (second Expression'))
             boolean)))
 
   [and] Type Vars Tail? ->
@@ -227,7 +240,7 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
     (let String' (kl-to-java-traverse String string Vars false)
          Position' (kl-to-java-traverse Position number Vars false)
       (@p (make-string "~A~%~A~%" (fst String') (fst Position'))
-          (make-string "((String)~A).substring(((Number)~A).intValue(), ((Number)~A).intValue()+1)"
+          (make-string "((String)~A).substring((int)(double)~A, (int)(double)~A + 1)"
                        (second String') (second Position') (second Position'))
           string))
 
@@ -245,8 +258,8 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
   [n->string Number] Type Vars Tail? ->
     (let Number' (kl-to-java-traverse Number number Vars false)
       (let Template (if (= number (third Number'))
-                        "new String(Character.toChars(((Number) (~A)).intValue()))"
-                        "new String(Character.toChars(((Number) (~A)).intValue()))")
+                        "new String(Character.toChars((int)(double)~A))"
+                        "new String(Character.toChars((int)(double)~A))")
         (@p (make-string "~A~%" (fst Number'))
             (make-string Template (second Number'))
             string)))
@@ -254,13 +267,13 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
   [string->n] Type Vars Tail? ->
     (let String (gensym s)
       (kl-to-java-traverse [lambda String [string->n String]] lambda Vars Tail?))
-  [string->n String] Type Vars Tail? -> (single-param String Type Vars "Integer.valueOf(((String) ~A).charAt(0))" number)
+  [string->n String] Type Vars Tail? -> (single-param String Type Vars "Double.valueOf(((String) ~A).charAt(0))" number)
 
   [absvector] Type Vars Tail? -> (let Arg (gensym s) (kl-to-java-traverse [lambda Arg [absvector Arg]] lambda Vars Tail?))
   [absvector Size] Type Vars Tail? ->
     (let Result (gensym a)
          Size' (kl-to-java-traverse Size integer Vars false)
-      (@p (make-string "~A~%final Object[] ~A = new Object[((Number)~A).intValue()];~%"
+      (@p (make-string "~A~%final Object[] ~A = new Object[(int)(double)~A];~%"
                        (fst Size') Result (second Size'))
           (str Result)
           vector))
@@ -269,7 +282,7 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
     (let Vector' (kl-to-java-traverse Vector vector Vars false)
          Index' (kl-to-java-traverse Index number Vars false)
          Value' (kl-to-java-traverse Value object Vars false)
-      (@p (make-string "~A~%~A~%~A~%((Object[])~A)[((Number)~A).intValue()] = ~A;~%"
+      (@p (make-string "~A~%~A~%~A~%((Object[])~A)[(int)(double)~A] = ~A;~%"
                        (fst Vector') (fst Index') (fst Value')
                        (second Vector') (second Index') (second Value'))
           (second Vector')
@@ -282,7 +295,7 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
     (let Index (gensym s)
       (kl-to-java-traverse [lambda [<-address Vector Index]] lambda Vars Tail?))
   [<-address Vector Index] Type Vars Tail? ->
-    (two-params Vector Index Type Vars "((Object[])~A)[((Number)~A).intValue()]" object)
+    (two-params Vector Index Type Vars "((Object[])~A)[(int)(double)~A]" object)
 
   [fail] Type Vars Tail? -> (@p "" "null" object)
 
@@ -299,7 +312,7 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
           (cond ((find-first? X Vars) (get-second X Vars))
                 ((symbol? X) (make-string "symbol(c#34;~Ac#34;)" X))
                 ((string? X) (@s "c#34;" (escape-java-string X) "c#34;"))
-				        ((integer? X) (make-string "~A" X))
+				        ((integer? X) (make-string "~Ad" X))
 				        ((float? X) (make-string "~Ad" X))
                 ((boolean? X) (str X))
                 (true (error "Unsupported type in kl-to-java-traverse: ~A" X)))

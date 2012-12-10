@@ -86,6 +86,13 @@ public class Primitives {
     public static Lambda str = new Lambda1() {
         @Override
         public Object apply(final Object atom) {
+            if (atom instanceof Double) {
+                // if it's an integer
+                if (((long) (double) atom) == (double) atom) {
+                    // print it out as one (no decimal)
+                    return Long.toString((long) (double) atom);
+                }
+            }
             String str = atom.toString();
             return atom instanceof String ? '"' + str + '"' : str;
         }
@@ -124,7 +131,7 @@ public class Primitives {
         @Override
         public Object apply(final Object string) {
             // TODO: throw error if more than 1 in length?
-            return Long.valueOf(((String) string).charAt(0));
+            return Double.valueOf(((String) string).charAt(0));
         }
     };
 
@@ -360,7 +367,7 @@ public class Primitives {
         @Override
         public Object apply(final Object streamIn) {
             try {
-                return (long) ((InputStream) streamIn).read();
+                return (double) ((InputStream) streamIn).read();
             } catch (final IOException e) {
                 throw new RuntimeException(e);
             }
@@ -457,16 +464,20 @@ public class Primitives {
     public static Lambda plus = new Lambda2() {
         @Override
         public Object apply(final Object x, final Object y) {
-            if (x instanceof Long && y instanceof Long) {
-                return (Long) x + (Long) y;
-            } else {
-                final double variable = ((Number) x).doubleValue() + ((Number) y).doubleValue();
-                if ((variable == Math.floor(variable)) && !Double.isInfinite(variable)) {
-                    return (long) variable;
-                } else {
-                    return variable;
-                }
-            }
+            return ((Number) x).doubleValue() + ((Number) y).doubleValue();
+            // return (Double) x + (Double) y;
+
+
+            // if (x instanceof Long && y instanceof Long) {
+            // return (Long) x + (Long) y;
+            // } else {
+            // final double variable = ((Number) x).doubleValue() + ((Number) y).doubleValue();
+            // if ((variable == Math.floor(variable)) && !Double.isInfinite(variable)) {
+            // return (long) variable;
+            // } else {
+            // return variable;
+            // }
+            // }
         }
     };
 
@@ -474,11 +485,15 @@ public class Primitives {
     public static Lambda minus = new Lambda2() {
         @Override
         public Object apply(final Object x, final Object y) {
-            if (x instanceof Long && y instanceof Long) {
-                return (Long) x - (Long) y;
-            } else {
-                return ((Number) x).doubleValue() - ((Number) y).doubleValue();
-            }
+            return ((Number) x).doubleValue() - ((Number) y).doubleValue();
+            // return (Double) x - (Double) y;
+
+
+            // if (x instanceof Long && y instanceof Long) {
+            // return (Long) x - (Long) y;
+            // } else {
+            // return ((Number) x).doubleValue() - ((Number) y).doubleValue();
+            // }
         }
     };
 
@@ -486,11 +501,15 @@ public class Primitives {
     public static Lambda multiply = new Lambda2() {
         @Override
         public Object apply(final Object x, final Object y) {
-            if (x instanceof Long && y instanceof Long) {
-                return (Long) x * (Long) y;
-            } else {
-                return ((Number) x).doubleValue() * ((Number) y).doubleValue();
-            }
+            return ((Number) x).doubleValue() * ((Number) y).doubleValue();
+
+            // return (Double) x * (Double) y;
+
+            // if (x instanceof Long && y instanceof Long) {
+            // return (Long) x * (Long) y;
+            // } else {
+            // return ((Number) x).doubleValue() * ((Number) y).doubleValue();
+            // }
         }
     };
 
@@ -498,12 +517,16 @@ public class Primitives {
     public static Lambda divide = new Lambda2() {
         @Override
         public Object apply(final Object x, final Object y) {
-            if (x instanceof Long && y instanceof Long) {
-                // TODO: it should return float unless divisor
-                return (Long) x / (Long) y;
-            } else {
-                return ((Number) x).doubleValue() / ((Number) y).doubleValue();
-            }
+            return ((Number) x).doubleValue() / ((Number) y).doubleValue();
+
+            // return (Double) x / (Double) y;
+
+            // if (x instanceof Long && y instanceof Long) {
+            // // TODO: it should return float unless divisor
+            // return (Long) x / (Long) y;
+            // } else {
+            // return ((Number) x).doubleValue() / ((Number) y).doubleValue();
+            // }
         }
     };
 
@@ -511,11 +534,12 @@ public class Primitives {
     public static Lambda greaterThan = new Lambda2() {
         @Override
         public Object apply(final Object x, final Object y) {
-            if (x instanceof Long && y instanceof Long) {
-                return (Long) x > (Long) y;
-            } else {
-                return ((Number) x).doubleValue() > ((Number) y).doubleValue();
-            }
+            return (Double) x > (Double) y;
+            // if (x instanceof Long && y instanceof Long) {
+            // return (Long) x > (Long) y;
+            // } else {
+            // return ((Number) x).doubleValue() > ((Number) y).doubleValue();
+            // }
         }
     };
 
@@ -523,11 +547,12 @@ public class Primitives {
     public static Lambda lessThan = new Lambda2() {
         @Override
         public Object apply(final Object x, final Object y) {
-            if (x instanceof Long && y instanceof Long) {
-                return (Long) x < (Long) y;
-            } else {
-                return ((Number) x).doubleValue() < ((Number) y).doubleValue();
-            }
+            return (Double) x < (Double) y;
+            // if (x instanceof Long && y instanceof Long) {
+            // return (Long) x < (Long) y;
+            // } else {
+            // return ((Number) x).doubleValue() < ((Number) y).doubleValue();
+            // }
         }
     };
 
@@ -535,11 +560,12 @@ public class Primitives {
     public static Lambda greaterThanOrEqual = new Lambda2() {
         @Override
         public Object apply(final Object x, final Object y) {
-            if (x instanceof Long && y instanceof Long) {
-                return (Long) x >= (Long) y;
-            } else {
-                return ((Number) x).doubleValue() >= ((Number) y).doubleValue();
-            }
+            return (Double) x >= (Double) y;
+            // if (x instanceof Long && y instanceof Long) {
+            // return (Long) x >= (Long) y;
+            // } else {
+            // return ((Number) x).doubleValue() >= ((Number) y).doubleValue();
+            // }
         }
     };
 
@@ -547,11 +573,12 @@ public class Primitives {
     public static Lambda lessThanOrEqual = new Lambda2() {
         @Override
         public Object apply(final Object x, final Object y) {
-            if (x instanceof Long && y instanceof Long) {
-                return (Long) x <= (Long) y;
-            } else {
-                return ((Number) x).doubleValue() <= ((Number) y).doubleValue();
-            }
+            return (Double) x <= (Double) y;
+            // if (x instanceof Long && y instanceof Long) {
+            // return (Long) x <= (Long) y;
+            // } else {
+            // return ((Number) x).doubleValue() <= ((Number) y).doubleValue();
+            // }
         }
     };
 

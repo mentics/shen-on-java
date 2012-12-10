@@ -43,8 +43,8 @@ public class Lang {
             return false;
         }
 
-        if (x0 instanceof Number && x1 instanceof Number) {
-            return ((Number) x0).doubleValue() == ((Number) x1).doubleValue();
+        if (x0 instanceof Double && x1 instanceof Double) {
+            return (double)x0 == (double)x1;
         } else {
             if (x0 != null && x0.getClass().isArray()) {
                 if (x1 != null && x1.getClass().isArray()) {
