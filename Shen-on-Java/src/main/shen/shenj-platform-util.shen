@@ -90,13 +90,13 @@
 
 (define third
   (@p A (@p B (@p C D))) -> C
-  (@p A (@p B C)) -> C)
+  (@p A (@p B C)) -> C
+  _ -> ())
 
 (define fourth
   (@p A B C D E) -> D
   (@p A B C D) -> D
-  (@p _ _ _) -> ()
-  (@p _ _) -> ())
+  _ -> ())
 
 (define type-of X -> (cond
   ((integer? X) integer)
@@ -250,6 +250,12 @@
 (define to-boolean
   X -> X where (boolean? X)
   _ -> false)
+
+(define string-replace
+  From To String -> (list->string (map (/. Value (if (= From Value) To Value)) (explode String))))
+
+(define remove-newlines String -> (string-replace "c#10;" "\n" (string-replace "c#13;" "\r" String)))
+
 
 (define escape-java-ustring
   "c#34;" -> "c#92;c#34;"

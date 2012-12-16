@@ -23,6 +23,7 @@ import com.esotericsoftware.kryo.io.Output;
 import com.mentics.shenj.CharSequenceCompiler;
 import com.mentics.shenj.CharSequenceCompilerException;
 import com.mentics.shenj.JavaFileObjectSource;
+import com.mentics.shenj.Lambda;
 import com.mentics.shenj.Lang;
 import com.mentics.shenj.ShenException;
 import com.mentics.shenj.Symbol;
@@ -244,5 +245,17 @@ public class CLProvider implements JavaFileObjectSource {
 
     public Map<Symbol, Object> getGlobalProperties() {
         return this.dcl.getGlobalProps();
+    }
+
+    public Map<Symbol, Lambda> getFunctions() {
+        return this.dcl.getFunctions();
+    }
+
+    public boolean deleteFunction(Symbol symbol) {
+        return this.dcl.deleteFunction(symbol);
+    }
+
+    public boolean deleteClass(String className) {
+        return dcl.deleteClass(className);
     }
 }

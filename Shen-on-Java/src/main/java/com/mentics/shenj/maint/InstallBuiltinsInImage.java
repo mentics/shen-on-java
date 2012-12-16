@@ -16,11 +16,16 @@ public class InstallBuiltinsInImage {
         String path = "default.image";
         loadImage(new File(path));
         getCurrentContext().loadPrimitives();
-        processDir(new File("src/main/builtin/shenj/platform/"));
-        processDir(new File("src/main/builtin/shenj/root/"));
+        processAllBuiltinDirs();
         try (Output out = new Output(new FileOutputStream(path))) {
             getCurrentContext().saveImage(out);
         }
+    }
+
+    public static void processAllBuiltinDirs() throws CharSequenceCompilerException {
+        processDir(new File("src/main/builtin/shenj/platform/"));
+        processDir(new File("src/main/builtin/shenj/root/"));
+        processDir(new File("src/main/builtin/shenj/reflect/"));
     }
 
     public static void processDir(File dir) throws CharSequenceCompilerException {

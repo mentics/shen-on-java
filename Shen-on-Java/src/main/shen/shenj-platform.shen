@@ -9,9 +9,6 @@
                                 (map (/. Parsed (output (make-string "~A~%" (java-eval Parsed))))
                                      (read-file File)))))
 
-(define string-replace
-  From To String -> (list->string (map (/. Value (if (= From Value) To Value)) (explode String))))
-
 (define java-eval
   Parsed ->
     (let Result (parsed-kl-to-java Parsed)
@@ -37,20 +34,7 @@
 
 (define java-class-file { string -> string -> string -> string }
   Classsimplename Package Contents ->
-    (make-string "~A~%
-import static com.mentics.shenj.Lang.*;
-import static com.mentics.shenj.ShenjRuntime.*;
-import static com.mentics.shenj.inner.Context.*;
-import static com.mentics.shenj.inner.Primitives.*;
-
-import com.mentics.shenj.*;
-import com.mentics.shenj.inner.*;
-
-import shenj.root.*;
-
-public class ~A {
-~A
-}"
+    (make-string "~A~%~%import static com.mentics.shenj.Lang.*;~%import static com.mentics.shenj.ShenjRuntime.*;~%import static com.mentics.shenj.inner.Context.*;~%import static com.mentics.shenj.inner.Primitives.*;~%import com.mentics.shenj.*;~%import com.mentics.shenj.inner.*;~%import shenj.root.*;~%~%public class ~A {~%~A~%}"
       (if (= Package "") "" (make-string "package ~A;~%~%" Package)) Classsimplename Contents))
 
 

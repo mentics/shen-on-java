@@ -150,6 +150,7 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
       (@p (make-string "~A~Afinal Object ~A = new Cons(~A, ~A);~%" (fst Arg0') (fst Arg1') Sym (second Arg0') (second Arg1'))
 	        (str Sym)
 	        cons))
+  [cons | Args] Type Vars Tail? -> (error "Too many arguments to cons: ~A" Args)
 \*  (two-params Arg0 Arg1 Type Vars "new Cons(~A, ~A)" cons)*\
 
   [hd] Type Vars Tail? -> (let A0 (gensym s) (kl-to-java-traverse [lambda A0 [hd A0]] lambda Vars Tail?))

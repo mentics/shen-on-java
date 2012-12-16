@@ -380,4 +380,13 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
             list.add(new JavaFileObjectImpl(className, JavaFileObject.Kind.CLASS, entry.getValue()));
         }
     }
+
+    public boolean deleteFunction(Symbol symbol) {
+        // TODO: remvoe class somehow?
+        return getFunctions().remove(symbol) == null ? false : true;
+    }
+
+    public boolean deleteClass(String className) {
+        return this.classes.remove(className) == null ? false : true;
+    }
 }

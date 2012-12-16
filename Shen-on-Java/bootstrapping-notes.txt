@@ -1,5 +1,63 @@
 ---------------------------------------------
 
+(13-) (track fourth)
+Evalkl: [track fourth]
+Evalkl: [defun fourth [V7730 ()] [do [set shen-*call* [+ [value shen-*call*] 1.0]] [do [shen-input-track [value shen-*call*] fourth [cons V7730 ()]] [do [shen-terpri-or-read-char] [let Result [cond [[and [tuple? V7730 ()] [and [and [tuple? [snd V7730 ()] ()] [and [and [tuple? [snd [snd V7730 ()] ()] ()] [and [tuple? [snd [snd [snd V7730 ()] ()] ()] ()] ()]] ()]] ()]] [fst [snd [snd [snd V7730 ()] ()] ()] ()] ()] [[and [tuple? V7730 ()] [and [and [tuple? [snd V7730 ()] ()] [and [tuple? [snd [snd V7730 ()] ()] ()] ()]] ()]] [snd [snd [snd V7730 ()] ()] ()] ()] [[and [tuple? V7730 ()] [and [tuple? [snd V7730 ()] ()] ()]] () ()] [[tuple? V7730 ()] () ()] [true [shen-f_error fourth ()] ()] ()] [do [shen-output-track [value shen-*call*] fourth Result] [do [set shen-*call* [- [value shen-*call*] 1.0]] [do [shen-terpri-or-read-char] Result]]]]]]]]
+com.mentics.shenj.SimpleError: Invalid argument to handle-case: []
+	at shenj.root.Interror$1.apply(Interror.java:22)
+	at shenj.root.HandleCase$1.apply(HandleCase.java:38)
+	at shenj.root.HandleCases$1.apply(HandleCases.java:63)
+	at shenj.root.HandleCases$1.apply(HandleCases.java:68)
+	at shenj.root.HandleCases$1.apply(HandleCases.java:68)
+	at shenj.root.HandleCases$1.apply(HandleCases.java:68)
+	at shenj.root.HandleCases$1.apply(HandleCases.java:68)
+	at shenj.root.HandleCases$1.apply(HandleCases.java:68)
+	at shenj.root.KlToJavaTraverse$1.apply(KlToJavaTraverse.java:248)
+	at shenj.root.HandleLet$1.apply(HandleLet.java:22)
+	at shenj.root.KlToJavaTraverse$1.apply(KlToJavaTraverse.java:202)
+	at shenj.root.Flip4$1$1$1$1$1.apply(Flip4.java:35)
+	at com.mentics.shenj.Cons.forEach(Cons.java:89)
+	at shenj.root.Map$1.apply(Map.java:23)
+	at shenj.root.HandleCall$1.apply(HandleCall.java:41)
+	at shenj.root.KlToJavaTraverse$1.apply(KlToJavaTraverse.java:2716)
+	at shenj.root.Flip4$1$1$1$1$1.apply(Flip4.java:35)
+	at com.mentics.shenj.Cons.forEach(Cons.java:89)
+	at shenj.root.Map$1.apply(Map.java:23)
+	at shenj.root.HandleCall$1.apply(HandleCall.java:41)
+	at shenj.root.KlToJavaTraverse$1.apply(KlToJavaTraverse.java:2716)
+	at shenj.root.Flip4$1$1$1$1$1.apply(Flip4.java:35)
+	at com.mentics.shenj.Cons.forEach(Cons.java:89)
+	at shenj.root.Map$1.apply(Map.java:23)
+	at shenj.root.HandleCall$1.apply(HandleCall.java:41)
+	at shenj.root.KlToJavaTraverse$1.apply(KlToJavaTraverse.java:2716)
+	at shenj.root.HandleDefun$1.apply(HandleDefun.java:60)
+	at shenj.root.KlToJavaTraverse$1.apply(KlToJavaTraverse.java:167)
+	at shenj.root.ParsedKlToJava$1.apply(ParsedKlToJava.java:17)
+	at com.mentics.shenj.cl.DirectClassLoader.apply(DirectClassLoader.java:217)
+	at com.mentics.shenj.cl.CLProvider.apply(CLProvider.java:89)
+	at shenj.root.EvalKl.defined(EvalKl.java:22)
+	at shenj.root.EvalKl$1.apply(EvalKl.java:16)
+	at com.mentics.shenj.cl.DirectClassLoader.apply(DirectClassLoader.java:217)
+	at com.mentics.shenj.cl.CLProvider.apply(CLProvider.java:89)
+	at com.mentics.shenj.inner.Primitives.evalKl(Primitives.java:284)
+	at shenj.root.ShenEvalWithoutMacros$1.apply(ShenEvalWithoutMacros.java:21)
+	at shenj.root.Eval$1.apply(Eval.java:46)
+	at shenj.root.ShenTrackFunction$1.apply(ShenTrackFunction.java:55)
+	at shenj.root.Track$1.apply(Track.java:20)
+	at shenj.generated.ToEval$1.apply(ToEval.java:15)
+	at com.mentics.shenj.inner.Context.runClass(Context.java:119)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:601)
+	at com.mentics.shenj.cl.DirectClassLoader.runClass(DirectClassLoader.java:167)
+
+
+It makes no sense. If I reevaluate the fourth define then try to track it, it works fine. But even after reevaluate, save, rerun REPL, track will throw above error.
+
+
+---------------------------------------------
+
 Evalkl: [defun digit? [V322] [ustring-inrange? [string->n V322] 48 57]]
 Caused by: java.lang.ClassCastException: java.lang.Boolean cannot be cast to java.lang.String
 	at shenj.root.ShenExplodeString$1.apply(ShenExplodeString.java:29)

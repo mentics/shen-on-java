@@ -15,10 +15,19 @@ public class Cons {
     }
 
 
+    // Instance Fields //
+
     public Object head;
 
     public Object tail;
 
+
+    // Constructors //
+
+    public Cons(Object head, Object tail) {
+        this.head = head;
+        this.tail = tail;
+    }
 
     /**
      * This is for kryo to use. Don't use it.
@@ -26,10 +35,8 @@ public class Cons {
     public Cons() {
     }
 
-    public Cons(Object head, Object tail) {
-        this.head = head;
-        this.tail = tail;
-    }
+
+    // Public Methods //
 
     @Override
     public int hashCode() {

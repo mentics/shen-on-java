@@ -89,10 +89,12 @@
 (define handle-cases
   [[true Expression]] -> Expression
   [Case] -> (handle-case Case [simple-error (make-string "True condition not found: ~A" Case)])
-  [Case | Rest] -> (handle-case Case (handle-cases Rest)))
+  [Case | Rest] -> (handle-case Case (handle-cases Rest))
+  X -> (error "Invalid argument to handle-cases: ~A" X))
 
 (define handle-case
-  [Condition Action] Else -> [if Condition Action Else])
+  [Condition Action] Else -> [if Condition Action Else]
+  X _ -> (error "Invalid argument to handle-case: ~A" X))
 
 \* TODO: bad hacks here *\
 \* (@p FuncSymbol FuncParams) where FuncParams are param pairs *\

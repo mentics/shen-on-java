@@ -22,7 +22,9 @@
     (let Var' (to-var (gensym Var))
       (let PValue (kl-to-java-traverse Value object Vars false)
            PBody (kl-to-java-traverse Body Type (cons (@p Var Var') Vars) Tail?)
-        (@p (make-string "~Afinal Object ~A = ~A; // [let ~A ~A ~A]~%~A" (fst PValue) Var' (second PValue) Var Value Body (newline-if-not-empty (fst PBody)))
+        (@p (make-string "~Afinal Object ~A = ~A; // [let ~A ~A ~A]~%~A"
+                         (fst PValue) Var' (second PValue) Var (remove-newlines Value) (remove-newlines Body)
+                         (newline-if-not-empty (fst PBody)))
             (second PBody)
             (third PBody)
             (to-boolean (fourth PBody))))))
@@ -185,7 +187,7 @@
                                          Result Func-string Args-string))
                           (true (make-string "final Object ~A = dispatch(~A).apply(~A);~%"
                                              Result Func-string Args-string)))
-	          (@p (make-string "~A~A~A" Func-prep-string Args-prep-string Eval)
+	          (@p (make-string "~A~A~A // Function call: ~A  Args: ~A)~%" Func-prep-string Args-prep-string Eval Func (remove-newlines Args))
                 (str Result)
 		            (if Unreachable? unreachable Type)
                 TailCall?))))))
