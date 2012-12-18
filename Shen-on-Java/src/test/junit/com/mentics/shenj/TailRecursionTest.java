@@ -17,7 +17,7 @@ public class TailRecursionTest {
     @Test
     public void testSimplestCase() throws Exception {
         String code = "(define test   0 -> \"done\"     X -> (test (- X 1)))";
-        System.out.println(second(shenToJava(code)));
+        System.out.println(ShenjUtil.second(shenToJava(code)));
         // assertEquals(symbol("test"), evalShen(code));
         // // Deliberately cause a stack overflow if TCO isn't working for this case
         // assertEquals("done", evalShen("(test 10000)"));
@@ -36,36 +36,9 @@ public class TailRecursionTest {
 
     public static Object evalKl(String code) throws Exception {
         Object[] tuple = (Object[]) getCurrentContext().apply("shenj.root.KlToJavaString", code);
-        Object[] result = (Object[]) getCurrentContext().apply("shenj.root.ToJavaUnit", first(tuple), second(tuple));
-        System.out.println(first(result));
-        System.out.println(second(result));
-        return doEval(first(result), second(result));
-    }
-
-    public static Object first(Object tuple) {
-        return ((Object[]) tuple)[1];
-    }
-
-    public static Object second(Object tuple) {
-        Object[] t0 = (Object[]) tuple;
-        if (t0[2].getClass().isArray()) {
-            Object[] t1 = (Object[]) t0[2];
-            if (t1[0] == symbol("shen-tuple")) {
-                return t1[1];
-            } else {
-                // The second item in the tuple is an array
-                return t1;
-            }
-        } else {
-            return ((Object[]) tuple)[2];
-        }
-    }
-
-    /**
-     * NOTE: 4-tuples will not work here!
-     */
-    public static Object third(Object tuple) {
-        Object[] t0 = (Object[]) tuple;
-        return ((Object[]) t0[2])[2];
+        Object[] result = (Object[]) getCurrentContext().apply("shenj.root.ToJavaUnit", ShenjUtil.first(tuple), ShenjUtil.second(tuple));
+        System.out.println(ShenjUtil.first(result));
+        System.out.println(ShenjUtil.second(result));
+        return doEval(ShenjUtil.first(result), ShenjUtil.second(result));
     }
 }

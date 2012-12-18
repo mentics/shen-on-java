@@ -1,7 +1,12 @@
 (define to-var-pair Param -> (@p Param (to-var Param)))
 (define to-var Param -> (name->method-name (str Param)))
 
-(define is-java-call Symbol -> (string-prefix? "shenj.dot/" (str Symbol)))
+(define is-java-call Symbol ->
+  (if (symbol? Symbol)
+      (let String (str Symbol)
+        (and (> (string-length String) (string-length "shenj.dot/"))
+            (string-prefix? "shenj.dot/" (str Symbol))))
+      (error "Non-symbol passed to is-java-call: ~A" Symbol)))
 
 (define method-sig { boolean --> (list string) --> string }
   TailCall? Params -> (let Join (if TailCall? "Object " "final Object ")
@@ -10,6 +15,8 @@
 (define method-argstring { (list string) --> string }
   Params -> (string-join ", " Params))
 
+(define replace-vars-string
+  String (@p (@p _ FromVar) (@p _ ToVar)) -> (cn String (make-string "final Object ~A = ~A;~%" ToVar FromVar)))
 
 (define shenj.platform/call-info-symbol->-h
   (@p F N M) Value -> (@p (cons Value F) N M)
@@ -21,23 +28,12 @@
                (@p () N)
                (cons Value N)))
 
-(assert-equals ["a"] (shenj.platform/call-info-symbol->-h () "a"))
-(assert-equals ["b" "a"] (shenj.platform/call-info-symbol->-h ["a"] "b"))
-(assert-equals (@p () ["b" "a"]) (shenj.platform/call-info-symbol->-h ["b" "a"] "/"))
-(assert-equals (@p ["c"] ["b" "a"]) (shenj.platform/call-info-symbol->-h (@p () ["b" "a"]) "c"))
-(assert-equals (@p () ["b" "a"] ["c"]) (shenj.platform/call-info-symbol->-h (@p ["c"] ["b" "a"]) "/"))
-(assert-equals (@p ["d"] ["b" "a"] ["c"]) (shenj.platform/call-info-symbol->-h (@p () ["b" "a"] ["c"]) "d"))
-
 (define shenj.platform/string-fix List -> (list->string (reverse List)))
-
-(assert-equals "abcd" (shenj.platform/string-fix ["d" "c" "b" "a"]))
 
 (define shenj.platform/call-info-fix
   (@p F N M) -> (@p (shenj.platform/string-fix F) (shenj.platform/string-fix N) (shenj.platform/string-fix M))
   (@p F N) -> (@p (shenj.platform/string-fix F) (shenj.platform/string-fix N))
   F -> (shenj.platform/string-fix F))
-
-(assert-equals (@p "e" "ab" "cd") (shenj.platform/call-info-fix (@p ["e"] ["b" "a"] ["d" "c"])))
 
 \*
 Create the mapping between function symbol and Java class and method.
@@ -54,13 +50,6 @@ Second two things are optional
                   Str
                   (shenj.platform/call-info-fix (foldl (function shenj.platform/call-info-symbol->-h) () (explode Str))))))
 
-
-(assert-equals "blue" (shenj.platform/call-info-symbol-> blue))
-(assert-equals "blue-friend/or-other-thing/" (shenj.platform/call-info-symbol-> blue-friend/or-other-thing/))
-(assert-equals "blue-friend-/" (shenj.platform/call-info-symbol-> blue-friend-/))
-(assert-equals (@p "symbol->" "shenj.platform") (shenj.platform/call-info-symbol-> shenj.platform/symbol->))
-(assert-equals (@p "call-info-symbol->" "shenj.platform") (shenj.platform/call-info-symbol-> shenj.platform/call-info-symbol->))
-
 (define shenj.platform/call-info-namespace
   (@p F N M) -> N
   (@p F N) -> N
@@ -76,15 +65,6 @@ Second two things are optional
   (@p F N) -> F
   F -> F)
 
-(assert-equals "shenj.platform" (shenj.platform/call-info-namespace (shenj.platform/call-info-symbol-> shenj.platform/call-info-symbol->)))
-(assert-equals "" (shenj.platform/call-info-module-name (shenj.platform/call-info-symbol-> shenj.platform/call-info-symbol->)))
-(assert-equals "call-info-symbol->" (shenj.platform/call-info-function-name (shenj.platform/call-info-symbol-> shenj.platform/call-info-symbol->)))
-(assert-equals "" (shenj.platform/call-info-module-name (shenj.platform/call-info-symbol-> shenj.platform/symbol->)))
-
-(assert-equals "shen-i" (shenj.platform/call-info-namespace (shenj.platform/call-info-symbol-> shen-i/o-macro)))
-(assert-equals "o-macro" (shenj.platform/call-info-function-name (shenj.platform/call-info-symbol-> shen-i/o-macro)))
-(assert-equals "" (shenj.platform/call-info-module-name (shenj.platform/call-info-symbol-> shen-i/o-macro)))
-
 (define string-split-h
   _ Result () -> Result
   _ Result "" -> Result
@@ -97,19 +77,56 @@ Second two things are optional
 (define string-split
   Delim String -> (reverse (foldl (string-split-h ".") () (explode String))))
 
-(assert-equals () (string-split "." ""))
-(assert-equals () (string-split "." "."))
-(assert-equals ["one" "two" "three"] (string-split "." "one.two.three"))
-
 (define string-join
   _ () -> ""
   Delim [X] -> X
   Delim [X | Xs] -> (@s X Delim (string-join Delim Xs)))
 
+(define name->method-name
+  "" -> ""
+  Name -> (ensure-not-reserved (cn (ustring-downcase (ensure-valid-char (hdstr Name))) (javify-loop (explode (tlstr Name))))))
+
+(define name->class-name
+  "" -> ""
+  Name ->
+    (let First (hdstr Name) Rest (tlstr Name)
+      (cond ((letter? First) (@s (ustring-upcase First) (javify-loop (explode Rest))))
+		    (true (@s (ensure-valid-char First) (name->method-name Rest))))))
+
+(define javify-loop
+  [] -> ""
+  [X] -> (ensure-valid-char X)
+  ["-" ">" Third | Rest] ->
+    (@s "To" (ustring-upcase Third) (javify-loop Rest))
+	where (letter? Third)
+  ["<" "-" Third | Rest] ->
+    (@s "From" (ustring-upcase Third) (javify-loop Rest))
+	where (letter? Third)
+  ["-" Second | Rest] ->
+    (let Fixed
+	     (ensure-valid-char Second)
+         (@s (ustring-upcase Fixed) (javify-loop Rest)))
+  [First | Rest] -> (@s (ensure-valid-char First) (javify-loop Rest))
+  X -> (simple-error "List expected. Call explode before calling javify-loop."))
+
+(define ensure-valid-char
+  "*" -> "Star"
+  "/" -> "Slash"
+  "?" -> "Q"
+  "+" -> "Plus"
+  "_" -> "_"
+  "@" -> "At"
+  "<" -> "A"
+  ">" -> "Z"
+  "-" -> "Hyphen"
+  "=" -> "Equal"
+  "!" -> "Bang"
+  "~" -> "Tilde"
+  "." -> "Dot"
+  X -> (if (or (digit? X) (letter? X)) X "TOxDO"))
+
 (define shenj.platform/call-info-namespace->package
   Namespace -> (string-join "." (map (function name->method-name) (string-split "." Namespace))))
-
-(assert-equals "shenShen.friendBlue" (shenj.platform/call-info-namespace->package "shen-shen.friend-blue"))
 
 
 (define shenj.platform/call-info-symbol->java-call-info
@@ -120,18 +137,8 @@ Second two things are optional
                  Methodname (if (= "" Modulename) "LAMBDA" (name->method-name Functionname))
               (@p (shenj.platform/call-info-namespace->package (shenj.platform/call-info-namespace Info)) Classname Methodname)))
 
-(assert-equals (@p "shenj.root" "DoSomethingSlash" "LAMBDA") (shenj.platform/call-info-symbol->java-call-info do-something-/))
-(assert-equals (@p "shenj.platform" "OrOther" "LAMBDA") (shenj.platform/call-info-symbol->java-call-info shenj.platform/or-other))
-
 (define shenj.platform/call-info-symbol->java-call-string
   Symbol -> (let Info (shenj.platform/call-info-symbol->java-call-info Symbol)
               (@s (fst Info) "." (second Info) "." (third Info))))
-
-(assert-equals "shenj.platform.DoSomething.orOther" (shenj.platform/call-info-symbol->java-call-string shenj.platform/DoSomething/or-other))
-(assert-equals "shenj.platform.OrOther.LAMBDA" (shenj.platform/call-info-symbol->java-call-string shenj.platform/or-other))
-(assert-equals "shenj.root.ACall.LAMBDA" (shenj.platform/call-info-symbol->java-call-string a-call))
-(assert-equals "shenI.OMacro.LAMBDA" (shenj.platform/call-info-symbol->java-call-string shen-i/o-macro))
-
-(assert-equals "shenShen.friendFriend.ClassInfo.orOther" (shenj.platform/call-info-symbol->java-call-string shen-shen.friend-friend/class-info/or-other))
 
 

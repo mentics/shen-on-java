@@ -32,7 +32,8 @@ public class InstanceMethodArgInfo {
 
             String methodName = (String) call;
 
-            Class<?> cls = currentContext.get().getClass(stripSymbolCall(args[1].toString()));
+            String receiverType = stripSymbolCall(args[1].toString());
+            Class<?> cls = currentContext.get().getClass(receiverType);
             String argString = null;
             String returnType = null;
             for (Method method : cls.getMethods()) {
@@ -43,7 +44,7 @@ public class InstanceMethodArgInfo {
 
                 Class<?>[] types = method.getParameterTypes();
                 if (types.length == 0 && args.length == 0) {
-                    return tuple(method.getReturnType(), "");
+                    return tuple(method.getReturnType(), "", receiverType);
                 }
                 String newArgString = makeArgString(types, makeTypePairList(ArrayUtil.removeFirst(2, args)));
                 if (newArgString != null) {
@@ -56,7 +57,7 @@ public class InstanceMethodArgInfo {
                 }
             }
             if (argString != null) {
-                return tuple(returnType, argString);
+                return tuple(returnType, argString, receiverType);
             } else {
                 throw new ShenException("No method found for: " + cls.getName() + " " + call + " " + theArgs);
             }

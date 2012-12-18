@@ -1,6 +1,7 @@
 package shenj.reflect;
 
 
+import static com.mentics.shenj.Nil.*;
 import static com.mentics.shenj.ShenjRuntime.*;
 
 import com.mentics.shenj.Lambda;
@@ -8,7 +9,6 @@ import com.mentics.shenj.Lambda1;
 import com.mentics.shenj.Nil;
 import com.mentics.shenj.ShenjRuntime;
 import com.mentics.shenj.Symbol;
-import com.mentics.shenj.inner.Context;
 
 
 public class LookupFunction {
@@ -18,11 +18,20 @@ public class LookupFunction {
             Lambda l = ShenjRuntime.getCurrentContext().getFunctions().get(key);
             if (l == null) {
                 String s = key.toString();
-                if (s.startsWith("shenj.dot/")) {
-                    
+                try {
+                    String className = s.replaceAll("\\#", "");
+                    return ShenjRuntime.getCurrentContext().loadClass(className) != null ? symbol(className) : NIL;
+                } catch (ClassNotFoundException e) {
+                    // if (s.startsWith("shenj.dot/")) {
+                    // Object t = Primitives.evalKl(makeCons(symbol("parse-java-call-symbol"),
+                    // makeCons(symbol("intern"), s))) == Nil.NIL ? Nil.NIL : key;
+                    // if (symbol("static-method").equals(ShenjUtil.first(t))) {
+                    //
+                    // }
+                    // }
                 }
             }
-            return l != null ? l : Nil.NIL;
+            return l != null ? key : Nil.NIL;
         }
     };
 }

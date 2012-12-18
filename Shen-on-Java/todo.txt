@@ -1,4 +1,4 @@
-Create executable jar
+Instead of #, can we check the existing defined vars instead of upper first char?
 
 Add kryo license notice
 
@@ -6,6 +6,8 @@ TODO next:
 subclassing/interfaces/protocols
 namespacing
 thread contexts?
+
+tail recursion elimination special case for do
 
 Change dot notation: ending with . should represent a package. So do something else for constructor.
 
@@ -38,6 +40,8 @@ How to remove properties from an image
 How to remove functions from an image
 
 --------  Done  ----------------
+
+Create executable jar
 
 We need to handle casting in the method signatures--we'll need to do that with reflection, so we'll have to call into java to get the argstring
 

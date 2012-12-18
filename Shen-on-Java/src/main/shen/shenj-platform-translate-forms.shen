@@ -41,15 +41,9 @@
                  (fst PX1) (handle-unreachable-assignment Result PX1)
                  (fst PX2) (handle-unreachable-assignment Result PX2)))
 
-\*(assert-equals "" (handle-if-h false*\ 
-
                                  
 (define tail-call?
   P1 P2 -> (or (to-boolean (fourth P1)) (to-boolean (fourth P2))))
-
-(assert-equals false (tail-call? (@p a b) (@p 1 2)))
-(assert-equals true (tail-call? (@p a b c true) (@p 1 2)))
-(assert-equals true (tail-call? (@p a b c false) (@p 1 2 3 true)))
 
 
 (define handle-if A0 A1 A2 Type Vars Tail? ->
@@ -66,11 +60,6 @@
             (if (= unreachable (third PX0)) unreachable
               (combine-types (third PX1) (third PX2)))
             (tail-call? PX1 PX2)))))
-
-\*(assert-equals "" 
-  (handle-if true 1 2 number () false))*\
-(handle-if true 1 2 number () true)
-(handle-if true 1 2 number () false)
 
 
 (define handle-trap-error To-eval Handler Type Vars Tail? ->
@@ -92,11 +81,6 @@
 
 (assert-equals "do something replaceVar1 and replaceVar2" 
 *\
-
-(define replace-vars-string
-  String (@p (@p _ FromVar) (@p _ ToVar)) -> (cn String (make-string "final Object ~A = ~A;~%" ToVar FromVar)))
-
-(assert-equals (make-string "start: final Object v2 = v1;~%") (replace-vars-string "start: " (@p (@p v1 "v1") (@p v2 "v2"))))
 
 (define handle-lambda
   Var Body Type Vars Tail? ->
@@ -136,16 +120,11 @@
 (define prepend-all
   Prepend Searches String -> (foldl (/. String Search (shenj.platform/regex Search String (cn Prepend Search))) String Searches)) 
 
-(assert-equals "(+ savev1 savev2)" (prepend-all "save" ["v1" "v2"] "(+ v1 v2)"))
-
 (define handle-tail-call-h
   String (@p Param Arg) ->
     (let P (second Param)
          FixedArg (prepend-all "save" (map (function second) (compile-context-params)) Arg)
       (if (= P Arg) String (cn String (make-string "~A = ~A;~%" P FixedArg)))))
-
-(assert-equals "blah" (handle-tail-call-h "blah" (@p (@p v123 "v123") "v123")))
-(assert-equals (make-string "v713 = a39;v714 = a40;~%") (handle-tail-call-h "v713 = a39;" (@p (@p V714 "v714") "a40")))
 
 (define handle-tail-call
   Name EvaledArgs -> (@s (foldl (/. String P (make-string "~Afinal Object save~A = ~A;~%" String P P)) ""
@@ -155,9 +134,6 @@
                                 (zip (compile-context-params) (map (function second) EvaledArgs)))
                          (make-string "continue;~%")))
 
-(set-compile-context (@p test [(@p v1 "v1" object) (@p v2 "v2" object)]))
-(assert-equals (make-string "final Object savev1 = v1;~%final Object savev2 = v2;~%v1 = 2;~%v2 = savev1;~%continue;~%")
-               (handle-tail-call test [(@p "" "2" object) (@p "" "v1" object)]))
 
 \* TODO: can do direct (make-string "~A.lambda.apply(~A)" (to-var name) Args-string) *\
 (define handle-call Func Args Type Vars Tail? ->
@@ -215,9 +191,10 @@
   (@p instance-method Callpart) Result Args-prep-string EvaledArgs ->
     (let ArgInfo (shenj.platform/instance-method-arg-info Callpart (map (function second) (tl EvaledArgs)))
          Args-string (second ArgInfo)
+         Receiver-type (third ArgInfo)
          Void? (= "void" (fst ArgInfo))
          Assignment (if Void? "" (make-string "Object ~A =" Result))
-      (@p (make-string "~A~A~A.~A(~A);~%" Args-prep-string Assignment (second (hd EvaledArgs)) Callpart Args-string)
+      (@p (make-string "~A~A((~A)~A).~A(~A);~%" Args-prep-string Assignment Receiver-type (second (hd EvaledArgs)) Callpart Args-string)
           (if Void? "null" (str Result))
           (if Void? void object)))
   (@p static-method Callpart) Result Args-prep-string EvaledArgs ->

@@ -34,6 +34,10 @@ public class ShenjUtil {
         return new Object[] { symbol("shen-tuple"), one, two };
     }
 
+    public static Object[] tuple(Object one, Object two, Object three) {
+        return tuple(one, tuple(two, three));
+    }
+
     public static String stripSymbolCall(String str) {
         return str.substring("symbol(\"".length(), str.length() - "\")".length());
     }
@@ -66,5 +70,32 @@ public class ShenjUtil {
 
         builder.setLength(builder.length() - 2);
         return builder.toString();
+    }
+
+    public static Object first(Object tuple) {
+        return ((Object[]) tuple)[1];
+    }
+
+    public static Object second(Object tuple) {
+        Object[] t0 = (Object[]) tuple;
+        if (t0[2].getClass().isArray()) {
+            Object[] t1 = (Object[]) t0[2];
+            if (t1[0] == symbol("shen-tuple")) {
+                return t1[1];
+            } else {
+                // The second item in the tuple is an array
+                return t1;
+            }
+        } else {
+            return ((Object[]) tuple)[2];
+        }
+    }
+
+    /**
+     * NOTE: 4-tuples will not work here!
+     */
+    public static Object third(Object tuple) {
+        Object[] t0 = (Object[]) tuple;
+        return ((Object[]) t0[2])[2];
     }
 }

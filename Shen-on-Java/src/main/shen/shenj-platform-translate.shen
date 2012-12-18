@@ -39,6 +39,7 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
   [trap-error To-eval Handler] Type Vars Tail? -> (handle-trap-error To-eval Handler Type Vars Tail?)
 
   [lambda Var Body] Type Vars Tail? -> (handle-lambda Var Body Type Vars Tail?)
+  [lambda | Rest] _ _ _ -> (error "lambda must be called with 2 parameters, but it was passed: ~A" Rest) 
 
   [simple-error Message] Type Vars Tail? ->
     (let Message' (kl-to-java-traverse Message string Vars false)

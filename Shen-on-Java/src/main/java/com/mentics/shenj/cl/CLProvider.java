@@ -258,4 +258,8 @@ public class CLProvider implements JavaFileObjectSource {
     public boolean deleteClass(String className) {
         return dcl.deleteClass(className);
     }
+
+    public Class<?> loadClass(String s) throws ClassNotFoundException {
+        return dcl.loadClass(s);
+    }
 }

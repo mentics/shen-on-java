@@ -1,5 +1,33 @@
 (define assert-equals Expected Actual -> (if (= Expected Actual) true (error "Assertion failed, expected=~A, actual=~A" Expected Actual)))
 
+(define != X Y -> (not (= X Y)))
+
+(define putv Symbol Link Value Vector -> (do (put Symbol Link Value Vector) Vector))
+
+(define putv-all Symbols Link Value Vector ->
+  (do (map (/. Symbol (putv Symbol Link Value Vector)) Symbols) Vector))
+
+(define loop
+  _ From To -> [] where (> From To)
+  Function From To -> (cons (Function From) (loop Function (+ From 1) To)))
+
+(define id X -> X)
+(define mapv
+  Function Vector -> (loop (/. Index (Function (trap-error (<-vector Vector Index) (/. E ())))) 1 (limit Vector)))
+
+(define flatten-list List -> (foldl (function append) () List))
+
+(define get-keys-h
+  List -> (map (/. V (hd (hd V))) List))
+
+\* Gets all the keys in a property vector *\
+(define get-keys
+  Vector -> (flatten-list (mapv (function get-keys-h) Vector)))
+
+(define find
+  _ [] -> ()
+  Predicate [X | Rest] -> (if (Predicate X) X (find Predicate Rest)))
+
 
 (define shenj.platform/parse-shen X ->  (snd (shen-<st_input> (@p (to-intlist X) ()))))
 (define shenj.platform/eval-shens X -> (map (function eval) (parse-shen X)))
@@ -36,66 +64,37 @@
   Acc Character -> (cons (string->n Character) Acc))
 (define to-intlist Code -> (reverse (foldl to-intlist-iterate [] (explode Code))))
 
-(set *java-reserved* ["byte" "char" "int" "long" "float" "double" "switch" "case" "public" "protected" "private"])
+(set *java-reserved* (map (function str)
+[abstract	assert	boolean	break	byte	case
+catch	char	class	const*	continue	default
+double	do	else	enum	extends	false
+final	finally	float	for	goto*	if
+implements	import	instanceof	int	interface	long
+native	new	null	package	private	protected
+public	return	short	static	strictfp	super
+switch	synchronized	this	throw	throws	transient
+true	try	void	volatile	while]))
 
 (define ensure-not-reserved
   X -> (if (element? X (value *java-reserved*)) (cn "_" X) X))
 
-(define name->method-name
-  "" -> ""
-  Name -> (ensure-not-reserved (cn (ustring-downcase (ensure-valid-char (hdstr Name))) (javify-loop (explode (tlstr Name))))))
-
-(define name->class-name
-  "" -> ""
-  Name ->
-    (let First (hdstr Name) Rest (tlstr Name)
-      (cond ((letter? First) (@s (ustring-upcase First) (javify-loop (explode Rest))))
-		    (true (@s (ensure-valid-char First) (name->method-name Rest))))))
-
-(define javify-loop
-  [] -> ""
-  [X] -> (ensure-valid-char X)
-  ["-" ">" Third | Rest] ->
-    (@s "To" (ustring-upcase Third) (javify-loop Rest))
-	where (letter? Third)
-  ["<" "-" Third | Rest] ->
-    (@s "From" (ustring-upcase Third) (javify-loop Rest))
-	where (letter? Third)
-  ["-" Second | Rest] ->
-    (let Fixed
-	     (ensure-valid-char Second)
-         (@s (ustring-upcase Fixed) (javify-loop Rest)))
-  [First | Rest] -> (@s (ensure-valid-char First) (javify-loop Rest))
-  X -> (simple-error "List expected. Call explode before calling javify-loop."))
-
-(define ensure-valid-char
-  "*" -> "Star"
-  "/" -> "Slash"
-  "?" -> "Q"
-  "+" -> "Plus"
-  "_" -> "_"
-  "@" -> "At"
-  "<" -> "A"
-  ">" -> "Z"
-  "-" -> "Hyphen"
-  "=" -> "Equal"
-  "!" -> "Bang"
-  "~" -> "Tilde"
-  "." -> "Dot"
-  X -> (if (or (digit? X) (letter? X)) X "TOxDO"))
-
 (define second
-  (@p A (@p B C)) -> B
-  (@p A B) -> B)
+  (@p _ B _) -> B
+  (@p _ B) -> B)
 
 (define third
-  (@p A (@p B (@p C D))) -> C
-  (@p A (@p B C)) -> C
+  (@p _ _ C _) -> C
+  (@p _ _ C) -> C
   _ -> ())
 
 (define fourth
-  (@p A B C D E) -> D
-  (@p A B C D) -> D
+  (@p _ _ _ D _) -> D
+  (@p _ _ _ D) -> D
+  _ -> ())
+
+(define fifth
+  (@p _ _ _ _ E _) -> E
+  (@p _ _ _ _ E) -> E
   _ -> ())
 
 (define type-of X -> (cond
@@ -236,15 +235,11 @@
 (define newline-if-not-empty
   "" -> ""
   String -> (cn String (n->string 10)))
-(assert-equals "" (newline-if-not-empty ""))
-(assert-equals (make-string "~A~%" blue) (newline-if-not-empty (str blue)))
 
 (define zip
   [] [] -> []
   [X] [Y] -> [(@p X Y)]
   [X | RestX] [Y | RestY] -> (cons (@p X Y) (zip RestX RestY)))
-
-(assert-equals [(@p 1 a) (@p 2 b) (@p 3 c)] (zip [1 2 3] [a b c]))
 
 
 (define to-boolean
@@ -256,6 +251,11 @@
 
 (define remove-newlines String -> (string-replace "c#10;" "\n" (string-replace "c#13;" "\r" String)))
 
+
+(define ensure-prefix
+  Prefix Symbol -> (if (string-prefix? (str Prefix) (str Symbol))
+                     Symbol
+                     (concat Prefix Symbol)))
 
 (define escape-java-ustring
   "c#34;" -> "c#92;c#34;"
