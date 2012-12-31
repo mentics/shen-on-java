@@ -25,6 +25,7 @@ import com.mentics.shenj.ShenException;
 import com.mentics.shenj.ShenjRuntime;
 import com.mentics.shenj.Symbol;
 import com.mentics.shenj.VarLambda;
+import com.mentics.shenj.cl.DirectClassLoader;
 import com.mentics.util.KryoUtil;
 import com.mentics.util.ReflectionUtil;
 
@@ -94,7 +95,12 @@ public class Context {
         // }
     }
 
-    static void saveImage(Output out) {
+    public static void saveImage(Output out) {
+        DirectClassLoader dcl = (DirectClassLoader) Context.class.getClassLoader();
+        dcl.saveImage(out);
+    }
+    
+    public static void saveImageContextPart(Output out) {
         Kryo kryo = newKryo();
         kryo.setClassLoader(Context.class.getClassLoader());
         clearGlobalConstants(globalProperties);
@@ -254,7 +260,7 @@ public class Context {
         }
     }
 
-    static void loadPrimitives() {
+    public static void loadPrimitives() {
         try {
             for (final Field f : Primitives.class.getFields()) {
                 if (Lambda.class.isAssignableFrom(f.getType())) {
@@ -305,6 +311,19 @@ public class Context {
             rethrow(e);
         }
         throw new ShenException("Could not find constructor for: " + name + "(" + Arrays.toString(args) + ")");
+    }
+
+    public static Class<?> loadClass(String className) throws ClassNotFoundException {
+        return Context.class.getClassLoader().loadClass(className);
+    }
+
+    public static Object apply(String name, Object... args) {
+        return ((DirectClassLoader) Context.class.getClassLoader()).apply(name, args);
+    }
+
+    public static Object doEval(Object className, Object classContent) {
+        return ((DirectClassLoader) Context.class.getClassLoader()).doEval((String) globalProperties.get(SRC_DIR_SYM),
+                className, classContent);
     }
 
     // static void registerAll(Map<String, byte[]> toReg) {

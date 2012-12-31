@@ -59,22 +59,22 @@ public class CLProvider implements JavaFileObjectSource {
 
     // Public Methods //
 
-    public CLProvider newEmpty() {
-        return new CLProvider(createEmptyImage(dcl));
-    }
+//    public CLProvider newEmpty() {
+//        return new CLProvider(createEmptyImage(dcl));
+//    }
 
-    public Object eval(String className, String classContent) {
-        try {
-            if (!className.contains(".")) {
-                throw new ShenException("No package for class: " + className);
-            }
-            compileTask(getJavaSourceDir(), (String) className, (String) classContent);
-            return dcl.runClass((String) className);
-        } catch (Exception e) {
-            rethrow(e);
-            return null; // unreachable code
-        }
-    }
+//    public Object eval(String className, String classContent) {
+//        try {
+//            if (!className.contains(".")) {
+//                throw new ShenException("No package for class: " + className);
+//            }
+//            compileTask(getJavaSourceDir(), (String) className, (String) classContent);
+//            return dcl.runClass((String) className);
+//        } catch (Exception e) {
+//            rethrow(e);
+//            return null; // unreachable code
+//        }
+//    }
 
     public String getJavaSourceDir() {
         Object o = dcl.getGlobalProps().get(SRC_DIR_SYM);
@@ -106,13 +106,13 @@ public class CLProvider implements JavaFileObjectSource {
     }
 
 
-    public Map<String, byte[]> compileTask(String srcDir, final String className, final String classContent)
+    public static Map<String, byte[]> compileTask(DirectClassLoader dcl, String srcDir, final String className, final String classContent)
             throws CharSequenceCompilerException {
         if (srcDir != null) {
             StringUtil.writeToFile(classContent, new File(srcDir, className.replace('.', '/') + ".java"));
         }
 
-        CharSequenceCompiler compiler = new CharSequenceCompiler(this, asList("-g"));
+        CharSequenceCompiler compiler = new CharSequenceCompiler(dcl, asList("-g"));
 
         // System.out.println("Compiling classname: " + className);
 
@@ -155,7 +155,7 @@ public class CLProvider implements JavaFileObjectSource {
                                 + ".LAMBDA.apply");
                         if (numParams != -1) {
                             // newClasses.putAll();
-                            createStubFunction(srcDir, missingClassFQN, numParams);
+                            createStubFunction(dcl, srcDir, missingClassFQN, numParams);
                             retry = true;
                         } else {
                             errors.add(d.toString());
@@ -168,7 +168,7 @@ public class CLProvider implements JavaFileObjectSource {
             }
         }
         if (retry) {
-            compileTask(srcDir, className, classContent);
+            compileTask(dcl, srcDir, className, classContent);
             // newClasses.putAll();
         } else if (errors.size() > 0) {
             throw new ShenException(errors.toString());
@@ -188,7 +188,7 @@ public class CLProvider implements JavaFileObjectSource {
      * symbol: class LAMBDA
      * location: package Map
      */
-    private String tryPackage2(String pkg, String msg) {
+    private static String tryPackage2(String pkg, String msg) {
         String ret = null;
         Pattern packageErrorPattern = Pattern.compile("location\\: package\\s(.+?)$");
         Matcher packageErrorMatcher = packageErrorPattern.matcher(msg);
@@ -199,7 +199,7 @@ public class CLProvider implements JavaFileObjectSource {
         return ret;
     }
 
-    private String tryPackage1(String pkg, String msg) {
+    private static String tryPackage1(String pkg, String msg) {
         String ret = null;
         Pattern packageErrorPattern = Pattern.compile("package\\s(.+?)\\sdoes not exist");
         Matcher packageErrorMatcher = packageErrorPattern.matcher(msg);
@@ -209,7 +209,7 @@ public class CLProvider implements JavaFileObjectSource {
         return ret;
     }
 
-    private void createStubFunction(String srcDir, String missingClassFQN, int numParams)
+    private static void createStubFunction(DirectClassLoader dcl, String srcDir, String missingClassFQN, int numParams)
             throws CharSequenceCompilerException {
         // System.out.println("stub compile: " + missingClassFQN);
         StringBuilder classContent = new StringBuilder();
@@ -227,7 +227,7 @@ public class CLProvider implements JavaFileObjectSource {
         classContent.append("public Object apply(" + sig + ") {");
         classContent.append("  throw new ShenException(\"Function " + missingClassFQN + " is not defined.\");");
         classContent.append("} }; }");
-        compileTask(srcDir, missingClassFQN, classContent.toString());
+        compileTask(dcl, srcDir, missingClassFQN, classContent.toString());
     }
 
     public void loadPrimitives() {

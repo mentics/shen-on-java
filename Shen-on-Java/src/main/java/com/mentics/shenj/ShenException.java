@@ -3,6 +3,7 @@ package com.mentics.shenj;
 public class ShenException extends RuntimeException {
     private static final long serialVersionUID = -7114753468075079810L;
 
+
     public ShenException(String msg) {
         super(msg);
     }
@@ -15,10 +16,12 @@ public class ShenException extends RuntimeException {
         if (e instanceof RuntimeException) {
             throw (RuntimeException) e;
         } else if (e instanceof ShenException) {
-            throw (ShenException)e;
+            throw (ShenException) e;
         } else if (e.getCause() != null) {
             if (e.getCause() instanceof ShenException) {
-                throw (ShenException)e.getCause();
+                throw (ShenException) e.getCause();
+            } else if (e.getCause() instanceof Error) {
+                throw (Error) e.getCause();
             } else {
                 throw new ShenException(e.getCause());
             }

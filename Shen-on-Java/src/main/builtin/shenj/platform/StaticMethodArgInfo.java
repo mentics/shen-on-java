@@ -10,11 +10,11 @@ import java.lang.reflect.Modifier;
 import com.mentics.shenj.Cons;
 import com.mentics.shenj.Lambda;
 import com.mentics.shenj.Lambda2;
-import com.mentics.shenj.Lang;
 import com.mentics.shenj.Nil;
 import com.mentics.shenj.ShenException;
 import com.mentics.shenj.ShenjUtil;
 import com.mentics.shenj.Symbol;
+import com.mentics.shenj.inner.Context;
 import com.mentics.util.StringUtil;
 
 
@@ -31,7 +31,7 @@ public class StaticMethodArgInfo {
             String methodName = StringUtil.lastToken(".", (String) call);
             String className = StringUtil.removeLastToken(".", (String) call);
             
-            Class<?> cls = currentContext.get().getClass(className);
+            Class<?> cls = Context.loadClass(className);
             String argString = null;
             Symbol returnType = null;
             for (Method method : cls.getMethods()) {

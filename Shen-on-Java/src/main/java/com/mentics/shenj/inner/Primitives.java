@@ -1,6 +1,5 @@
 package com.mentics.shenj.inner;
 
-import static com.mentics.shenj.ShenjRuntime.*;
 import static java.util.Calendar.*;
 
 import java.io.Closeable;
@@ -275,13 +274,13 @@ public class Primitives {
 
     @Label("eval-kl")
     public static Object evalKl(final Object kl) throws Exception {
-        Object o = getCurrentContext().getGlobalProperties().get(SHOW_EVAL);
+        Object o = Context.globalProperties.get(SHOW_EVAL);
         if (o != null && o instanceof Boolean && (Boolean) o) {
             System.out.println("Evalkl: " + kl);
         }
         if (kl instanceof Cons) {
             // TODO: make more efficient. Did reflection to avoid dependency
-            return getCurrentContext().apply("shenj.root.EvalKl", kl);
+            return Context.apply("shenj.root.EvalKl", kl);
         } else {
             return kl;
         }

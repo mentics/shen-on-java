@@ -55,6 +55,33 @@ com.mentics.shenj.SimpleError: Invalid argument to handle-case: []
 
 It makes no sense. If I reevaluate the fourth define then try to track it, it works fine. But even after reevaluate, save, rerun REPL, track will throw above error.
 
+---------------------------------------------
+
+java.lang.ClassNotFoundException: j
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:423)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:356)
+	at com.mentics.shenj.cl.DirectClassLoader.loadClass(DirectClassLoader.java:355)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:356)
+	at com.mentics.shenj.inner.Context.loadClass(Context.java:317)
+	at shenj.platform.StaticMethodArgInfo$1.apply(StaticMethodArgInfo.java:34)
+	at shenj.root.HandleJava$1.apply(HandleJava.java:212)
+	at shenj.root.HandleJavaCall$1.apply(HandleJavaCall.java:52)
+	at shenj.root.KlToJavaTraverse$1.apply(KlToJavaTraverse.java:2723)
+	at shenj.root.Flip4$1$1$1$1$1.apply(Flip4.java:35)
+	at com.mentics.shenj.Cons.forEach(Cons.java:89)
+	at shenj.root.Map$1.apply(Map.java:23)
+	at shenj.root.HandleCall$1.apply(HandleCall.java:52)
+	at shenj.root.KlToJavaTraverse$1.apply(KlToJavaTraverse.java:2728)
+
+Inside a namespace, it's trying to deal with something like shenj.platform/eval-shen. 
+Test case added to test-namespace.shen:
+(namespace foo [] [shenj.dot/] (shenj.platform/eval-shen "2"))
+
 
 ---------------------------------------------
 

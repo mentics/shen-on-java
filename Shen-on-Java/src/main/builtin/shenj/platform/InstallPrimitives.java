@@ -1,10 +1,11 @@
-package shenj.root;
+package shenj.platform;
 
 
 import com.mentics.shenj.Lambda;
 import com.mentics.shenj.Lambda0;
 import com.mentics.shenj.ShenjRuntime;
 import com.mentics.shenj.Symbol;
+import com.mentics.shenj.inner.Context;
 
 
 public class InstallPrimitives {
@@ -19,7 +20,7 @@ public class InstallPrimitives {
 
 
     public static Object defined() throws Exception {
-        ShenjRuntime.getCurrentContext().loadPrimitives();
+        Context.loadPrimitives();
         return true;
     }
 }

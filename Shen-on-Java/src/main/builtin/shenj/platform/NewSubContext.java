@@ -1,4 +1,7 @@
-package shenj.root;
+package shenj.platform;
+
+import static com.mentics.shenj.cl.DirectClassLoader.*;
+import static com.mentics.util.ReflectionUtil.*;
 
 import com.mentics.shenj.Lambda;
 import com.mentics.shenj.Lambda0;
@@ -12,12 +15,8 @@ public class NewSubContext {
 
     public static Lambda LAMBDA = new Lambda0() {
         public Object apply() throws Exception {
-            return defined();
+            // return ShenjRuntime.getCurrentContext().newEmpty();
+            return loadDefaultImage(threadClassLoader());
         }
     };
-
-
-    public static Object defined() throws Exception {
-        return ShenjRuntime.getCurrentContext().newEmpty();
-    }
 }

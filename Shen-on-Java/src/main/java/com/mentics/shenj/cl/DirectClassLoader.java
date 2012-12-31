@@ -10,6 +10,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -22,9 +23,11 @@ import javax.tools.JavaFileObject;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
+import com.mentics.shenj.CharSequenceCompilerException;
 import com.mentics.shenj.JavaFileObjectImpl;
 import com.mentics.shenj.JavaFileObjectSource;
 import com.mentics.shenj.Lambda;
+import com.mentics.shenj.ShenException;
 import com.mentics.shenj.Symbol;
 import com.mentics.shenj.inner.Context;
 import com.mentics.util.ReflectionUtil;
@@ -36,8 +39,8 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
     static int count = 0;
 
 
-    static DirectClassLoader loadDefaultImage(ClassLoader parent) {
-        try (Input in = new Input(ReflectionUtil.openResource("com/mentics/shenj/image/default.image"))) {
+    public static DirectClassLoader loadDefaultImage(ClassLoader parent) {
+        try (Input in = new Input(openResource("com/mentics/shenj/image/default.image"))) {
             return loadFromImage(parent, in);
         } catch (Exception e) {
             rethrow(e);
@@ -46,9 +49,9 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
     }
 
     @SuppressWarnings("unchecked")
-    static DirectClassLoader loadFromImage(ClassLoader parent, Input in) {
+    public static DirectClassLoader loadFromImage(ClassLoader parent, Input in) {
         Kryo kryo = newKryo();
-        DirectClassLoader dcl = new DirectClassLoader(ReflectionUtil.threadClassLoader(),
+        DirectClassLoader dcl = new DirectClassLoader(threadClassLoader(),
                 (Map<String, byte[]>) kryo.readClassAndObject(in));
         // System.out.println(dcl.classes);
         dcl.callContext("loadImage", new Class[] { Input.class }, new Object[] { in });
@@ -56,7 +59,9 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
     }
 
     public static DirectClassLoader createEmptyImage(ClassLoader parent) {
-        return new DirectClassLoader(parent, new HashMap<String, byte[]>());
+        DirectClassLoader dcl = new DirectClassLoader(parent, new HashMap<String, byte[]>());
+        dcl.callContext("loadPrimitives", null, null);
+        return dcl;
     }
 
     static DirectClassLoader fromPropFile(File file) {
@@ -70,6 +75,7 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
     // Instance Fields //
 
     private Map<String, byte[]> classes;
+    // TODO: is this unnecessary since we call findLoadedClass anyway?
     private Map<String, Class<?>> loaded;
     private Map<String, List<JavaFileObject>> files;
     private boolean running = false;
@@ -154,7 +160,7 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
             writeObjects(newKryo(), out, classes);
             // System.out.println("wrote classes to image");
             Class<?> cls = loadClass(Context.class.getName());
-            invokeStatic(cls, "saveImage", new Class[] { Output.class }, new Object[] { out });
+            invokeStatic(cls, "saveImageContextPart", new Class[] { Output.class }, new Object[] { out });
         } catch (Exception e) {
             rethrow(e);
         }
@@ -210,33 +216,24 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
         return dcl;
     }
 
-    public Object apply(String className, Object arg0) {
+    public Object apply(String className, Object... args) {
         try {
             Class<?> c = loadClass(className);
             Lambda l = (Lambda) getStaticField(c, "LAMBDA");
-            return l.apply(arg0);
-        } catch (Exception e) {
-            rethrow(e);
-            return null; // unreachable code
-        }
-    }
-
-    public Object apply(String className, Object arg0, Object arg1) {
-        try {
-            Class<?> c = loadClass(className);
-            Lambda l = (Lambda) getStaticField(c, "LAMBDA");
-            return l.apply(arg0, arg1);
-        } catch (Exception e) {
-            rethrow(e);
-            return null; // unreachable code
-        }
-    }
-
-    public Object apply(String className) {
-        try {
-            Class<?> c = loadClass(className);
-            Lambda l = (Lambda) getStaticField(c, "LAMBDA");
-            return l.apply();
+            switch (args.length) {
+            case 0:
+                return l.apply();
+            case 1:
+                return l.apply(args[0]);
+            case 2:
+                return l.apply(args[0], args[1]);
+            case 3:
+                return l.apply(args[0], args[1], args[2]);
+            case 4:
+                return l.apply(args[0], args[1], args[2], args[3]);
+            default:
+                throw new ShenException("apply called with more than implemented cases: " + Arrays.toString(args));
+            }
         } catch (Exception e) {
             rethrow(e);
             return null; // unreachable code
@@ -312,6 +309,9 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
         if (findLoadedClass != null) {
             return findLoadedClass;
         }
+        if ("j".equals(name)) {
+            System.out.println("loading Context");
+        }
         if (name.indexOf('$') != -1 && name.endsWith("ConstructorAccess")) {
             throw new ClassNotFoundException("ConstructorAccess thing is not supported.");
         }
@@ -351,7 +351,7 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
                 }
                 loaded.put(name, found);
             } else {
-                // System.out.println("Parent is loading it");
+//                 System.out.println("Parent is loading: "+name);
                 return getParent().loadClass(name);
             }
         }
@@ -370,6 +370,10 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
 
     private void addToFiles(Map<String, byte[]> classes) {
         for (Entry<String, byte[]> entry : classes.entrySet()) {
+            Object o = entry.getKey();
+            if (o instanceof Symbol) {
+                System.out.println("found bad symbol: " + o.toString());
+            }
             String className = entry.getKey();
             String pkg = removeLastToken(".", className);
             List<JavaFileObject> list = files.get(pkg);
@@ -388,5 +392,24 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
 
     public boolean deleteClass(String className) {
         return this.classes.remove(className) == null ? false : true;
+    }
+
+    public Object doEval(String srcDir, Object className, Object classContent) {
+        String cn = (String) className;
+        try {
+            compile(srcDir, cn, (String) classContent);
+            return runClass(cn);
+        } catch (Exception e) {
+            rethrow(e);
+            return null; // unreachable code
+        }
+    }
+
+    public Map<String, byte[]> compile(String srcDir, String className, String classContent)
+            throws CharSequenceCompilerException {
+        if (!className.contains(".")) {
+            throw new ShenException("No package for class: " + className);
+        }
+        return CLProvider.compileTask(this, srcDir, (String) className, (String) classContent);
     }
 }

@@ -67,7 +67,7 @@
          Temp (gensym t)
          Evaled (kl-to-java-traverse To-eval object Vars false)
          Handler' (kl-to-java-traverse Handler lambda (cons (to-var-pair t) Vars) false)
-	  (@p (make-string "Object ~A;~%try {~%~A~A = ~A;~%} catch (Throwable t) {~%~A~A = ~A.apply(t);~%}~%final Object ~A = ~A;~%"
+	  (@p (make-string "Object ~A;~%try {~%~A~A = ~A;~%} catch (Exception t) {~%~A~A = ~A.apply(t);~%}~%final Object ~A = ~A;~%"
                        Temp (fst Evaled) Temp (second Evaled) (fst Handler') Temp (second Handler') Result Temp)
           (str Result)
           object)))

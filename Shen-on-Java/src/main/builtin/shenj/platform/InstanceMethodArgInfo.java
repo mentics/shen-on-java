@@ -13,6 +13,7 @@ import com.mentics.shenj.Lambda;
 import com.mentics.shenj.Lambda2;
 import com.mentics.shenj.ShenException;
 import com.mentics.shenj.Symbol;
+import com.mentics.shenj.inner.Context;
 
 
 /**
@@ -33,7 +34,7 @@ public class InstanceMethodArgInfo {
             String methodName = (String) call;
 
             String receiverType = stripSymbolCall(args[1].toString());
-            Class<?> cls = currentContext.get().getClass(receiverType);
+            Class<?> cls = Context.loadClass(receiverType);
             String argString = null;
             String returnType = null;
             for (Method method : cls.getMethods()) {

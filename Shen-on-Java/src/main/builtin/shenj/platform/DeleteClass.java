@@ -14,7 +14,8 @@ public class DeleteClass {
     public static Lambda LAMBDA = new Lambda1() {
         public Object apply(Object className) throws Exception {
             assert className instanceof String;
-            return getCurrentContext().deleteClass((String) className);
+//            return getCurrentContext().deleteClass((String) className);
+            return null;
         }
     };
 }

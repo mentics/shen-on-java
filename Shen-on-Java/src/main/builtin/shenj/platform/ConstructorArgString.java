@@ -14,6 +14,7 @@ import com.mentics.shenj.Lambda2;
 import com.mentics.shenj.Nil;
 import com.mentics.shenj.ShenException;
 import com.mentics.shenj.Symbol;
+import com.mentics.shenj.inner.Context;
 import com.mentics.util.StringUtil;
 
 
@@ -28,7 +29,7 @@ public class ConstructorArgString {
             List<String[]> argsPairList = makeTypePairList(args);
 
             String className = call.toString();
-            Class<?> cls = currentContext.get().getClass(className);
+            Class<?> cls = Context.loadClass(className);
             
             String argString = null;
             for (Constructor<?> constructor : cls.getConstructors()) {

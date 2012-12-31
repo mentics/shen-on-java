@@ -65,7 +65,7 @@
   Struct Symbol ->
     (let Imports (fourth Struct)
          Result (find (/. Import (!= (namespace/symbol-defined? Struct (concat Import Symbol)) ())) Imports)
-      (if (= Result ()) Symbol (namespace/symbol-defined? Struct (concat Result Symbol)))))
+      (if (= Result ()) () (namespace/symbol-defined? Struct (concat Result Symbol)))))
 
 (define namespace/process-symbol
   Struct Symbol ->
@@ -82,14 +82,14 @@
                                          (if (= Call-info ())
                                               ()
                                               (let Search (if (or (= static-method (fst Call-info)) (= static-field (fst Call-info)))
-                                                              (shenj.dot/com.mentics.util.StringUtil.removeLastToken "." (second Call-info))
-                                                              (second Call-info))
+                                                                      (shenj.dot/com.mentics.util.StringUtil.removeLastToken "." (second Call-info))
+                                                                      (second Call-info))
                                                    Result (namespace/look-in-imports Struct (intern Search))
-                                                (if (= Result ()) () (back-to-dot-notation Call-info (concat shenj.dot/ Result))))))
+                                                (if (= Result ()) Check-java (back-to-dot-notation Call-info (concat shenj.dot/ Result))))))
                                        ())
                       (if (= () Java-call)
                           (let Imported (namespace/look-in-imports Struct Symbol)
-                            (if (= Imported Symbol)
+                            (if (= Imported ())
                                 (let New-symbol (namespace/symbol-defined? Struct Symbol)
                                   (if (= New-symbol ()) (concat (fifth Struct) Symbol) New-symbol))
 		                            Imported))

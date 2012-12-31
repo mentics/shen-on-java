@@ -8,6 +8,7 @@ import com.esotericsoftware.kryo.io.Output;
 import com.mentics.shenj.Lambda;
 import com.mentics.shenj.Lambda1;
 import com.mentics.shenj.Symbol;
+import com.mentics.shenj.inner.Context;
 
 
 public class SaveImage {
@@ -16,15 +17,10 @@ public class SaveImage {
 
     public static Lambda LAMBDA = new Lambda1() {
         public Object apply(final Object v6932) throws Exception {
-            return defined(v6932);
+            try (Output out = new Output(new FileOutputStream((String) v6932))) {
+                Context.saveImage(out);
+            }
+            return true;
         }
     };
-
-
-    public static Object defined(final Object v6932) throws Exception {
-        try (Output out = new Output(new FileOutputStream((String) v6932))) {
-            getCurrentContext().saveImage(out);
-        }
-        return true;
-    }
 }

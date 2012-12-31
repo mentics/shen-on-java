@@ -17,7 +17,7 @@ import com.mentics.shenj.cl.CLProvider;
 public class ConstructorArgStringTest {
     @BeforeClass
     public static void classSetUp() {
-        currentContext.set(new CLProvider(createEmptyImage(threadClassLoader())));
+//        currentContext.set(new CLProvider(createEmptyImage(threadClassLoader())));
     }
 
     @Test

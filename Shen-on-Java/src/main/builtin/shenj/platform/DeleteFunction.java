@@ -14,7 +14,8 @@ public class DeleteFunction {
     public static Lambda LAMBDA = new Lambda1() {
         public Object apply(Object symbol) throws Exception {
             assert symbol instanceof Symbol;
-            return getCurrentContext().deleteFunction((Symbol) symbol);
+//            return getCurrentContext().deleteFunction((Symbol) symbol);
+            return null;
         }
     };
 }

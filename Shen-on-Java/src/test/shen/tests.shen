@@ -19,15 +19,15 @@
 
 \* Sub context basic test *\
 
-(set-context (new-sub-context))
+(shenj.platform/set-context (shenj.platform/new-sub-context))
 (value *stoutput*)
 
-(set-context (new-sub-context))
-(value blue)
+(shenj.platform/set-context (shenj.platform/new-sub-context))
+(assert-equals (fail) (value blue))
 (set blue "green")
-(value blue)
-(set-context (new-sub-context))
-(value blue)
+(assert-equals "green" (value blue))
+(shenj.platform/set-context (shenj.platform/new-sub-context))
+(assert-equals (fail) (value blue))
 
 
 \* Possible problem with anon inner classes for new redefine mechanism (setting lambda field) *\

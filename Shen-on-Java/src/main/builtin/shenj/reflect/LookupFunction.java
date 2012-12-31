@@ -7,28 +7,28 @@ import static com.mentics.shenj.ShenjRuntime.*;
 import com.mentics.shenj.Lambda;
 import com.mentics.shenj.Lambda1;
 import com.mentics.shenj.Nil;
-import com.mentics.shenj.ShenjRuntime;
 import com.mentics.shenj.ShenjUtil;
 import com.mentics.shenj.Symbol;
-import com.mentics.shenj.cl.CLProvider;
+import com.mentics.shenj.inner.Context;
 
 
 public class LookupFunction {
     public static final Symbol SYMBOL = symbol("shenj.reflect/lookup-function");
     public static Lambda LAMBDA = new Lambda1() {
         public Object apply(final Object key) throws Exception {
-            CLProvider context = ShenjRuntime.getCurrentContext();
-            Lambda l = context.getFunctions().get(key);
+            // CLProvider context = ShenjRuntime.getCurrentContext();
+            Lambda l = Context.functions.get(key);
             if (l == null) {
                 String s = key.toString();
                 String className = ShenjUtil.removeDotPkg(s.replaceAll("\\#", ""));
                 className = className.replace("..", ".");
                 try {
-                    return context.loadClass(className) != null ? symbol(className) : NIL;
+                    return Context.loadClass(className) != null ? symbol(className) : NIL;
                 } catch (ClassNotFoundException e) {
                     try {
-                        return context.loadClass("java.lang." + className) != null ? symbol("java.lang."+className) : NIL;
-                    } catch (ClassNotFoundException e2) {
+                        return Context.loadClass("java.lang." + className) != null ? symbol("java.lang." + className)
+                                : NIL;
+                    } catch (ClassNotFoundException ignore) {
                         // ignore
                     }
                     // if (s.startsWith("shenj.dot/")) {

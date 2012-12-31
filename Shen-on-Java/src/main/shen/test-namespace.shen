@@ -44,10 +44,13 @@
   true)
 
 
-
-
 (assert-equals [+ 1 2] (namespace/macro-h (namespace/default-struct) () [+ 1 2]))
 (let Struct (namespace/process-imports [n.s.1. n.s.2. alias:ns2. n.s.3. for:[sym0 sym2]] (namespace/default-struct))
   (assert-equals [define n.s.3.sym0 X Y -> [n.s.2.sym1 n.s.3.sym2 X Y]]
                  (namespace/macro-h Struct () [define sym0 X Y -> [ns2.sym1 sym2 X Y]])))
 
+
+(namespace foo [] [shenj.dot/] (shenj.platform/eval-shen "2"))
+
+TODO: make into real test case since this won't execute (can't cast nil to textarea)
+(namespace test.gui [] [shenj.dot/ javafx.scene.control.] (let Area () (.setEditable Area:#TextArea false)))

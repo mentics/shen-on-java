@@ -9,6 +9,8 @@ thread contexts?
 
 tail recursion elimination special case for do
 
+Handle full class reloading by byte code manipulation and one level of indirection to access classes
+
 Change dot notation: ending with . should represent a package. So do something else for constructor.
 
 Check read primitive kl-jav-ato-traverse, side effects in expression?
