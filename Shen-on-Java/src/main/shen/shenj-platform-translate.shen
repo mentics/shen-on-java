@@ -31,8 +31,9 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
   [defun Name Params Body] Type Vars Tail? -> (handle-defun Name Params Body Type Vars)
 
   [let Var Value Body] Type Vars Tail? -> (handle-let Var Value Body Type Vars Tail?)
-
+  
   [if A0 A1 A2] Type Vars Tail? -> (handle-if A0 A1 A2 Type Vars Tail?)
+  [if | Rest] Type Vars Tail? -> (error "Invalid number of arguments to if: " Rest)
 
   [cond | Cases] Type Vars Tail? -> (kl-to-java-traverse (handle-cases Cases) Type Vars Tail?)
 

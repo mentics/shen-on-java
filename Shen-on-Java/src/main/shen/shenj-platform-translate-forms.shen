@@ -194,12 +194,12 @@
           (make-string "~A.~A" (second (hd EvaledArgs)) Callpart)
           object)
   (@p instance-method Callpart) Result Args-prep-string EvaledArgs ->
-    (let ArgInfo (shenj.platform/instance-method-arg-info Callpart (map (function second) (tl EvaledArgs)))
+    (let ArgInfo (shenj.platform/instance-method-arg-info Callpart (map (function second) EvaledArgs))
          Args-string (second ArgInfo)
          Receiver-type (third ArgInfo)
          Void? (= "void" (fst ArgInfo))
          Assignment (if Void? "" (make-string "Object ~A =" Result))
-      (@p (make-string "~A~A((~A)~A).~A(~A);~%" Args-prep-string Assignment Receiver-type (second (hd EvaledArgs)) Callpart Args-string)
+      (@p (make-string "~A~A((~A)~A).~A(~A);~%" Args-prep-string Assignment Receiver-type (second (hd EvaledArgs)) (shenj.dot/%com.mentics.util.StringUtil.lastToken "." Callpart) Args-string)
           (if Void? "null" (str Result))
           (if Void? void object)))
   (@p static-method Callpart) Result Args-prep-string EvaledArgs ->
@@ -210,5 +210,5 @@
       (@p (make-string "~A~A~A(~A);~%" Args-prep-string Assignment Callpart Args-string)
           (if Void? "null" (str Result))
           (if Void? void object)))
-  _ _ _ _ -> (error "Unknown java call"))
+  Call Args _ _ -> (error "Unknown java call (~A ~A)" Call Args))
 

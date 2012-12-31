@@ -32,7 +32,12 @@ public class StringUtil {
     }
 
     public static String lastToken(final String delim, final String str) {
-        return !isBlank(str) ? str.substring(str.lastIndexOf(delim) + 1) : "";
+        int i = str.indexOf(delim);
+        if (i < str.length() - 1) {
+            return str.substring(str.lastIndexOf(delim) + 1);
+        } else {
+            return "";
+        }
     }
 
     public static void writeFully(String path, String code) {
@@ -101,7 +106,7 @@ public class StringUtil {
             return o == null ? "null" : o.toString();
         }
     }
-    
+
     public static String join(String delim, Object[] arr) {
         if (arr.length > 0) {
             StringBuilder builder = new StringBuilder();

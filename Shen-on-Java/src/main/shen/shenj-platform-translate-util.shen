@@ -1,13 +1,6 @@
 (define to-var-pair Param -> (@p Param (to-var Param)))
 (define to-var Param -> (name->method-name (str Param)))
 
-(define is-java-call Symbol ->
-  (if (symbol? Symbol)
-      (let String (str Symbol)
-        (and (> (string-length String) (string-length "shenj.dot/"))
-            (string-prefix? "shenj.dot/" (str Symbol))))
-      (error "Non-symbol passed to is-java-call: ~A" Symbol)))
-
 (define method-sig { boolean --> (list string) --> string }
   TailCall? Params -> (let Join (if TailCall? "Object " "final Object ")
                         (string-join ", " (map (cn Join) Params))))

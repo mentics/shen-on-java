@@ -5,7 +5,6 @@ import static com.mentics.shenj.ShenjUtil.*;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.Arrays;
 
 import com.mentics.shenj.ArrayUtil;
 import com.mentics.shenj.Cons;
@@ -14,6 +13,7 @@ import com.mentics.shenj.Lambda2;
 import com.mentics.shenj.ShenException;
 import com.mentics.shenj.Symbol;
 import com.mentics.shenj.inner.Context;
+import com.mentics.util.StringUtil;
 
 
 /**
@@ -23,17 +23,13 @@ import com.mentics.shenj.inner.Context;
 public class InstanceMethodArgInfo {
     public static final Symbol SYMBOL = symbol("shenj.platform/instance-method-arg-info");
     public static Lambda LAMBDA = new Lambda2() {
-        public Object apply(final Object call, final Object theArgs) throws Exception {
-            Object[] args = ((Cons) theArgs).toArray();
+        public Object apply(final Object first, final Object theArgs) throws Exception {
+            Object[] args =  theArgs instanceof Cons ? ((Cons) theArgs).toArray() : new Object[0];
 
-            if (!args[0].equals(SPLITTER)) {
-                throw new ShenException("Please specify type with [instance expression]:type for " + call + " "
-                        + Arrays.deepToString(args));
-            }
+            String call = (String)first;
+            String methodName = StringUtil.lastToken(".", call);
+            String receiverType = call.substring(0, call.length() - methodName.length()-1);
 
-            String methodName = (String) call;
-
-            String receiverType = stripSymbolCall(args[1].toString());
             Class<?> cls = Context.loadClass(receiverType);
             String argString = null;
             String returnType = null;
@@ -47,7 +43,7 @@ public class InstanceMethodArgInfo {
                 if (types.length == 0 && args.length == 0) {
                     return tuple(method.getReturnType(), "", receiverType);
                 }
-                String newArgString = makeArgString(types, makeTypePairList(ArrayUtil.removeFirst(2, args)));
+                String newArgString = makeArgString(types, makeTypePairList(ArrayUtil.removeFirst(1, args)));
                 if (newArgString != null) {
                     if (argString != null) {
                         throw new ShenException("Ambiguous method for signature " + call + " " + args);
