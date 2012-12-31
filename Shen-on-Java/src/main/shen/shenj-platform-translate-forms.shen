@@ -170,6 +170,11 @@
 		            (if Unreachable? unreachable Type)
                 TailCall?))))))
 
+(define handle-java-arg
+  (@p static-field Callpart) Type ->
+      (@p "" Callpart object)
+  X _ -> (error "Invalid call to handle-java-arg ~A" X))
+
 (define handle-java-call
   Call Args Type Vars Tail? ->
     (let Result (gensym c)
@@ -188,8 +193,6 @@
       (@p Args-prep-string
           (make-string "~A.~A" (second (hd EvaledArgs)) Callpart)
           object)
-  (@p static-field Callpart) Result Args-prep-string EvaledArgs ->
-      (@p "" Callpart object)
   (@p instance-method Callpart) Result Args-prep-string EvaledArgs ->
     (let ArgInfo (shenj.platform/instance-method-arg-info Callpart (map (function second) (tl EvaledArgs)))
          Args-string (second ArgInfo)

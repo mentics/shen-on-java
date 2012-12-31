@@ -58,6 +58,23 @@ It makes no sense. If I reevaluate the fourth define then try to track it, it wo
 
 ---------------------------------------------
 
+ java.lang.NullPointerException
+	at com.mentics.shenj.inner.Primitives.evalKl(Primitives.java:278)
+	at shenj.root.ShenEvalWithoutMacros$1.apply(ShenEvalWithoutMacros.java:21)
+	at shenj.root.Eval$1.apply(Eval.java:46)
+	at test.gui.InputHandler$1.apply(InputHandler.java:28)
+	at com.mentics.shenj.Lambda3$1.apply(Lambda3.java:9)
+	at com.mentics.shen.javafx.JavaFX$2.handle(JavaFX.java:37)
+	at com.mentics.shen.javafx.JavaFX$2.handle(JavaFX.java:1)
+	at com.sun.javafx.event.CompositeEventHandler.dispatchCapturingEvent(CompositeEventHandler.java:78)
+	at com.sun.javafx.event.EventHandlerManager.dispatchCapturingEvent(EventHandlerManager.java:202)
+	at com.sun.javafx.event.EventHandlerManager.dispatchCapturingEvent(EventHandlerManager.java:159)
+
+This is caused because it's trying to get the current context from a JavaFX event handler thread, so the thread local context doesn't work
+TODO: figure out how to handle this
+
+---------------------------------------------
+
 Evalkl: [defun digit? [V322] [ustring-inrange? [string->n V322] 48 57]]
 Caused by: java.lang.ClassCastException: java.lang.Boolean cannot be cast to java.lang.String
 	at shenj.root.ShenExplodeString$1.apply(ShenExplodeString.java:29)

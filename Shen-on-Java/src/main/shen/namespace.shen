@@ -81,7 +81,7 @@
                                        (let Call-info (parse-java-call-symbol Check-java)
                                          (if (= Call-info ())
                                               ()
-                                              (let Search (if (= static-method (fst Call-info))
+                                              (let Search (if (or (= static-method (fst Call-info)) (= static-field (fst Call-info)))
                                                               (shenj.dot/com.mentics.util.StringUtil.removeLastToken "." (second Call-info))
                                                               (second Call-info))
                                                    Result (namespace/look-in-imports Struct (intern Search))

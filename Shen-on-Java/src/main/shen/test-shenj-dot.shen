@@ -9,5 +9,6 @@
 (assert-equals (@p static-method "java.lang.Math.round") (parse-java-call-symbol (intern "shenj.dot/java.lang.Math.round")))
 (assert-equals (@p constructor "JFrame") (parse-java-call-symbol (intern "shenj.dot/JFrame.")))
 
-(assert-equals (intern "shenj.dot/JFrame.") (back-to-dot-notation constructor (intern "shenj.dot/JFrame")))
+(assert-equals (intern "shenj.dot/JFrame.") (back-to-dot-notation (@p constructor "") (intern "shenj.dot/JFrame")))
+(assert-equals (intern "shenj.dot/KeyEvent.UP$") (back-to-dot-notation (@p static-field "") (intern "shenj.dot/KeyEvent.UP")))
 

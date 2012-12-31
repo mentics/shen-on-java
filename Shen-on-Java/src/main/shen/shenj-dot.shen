@@ -25,16 +25,12 @@
 
 
 (define back-to-dot-notation
-  Call-info Symbol ->
-    (let Call-type (fst Call-info)
-         Java-part (intern (to-java-part (str Symbol)))
+  (@p Call-type Call-str) Symbol ->
+    (let Java-part (intern (to-java-part (str Symbol)))
       (concat shenj.dot/
               (cond ((= Call-type constructor) (concat Java-part .))
                     ((= Call-type instance-method) (concat . Java-part))
                     ((= Call-type instance-field) (concat . (concat Java-part $)))
-                    ((= Call-type static-method) (intern (to-java-part (@s (shenj.dot/com.mentics.util.StringUtil.removeLastToken "." (str Symbol)) "." (second Call-info)))))
+                    ((= Call-type static-field) (intern (to-java-part (@s (shenj.dot/com.mentics.util.StringUtil.removeLastToken "." (str Symbol)) "." Call-str "$"))))
+                    ((= Call-type static-method) (intern (to-java-part (@s (shenj.dot/com.mentics.util.StringUtil.removeLastToken "." (str Symbol)) "." Call-str))))
                     (true Java-part)))))
-
-
-(track back-to-dot-notation)
-(load "test-javafx.shen")

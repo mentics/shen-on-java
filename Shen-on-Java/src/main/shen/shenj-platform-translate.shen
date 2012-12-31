@@ -306,8 +306,8 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
   [Func | Args] Type Vars Tail? -> (handle-call Func Args Type Vars Tail?)
 
   [] Type Vars Tail? -> (@p "" "Nil.NIL" nil)
-  \*X Type Vars Tail? -> (handle-java-call X () Type Vars Tail?)
-    where (and (symbol? X) (is-java-call X))*\
+  X Type Vars Tail? -> (handle-java-arg (parse-java-call-symbol X) Type)
+    where (and (symbol? X) (is-java-call X))
   X Type Vars Tail? ->
     (assert (not (cons? X)) "Invalid input to kl-to-java-traverse. List found where atom expected."
       (@p ""
