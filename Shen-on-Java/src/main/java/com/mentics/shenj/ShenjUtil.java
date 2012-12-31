@@ -20,7 +20,7 @@ public class ShenjUtil {
                 if (i + 2 >= length) {
                     throw new ShenException("Type expected after : for " + val + " in arg list " + args);
                 }
-                type = stripSymbolCall((String) args[i + 2]);
+                type = removeDotPkg(stripSymbolCall((String) args[i + 2]));
                 i += 2;
             } else {
                 type = "*";
@@ -45,6 +45,9 @@ public class ShenjUtil {
     public static String makeArgString(Class<?>[] types, List<String[]> argsWithTypes) throws Exception {
         if (types.length != argsWithTypes.size()) {
             return null;
+        }
+        if (types.length == 0) {
+            return "";
         }
 
         final StringBuilder builder = new StringBuilder();
@@ -97,5 +100,9 @@ public class ShenjUtil {
     public static Object third(Object tuple) {
         Object[] t0 = (Object[]) tuple;
         return ((Object[]) t0[2])[2];
+    }
+
+    public static String removeDotPkg(String s) {
+        return s.startsWith("shenj.dot/") ? s.substring("shenj.dot/".length()) : s;
     }
 }

@@ -1,11 +1,10 @@
-(define to-java-part
-  Symbol -> (if (symbol? Symbol)
-                (let String (str Symbol)
-                  (substring (string-length "shenj.dot/") (string-length String) String))
-                (error "Non-symbol passed to to-java-part: ~A" Symbol)))
+(define to-java-part { String --> String }
+  String -> (if (string? String)
+                (substring (string-length "shenj.dot/") (string-length String) String)
+                (error "Non-string passed to to-java-part: ~A" String)))
 
 (define parse-java-call-symbol
-  Symbol -> (let Str (to-java-part Symbol)
+  Symbol -> (let Str (to-java-part (str Symbol))
                  Length (string-length Str)
                  Last-index (- Length 1)
                  Last-char (pos Str Last-index)
@@ -26,11 +25,16 @@
 
 
 (define back-to-dot-notation
-  Call-type Symbol ->
-    (let Java-part (intern (to-java-part Symbol))
+  Call-info Symbol ->
+    (let Call-type (fst Call-info)
+         Java-part (intern (to-java-part (str Symbol)))
       (concat shenj.dot/
               (cond ((= Call-type constructor) (concat Java-part .))
                     ((= Call-type instance-method) (concat . Java-part))
                     ((= Call-type instance-field) (concat . (concat Java-part $)))
+                    ((= Call-type static-method) (intern (to-java-part (@s (shenj.dot/com.mentics.util.StringUtil.removeLastToken "." (str Symbol)) "." (second Call-info)))))
                     (true Java-part)))))
 
+
+(track back-to-dot-notation)
+(load "test-javafx.shen")

@@ -30,10 +30,10 @@ public class StaticMethodArgInfo {
 
             String methodName = StringUtil.lastToken(".", (String) call);
             String className = StringUtil.removeLastToken(".", (String) call);
-
+            
             Class<?> cls = currentContext.get().getClass(className);
             String argString = null;
-            String returnType = null;
+            Symbol returnType = null;
             for (Method method : cls.getMethods()) {
                 // Must be static method and matching name
                 if ((method.getModifiers() & Modifier.STATIC) == 0 || !methodName.equals(method.getName())) {
@@ -50,7 +50,7 @@ public class StaticMethodArgInfo {
                         throw new ShenException("Ambiguous static method for signature " + call + " " + args);
                     } else {
                         argString = newArgString;
-                        returnType = method.getReturnType().getName();
+                        returnType = symbol(method.getReturnType().getName());
                     }
                 }
             }

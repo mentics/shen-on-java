@@ -51,7 +51,7 @@
             (assert-test Result traverse-result-type? (make-string "Expected string triple from defun, was: ~A~%" (fst Result)))
             (let Code (assert-test (fst Result) string? (make-string "Expected string result body, but Result was: ~A~%" "TODO"))
                  Expression (assert-test (second Result) string? "Expected string result expression.")
-              (@p (make-string "  public static Object run = new Lambda0() { public Object apply() throws Exception {~%~A;~%~A  } };"
+              (@p (make-string "  public static Object run = new Lambda0() { public Object apply() throws Exception {~%~A~A  } };"
 			                         Code (handle-unreachable-return Result))
                   ""
                   runnable)))))

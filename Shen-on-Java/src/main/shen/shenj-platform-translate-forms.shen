@@ -139,7 +139,9 @@
 (define handle-call Func Args Type Vars Tail? ->
     (let Result (gensym f)
          Direct? (not (cons? Func))
-         Func' (if (cons? Func) (kl-to-java-traverse Func lambda Vars false) (@p "" (to-var Func) symbol))
+         Func' (cond ((cons? Func) (kl-to-java-traverse Func lambda Vars false))
+                     ((symbol? Func) (@p "" (to-var Func) symbol))
+                     (true (error "Function application requires a cons or symbol in first position but found: ~A" Func)))
       (let EvaledArgs (map ((flip4 kl-to-java-traverse) false Vars object) Args)
         (let Args-prep-string (string-join "" (map (function fst) EvaledArgs))
              Args-string (string-join ", " (map (function second) EvaledArgs))

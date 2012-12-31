@@ -6,6 +6,7 @@ import static com.mentics.shenj.ShenjRuntime.*;
 import static com.mentics.shenj.ShenjUtil.*;
 
 import java.lang.reflect.Constructor;
+import java.util.List;
 
 import com.mentics.shenj.Cons;
 import com.mentics.shenj.Lambda;
@@ -24,12 +25,15 @@ public class ConstructorArgString {
                 return "";
             }
             Object[] args = theArgs == NIL ? EMPTY_OBJECT_ARRAY : ((Cons) theArgs).toArray();
+            List<String[]> argsPairList = makeTypePairList(args);
+
             String className = call.toString();
             Class<?> cls = currentContext.get().getClass(className);
+            
             String argString = null;
             for (Constructor<?> constructor : cls.getConstructors()) {
                 Class<?>[] types = constructor.getParameterTypes();
-                String newArgString = makeArgString(types, makeTypePairList(args));
+                String newArgString = makeArgString(types, argsPairList);
                 if (newArgString != null) {
                     if (argString != null) {
                         throw new ShenException("Ambiguous constructors for signature " + call + " "

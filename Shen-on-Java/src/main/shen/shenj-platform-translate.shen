@@ -49,7 +49,7 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
 
   [error-to-string Exception] Type Vars Tail? -> 
     (let Exception' (kl-to-java-traverse Exception exception Vars false)
-	  (@p (make-string "~A~%" (fst Exception'))
+	  (@p (make-string "~A" (fst Exception'))
 	      (make-string "errorToString(~A)" (second Exception'))
         string))
 
@@ -66,7 +66,7 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
 
   [close Stream] Type Vars Tail? ->
     (let Stream' (kl-to-java-traverse Stream stream Vars false)
-      (@p (make-string "~A~%((java.io.Closeable)~A).close();~%"
+      (@p (make-string "~A((java.io.Closeable)~A).close();~%"
 	                   (fst Stream') (second Stream'))
           "Nil.NIL"
           list))
@@ -74,7 +74,7 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
   [pr String Stream] Type Vars Tail? ->
     (let String' (kl-to-java-traverse String string Vars false)
          Stream' (kl-to-java-traverse Stream stream Vars false)
-      (@p (make-string "~A~%~A~%((java.io.OutputStream)~A).write(((String)~A).getBytes());"
+      (@p (make-string "~A~A((java.io.OutputStream)~A).write(((String)~A).getBytes());"
 	                   (fst String') (fst Stream') (second Stream') (second String'))
           (second String')
           string))
@@ -94,7 +94,7 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
   [not Expression] Type Vars Tail? ->
     (assert (or (= boolean Type) (= object Type)) "Expected boolean or object for not operation."
       (let Expression' (kl-to-java-traverse Expression boolean Vars false)
-        (@p (make-string "~A~%" (fst Expression'))
+        (@p (make-string "~A" (fst Expression'))
             (make-string "!((boolean)(~A))" (second Expression'))
             boolean)))
 
@@ -125,7 +125,7 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
   [set Name Value] Type Vars Tail? ->
     (let Name' (kl-to-java-traverse Name Type Vars false)
          Value' (kl-to-java-traverse Value Type Vars false)
-	  (@p (make-string "~A~%~A~%globalProperties.put((Symbol)~A, ~A);"
+	  (@p (make-string "~A~AglobalProperties.put((Symbol)~A, ~A);~%"
 	                  (fst Value') (fst Name') (second Name') (second Value'))
         (second Value')
         (third Value')))
@@ -175,7 +175,7 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
   [number?] Type Vars Tail? -> (let A0 (gensym s) (kl-to-java-traverse [lambda A0 [number? A0]] lambda Vars Tail?))
   [number? A0] Type Vars Tail? ->
     (let A0' (kl-to-java-traverse A0 object Vars false)
-      (@p (make-string "~A~%" (fst A0'))
+      (@p (make-string "~A" (fst A0'))
           (cond ((and (= symbol (third A0')) (not (find-first? A0 Vars))) "false")
                 ((= string (third A0')) "false")
                 ((numeric-type? (third A0')) "true")
@@ -219,7 +219,7 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
       (kl-to-java-traverse [lambda A0 [string? A0]] lambda Vars Tail?))
   [string? A0] Type Vars Tail? ->
     (let A0' (kl-to-java-traverse A0 string Vars false)
-      (@p (make-string "~A~%" (fst A0'))
+      (@p (make-string "~A" (fst A0'))
           (make-string "(~A instanceof String)" (second A0'))
           boolean))
 
@@ -228,7 +228,7 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
       (kl-to-java-traverse [tlstr String] string Vars Tail?))
   [tlstr String] Type Vars Tail? ->
     (let String' (kl-to-java-traverse String string Vars false)
-      (@p (make-string "~A~%" (fst String'))
+      (@p (make-string "~A" (fst String'))
           (make-string "((String)~A).substring(1)" (second String'))
           string))
 
@@ -241,7 +241,7 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
   [pos String Position] Type Vars Tail? ->
     (let String' (kl-to-java-traverse String string Vars false)
          Position' (kl-to-java-traverse Position number Vars false)
-      (@p (make-string "~A~%~A~%" (fst String') (fst Position'))
+      (@p (make-string "~A~A" (fst String') (fst Position'))
           (make-string "((String)~A).substring((int)(double)~A, (int)(double)~A + 1)"
                        (second String') (second Position') (second Position'))
           string))
@@ -262,7 +262,7 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
       (let Template (if (= number (third Number'))
                         "new String(Character.toChars((int)(double)~A))"
                         "new String(Character.toChars((int)(double)~A))")
-        (@p (make-string "~A~%" (fst Number'))
+        (@p (make-string "~A" (fst Number'))
             (make-string Template (second Number'))
             string)))
 
@@ -275,7 +275,7 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
   [absvector Size] Type Vars Tail? ->
     (let Result (gensym a)
          Size' (kl-to-java-traverse Size integer Vars false)
-      (@p (make-string "~A~%final Object[] ~A = new Object[(int)(double)~A];~%"
+      (@p (make-string "~Afinal Object[] ~A = new Object[(int)(double)~A];~%"
                        (fst Size') Result (second Size'))
           (str Result)
           vector))
@@ -284,7 +284,7 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
     (let Vector' (kl-to-java-traverse Vector vector Vars false)
          Index' (kl-to-java-traverse Index number Vars false)
          Value' (kl-to-java-traverse Value object Vars false)
-      (@p (make-string "~A~%~A~%~A~%((Object[])~A)[(int)(double)~A] = ~A;~%"
+      (@p (make-string "~A~A~A((Object[])~A)[(int)(double)~A] = ~A;~%"
                        (fst Vector') (fst Index') (fst Value')
                        (second Vector') (second Index') (second Value'))
           (second Vector')
@@ -306,8 +306,8 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
   [Func | Args] Type Vars Tail? -> (handle-call Func Args Type Vars Tail?)
 
   [] Type Vars Tail? -> (@p "" "Nil.NIL" nil)
-  X Type Vars Tail? -> (handle-java-call X () Type Vars Tail?)
-    where (and (symbol? X) (is-java-call X))
+  \*X Type Vars Tail? -> (handle-java-call X () Type Vars Tail?)
+    where (and (symbol? X) (is-java-call X))*\
   X Type Vars Tail? ->
     (assert (not (cons? X)) "Invalid input to kl-to-java-traverse. List found where atom expected."
       (@p ""
