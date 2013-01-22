@@ -1,6 +1,12 @@
-Instead of #, can we check the existing defined vars instead of upper first char?
+...internal.compiler.batch.Main.setPaths
+Get all the VM default classpaths like it does there in all those handle* calls
+
+
+When change shenj.dot/ we don't need the / in there because it always has a prepend of something else like > # %, etc.
 
 Add kryo license notice
+
+Support specifying overloaded methods in sub-class mechanism
 
 TODO next:
 subclassing/interfaces/protocols

@@ -2,8 +2,12 @@ package com.mentics.shenj;
 
 import static com.mentics.shenj.ShenjRuntime.*;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.mentics.shenj.inner.Context;
+import com.mentics.util.StringUtil;
 
 
 public class ShenjUtil {
@@ -39,7 +43,7 @@ public class ShenjUtil {
     }
 
     public static String stripSymbolCall(String str) {
-        return str.substring("symbol(\"".length(), str.length() - "\")".length());
+        return str.startsWith("symbol(") ? str.substring("symbol(\"".length(), str.length() - "\")".length()) : str;
     }
 
     public static String makeArgString(Class<?>[] types, List<String[]> argsWithTypes) throws Exception {
@@ -104,5 +108,35 @@ public class ShenjUtil {
 
     public static String removeDotPkg(String s) {
         return s.startsWith("shenj.dot/") ? s.substring("shenj.dot/".length()) : s;
+    }
+
+    public static String makeConsArgString(final Object call, Object[] args) throws Exception, ClassNotFoundException {
+        List<String[]> argsPairList = makeTypePairList(args);
+    
+        Class<?> cls;
+        try {
+            cls = Context.loadClass((String) call);
+        } catch (ClassNotFoundException e) {
+            cls = Context.loadClass("java.lang." + call);
+        }
+    
+        String argString = null;
+        for (Constructor<?> constructor : cls.getConstructors()) {
+            Class<?>[] types = constructor.getParameterTypes();
+            String newArgString = makeArgString(types, argsPairList);
+            if (newArgString != null) {
+                if (argString != null) {
+                    throw new ShenException("Ambiguous constructors for signature " + call + " "
+                            + StringUtil.toString(args));
+                } else {
+                    argString = newArgString;
+                }
+            }
+        }
+        if (argString != null) {
+            return argString;
+        } else {
+            throw new ShenException("No constructor found for: " + call + ", " + args);
+        }
     }
 }

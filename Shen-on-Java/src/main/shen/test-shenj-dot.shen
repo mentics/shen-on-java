@@ -1,5 +1,8 @@
+(assert-equals false (is-java-call <e>))
+(assert-equals false (is-java-call (intern "Parse_<br$>")))
+
 (assert-equals ">JFrame" (to-java-part "shenj.dot/>JFrame"))
-(assert-equals "error" (trap-error (to-java-part (intern "shenj.dot/>JFrame")) (/. E "error")))
+(assert-equals "" (to-java-part (intern "shenj.dot/>JFrame")))
 
 (assert-equals (@p constructor "java.awt.Font") (parse-java-call-symbol (intern "shenj.dot/>java.awt.Font")))
 (assert-equals (@p instance-method "Something.setFont") (parse-java-call-symbol (intern "shenj.dot/#Something.setFont")))
@@ -8,6 +11,7 @@
 (assert-equals (@p static-field "java.awt.Font.BOLD") (parse-java-call-symbol (intern "shenj.dot/%%java.awt.Font.BOLD")))
 (assert-equals (@p static-method "java.lang.Math.round") (parse-java-call-symbol (intern "shenj.dot/%java.lang.Math.round")))
 (assert-equals (@p constructor "JFrame") (parse-java-call-symbol (intern "shenj.dot/>JFrame")))
+(assert-equals (@p sub-class "JFrame") (parse-java-call-symbol (intern "shenj.dot/>>JFrame")))
 
 (assert-equals (intern "shenj.dot/>JFrame") (back-to-dot-notation (@p constructor "") (intern "shenj.dot/JFrame")))
 

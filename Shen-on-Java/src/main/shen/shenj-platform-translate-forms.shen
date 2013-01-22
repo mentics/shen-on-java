@@ -210,5 +210,29 @@
       (@p (make-string "~A~A~A(~A);~%" Args-prep-string Assignment Callpart Args-string)
           (if Void? "null" (str Result))
           (if Void? void object)))
+  (@p sub-class Callpart) Result Args-prep-string EvaledArgs ->
+    (let Info (shenj.platform/sub-class-info Callpart (sub-class-h (@p () ()) (map (function second) EvaledArgs)))
+         Args-string (fst Info)
+         Body (second Info)
+      (@p (make-string "~A~A ~A = new ~A(~A) {~%~A};~%" Args-prep-string Callpart Result Callpart Args-string Body)
+	        (str Result)
+		      object))
   Call Args _ _ -> (error "Unknown java call (~A ~A)" Call Args))
 
+(define sub-class-h
+  Acc ["symbol(c#34;bar!c#34;)" | Rest] -> (sub-class-hh Acc Rest)
+  (@p () ()) [X | Rest] -> (sub-class-h (@p [X] ()) Rest)
+  (@p L ()) [X | Rest] -> (sub-class-h (@p (cons X L) ()) Rest)
+  A0 A1 -> (error "Invalid sub-class call for constructor args ~A ~A" A0 A1))
+
+(define sub-class-hh
+  Acc () -> Acc
+  (@p Cargs ()) [Name "symbol(c#34;:c#34;)" Call | Rest] -> (sub-class-hh (@p Cargs [(sub-class-method Name Call)]) Rest)
+  (@p Cargs Methods) [Name "symbol(c#34;:c#34;)" Call | Rest] -> (sub-class-hh (@p Cargs (cons (sub-class-method Name Call) Methods) Rest))
+  A0 A1 -> (error "Invalid sub-class call for methods ~A ~A" A0 A1))
+
+(define sub-class-method
+  Name Call -> (@p Name
+                   (if (string-prefix? "symbol(" Call)
+                       (shenj.platform/call-info-symbol->java-call-string (intern (substring 8 (- (string-length Call) 2) Call)))
+                       Call)))

@@ -47,7 +47,7 @@ public class Context {
         props.put(ShenjRuntime.symbol("*language*"), "Java");
         props.put(ShenjRuntime.symbol("*implementation*"), "Shen on Java");
         props.put(ShenjRuntime.symbol("*release*"), System.getProperty("java.version"));
-        props.put(ShenjRuntime.symbol("*port*"), "0.7.2");
+        props.put(ShenjRuntime.symbol("*port*"), "0.8.0");
         props.put(ShenjRuntime.symbol("*porters*"), "Joel Shellman");
         // if (globalProperties.get(ShenjRuntime.SRC_DIR_SYM) == null) {
         // globalProperties.put(ShenjRuntime.SRC_DIR_SYM, "java/generated/");

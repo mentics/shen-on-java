@@ -17,3 +17,15 @@
 (set-compile-context (@p test [(@p v1 "v1" object) (@p v2 "v2" object)]))
 (assert-equals (make-string "final Object savev1 = v1;~%final Object savev2 = v2;~%v1 = 2;~%v2 = savev1;~%continue;~%")
                (handle-tail-call test [(@p "" "2" object) (@p "" "v1" object)]))
+
+
+(assert-equals (@p (make-string "Runnable resVar = new Runnable() {~%public void run() {~%lam0.apply();~%}~%};~%") "resVar" object)
+               (handle-java (@p sub-class "Runnable") resVar "" [(@p "" "symbol(c#34;runc#34;)" symbol) (@p "" "symbol(c#34;:c#34;)" symbol) (@p "" "symbol(c#34;lam0c#34;)" symbol)]))
+
+(define test -> (output "green"))
+(shenj.dot/#java.lang.Runnable.run (shenj.dot/>>Runnable # run:test))
+
+(shenj.dot/#java.lang.Runnable.run (shenj.dot/>>Runnable # run:(/. () (output "blue"))))
+
+(shenj.dot/>>javafx.event.EventHandler # handle:(/. Event (output Event)))
+
