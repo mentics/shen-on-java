@@ -1,29 +1,30 @@
 package com.mentics.shenj.inner;
 
 import static com.mentics.shenj.ShenjRuntime.*;
-import static com.mentics.shenj.inner.Primitives.*;
+import static com.mentics.util.ReflectionUtil.*;
 import static org.junit.Assert.*;
-
-import java.io.File;
 
 import org.junit.Test;
 
 import com.mentics.shenj.Cons;
 import com.mentics.shenj.Nil;
 import com.mentics.shenj.Symbol;
+import com.mentics.shenj.cl.DirectClassLoader;
 
 
 public class EvalKlTest {
     @Test
     public void testEvalKl() throws Exception {
-        // loadDefaultImage();
-        loadImage(new File("shen-test.image"));
-        
-        // System.out.println(ShenjRuntime.compileContext.classes.size());
-        assertEquals(3, evalKl(3));
-        assertEquals(17.8, evalKl(17.8));
-        assertEquals("purple", evalKl("purple"));
-        assertEquals(new Symbol("blue"), evalKl(new Symbol("blue")));
-        assertEquals(2, evalKl(new Cons(symbol("+"), new Cons(2, new Cons(2, Nil.NIL)))));
+        DirectClassLoader dcl = DirectClassLoader.loadDefaultImage(threadClassLoader());
+
+        assertEquals(3.0, evalKl(dcl, 3.0));
+        assertEquals(17.8, evalKl(dcl, 17.8));
+        assertEquals("purple", evalKl(dcl, "purple"));
+        assertEquals(new Symbol("blue"), evalKl(dcl, new Symbol("blue")));
+        assertEquals(4.0, evalKl(dcl, new Cons(symbol("+"), new Cons(2.0, new Cons(2.0, Nil.NIL)))));
+    }
+
+    public static Object evalKl(DirectClassLoader dcl, Object o) {
+        return dcl.apply("shenj.root.EvalKl", o);
     }
 }

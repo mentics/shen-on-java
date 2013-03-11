@@ -1,4 +1,4 @@
-package shenj.root;
+package shenj.platform;
 
 import static com.mentics.shenj.ShenjRuntime.*;
 

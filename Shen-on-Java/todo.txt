@@ -1,10 +1,9 @@
+Can we hold a single object that is the shen system that we can call things on? So it doesn't have to be static to initiate call to it?
+
 ...internal.compiler.batch.Main.setPaths
 Get all the VM default classpaths like it does there in all those handle* calls
 
-
 When change shenj.dot/ we don't need the / in there because it always has a prepend of something else like > # %, etc.
-
-Add kryo license notice
 
 Support specifying overloaded methods in sub-class mechanism
 
@@ -17,9 +16,7 @@ tail recursion elimination special case for do
 
 Handle full class reloading by byte code manipulation and one level of indirection to access classes
 
-Change dot notation: ending with . should represent a package. So do something else for constructor.
-
-Check read primitive kl-jav-ato-traverse, side effects in expression?
+Check read primitive kl-java-to-traverse, side effects in expression?
 
 Need to support runtime dynamic java call dispatch
 

@@ -1,9 +1,9 @@
 package com.mentics.shenj;
 
+import static com.mentics.shenj.ShenjRuntime.*;
+
 import org.junit.Before;
 import org.junit.Test;
-
-import shenj.root.ShenjTest;
 
 
 public class CallPerfTest {
@@ -13,7 +13,7 @@ public class CallPerfTest {
 
     @Before
     public void setUp() throws Exception {
-        System.gc();
+//        System.gc();
         ShenjTest.LAMBDA2 = ShenjTest.LAMBDA;
         ShenjTest.LAMBDA2.apply(false);
     }
@@ -78,7 +78,7 @@ public class CallPerfTest {
         boolean result = false;
         result = setIt(1);
         result = setIt(2);
-        result = setIt(3);
+        result = setIt(1);
         result = toTimeStaticLambda2(result);
 
         long t0 = System.nanoTime();
@@ -86,14 +86,14 @@ public class CallPerfTest {
         long t1 = System.nanoTime();
         System.out.println("result static lambda changed thrice: " + result + ", " + (t1 - t0));
     }
-    
+
     @Test
     public void testStaticLambdaChangedFourTimes() throws Exception {
         boolean result = false;
         result = setIt(1);
         result = setIt(2);
         result = setIt(3);
-        result = setIt(4);
+        result = setIt(2);
 
         result = toTimeStaticLambda2(result);
 
@@ -108,7 +108,8 @@ public class CallPerfTest {
         ShenjTest.LAMBDA2 = new Lambda2() {
             @Override
             public Object apply(Object x0, Object x1) throws Exception {
-                return ShenjTest.defined(value);
+                return x0.equals(value);
+//                return ShenjTest.defined(value);
             }
         };
         return (boolean) ShenjTest.LAMBDA2.apply(value, value);
@@ -154,4 +155,27 @@ public class CallPerfTest {
     public Object staticMethod(Object param) {
         return param.equals(param);
     }
+}
+
+
+class ShenjTest {
+    public static final Symbol SYMBOL = symbol("shenj-test");
+
+    public static Lambda LAMBDA = new Lambda1() {
+        public Object apply(Object arg) throws Exception {
+            return defined(arg);
+        }
+    };
+
+    public static Lambda LAMBDA2 = new Lambda1() {
+        public Object apply(Object arg) throws Exception {
+            return defined(arg);
+        }
+    };
+
+
+    public static Object defined(Object arg) throws Exception {
+        return arg.equals(2);
+    }
+
 }

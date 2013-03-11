@@ -4,9 +4,9 @@
 	<classpathentry kind="src" path="src/test/junit"/>
 	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry kind="src" path="src/main/builtin"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/kryo-2.20"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/kryo-2.20"/>
 	<classpathentry kind="lib" path="C:/dev/java/libraries/eclipse-batch-compiler/ecj-4.2.1.jar" sourcepath="C:/dev/java/libraries/eclipse-batch-compiler/ecjsrc-4.2.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
