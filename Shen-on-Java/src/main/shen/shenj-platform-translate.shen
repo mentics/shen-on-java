@@ -20,7 +20,17 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
       (@p (make-string "~A~A" (fst A0') (fst A1'))
           (make-string "(double)~A == (double)~A" (second A0') (second A1'))
           number))
-
+  
+  [do | Args] Type Vars Tail? ->
+    (let Reversed (reverse Args)
+         Reversed-tail' (map ((flip4 kl-to-java-traverse) false Vars object) (tail Reversed))
+         Last' (kl-to-java-traverse (head Reversed) Type Vars Tail?)
+         Args' (reverse (cons Last' Reversed-tail'))
+      (@p (foldl (/. Acc Arg (cn Acc (make-string "~A" (fst Arg)))) "" Args')
+          (make-string "~A" (second Last'))
+          (third (third Last'))
+          (to-boolean (fourth Last'))))
+    
   [int-modulus A0 A1] Type Vars Tail? ->
     (let A0' (kl-to-java-traverse A0 number Vars false)
          A1' (kl-to-java-traverse A1 number Vars false)

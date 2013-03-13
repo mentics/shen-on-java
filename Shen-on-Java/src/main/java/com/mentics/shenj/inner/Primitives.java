@@ -12,6 +12,8 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
 import java.util.Calendar;
 
+import shenj.root.EvalKl;
+
 import com.mentics.shenj.Cons;
 import com.mentics.shenj.Label;
 import com.mentics.shenj.Lambda;
@@ -274,13 +276,16 @@ public class Primitives {
 
     @Label("eval-kl")
     public static Object evalKl(final Object kl) throws Exception {
-        Object o = Context.globalProperties.get(SHOW_EVAL);
+//        Object o = Context.globalProperties.get(SHOW_EVAL);
+        Object o = true;
         if (o != null && o instanceof Boolean && (Boolean) o) {
             System.out.println("Evalkl: " + kl);
         }
         if (kl instanceof Cons) {
             // TODO: make more efficient. Did reflection to avoid dependency
+//            System.out.println("Prim CL: "+Primitives.class.getClassLoader());
             return Context.apply("shenj.root.EvalKl", kl);
+//            return EvalKl.LAMBDA.apply(kl);
         } else {
             return kl;
         }

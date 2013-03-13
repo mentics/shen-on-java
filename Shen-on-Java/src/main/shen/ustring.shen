@@ -28,7 +28,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
    (@s _ "") -> true
      _       -> false)
  
-(package ustring- [ustring
+(package ustring [ustring
                    whitespace? digit? letter?
 				   <ustr >ustr <=ustr >=ustr]
   

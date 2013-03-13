@@ -37,14 +37,15 @@ public class ReflectionUtil {
         setStaticField(to, fieldName, getStaticField(from, fieldName));
     }
 
-    public static byte[] loadBytesForClass(Class<?> cls) throws IOException {
+    public static byte[] loadBytesForClass(Class<?> cls) throws Exception {
         return loadBytesForClass(cls.getClassLoader(), cls.getName());
     }
 
-    public static byte[] loadBytesForClass(ClassLoader loader, String fqn) throws IOException {
+    public static byte[] loadBytesForClass(ClassLoader loader, String fqn) throws Exception {
         InputStream input = loader.getResourceAsStream(fqn.replace(".", "/") + ".class");
         if (input == null) {
-            System.out.println("Could not load bytes for class: " + fqn);
+            // System.out.println("Could not load bytes for class: " + fqn);
+            throw new ClassNotFoundException(fqn);
         }
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         StringUtil.copy(input, output);
@@ -69,5 +70,9 @@ public class ReflectionUtil {
             rethrow(e);
         }
         return ret;
+    }
+
+    public static String string(Object o) {
+        return (o instanceof String) ? (String) o : null;
     }
 }

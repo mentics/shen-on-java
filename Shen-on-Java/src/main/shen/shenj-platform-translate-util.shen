@@ -77,28 +77,28 @@ Second two things are optional
 
 (define name->method-name
   "" -> ""
-  Name -> (ensure-not-reserved (cn (ustring-downcase (ensure-valid-char (hdstr Name))) (javify-loop (explode (tlstr Name))))))
+  Name -> (ensure-not-reserved (cn (ustring.downcase (ensure-valid-char (hdstr Name))) (javify-loop (explode (tlstr Name))))))
 
 (define name->class-name
   "" -> ""
   Name ->
     (let First (hdstr Name) Rest (tlstr Name)
-      (cond ((letter? First) (@s (ustring-upcase First) (javify-loop (explode Rest))))
+      (cond ((letter? First) (@s (ustring.upcase First) (javify-loop (explode Rest))))
 		    (true (@s (ensure-valid-char First) (name->method-name Rest))))))
 
 (define javify-loop
   [] -> ""
   [X] -> (ensure-valid-char X)
   ["-" ">" Third | Rest] ->
-    (@s "To" (ustring-upcase Third) (javify-loop Rest))
+    (@s "To" (ustring.upcase Third) (javify-loop Rest))
 	where (letter? Third)
   ["<" "-" Third | Rest] ->
-    (@s "From" (ustring-upcase Third) (javify-loop Rest))
+    (@s "From" (ustring.upcase Third) (javify-loop Rest))
 	where (letter? Third)
   ["-" Second | Rest] ->
     (let Fixed
 	     (ensure-valid-char Second)
-         (@s (ustring-upcase Fixed) (javify-loop Rest)))
+         (@s (ustring.upcase Fixed) (javify-loop Rest)))
   [First | Rest] -> (@s (ensure-valid-char First) (javify-loop Rest))
   X -> (simple-error "List expected. Call explode before calling javify-loop."))
 

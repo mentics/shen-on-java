@@ -117,8 +117,10 @@
                  (= Func (compile-context-symbol))
                  (= (length Args) (length (compile-context-params)))))
 
+\*(define prepend-all
+  Prepend Searches String -> (foldl (/. String Search (shenj.platform/regex Search String (cn Prepend Search))) String Searches))*\ 
 (define prepend-all
-  Prepend Searches String -> (foldl (/. String Search (shenj.platform/regex Search String (cn Prepend Search))) String Searches)) 
+  Prepend Searches String -> (foldl (/. String Search (string-replace Search (cn Prepend Search) String)) String Searches)) 
 
 (define handle-tail-call-h
   String (@p Param Arg) ->

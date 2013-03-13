@@ -77,7 +77,7 @@ public class CLProvider implements JavaFileObjectSource {
 //    }
 
     public String getJavaSourceDir() {
-        Object o = dcl.getGlobalProps().get(SRC_DIR_SYM);
+        Object o = dcl.getGlobalProps().get(GEN_SOURCE_DIRECTORY_SYM);
         return o != null && o instanceof String ? (String) o : null;
     }
 

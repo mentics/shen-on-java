@@ -323,21 +323,16 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
             return found;
         }
 
+        // TODO: change this to use a flag
+        // if (name.startsWith("shenj.root")) {
+        // try {
+        // return getParent().loadClass(name);
+        // }
+        // }
+
         // Anything in the same package as Context is intended to be handled by this context class loader.
         if (name.startsWith(Context.class.getPackage().getName())) {
-            try {
-                byte[] bytes = loadBytesForClass(getParent(), name);
-                found = defineClass(name, bytes, 0, bytes.length);
-                loaded.put(name, found);
-                // System.out.println("DCL " + id + " loading override: " + name);
-            } catch (Exception e) {
-                if (name.startsWith("com.mentics.shenj.inner.Primitives$")) {
-                    return null;
-                } else {
-                    e.printStackTrace(System.out);
-                    rethrow(e);
-                }
-            }
+            found = copyFromParent(name);
         } else {
             // System.out.println("DCL " + id + " loading: " + name + " num clases: " + classes.size());
             byte[] cls = this.classes.get(name);
@@ -351,8 +346,30 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
                 }
                 loaded.put(name, found);
             } else {
-//                 System.out.println("Parent is loading: "+name);
-                return getParent().loadClass(name);
+                if (name.startsWith("shen")) {
+                    found = copyFromParent(name);
+                } else {
+                    // System.out.println("Parent is loading: "+name);
+                    found = getParent().loadClass(name);
+                }
+            }
+        }
+        return found;
+    }
+
+    public Class<?> copyFromParent(String name) throws ClassFormatError {
+        Class<?> found = null;
+        try {
+            byte[] bytes = loadBytesForClass(getParent(), name);
+            found = defineClass(name, bytes, 0, bytes.length);
+            loaded.put(name, found);
+            // System.out.println("DCL " + id + " loading override: " + name);
+        } catch (Exception e) {
+            if (name.startsWith("com.mentics.shenj.inner.Primitives$")) {
+                return null;
+            } else {
+//                e.printStackTrace(System.out);
+                rethrow(e);
             }
         }
         return found;
@@ -394,7 +411,7 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
         return this.classes.remove(className) == null ? false : true;
     }
 
-    public Object doEval(String srcDir, Object className, Object classContent) {
+    public Object doEval(String srcDir, String className, String classContent) {
         String cn = (String) className;
         try {
             compile(srcDir, cn, (String) classContent);

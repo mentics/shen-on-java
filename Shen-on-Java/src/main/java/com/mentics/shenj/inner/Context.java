@@ -15,6 +15,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import shenj.platform.CallInfoSymbolToJavaCallInfo;
+
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
@@ -23,11 +25,13 @@ import com.mentics.shenj.Lambda;
 import com.mentics.shenj.Nil;
 import com.mentics.shenj.ShenException;
 import com.mentics.shenj.ShenjRuntime;
+import com.mentics.shenj.ShenjUtil;
 import com.mentics.shenj.Symbol;
 import com.mentics.shenj.VarLambda;
 import com.mentics.shenj.cl.DirectClassLoader;
 import com.mentics.util.KryoUtil;
 import com.mentics.util.ReflectionUtil;
+import com.mentics.util.StringUtil;
 
 
 public class Context {
@@ -99,7 +103,7 @@ public class Context {
         DirectClassLoader dcl = (DirectClassLoader) Context.class.getClassLoader();
         dcl.saveImage(out);
     }
-    
+
     public static void saveImageContextPart(Output out) {
         Kryo kryo = newKryo();
         kryo.setClassLoader(Context.class.getClassLoader());
@@ -156,14 +160,52 @@ public class Context {
         return ret;
     }
 
-    public static Lambda dispatch(Object obj) {
+    public static Lambda dispatch(Object obj) throws Exception {
         Lambda ret;
         if (obj instanceof Lambda) {
             ret = (Lambda) obj;
         } else if (obj instanceof Symbol) {
             ret = functions.get(obj);
             if (ret == null) {
-                throw new ShenException("Could not find function: " + obj);
+                Object javaCallInfo = CallInfoSymbolToJavaCallInfo.LAMBDA.apply(obj);
+                String packageName = (String) ShenjUtil.first(javaCallInfo);
+                String className = (String) ShenjUtil.second(javaCallInfo);
+
+                // if ("shen.put/get-macro".equals(orig)) {
+                // return shen.put.GetMacro.LAMBDA;
+                // }
+                // StringBuilder builder = new StringBuilder();
+                // for (int i = 0; i < orig.length(); i++) {
+                // String s = orig.substring(i, i + 1);
+                // if (i == 0) {
+                // builder.append(s.toUpperCase());
+                // } else if (".".equals(s)) {
+                // builder.append("Dot");
+                // } else if ("-".equals(s)) {
+                // builder.append(orig.substring(i + 1, i + 2).toUpperCase());
+                // i++;
+                // } else if ("<".equals(s)) {
+                // builder.append("A");
+                // } else if (">".equals(s)) {
+                // builder.append("Z");
+                // } else if ("@".equals(s)) {
+                // builder.append("At");
+                // } else if ("+".equals(s)) {
+                // builder.append("Plus");
+                // } else if ("?".equals(s)) {
+                // builder.append("Q");
+                // } else {
+                // builder.append(s);
+                // }
+                // }
+                try {
+                    Class c = loadClass(packageName + "." + className);
+                    // TODO: use field/method from call info
+                    return (Lambda) c.getField("LAMBDA").get(null);
+                } catch (Exception e) {
+                    // e.printStackTrace();
+                    throw new ShenException("Could not find function: " + obj);
+                }
             }
         } else {
             throw new ShenException("Attempted to dispatch on invalid object: " + obj);
@@ -322,10 +364,21 @@ public class Context {
     }
 
     public static Object doEval(Object className, Object classContent) {
-        return ((DirectClassLoader) Context.class.getClassLoader()).doEval((String) globalProperties.get(SRC_DIR_SYM),
-                className, classContent);
-    }
+        String srcDir = string(globalProperties.get(GEN_SOURCE_DIRECTORY_SYM));
+        String cn = (String) className;
+        String content = (String) classContent;
 
+        Object only = globalProperties.get(GENERATE_JAVA_ONLY_SYM);
+        if (!cn.contains("ToEval") && only != null && (only instanceof Boolean) && (boolean) only) {
+            // TODO: remove duplication between this and in CLProvider.compileTask
+            if (srcDir != null) {
+                StringUtil.writeToFile(content, new File(srcDir, cn.replace('.', '/') + ".java"));
+            }
+            return "|not evaluated|";
+        } else {
+            return ((DirectClassLoader) Context.class.getClassLoader()).doEval(srcDir, cn, content);
+        }
+    }
     // static void registerAll(Map<String, byte[]> toReg) {
     // for (byte[] bytes : toReg.values()) {
     // Class<?> cls = Context.class.getClassLoader().loadClass();

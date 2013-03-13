@@ -25,6 +25,6 @@ public class EvalKlTest {
     }
 
     public static Object evalKl(DirectClassLoader dcl, Object o) {
-        return dcl.apply("shenj.root.EvalKl", o);
+        return dcl.apply("shen.root.EvalKl", o);
     }
 }

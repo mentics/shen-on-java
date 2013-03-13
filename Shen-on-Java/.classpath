@@ -4,6 +4,9 @@
 	<classpathentry kind="src" path="src/test/junit"/>
 	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry kind="src" path="src/main/builtin"/>
+	<classpathentry kind="src" path="java/core"/>
+	<classpathentry kind="src" path="java/platform"/>
+	<classpathentry kind="src" path="java/ustring"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/kryo-2.20"/>

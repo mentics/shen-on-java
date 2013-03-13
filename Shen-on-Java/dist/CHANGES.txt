@@ -1,0 +1,4 @@
+0.8.0
+(This list is not complete)
+self call optimization for do
+support for subtyping form

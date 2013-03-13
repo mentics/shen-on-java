@@ -29,19 +29,27 @@
   Predicate [X | Rest] -> (if (Predicate X) X (find Predicate Rest)))
 
 
+\*
 (define shenj.platform/parse-shen X ->  (snd (shen-<st_input> (@p (to-intlist X) ()))))
 (define shenj.platform/eval-shens X -> (map (function eval) (shenj.platform/parse-shen X)))
 (define shenj.platform/eval-shen X -> (eval (hd (shenj.platform/parse-shen X))))
+*\
 (define shenj.platform/shen-to-java
-  X -> (let Java (parsed-kl-to-java (hd (kl-from-shen (parse-shen X))))
+  X -> (let Java (parsed-kl-to-java (hd (kl-from-shen X)))
     (to-java-unit (fst Java) (second Java))))
 
+(define kl-from-parsed-shen
+  X -> (shen.elim-define X))
+
 (define kl-from-shen
+  X -> (shen.elim-define (read-from-string X)) where (string? X))
+  \*
   X -> (let X (shen-walk (function macroexpand) X)
             X (if (shen-packaged? X)
                   (package-contents X)
                   X)
          (shen-elim-define (shen-proc-input+ X))))
+*\
 
 
 (define stream->string
@@ -49,8 +57,10 @@
                       (if (= Byte -1) String
 					    (stream->string Stream (@s String (n->string Byte))))))
 
+\*
 (define shell
   Command -> (let Stream (shell-stream Command) (stream->string Stream "")))
+*\
 
 
 (define write-string-to-file
@@ -153,7 +163,9 @@ true	try	void	volatile	while]))
    Delimiter [String | Tail] Result -> (string-join-iterator Delimiter Tail (@s Result String Delimiter)))
 
 (define write-source
-  Path Contents -> (do (make-directories Path) (write-string-to-file Path Contents) Path))
+  Path Contents ->
+    (let AbsPath (output (cn (value *home-directory*) Path))
+      (do (shenj.platform/make-directories AbsPath) (write-string-to-file Path Contents) Path)))
 
 (define run-without-macros
   F -> (do (set *save-macros* (value *macros*))
@@ -185,6 +197,40 @@ true	try	void	volatile	while]))
    "" _ -> true
    (@s S Str1) (@s S Str2) -> (string-prefix? Str1 Str2)
    _ _ -> false)
+
+(define split   \* added 13-02-12 *\
+   \* splits a string into an n-prefix and the remaining suffix *\
+   { number --> string --> (string * string) } 
+   N Str -> (split-h N Str ""))
+     
+(define split-h
+   { number --> string --> string --> (string * string) }
+   _ "" Result -> (@p Result "")
+   N Str  Result -> (@p Result Str) where (<= N 0)
+   N (@s S Str) Result -> (split-h (- N 1) Str (@s Result S)))
+
+(define take
+   \* returns the n-length prefix of string *\
+   { number --> string --> string }  
+   N Str -> (fst(split N Str)))
+       
+(define drop
+   \* drops the n-length prefix of string *\
+   { number --> string --> string }
+   N Str -> (snd(split N Str)))
+
+(define replace-all
+   \* replaces all occurrences of Str2 with Str1 in Str3  *\ 
+   { string --> string --> string --> string }
+   _  "" _  -> (error "empty substring in 'replace-all'!~%")
+   Str1 Str2 Str3 -> (replace-all-h Str1 Str2 Str3 (string-length Str2) ""))
+
+(define replace-all-h
+  { string --> string --> string --> number --> string --> string }
+   _ _ "" _ Result -> Result
+   Str1 Str2 Str3 N Result -> (replace-all-h Str1 Str2 (drop N Str3) N (cn Result Str1))
+															where (string-prefix? Str2 Str3)
+   Str1 Str2 (@s S Str) N Result -> (replace-all-h Str1 Str2 Str N (cn Result S)))
 
 (define string-length
    \* returns the length of the string *\
@@ -250,6 +296,13 @@ true	try	void	volatile	while]))
   From To String -> (list->string (map (/. Value (if (= From Value) To Value)) (explode String))))
 
 (define remove-newlines String -> (string-replace "c#10;" "\n" (string-replace "c#13;" "\r" String)))
+
+
+(define list-last
+  [X] -> X
+  [X | ()] -> X
+  [X | Xs] -> (list-last Xs)
+  X -> (error "Invalid argument to list-last ~A" X))
 
 
 (define ensure-prefix

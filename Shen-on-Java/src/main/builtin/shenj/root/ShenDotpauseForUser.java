@@ -12,7 +12,7 @@ import com.mentics.shenj.SimpleError;
 import com.mentics.shenj.Symbol;
 
 
-public class ShenPauseForUser {
+public class ShenDotpauseForUser {
     public static final Symbol SYMBOL = symbol("shen-pause-for-user");
 
     public static Lambda LAMBDA = new Lambda1() {

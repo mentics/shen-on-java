@@ -35,7 +35,7 @@ public class ShenjUtil {
     }
 
     public static Object[] tuple(Object one, Object two) {
-        return new Object[] { symbol("shen-tuple"), one, two };
+        return new Object[] { symbol("shen.tuple"), one, two };
     }
 
     public static Object[] tuple(Object one, Object two, Object three) {
@@ -87,7 +87,7 @@ public class ShenjUtil {
         Object[] t0 = (Object[]) tuple;
         if (t0[2].getClass().isArray()) {
             Object[] t1 = (Object[]) t0[2];
-            if (t1[0] == symbol("shen-tuple")) {
+            if (t1[0] == symbol("shen.tuple")) {
                 return t1[1];
             } else {
                 // The second item in the tuple is an array

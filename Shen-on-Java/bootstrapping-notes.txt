@@ -1,5 +1,24 @@
 ---------------------------------------------
 
+(3-) (+ 2 2)
+java.lang.ClassCastException: sun.misc.Launcher$AppClassLoader cannot be cast to com.mentics.shenj.cl.DirectClassLoader
+	at com.mentics.shenj.inner.Context.apply(Context.java:354)
+	at com.mentics.shenj.inner.Primitives.evalKl(Primitives.java:285)
+	at shenj.root.ShenDotevalWithoutMacros$1.apply(ShenDotevalWithoutMacros.java:21)
+	at shenj.root.ShenDottoplevel_evaluate$1.apply(ShenDottoplevel_evaluate.java:103)
+	at shenj.root.ShenDottoplevel$1.apply(ShenDottoplevel.java:17)
+	at shenj.root.ShenDotreadEvaluatePrint$1.apply(ShenDotreadEvaluatePrint.java:30)
+	at shenj.root.ShenDotloop$1.apply(ShenDotloop.java:24)
+	at shenj.root.ShenDotshen$1.apply(ShenDotshen.java:19)
+	at com.mentics.shenj.cl.DirectClassLoader.apply(DirectClassLoader.java:225)
+	at com.mentics.shenj.REPL.main(REPL.java:40)
+
+Got this while trying to upgrade to 9.0. I didn't think I changed anything big there but...
+If DCL only looks in it's byte[][] for classes and doesn't find it, this can happen. I changed it so it looked for shenj.root in the parent and loaded it in DCL.
+This happened again because shenj.root isn't enough. It now checks for a shen prefix to catch everything.
+
+---------------------------------------------
+
 (13-) (track fourth)
 Evalkl: [track fourth]
 Evalkl: [defun fourth [V7730 ()] [do [set shen-*call* [+ [value shen-*call*] 1.0]] [do [shen-input-track [value shen-*call*] fourth [cons V7730 ()]] [do [shen-terpri-or-read-char] [let Result [cond [[and [tuple? V7730 ()] [and [and [tuple? [snd V7730 ()] ()] [and [and [tuple? [snd [snd V7730 ()] ()] ()] [and [tuple? [snd [snd [snd V7730 ()] ()] ()] ()] ()]] ()]] ()]] [fst [snd [snd [snd V7730 ()] ()] ()] ()] ()] [[and [tuple? V7730 ()] [and [and [tuple? [snd V7730 ()] ()] [and [tuple? [snd [snd V7730 ()] ()] ()] ()]] ()]] [snd [snd [snd V7730 ()] ()] ()] ()] [[and [tuple? V7730 ()] [and [tuple? [snd V7730 ()] ()] ()]] () ()] [[tuple? V7730 ()] () ()] [true [shen-f_error fourth ()] ()] ()] [do [shen-output-track [value shen-*call*] fourth Result] [do [set shen-*call* [- [value shen-*call*] 1.0]] [do [shen-terpri-or-read-char] Result]]]]]]]]

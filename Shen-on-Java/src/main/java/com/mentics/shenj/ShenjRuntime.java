@@ -15,7 +15,10 @@ public class ShenjRuntime {
     // public static ThreadLocal<CLProvider> currentContext = new ThreadLocal<>();
 
     public static final String GEN_SOURCE_DIRECTORY = "shenj.platform/*java-source-directory*";
-    public static final Symbol SRC_DIR_SYM = symbol(GEN_SOURCE_DIRECTORY);
+    public static final Symbol GEN_SOURCE_DIRECTORY_SYM = symbol(GEN_SOURCE_DIRECTORY);
+
+    public static final String GENERATE_JAVA_ONLY = "shenj.platform/*generate-java-only*";
+    public static final Symbol GENERATE_JAVA_ONLY_SYM = symbol(GENERATE_JAVA_ONLY);
 
     public static int gensymCounter = 0;
 

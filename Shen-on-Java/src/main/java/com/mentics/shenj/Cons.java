@@ -14,6 +14,14 @@ public class Cons {
         return c;
     }
 
+    public static Object list(Object... objs) {
+        Cons cons = new Cons(objs[0], Nil.NIL);
+        for (int i = 1; i < objs.length; i++) {
+            cons = new Cons(objs[i], cons);
+        }
+        return cons;
+    }
+
 
     // Instance Fields //
 
@@ -105,14 +113,6 @@ public class Cons {
             o = oc.tail;
         }
         return result;
-    }
-
-    public static Object list(Object... objs) {
-        Cons cons = new Cons(objs[0], Nil.NIL);
-        for (int i = 1; i < objs.length; i++) {
-            cons = new Cons(objs[i], cons);
-        }
-        return cons;
     }
 
     public int length() {
