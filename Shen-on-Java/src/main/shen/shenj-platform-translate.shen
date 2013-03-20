@@ -103,7 +103,7 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
     (let Expression (gensym n)
       (kl-to-java-traverse [lambda Expression [not Expression]] lambda Vars false))
   [not Expression] Type Vars Tail? ->
-    (assert (or (= boolean Type) (= object Type)) "Expected boolean or object for not operation."
+    (assert-check (or (= boolean Type) (= object Type)) "Expected boolean or object for not operation."
       (let Expression' (kl-to-java-traverse Expression boolean Vars false)
         (@p (make-string "~A" (fst Expression'))
             (make-string "!((boolean)(~A))" (second Expression'))
@@ -142,7 +142,7 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
         (third Value')))
 
   [value] Type Vars Tail? -> (let Name (gensym s) (kl-to-java-traverse [lambda Name [value Name]] lambda Vars Tail?))
-  [value Name] Type Vars Tail? -> (single-param Name Type Vars "globalProperties.get(~A)" object)
+  [value Name] Type Vars Tail? -> (single-param Name Type Vars "globalProperties.require(~A)" object)
 
   [cons?] Type Vars Tail? ->
     (let A0 (gensym s)
@@ -320,13 +320,13 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
   X Type Vars Tail? -> (handle-java-arg (parse-java-call-symbol X) Type)
     where (and (symbol? X) (is-java-call X))
   X Type Vars Tail? ->
-    (assert (not (cons? X)) "Invalid input to kl-to-java-traverse. List found where atom expected."
+    (assert-check (not (cons? X)) "Invalid input to kl-to-java-traverse. List found where atom expected."
       (@p ""
           (cond ((find-first? X Vars) (get-second X Vars))
-                ((symbol? X) (make-string "symbol(c#34;~Ac#34;)" X))
-                ((string? X) (@s "c#34;" (escape-java-string X) "c#34;"))
+                ((boolean? X) (str X))
 				        ((integer? X) (make-string "~Ad" X))
 				        ((float? X) (make-string "~Ad" X))
-                ((boolean? X) (str X))
+                ((string? X) (@s "c#34;" (escape-java-string X) "c#34;"))
+                ((symbol? X) (make-string "symbol(c#34;~Ac#34;)" X))
                 (true (error "Unsupported type in kl-to-java-traverse: ~A" X)))
           (type-of X))))

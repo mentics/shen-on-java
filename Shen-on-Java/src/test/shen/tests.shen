@@ -1,3 +1,5 @@
+(assert-equals false (symbol? (/. X X)))
+
 (track fourth)
 (track arithmetic)
 

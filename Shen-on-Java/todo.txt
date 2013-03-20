@@ -1,3 +1,7 @@
+final Object f7254 = shenj.root.Foldl.LAMBDA.apply(symbol("shenj.platform/call-info-symbol->-h"), Nil.NIL, f7255);
+The above line should be able to compile to use the lambda for the function to apply. We probably just need special case for function keyword
+
+
 Can we hold a single object that is the shen system that we can call things on? So it doesn't have to be static to initiate call to it?
 
 ...internal.compiler.batch.Main.setPaths
@@ -43,6 +47,8 @@ Fix the true finding for cond code gen
 
 How to remove properties from an image
 How to remove functions from an image
+
+Optimize trap-error so lambdas to handle exceptions written inline are inlined
 
 --------  Done  ----------------
 

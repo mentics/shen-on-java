@@ -120,18 +120,20 @@
 \*(define prepend-all
   Prepend Searches String -> (foldl (/. String Search (shenj.platform/regex Search String (cn Prepend Search))) String Searches))*\ 
 (define prepend-all
-  Prepend Searches String -> (foldl (/. String Search (string-replace Search (cn Prepend Search) String)) String Searches)) 
+  Prepend Searches String -> (foldl (/. String Search (replace-all (cn Prepend Search) Search String)) String Searches))
+(assert-equals "a12a3" (prepend-all "a" ["1" "3"] "123"))
+(assert-equals "savev1075" (prepend-all "save" ["v1074" "v1075"] "v1075"))
 
 (define handle-tail-call-h
-  String (@p Param Arg) ->
+  ToSave String (@p Param Arg) ->
     (let P (second Param)
-         FixedArg (prepend-all "save" (map (function second) (compile-context-params)) Arg)
+         FixedArg (prepend-all "save" (map (function second) ToSave) Arg)
       (if (= P Arg) String (cn String (make-string "~A = ~A;~%" P FixedArg)))))
 
 (define handle-tail-call
   Name EvaledArgs -> (@s (foldl (/. String P (make-string "~Afinal Object save~A = ~A;~%" String P P)) ""
                                 (map (function second) (compile-context-params)))
-                         (foldl (function handle-tail-call-h)
+                         (foldl (handle-tail-call-h (compile-context-params))
                                 ""
                                 (zip (compile-context-params) (map (function second) EvaledArgs)))
                          (make-string "continue;~%")))
@@ -154,7 +156,7 @@
           (let Eval (cond (Unreachable? "")
                           ((find-first? Func Vars)
                             (make-string "final Object ~A = dispatch(~A).apply(~A);~%"
-                                         Result Func-string Args-string))
+                                         Result (get-second Func Vars) Args-string))
                           (Direct? (if TailCall?
                                        (handle-tail-call Func EvaledArgs)
                                        (make-string "final Object ~A = ~A.apply(~A);~%"
@@ -201,7 +203,7 @@
          Receiver-type (third ArgInfo)
          Void? (= "void" (fst ArgInfo))
          Assignment (if Void? "" (make-string "Object ~A =" Result))
-      (@p (make-string "~A~A((~A)~A).~A(~A);~%" Args-prep-string Assignment Receiver-type (second (hd EvaledArgs)) (shenj.dot/%com.mentics.util.StringUtil.lastToken "." Callpart) Args-string)
+      (@p (make-string "~A~A((~A)~A).~A(~A);~%" Args-prep-string Assignment Receiver-type (second (hd EvaledArgs)) (last-token "." Callpart) Args-string)
           (if Void? "null" (str Result))
           (if Void? void object)))
   (@p static-method Callpart) Result Args-prep-string EvaledArgs ->

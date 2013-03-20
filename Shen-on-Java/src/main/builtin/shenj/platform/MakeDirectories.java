@@ -14,7 +14,12 @@ public class MakeDirectories {
     public static Lambda LAMBDA = new Lambda1() {
         public Object apply(Object path) throws Exception {
             assert path instanceof String;
-            return new File((String) path).mkdirs();
+            String p = (String) path;
+            if (p.endsWith("/") || p.endsWith("\\")) {
+                return new File((String) path).mkdirs();
+            } else {
+                return new File(p).getParentFile().mkdirs();
+            }
         }
     };
 }

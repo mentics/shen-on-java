@@ -155,7 +155,7 @@
 
 (defun do (V1857 V1858) V1858)
 
-(defun element? (V1867 V1868)  (cond ((= () V1868) false)        ((and (cons? V1868) (= (hd V1868) V1867)) true)        ((cons? V1868) (element? V1867 (tl V1868)))        (true (shen.sys-error element?))))
+(defun element? (V1867 V1868) (cond ((= () V1868) false) ((and (cons? V1868) (= (hd V1868) V1867)) true) ((cons? V1868) (element? V1867 (tl V1868))) (true (shen.sys-error element?))))
 
 (defun empty? (V1874) (cond ((= () V1874) true) (true false)))
 

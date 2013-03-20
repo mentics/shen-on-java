@@ -13,6 +13,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import shenj.platform.CallInfoSymbolToJavaCallInfo;
@@ -22,6 +23,7 @@ import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.mentics.shenj.Label;
 import com.mentics.shenj.Lambda;
+import com.mentics.shenj.Lambda2;
 import com.mentics.shenj.Nil;
 import com.mentics.shenj.ShenException;
 import com.mentics.shenj.ShenjRuntime;
@@ -35,9 +37,22 @@ import com.mentics.util.StringUtil;
 
 
 public class Context {
+    public static class SpecialHashMap<K, V> extends HashMap<K, V> {
+        public Object require(Object key) {
+            Object val = super.get(key);
+            if (val == null) {
+                throw new ShenException("No value for " + key);
+            } else {
+                return val;
+            }
+        }
+    }
+
+
     public static final String GLOBAL_PROPERTIES_NAME = "globalProperties";
-    public static Map<Symbol, Object> globalProperties = new HashMap<>();
+    public static SpecialHashMap<Symbol, Object> globalProperties;
     static {
+        globalProperties = new SpecialHashMap<>();
         installGlobalConstants(globalProperties);
     }
 
@@ -88,7 +103,10 @@ public class Context {
     static void loadImage(Input input) throws Exception {
         Kryo kryo = newKryo();
         kryo.setClassLoader(Context.class.getClassLoader());
-        globalProperties = (Map<Symbol, Object>) kryo.readClassAndObject(input);
+        globalProperties = (SpecialHashMap<Symbol, Object>) kryo.readClassAndObject(input);
+        SpecialHashMap<Symbol, Object> props = new SpecialHashMap<>();
+        props.putAll(globalProperties);
+        globalProperties = props;
         functions = (Map<Symbol, Lambda>) kryo.readClassAndObject(input);
         installGlobalConstants(globalProperties);
         globalProperties.put(symbol("shen-*history*"), Nil.NIL);
@@ -160,6 +178,22 @@ public class Context {
         return ret;
     }
 
+
+    public static Lambda orcc = new Lambda2() {
+        @Override
+        public Object apply(final Object o1, final Object o2) {
+            return (Boolean) o1 || (Boolean) o2;
+        }
+    };
+
+    public static Lambda andcc = new Lambda2() {
+        @Override
+        public Object apply(final Object o1, final Object o2) {
+            return (Boolean) o1 && (Boolean) o2;
+        }
+    };
+
+
     public static Lambda dispatch(Object obj) throws Exception {
         Lambda ret;
         if (obj instanceof Lambda) {
@@ -167,6 +201,13 @@ public class Context {
         } else if (obj instanceof Symbol) {
             ret = functions.get(obj);
             if (ret == null) {
+                if ("or".equals(obj.toString())) {
+                    return orcc;
+                }
+                if ("and".equals(obj.toString())) {
+                    return andcc;
+                }
+
                 Object javaCallInfo = CallInfoSymbolToJavaCallInfo.LAMBDA.apply(obj);
                 String packageName = (String) ShenjUtil.first(javaCallInfo);
                 String className = (String) ShenjUtil.second(javaCallInfo);
@@ -322,7 +363,7 @@ public class Context {
         Kryo kryo = newKryo();
         kryo.setClassLoader(Context.class.getClassLoader());
         try (Input in = new Input(new FileInputStream(file))) {
-            globalProperties = (Map<Symbol, Object>) readObjects(kryo, in, HashMap.class).get(0);
+            globalProperties = (SpecialHashMap<Symbol, Object>) readObjects(kryo, in, HashMap.class).get(0);
         } catch (Exception e) {
             rethrow(e);
         }
@@ -379,10 +420,26 @@ public class Context {
             return ((DirectClassLoader) Context.class.getClassLoader()).doEval(srcDir, cn, content);
         }
     }
+
     // static void registerAll(Map<String, byte[]> toReg) {
     // for (byte[] bytes : toReg.values()) {
     // Class<?> cls = Context.class.getClassLoader().loadClass();
     // registerLambda(cls.getFields());
     // }
     // }
+
+    public static boolean removeShenFunctions() {
+        boolean found = false;
+        for (Iterator<Symbol> iterator = functions.keySet().iterator(); iterator.hasNext();) {
+            if (iterator.next().toString().startsWith("shen")) {
+                iterator.remove();
+                found = true;
+            }
+        }
+        found |= ((DirectClassLoader) Context.class.getClassLoader()).removeShenFunctions();
+        return found;
+        // boolean v1 = Context.functions.remove(symbol) != null;
+        // boolean v2 = ((DirectClassLoader) Context.class.getClassLoader()).deleteClass(symbol);
+        // return v1 || v2;
+    }
 }

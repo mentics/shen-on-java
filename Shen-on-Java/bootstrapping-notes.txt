@@ -1,3 +1,59 @@
+
+
+
+
+
+
+
+---------------------------------------------
+
+FPQi chapter 8: (generate_parser (cons sent (cons --> (cons np (cons vp (cons np (cons --> (cons name (cons np (cons --> (cons det (cons n (cons name (cons --> (cons "John" (cons name (cons --> (cons "Bill" (cons name (cons --> (cons "Tom" (cons det (cons --> (cons "the" (cons det (cons --> (cons "a" (cons det (cons --> (cons "that" (cons det (cons --> (cons "this" (cons n (cons --> (cons "girl" (cons n (cons --> (cons "ball" (cons vp (cons --> (cons vtrans (cons np (cons vp (cons --> (cons vintrans (cons vtrans (cons --> (cons "kicks" (cons vtrans (cons --> (cons "likes" (cons vintrans (cons --> (cons "jumps" (cons vintrans (cons --> (cons "flies" ())))))))))))))))))))))))))))))))))))))))))))))))))))))))))) = [sent np name det n vp vtrans vintrans]
+failed with error java.lang.ClassCastException: com.mentics.shenj.Symbol cannot be cast to java.lang.Boolean
+	at shenj.root.Place_in_group$1.apply(Place_in_group.java:30)
+	at shenj.root.Group_rules1$1.apply(Group_rules1.java:22)
+	at shenj.root.Group_rules$1.apply(Group_rules.java:17)
+	at shenj.root.Generate_parser$1.apply(Generate_parser.java:27)
+	at shenj.generated.ToEval$1.apply(ToEval.java:318)
+	at com.mentics.shenj.inner.Context.runClass(Context.java:143)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:601)
+	at com.mentics.shenj.cl.DirectClassLoader.runClass(DirectClassLoader.java:173)
+
+Running test programs.
+Happened when I overrode symbol?. booleans are being output as symbol("true")
+
+
+---------------------------------------------
+
+test program spreadsheet failed because symbol? implementation in Shen 9 is wacko and so I overrode it.
+
+
+---------------------------------------------
+
+failed with error java.lang.ClassCastException: com.mentics.shenj.Symbol cannot be cast to com.mentics.shenj.Cons
+	at shenj.root.ShenDotmu_reduction$1.apply(ShenDotmu_reduction.java:97)
+	at shenj.root.ShenDotaum$1.apply(ShenDotaum.java:56)
+	at shenj.root.ShenDotclausesToShen$1$2.apply(ShenDotclausesToShen.java:45)
+	at com.mentics.shenj.Cons.forEach(Cons.java:97)
+	at shenj.root.Map$1.apply(Map.java:23)
+	at shenj.root.ShenDotclausesToShen$1.apply(ShenDotclausesToShen.java:50)
+	at shenj.root.ShenDotcompile_prolog_procedure$1.apply(ShenDotcompile_prolog_procedure.java:20)
+	at com.mentics.shenj.Cons.forEach(Cons.java:97)
+	at shenj.root.Map$1.apply(Map.java:23)
+	at shenj.root.ShenDotprologToShen$1.apply(ShenDotprologToShen.java:23)
+	at shenj.root.ShenDotAdefprologZ$1.apply(ShenDotAdefprologZ.java:43)
+	at shenj.root.Compile$1.apply(Compile.java:19)
+	at shenj.root.ShenDotdefprologMacro$1.apply(ShenDotdefprologMacro.java:38)
+	at shenj.root.ShenDotcompose$1.apply(ShenDotcompose.java:22)
+	at shenj.root.Macroexpand$1.apply(Macroexpand.java:17)
+
+Trying to run test programs, in prolog.shen. Just running:
+(defprolog f a <--;)   
+causes the error.
+It was caused by tail call implementation bug. prepend-all was using string-replace (which right now only works on unit strings) instead of replace-all. 
+
+
 ---------------------------------------------
 
 (3-) (+ 2 2)

@@ -230,36 +230,24 @@ public class CLProvider implements JavaFileObjectSource {
         compileTask(dcl, srcDir, missingClassFQN, classContent.toString());
     }
 
-    public void loadPrimitives() {
-        dcl.callContext("loadPrimitives", null, null);
-    }
+//    public void loadPrimitives() {
+//        dcl.callContext("loadPrimitives", null, null);
+//    }
 
-    public Class<?> getClass(String className) {
-        try {
-            return this.dcl.loadClass(className);
-        } catch (ClassNotFoundException e) {
-            rethrow(e);
-            return null; // unreachable code
-        }
-    }
+//    public Class<?> getClass(String className) {
+//        try {
+//            return this.dcl.loadClass(className);
+//        } catch (ClassNotFoundException e) {
+//            rethrow(e);
+//            return null; // unreachable code
+//        }
+//    }
 
-    public Map<Symbol, Object> getGlobalProperties() {
-        return this.dcl.getGlobalProps();
-    }
-
-    public Map<Symbol, Lambda> getFunctions() {
-        return this.dcl.getFunctions();
-    }
-
-    public boolean deleteFunction(Symbol symbol) {
-        return this.dcl.deleteFunction(symbol);
-    }
-
-    public boolean deleteClass(String className) {
-        return dcl.deleteClass(className);
-    }
-
-    public Class<?> loadClass(String s) throws ClassNotFoundException {
-        return dcl.loadClass(s);
-    }
+//    public Map<Symbol, Object> getGlobalProperties() {
+//        return this.dcl.getGlobalProps();
+//    }
+//
+//    public Map<Symbol, Lambda> getFunctions() {
+//        return this.dcl.getFunctions();
+//    }
 }

@@ -21,6 +21,7 @@ public class REPL {
 //                System.out.println(topDCL.getGlobalProps());
                 topDCL.getGlobalProps().put(Primitives.SHOW_EVAL, true);
                 topDCL.apply("shenj.root.ShenInstallInit");
+                topDCL.getGlobalProps().put(Primitives.SHOW_EVAL, false);
             } else {
                 File f = new File(args[0]);
                 if (f.exists()) {

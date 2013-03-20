@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -402,13 +403,8 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
         }
     }
 
-    public boolean deleteFunction(Symbol symbol) {
-        // TODO: remvoe class somehow?
-        return getFunctions().remove(symbol) == null ? false : true;
-    }
-
     public boolean deleteClass(String className) {
-        return this.classes.remove(className) == null ? false : true;
+        return classes.remove(className) != null;
     }
 
     public Object doEval(String srcDir, String className, String classContent) {
@@ -428,5 +424,24 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
             throw new ShenException("No package for class: " + className);
         }
         return CLProvider.compileTask(this, srcDir, (String) className, (String) classContent);
+    }
+
+    public boolean removeShenFunctions() {
+        boolean found = false;
+
+        for (Iterator<String> iterator = classes.keySet().iterator(); iterator.hasNext(); ) {
+            if (iterator.next().startsWith("shen")) {
+                iterator.remove();
+                found = true;
+            }
+        }
+        for (Iterator<String> iterator = loaded.keySet().iterator(); iterator.hasNext(); ) {
+            if (iterator.next().startsWith("shen")) {
+                iterator.remove();
+                found = true;
+            }
+        }
+
+        return found;
     }
 }

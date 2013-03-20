@@ -123,7 +123,7 @@ true	try	void	volatile	while]))
 (define flip3 F -> (/. X (/. Y (/. Z (F Z Y X)))))
 (define flip4 F -> (/. W (/. X (/. Y (/. Z (F Z Y X W))))))
 
-(define assert Test Message Expression -> (if Test Expression (simple-error Message)))
+(define assert-check Test Message Expression -> (if Test Expression (simple-error Message)))
 
 (define assert-test
   Actual Test Message ->
@@ -232,15 +232,15 @@ true	try	void	volatile	while]))
 															where (string-prefix? Str2 Str3)
    Str1 Str2 (@s S Str) N Result -> (replace-all-h Str1 Str2 Str N (cn Result S)))
 
-(define string-length
-   \* returns the length of the string *\
-   { string --> number }
-   Str -> (string-length-h Str 0))
- 
 (define string-length-h
    { string --> number --> number }
    "" Len -> Len
    (@s _ Str) Len -> (string-length-h Str (+ Len 1)))
+
+(define string-length
+   \* returns the length of the string *\
+   { string --> number }
+   Str -> (string-length-h Str 0))
 
 (define logic-to-java
   and -> "&&"
@@ -297,12 +297,23 @@ true	try	void	volatile	while]))
 
 (define remove-newlines String -> (string-replace "c#10;" "\n" (string-replace "c#13;" "\r" String)))
 
+(define tokenise
+   { (string --> boolean) --> string -->  (list string)}
+   F Str -> (tokenise-h F Str "" []))
+
+(define tokenise-h
+   { (string --> boolean) --> string -->  string --> (list string) --> (list string)}
+   _ "" Str L -> (reverse [Str | L])
+   F (@s S1 Str) S2 L -> (tokenise-h F Str "" [S2 | L])  where (F S1)
+   F (@s S1 Str) S2 L -> (tokenise-h F Str (@s S2 S1) L))  
 
 (define list-last
   [X] -> X
   [X | ()] -> X
   [X | Xs] -> (list-last Xs)
   X -> (error "Invalid argument to list-last ~A" X))
+
+(define last-token Delim String -> (list-last (tokenise (= Delim) String)))
 
 
 (define ensure-prefix
