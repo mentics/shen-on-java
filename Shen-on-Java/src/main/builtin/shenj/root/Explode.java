@@ -21,9 +21,10 @@ public class Explode {
             if (len <= 0) {
                 return Nil.NIL;
             }
-            Cons c = new Cons(String.valueOf(s.charAt(len-1)).intern(), Nil.NIL);
+            // TODO: consider how to optimize this
+            Cons c = new Cons(String.valueOf(s.charAt(len-1)), Nil.NIL);
             for (int i=len-2; i>=0; i--) {
-                c = new Cons(String.valueOf(s.charAt(i)).intern(), c);
+                c = new Cons(String.valueOf(s.charAt(i)), c);
             }
 //            final Object f2599 = shenj.root.ShenDotexplodeH.LAMBDA.apply(f2600);
             // Function call: shen.explode-h Args: [[shen.app V1951 shen.a]])

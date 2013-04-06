@@ -6,7 +6,6 @@ import static com.mentics.util.StringUtil.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.util.Map;
 
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
@@ -43,8 +42,9 @@ public class InstallBuiltinsInImage {
                 String pathName = t0.substring("src/main/builtin/".length());
                 String fqn = pathName.replace(File.separatorChar, '.');
                 System.out.println("compiling: " + fqn);
-                Map<String, byte[]> builtins = dcl.compile(null, fqn, readFully(f));
-                dcl.register(fqn, builtins);
+                // TODO
+                // Map<String, byte[]> builtins = dcl.compile(null, fqn, readFully(f));
+                // dcl.register(fqn, builtins);
             }
         }
     }

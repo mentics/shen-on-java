@@ -12,6 +12,10 @@
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
         <javaElement handleIdentifier="=Shen-on-Java/src\/main\/java"/>
+        <javaElement handleIdentifier="=Shen-on-Java/java\/ustring"/>
         <javaElement handleIdentifier="=Shen-on-Java/src\/main\/resources"/>
+        <javaElement handleIdentifier="=Shen-on-Java/src\/main\/builtin"/>
+        <javaElement handleIdentifier="=Shen-on-Java/java\/platform"/>
+        <javaElement handleIdentifier="=Shen-on-Java/java\/core"/>
     </selectedElements>
 </jardesc>

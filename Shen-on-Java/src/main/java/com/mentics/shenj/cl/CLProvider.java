@@ -30,7 +30,7 @@ import com.mentics.shenj.Symbol;
 import com.mentics.util.StringUtil;
 
 
-public class CLProvider implements JavaFileObjectSource {
+public class CLProvider {// implements JavaFileObjectSource {
     // Static Methods //
 
     public static CLProvider newDefault(ClassLoader parent) {
@@ -101,85 +101,85 @@ public class CLProvider implements JavaFileObjectSource {
         return new CLProvider(dcl.copy(new HashMap<String, byte[]>(), false));
     }
 
-    public void register(String fqn, Map<String, byte[]> toReg) {
-        dcl.register(fqn, toReg);
-    }
+//    public void register(String fqn, Map<String, byte[]> toReg) {
+//        dcl.register(fqn, toReg);
+//    }
 
 
-    public static Map<String, byte[]> compileTask(DirectClassLoader dcl, String srcDir, final String className, final String classContent)
-            throws CharSequenceCompilerException {
-        if (srcDir != null) {
-            StringUtil.writeToFile(classContent, new File(srcDir, className.replace('.', '/') + ".java"));
-        }
+//    public static Map<String, byte[]> compileTask(DirectClassLoader dcl, String srcDir, final String className, final String classContent)
+//            throws CharSequenceCompilerException {
+//        if (srcDir != null) {
+//            StringUtil.writeToFile(classContent, new File(srcDir, className.replace('.', '/') + ".java"));
+//        }
+//
+//        CharSequenceCompiler compiler = new CharSequenceCompiler(dcl, asList("-g"));
+//
+//        // System.out.println("Compiling classname: " + className);
+//
+//        DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
+//        Map<String, byte[]> newClasses = compiler.compileToBytes(Lang.mapOf(className, (CharSequence) classContent),
+//                diagnostics);
+//        dcl = dcl.newWith(className, newClasses);
+//        boolean retry = false;
+//        List<String> errors = new ArrayList<>();
+//        if (!diagnostics.getDiagnostics().isEmpty()) {
+//            for (Diagnostic<? extends JavaFileObject> d : diagnostics.getDiagnostics()) {
+//                if (d.getKind() == Diagnostic.Kind.ERROR) {
+//                    // System.out.println("Found error: " + d.getCode()); // compiler.err.cant.resolve.location
+//                    String msg = d.getMessage(null);
+//
+//                    String pkg = StringUtil.removeLastToken(".", className);
+//
+//                    String missingClassFQN = tryPackage1(pkg, msg);
+//                    if (missingClassFQN == null) {
+//                        missingClassFQN = tryPackage2(pkg, msg);
+//                    }
+//
+//                    if (missingClassFQN == null && msg.contains("cannot find symbol")
+//                            && Pattern.compile("symbol:\\s+?variable").matcher(msg).find()) {
+//                        // System.out.println(msg);
+//                        Pattern p = Pattern.compile("location:\\s+?class\\s(.+?)$");
+//                        Matcher matcher = p.matcher(msg);
+//                        matcher.find();
+//                        try {
+//                            missingClassFQN = matcher.group(1);
+//                        } catch (Exception e) {
+//                            System.out.println("could not parse message:\n" + msg);
+//                            System.out.println("for class contents:\n" + classContent);
+//                            e.printStackTrace();
+//                        }
+//                    }
+//
+//                    if (missingClassFQN != null) {
+//                        int numParams = Lang.methodParamCount(classContent, StringUtil.lastToken(".", missingClassFQN)
+//                                + ".LAMBDA.apply");
+//                        if (numParams != -1) {
+//                            // newClasses.putAll();
+//                            createStubFunction(dcl, srcDir, missingClassFQN, numParams);
+//                            retry = true;
+//                        } else {
+//                            errors.add(d.toString());
+//                        }
+//                    } else {
+//                        System.out.println("Couldn't find fqn: " + d);
+//                        errors.add(d.toString());
+//                    }
+//                }
+//            }
+//        }
+//        if (retry) {
+//            compileTask(dcl, srcDir, className, classContent);
+//            // newClasses.putAll();
+//        } else if (errors.size() > 0) {
+//            throw new ShenException(errors.toString());
+//        }
+//        return newClasses;
+//    }
 
-        CharSequenceCompiler compiler = new CharSequenceCompiler(dcl, asList("-g"));
-
-        // System.out.println("Compiling classname: " + className);
-
-        DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
-        Map<String, byte[]> newClasses = compiler.compileToBytes(Lang.mapOf(className, (CharSequence) classContent),
-                diagnostics);
-        dcl = dcl.newWith(className, newClasses);
-        boolean retry = false;
-        List<String> errors = new ArrayList<>();
-        if (!diagnostics.getDiagnostics().isEmpty()) {
-            for (Diagnostic<? extends JavaFileObject> d : diagnostics.getDiagnostics()) {
-                if (d.getKind() == Diagnostic.Kind.ERROR) {
-                    // System.out.println("Found error: " + d.getCode()); // compiler.err.cant.resolve.location
-                    String msg = d.getMessage(null);
-
-                    String pkg = StringUtil.removeLastToken(".", className);
-
-                    String missingClassFQN = tryPackage1(pkg, msg);
-                    if (missingClassFQN == null) {
-                        missingClassFQN = tryPackage2(pkg, msg);
-                    }
-
-                    if (missingClassFQN == null && msg.contains("cannot find symbol")
-                            && Pattern.compile("symbol:\\s+?variable").matcher(msg).find()) {
-                        // System.out.println(msg);
-                        Pattern p = Pattern.compile("location:\\s+?class\\s(.+?)$");
-                        Matcher matcher = p.matcher(msg);
-                        matcher.find();
-                        try {
-                            missingClassFQN = matcher.group(1);
-                        } catch (Exception e) {
-                            System.out.println("could not parse message:\n" + msg);
-                            System.out.println("for class contents:\n" + classContent);
-                            e.printStackTrace();
-                        }
-                    }
-
-                    if (missingClassFQN != null) {
-                        int numParams = Lang.methodParamCount(classContent, StringUtil.lastToken(".", missingClassFQN)
-                                + ".LAMBDA.apply");
-                        if (numParams != -1) {
-                            // newClasses.putAll();
-                            createStubFunction(dcl, srcDir, missingClassFQN, numParams);
-                            retry = true;
-                        } else {
-                            errors.add(d.toString());
-                        }
-                    } else {
-                        System.out.println("Couldn't find fqn: " + d);
-                        errors.add(d.toString());
-                    }
-                }
-            }
-        }
-        if (retry) {
-            compileTask(dcl, srcDir, className, classContent);
-            // newClasses.putAll();
-        } else if (errors.size() > 0) {
-            throw new ShenException(errors.toString());
-        }
-        return newClasses;
-    }
-
-    @Override
-    public Collection<JavaFileObject> files(String packageName) {
-        return dcl.files(packageName);
-    }
+//    @Override
+//    public Collection<JavaFileObject> files(String packageName) {
+//        return dcl.files(packageName);
+//    }
 
 
     // Local Methods //
@@ -209,26 +209,26 @@ public class CLProvider implements JavaFileObjectSource {
         return ret;
     }
 
-    private static void createStubFunction(DirectClassLoader dcl, String srcDir, String missingClassFQN, int numParams)
-            throws CharSequenceCompilerException {
-        // System.out.println("stub compile: " + missingClassFQN);
-        StringBuilder classContent = new StringBuilder();
-        String sig = "";
-        for (int i = 0; i < numParams; i++) {
-            sig += "Object arg" + i + ", ";
-        }
-        if (numParams > 0) {
-            sig = sig.substring(0, sig.length() - 2);
-        }
-        classContent.append("package " + StringUtil.removeLastToken(".", missingClassFQN) + ";");
-        classContent.append("import com.mentics.shenj.*;");
-        classContent.append("public class " + StringUtil.lastToken(".", missingClassFQN) + " {");
-        classContent.append("public static Lambda LAMBDA = new Lambda" + numParams + "() {");
-        classContent.append("public Object apply(" + sig + ") {");
-        classContent.append("  throw new ShenException(\"Function " + missingClassFQN + " is not defined.\");");
-        classContent.append("} }; }");
-        compileTask(dcl, srcDir, missingClassFQN, classContent.toString());
-    }
+//    private static void createStubFunction(DirectClassLoader dcl, String srcDir, String missingClassFQN, int numParams)
+//            throws CharSequenceCompilerException {
+//        // System.out.println("stub compile: " + missingClassFQN);
+//        StringBuilder classContent = new StringBuilder();
+//        String sig = "";
+//        for (int i = 0; i < numParams; i++) {
+//            sig += "Object arg" + i + ", ";
+//        }
+//        if (numParams > 0) {
+//            sig = sig.substring(0, sig.length() - 2);
+//        }
+//        classContent.append("package " + StringUtil.removeLastToken(".", missingClassFQN) + ";");
+//        classContent.append("import com.mentics.shenj.*;");
+//        classContent.append("public class " + StringUtil.lastToken(".", missingClassFQN) + " {");
+//        classContent.append("public static Lambda LAMBDA = new Lambda" + numParams + "() {");
+//        classContent.append("public Object apply(" + sig + ") {");
+//        classContent.append("  throw new ShenException(\"Function " + missingClassFQN + " is not defined.\");");
+//        classContent.append("} }; }");
+//        compileTask(dcl, srcDir, missingClassFQN, classContent.toString());
+//    }
 
 //    public void loadPrimitives() {
 //        dcl.callContext("loadPrimitives", null, null);

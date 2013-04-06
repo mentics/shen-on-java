@@ -106,7 +106,7 @@ The second parameter is information for the current context: (@p symbol [(@p Hea
     (assert-check (or (= boolean Type) (= object Type)) "Expected boolean or object for not operation."
       (let Expression' (kl-to-java-traverse Expression boolean Vars false)
         (@p (make-string "~A" (fst Expression'))
-            (make-string "!((boolean)(~A))" (second Expression'))
+            (make-string "!((Boolean)(~A))" (second Expression'))
             boolean)))
 
   [and] Type Vars Tail? ->

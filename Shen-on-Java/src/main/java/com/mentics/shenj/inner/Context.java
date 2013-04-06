@@ -49,6 +49,9 @@ public class Context {
     }
 
 
+    private static final ClassLoader CC = Context.class.getClassLoader();
+
+
     public static final String GLOBAL_PROPERTIES_NAME = "globalProperties";
     public static SpecialHashMap<Symbol, Object> globalProperties;
     static {
@@ -78,6 +81,14 @@ public class Context {
         props.remove(ShenjRuntime.symbol("*stinput*"));
     }
 
+    public static void register(String className) {
+        try {
+            Class<?> c = loadClass(className);
+            registerLambda(c.getDeclaredFields());
+        } catch (Exception e) {
+            ShenException.rethrow(e);
+        }
+    }
 
     public static Symbol registerLambda(Field[] fields) throws IllegalAccessException {
         Field lambda = null;
@@ -102,7 +113,7 @@ public class Context {
     @SuppressWarnings("unchecked")
     static void loadImage(Input input) throws Exception {
         Kryo kryo = newKryo();
-        kryo.setClassLoader(Context.class.getClassLoader());
+        kryo.setClassLoader(CC);
         globalProperties = (SpecialHashMap<Symbol, Object>) kryo.readClassAndObject(input);
         SpecialHashMap<Symbol, Object> props = new SpecialHashMap<>();
         props.putAll(globalProperties);
@@ -112,19 +123,19 @@ public class Context {
         globalProperties.put(symbol("shen-*history*"), Nil.NIL);
         // globalProperties.put(symbol("*home-directory*"), Nil.NIL);
         // kryo.setClassLoader(DirectClassLoader.class.getClassLoader());
-        // if (Context.class.getClassLoader() == DirectClassLoader.class.getClassLoader()) {
+        // if (CC == DirectClassLoader.class.getClassLoader()) {
         // throw new Error("Context and DCL same classloader");
         // }
     }
 
     public static void saveImage(Output out) {
-        DirectClassLoader dcl = (DirectClassLoader) Context.class.getClassLoader();
+        DirectClassLoader dcl = (DirectClassLoader) CC;
         dcl.saveImage(out);
     }
 
     public static void saveImageContextPart(Output out) {
         Kryo kryo = newKryo();
-        kryo.setClassLoader(Context.class.getClassLoader());
+        kryo.setClassLoader(CC);
         clearGlobalConstants(globalProperties);
         KryoUtil.writeObjects(kryo, out, globalProperties, functions);
         // System.out.println("saved globalProperties and functions to image");
@@ -135,7 +146,7 @@ public class Context {
     public static Object runClass(String className) {
         Object result = null;
         try {
-            Class<?> c = Context.class.getClassLoader().loadClass(className);
+            Class<?> c = CC.loadClass(className);
             result = registerLambda(c.getDeclaredFields());
             Lambda lam = null;
             try {
@@ -161,7 +172,7 @@ public class Context {
     }
 
     public static Object callClass(String className, Object... args) throws Exception {
-        Class<?> c = Context.class.getClassLoader().loadClass(className);
+        Class<?> c = CC.loadClass(className);
         Lambda l = (Lambda) ReflectionUtil.getStaticField(c, "LAMBDA");
         Class<?>[] params = new Class[args.length];
         Arrays.fill(params, Object.class);
@@ -212,41 +223,19 @@ public class Context {
                 String packageName = (String) ShenjUtil.first(javaCallInfo);
                 String className = (String) ShenjUtil.second(javaCallInfo);
 
-                // if ("shen.put/get-macro".equals(orig)) {
-                // return shen.put.GetMacro.LAMBDA;
-                // }
-                // StringBuilder builder = new StringBuilder();
-                // for (int i = 0; i < orig.length(); i++) {
-                // String s = orig.substring(i, i + 1);
-                // if (i == 0) {
-                // builder.append(s.toUpperCase());
-                // } else if (".".equals(s)) {
-                // builder.append("Dot");
-                // } else if ("-".equals(s)) {
-                // builder.append(orig.substring(i + 1, i + 2).toUpperCase());
-                // i++;
-                // } else if ("<".equals(s)) {
-                // builder.append("A");
-                // } else if (">".equals(s)) {
-                // builder.append("Z");
-                // } else if ("@".equals(s)) {
-                // builder.append("At");
-                // } else if ("+".equals(s)) {
-                // builder.append("Plus");
-                // } else if ("?".equals(s)) {
-                // builder.append("Q");
-                // } else {
-                // builder.append(s);
-                // }
-                // }
                 try {
                     Class c = loadClass(packageName + "." + className);
                     // TODO: use field/method from call info
-                    return (Lambda) c.getField("LAMBDA").get(null);
+                    Lambda lam = (Lambda) c.getField("LAMBDA").get(null);
+                    functions.put((Symbol) obj, lam);
+                    // System.out.println("cache miss: "+obj.toString());
+                    return lam;
                 } catch (Exception e) {
                     // e.printStackTrace();
                     throw new ShenException("Could not find function: " + obj);
                 }
+            } else {
+                // System.out.println("cache hit: "+obj.toString());
             }
         } else {
             throw new ShenException("Attempted to dispatch on invalid object: " + obj);
@@ -361,7 +350,7 @@ public class Context {
     @SuppressWarnings("unchecked")
     static Map<Symbol, Object> loadProps(File file) {
         Kryo kryo = newKryo();
-        kryo.setClassLoader(Context.class.getClassLoader());
+        kryo.setClassLoader(CC);
         try (Input in = new Input(new FileInputStream(file))) {
             globalProperties = (SpecialHashMap<Symbol, Object>) readObjects(kryo, in, HashMap.class).get(0);
         } catch (Exception e) {
@@ -373,7 +362,7 @@ public class Context {
 
     public static Object newInstance(final String name, Object[] args) {
         try {
-            Class<?> c = Context.class.getClassLoader().loadClass(name);
+            Class<?> c = CC.loadClass(name);
             Constructor<?>[] consts = c.getConstructors();
             for (Constructor<?> con : consts) {
                 Class<?>[] params = con.getParameterTypes();
@@ -397,11 +386,11 @@ public class Context {
     }
 
     public static Class<?> loadClass(String className) throws ClassNotFoundException {
-        return Context.class.getClassLoader().loadClass(className);
+        return CC.loadClass(className);
     }
 
     public static Object apply(String name, Object... args) {
-        return ((DirectClassLoader) Context.class.getClassLoader()).apply(name, args);
+        return ((DirectClassLoader) CC).apply(name, args);
     }
 
     public static Object doEval(Object className, Object classContent) {
@@ -417,16 +406,23 @@ public class Context {
             }
             return "|not evaluated|";
         } else {
-            return ((DirectClassLoader) Context.class.getClassLoader()).doEval(srcDir, cn, content);
+            return ((DirectClassLoader) CC).doEval(srcDir, cn, content);
         }
     }
 
     // static void registerAll(Map<String, byte[]> toReg) {
     // for (byte[] bytes : toReg.values()) {
-    // Class<?> cls = Context.class.getClassLoader().loadClass();
+    // Class<?> cls = CC.loadClass();
     // registerLambda(cls.getFields());
     // }
     // }
+
+    public static boolean clearImage() {
+        functions.clear();
+        ((DirectClassLoader) CC).clearImage();
+        loadPrimitives();
+        return true;
+    }
 
     public static boolean removeShenFunctions() {
         boolean found = false;
@@ -436,10 +432,10 @@ public class Context {
                 found = true;
             }
         }
-        found |= ((DirectClassLoader) Context.class.getClassLoader()).removeShenFunctions();
+        found |= ((DirectClassLoader) CC).removeShenFunctions();
         return found;
         // boolean v1 = Context.functions.remove(symbol) != null;
-        // boolean v2 = ((DirectClassLoader) Context.class.getClassLoader()).deleteClass(symbol);
+        // boolean v2 = ((DirectClassLoader) CC).deleteClass(symbol);
         // return v1 || v2;
     }
 }

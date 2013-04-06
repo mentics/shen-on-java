@@ -31,12 +31,12 @@
 
 (define handle-if-h
   true PX0 PX1 PX2 Result ->
-    (make-string "~Aif ((boolean)(~A)) {~%~A~A} else {~%~A~A}~%"
+    (make-string "~Aif ((Boolean)(~A)) {~%~A~A} else {~%~A~A}~%"
                  (fst PX0) (second PX0)
                  (fst PX1) (special-return Result PX1 true)
                  (fst PX2) (special-return Result PX2 true))
   false PX0 PX1 PX2 Result ->
-    (make-string "~Afinal Object ~A;~%if ((boolean)(~A)) {~%~A~A} else {~%~A~A}~%"
+    (make-string "~Afinal Object ~A;~%if ((Boolean)(~A)) {~%~A~A} else {~%~A~A}~%"
                  (fst PX0) Result (second PX0)
                  (fst PX1) (handle-unreachable-assignment Result PX1)
                  (fst PX2) (handle-unreachable-assignment Result PX2)))

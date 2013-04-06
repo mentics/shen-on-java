@@ -3,38 +3,32 @@ package com.mentics.shenj.cl;
 import static com.mentics.shenj.ShenException.*;
 import static com.mentics.util.KryoUtil.*;
 import static com.mentics.util.ReflectionUtil.*;
-import static com.mentics.util.StringUtil.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
+import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import javax.tools.JavaFileObject;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
+import com.mentics.ecj.EclipseCompiler;
 import com.mentics.shenj.CharSequenceCompilerException;
-import com.mentics.shenj.JavaFileObjectImpl;
-import com.mentics.shenj.JavaFileObjectSource;
 import com.mentics.shenj.Lambda;
 import com.mentics.shenj.ShenException;
 import com.mentics.shenj.Symbol;
 import com.mentics.shenj.inner.Context;
 import com.mentics.util.ReflectionUtil;
+import com.mentics.util.StringUtil;
 
 
-public class DirectClassLoader extends ClassLoader implements JavaFileObjectSource {
+public class DirectClassLoader extends ClassLoader {// implements JavaFileObjectSource {
     // private static Kryo kryo = KryoUtil.newKryo();
 
     static int count = 0;
@@ -78,7 +72,7 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
     private Map<String, byte[]> classes;
     // TODO: is this unnecessary since we call findLoadedClass anyway?
     private Map<String, Class<?>> loaded;
-    private Map<String, List<JavaFileObject>> files;
+    // private Map<String, List<JavaFileObject>> files;
     private boolean running = false;
     private boolean obselete = false;
 
@@ -93,34 +87,39 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
         this.loaded = new HashMap<>();
         this.classes = classes;
 
-        files = new HashMap<>();
-        addToFiles(classes);
+        // files = new HashMap<>();
+        // addToFiles(classes);
     }
 
 
     // Public Methods //
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public Collection<JavaFileObject> files(String pkg) {
-        List<JavaFileObject> f1 = files.get(pkg);
-        if (getParent() instanceof DirectClassLoader) {
-            List<JavaFileObject> result = new ArrayList<>();
-            if (f1 != null) {
-                result.addAll(f1);
-            }
-            Collection<JavaFileObject> f2 = ((DirectClassLoader) getParent()).files(pkg);
-            if (f2 != null) {
-                result.addAll(f2);
-            }
-            return result;
-        }
-        return f1 != null ? f1 : Collections.EMPTY_LIST;
-    }
-
     public DirectClassLoader newWith(String className, Map<String, byte[]> newClasses) {
         // System.out.println("Adding classes to dcl: " + newClasses);
+
+        // for (Entry<String, byte[]> entry : newClasses.entrySet()) {
+        // SimpleClassLoader cl = new SimpleClassLoader(getParent(), newClasses);
+        // Class<?> c;
+        // try {
+        // c = cl.loadClass(entry.getKey());
+        // if (!isStub(c)) {
+        // this.classes.put(entry.getKey(), entry.getValue());
+        // } else {
+        // System.out.println("ignoring stub: " + entry.getKey());
+        // }
+        // } catch (ClassNotFoundException e) {
+        // // TODO Auto-generated catch block
+        // e.printStackTrace();
+        // }
+        // if (!NameEnv.stubsCreated.contains(entry.getKey())) {
+        // this.classes.put(entry.getKey(), entry.getValue());
+        // } else {
+        // // System.out.println("ignoring stub: " + entry.getKey());
+        // }
+        // }
+        // NameEnv.stubsCreated.clear();
         classes.putAll(newClasses);
+
         // boolean found = MapUtil.containsAny(loaded, newClasses.keySet());
         Class<?> alreadyLoadedClass = findLoadedClass(className);
         if (alreadyLoadedClass != null) {
@@ -135,6 +134,7 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
                     Field field = alreadyLoadedClass.getDeclaredField("LAMBDA");
                     field.setAccessible(true);
                     field.set(null, newLambda);
+                    register(className);
                 } catch (Exception e) {
                     // TODO: combine the run/LAMBDA thing?
                     try {
@@ -152,9 +152,18 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
             }
             // return copy(newClasses, true);
         }
-        addToFiles(newClasses);
+        // addToFiles(newClasses);
         return this;
     }
+
+    // private boolean isStub(Class<?> c) {
+    // try {
+    // c.getDeclaredField("STUB");
+    // return true;
+    // } catch (Exception e) {
+    // return false;
+    // }
+    // }
 
     public void saveImage(Output out) {
         try {
@@ -167,15 +176,24 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
         }
     }
 
+
+    private Class<?> context;
+    private Method contextRun;
+
+
     public Object runClass(String className) {
         try {
             running = true;
-            Class<?> c = loadClass(Context.class.getName());
-            Object result = c.getMethod("runClass", new Class[] { String.class }).invoke(null, className);
+            if (contextRun == null) {
+                if (context == null) {
+                    context = loadClass(Context.class.getName());
+                }
+                contextRun = context.getMethod("runClass", new Class[] { String.class });
+            }
+            Object result = contextRun.invoke(null, className);
             if (obselete) {
                 this.classes = null;
                 this.loaded = null;
-                this.files = null;
             }
             return result;
         } catch (Exception e) {
@@ -210,11 +228,19 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
         return ret;
     }
 
-    public DirectClassLoader register(String fqn, Map<String, byte[]> toReg) {
-        DirectClassLoader dcl = newWith(fqn, toReg);
-        dcl.runClass(fqn);
-        // callContext("registerAll", new Class[] { Map.class }, new Object[] { toReg });
-        return dcl;
+
+    private Method register;
+
+
+    public void register(String fqn) {
+        try {
+            if (register == null) {
+                register = context.getMethod("register", String.class);
+            }
+            register.invoke(null, fqn);
+        } catch (Exception e) {
+            ShenException.rethrow(e);
+        }
     }
 
     public Object apply(String className, Object... args) {
@@ -275,7 +301,6 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
                     obselete = true;
                 } else {
                     this.classes = null;
-                    this.files = null;
                     this.loaded = null;
                 }
             }
@@ -308,6 +333,7 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
     protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
         Class<?> findLoadedClass = findLoadedClass(name);
         if (findLoadedClass != null) {
+            // System.out.println("Loading already loaded Class: " + name);
             return findLoadedClass;
         }
         if ("j".equals(name)) {
@@ -339,7 +365,7 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
             byte[] cls = this.classes.get(name);
 
             if (cls != null) {
-                // System.out.println("Loading directly by "+id+": " + name);
+                // System.out.println("Loading directly by " + id + ": " + name + " len: " + cls.length);
                 try {
                     found = defineClass(name, cls, 0, cls.length);
                 } catch (Error re) {
@@ -350,7 +376,7 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
                 if (name.startsWith("shen")) {
                     found = copyFromParent(name);
                 } else {
-                    // System.out.println("Parent is loading: "+name);
+                    // System.out.println("Parent is loading: " + name);
                     found = getParent().loadClass(name);
                 }
             }
@@ -369,7 +395,7 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
             if (name.startsWith("com.mentics.shenj.inner.Primitives$")) {
                 return null;
             } else {
-//                e.printStackTrace(System.out);
+                // e.printStackTrace(System.out);
                 rethrow(e);
             }
         }
@@ -383,23 +409,6 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
         } catch (ClassNotFoundException e) {
             rethrow(e);
             return null; // unreachable code
-        }
-    }
-
-    private void addToFiles(Map<String, byte[]> classes) {
-        for (Entry<String, byte[]> entry : classes.entrySet()) {
-            Object o = entry.getKey();
-            if (o instanceof Symbol) {
-                System.out.println("found bad symbol: " + o.toString());
-            }
-            String className = entry.getKey();
-            String pkg = removeLastToken(".", className);
-            List<JavaFileObject> list = files.get(pkg);
-            if (list == null) {
-                list = new ArrayList<JavaFileObject>();
-                files.put(pkg, list);
-            }
-            list.add(new JavaFileObjectImpl(className, JavaFileObject.Kind.CLASS, entry.getValue()));
         }
     }
 
@@ -418,24 +427,41 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
         }
     }
 
-    public Map<String, byte[]> compile(String srcDir, String className, String classContent)
-            throws CharSequenceCompilerException {
+    public void compile(String srcDir, String className, String classContent) throws CharSequenceCompilerException {
         if (!className.contains(".")) {
             throw new ShenException("No package for class: " + className);
         }
-        return CLProvider.compileTask(this, srcDir, (String) className, (String) classContent);
+
+        if (srcDir != null) {
+            StringUtil.writeToFile(classContent, new File(srcDir, className.replace('.', '/') + ".java"));
+        }
+
+        // return CLProvider.compileTask(this, srcDir, (String) className, (String) classContent);
+        EclipseCompiler.env.dcl = this;
+        Map<String, byte[]> classes = EclipseCompiler.compile(classContent, StringUtil.lastToken(".", className)
+                + ".java");
+        this.newWith(className, classes);
+
+//        for (Entry<String, byte[]> entry : classes.entrySet()) {
+//            if (srcDir != null) {
+//                StringUtil.writeToFile(entry.getValue(), new File(srcDir, entry.getKey().replace('.', '/') + ".class"));
+//            }
+//        }
+
+        // this.newWith(classes);
+        // this.classes.putAll(classes);
     }
 
     public boolean removeShenFunctions() {
         boolean found = false;
 
-        for (Iterator<String> iterator = classes.keySet().iterator(); iterator.hasNext(); ) {
+        for (Iterator<String> iterator = classes.keySet().iterator(); iterator.hasNext();) {
             if (iterator.next().startsWith("shen")) {
                 iterator.remove();
                 found = true;
             }
         }
-        for (Iterator<String> iterator = loaded.keySet().iterator(); iterator.hasNext(); ) {
+        for (Iterator<String> iterator = loaded.keySet().iterator(); iterator.hasNext();) {
             if (iterator.next().startsWith("shen")) {
                 iterator.remove();
                 found = true;
@@ -443,5 +469,14 @@ public class DirectClassLoader extends ClassLoader implements JavaFileObjectSour
         }
 
         return found;
+    }
+
+    public byte[] localClass(String fqn) {
+        return this.classes.get(fqn);
+    }
+
+    public void clearImage() {
+        this.classes.clear();
+        this.loaded.clear();
     }
 }

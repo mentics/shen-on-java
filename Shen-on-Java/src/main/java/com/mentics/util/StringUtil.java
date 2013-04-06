@@ -3,6 +3,7 @@ package com.mentics.util;
 import static com.mentics.shenj.ShenException.*;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -68,6 +69,23 @@ public class StringUtil {
             total += r;
         }
         return total;
+    }
+
+    public static void writeToFile(byte[] content, File file) {
+        OutputStream out = null;
+        try {
+            file.getParentFile().mkdirs();
+            out = new FileOutputStream(file);
+            out.write(content);
+        } catch (IOException e) {
+            throw new ShenException(e);
+        } finally {
+            try {
+                out.close();
+            } catch (Exception e) {
+                // ignore
+            }
+        }
     }
 
     public static void writeToFile(String content, File file) {
