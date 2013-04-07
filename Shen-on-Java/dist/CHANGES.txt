@@ -2,3 +2,9 @@
 (This list is not complete)
 self call optimization for do
 support for subtyping form
+moved to ECJ for faster compiling and don't need JDK (JRE sufficient)
+updated to Shen 9.0
+(shenj.dot/>>java.awt.event.MouseAdapter |
+    mouseClicked:(/. Event (output Event)))
+
+    
